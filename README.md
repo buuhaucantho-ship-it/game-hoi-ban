@@ -2,7 +2,7 @@
 
 Trò chơi cờ tỷ phú chủ đề du lịch Việt Nam và thế giới, dành cho 2–10 người chơi. Chơi trực tiếp trên trình duyệt (điện thoại, iPad, máy tính), không cần cài đặt.
 
-**Chơi ngay:** https://buuhaucantho-ship-it.github.io/co-ty-phu-du-lich/
+**Chơi ngay:** https://buuhaucantho-ship-it.github.io/game-hoi-ban/
 
 ## Hai cách chơi
 
