@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ai Là Gián Điệp · Game Hội Bạn</title>
+<meta name="description" content="Ai Là Gián Điệp: mọi người nhận từ khóa, gián điệp nhận từ khác. Chơi chuyền máy cho 3–12 người.">
+<meta name="theme-color" content="#063a4a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a9d86'/%3E%3Cpath d='M14 30l6-14h24l6 14z' fill='%23063a4a'/%3E%3Ccircle cx='24' cy='42' r='7' fill='%23063a4a'/%3E%3Ccircle cx='40' cy='42' r='7' fill='%23063a4a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="hub.css">
+<style>
+:root{--accent:#0a9d86;--accent-ink:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:#20c3a8;--accent-ink:#04221d}}
+:root[data-theme="dark"]{--accent:#20c3a8;--accent-ink:#04221d}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.head h1{font-size:clamp(30px,5vw,44px)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}
+.stack{display:grid;gap:16px}
+.opt{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.opt:first-of-type{border-top:0}
+.opt b{display:block}
+.opt small{color:var(--muted);font-weight:700}
+.switch{position:relative;width:50px;height:30px;border-radius:999px;background:var(--line);flex:none;transition:background .15s}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .15s}
+.switch[aria-checked="true"]{background:var(--accent)}
+.switch[aria-checked="true"]::after{transform:translateX(20px)}
+.cats{display:flex;gap:6px;flex-wrap:wrap}
+.custom{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-top:10px}
+.custlist{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.rules{margin:0;padding-left:18px;display:grid;gap:6px;color:var(--muted);font-size:14px}
+.rules b{color:var(--ink)}
+.stage{display:grid;gap:16px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;background:var(--tile-2);border:1px solid var(--line);padding:6px 12px;border-radius:999px;color:var(--muted)}
+.order{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;counter-reset:o}
+.order li{counter-increment:o;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:var(--tile-2);border:1px solid var(--line);font-weight:800}
+.order li::before{content:counter(o);width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--f-display);font-size:14px;flex:none}
+.order li.first{border:2px solid var(--accent)}
+.tbox{display:grid;justify-items:center;gap:10px;padding:10px 0}
+.verdict{display:grid;gap:6px;justify-items:center;text-align:center;padding:8px 0}
+.verdict .role{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,6vw,40px)}
+.roles{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.roles li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--tile-2)}
+.roles li.spy{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.roles li.blank{border-color:var(--sun);background:color-mix(in srgb,var(--sun) 14%,var(--surface))}
+.roles li svg{width:30px;height:30px}
+.roles li b{display:block}
+.roles li small{color:var(--muted);font-weight:700}
+.win{border-radius:20px;padding:22px;color:#fff;background:linear-gradient(135deg,var(--wc1),var(--wc2))}
+.win h2{font-size:clamp(28px,6vw,44px)}
+.win p{margin:6px 0 0;opacity:.92}
+.words{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.words span{background:rgba(255,255,255,.18);border-radius:10px;padding:6px 12px;font-weight:800}
+.score{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.score li{display:flex;justify-content:space-between;padding:8px 12px;border-radius:10px;background:var(--tile-2);font-weight:800}
+.score li:first-child{background:color-mix(in srgb,var(--sun) 22%,var(--surface))}
+@media (max-width:820px){.grid2{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<nav class="gnav" aria-label="Chọn trò chơi"><div class="gnav-in">
+  <a class="gbrand" href="./"><span class="dot"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 15v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V8l-8 5v2l8-2.5V18l-2 1.5V21l3.5-1 3.5 1v-1.5L13 18v-5.5z"/></svg></span><span>Game Hội Bạn</span></a>
+  <div class="gtabs">
+    <a class="gtab" href="co-ty-phu.html" style="--tc:#ff6a3d"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></svg>Cờ Tỷ Phú</a>
+    <a class="gtab" href="ma-soi.html" style="--tc:#7a5cff"><svg class="i" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>Ma Sói</a>
+    <a class="gtab" href="gian-diep.html" style="--tc:#0a9d86" aria-current="page"><svg class="i" viewBox="0 0 24 24"><path d="M3 12h18M6 12l2-6h8l2 6"/><circle cx="8" cy="16" r="2.5"/><circle cx="16" cy="16" r="2.5"/><path d="M10.5 16h3"/></svg>Gián Điệp</a>
+  </div>
+</div></nav>
+
+<main class="wrap">
+  <!-- SETUP -->
+  <section id="setup">
+    <div class="head"><div><span class="eyebrow">Chuyền máy · 3–12 người</span><h1>Ai Là Gián Điệp</h1></div>
+      <button class="btn primary big" id="start" type="button">Chia từ khóa</button></div>
+    <div class="grid2">
+      <div class="stack">
+        <div class="card">
+          <h3>Người chơi</h3><p class="sub">Nhập tên theo thứ tự ngồi. Sau đó máy sẽ được chuyền lần lượt cho từng người.</p>
+          <ul class="plist-ed" id="names"></ul>
+          <div class="row" style="margin-top:10px"><button class="btn sm" id="addP" type="button">+ Thêm người</button><span class="sub" id="pcount" style="margin:0"></span></div>
+        </div>
+        <div class="card">
+          <h3>Bộ từ khóa</h3><p class="sub">Chọn chủ đề. Mỗi ván lấy ngẫu nhiên một cặp từ gần nghĩa: một cho dân, một cho gián điệp.</p>
+          <div class="cats" id="cats"></div>
+          <div class="custom"><input class="inp" id="cw1" placeholder="Từ của dân" maxlength="24" aria-label="Từ của dân"><input class="inp" id="cw2" placeholder="Từ của gián điệp" maxlength="24" aria-label="Từ của gián điệp"><button class="btn sm" id="cadd" type="button">Thêm cặp</button></div>
+          <div class="custlist" id="custlist"></div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <h3>Tùy chỉnh</h3>
+          <div class="opt"><div><b>Số gián điệp</b><small id="spyNote"></small></div><span class="stepper"><button type="button" id="spyMinus" aria-label="Bớt">−</button><b id="spyN" class="num">1</b><button type="button" id="spyPlus" aria-label="Thêm">+</button></span></div>
+          <div class="opt"><div><b>Có người Trắng</b><small>Không có từ nào, phải đoán. Từ 5 người.</small></div><button class="switch" id="optBlank" type="button" role="switch" aria-checked="false" aria-label="Có người Trắng"></button></div>
+          <div class="opt"><div><b>Gián điệp biết mình là gián điệp</b><small>Tắt: ai cũng tưởng mình là dân.</small></div><button class="switch" id="optKnow" type="button" role="switch" aria-checked="false" aria-label="Gián điệp biết vai"></button></div>
+          <div class="opt"><div><b>Thời gian mỗi vòng mô tả</b></div><select class="inp" id="optTime" aria-label="Thời gian"><option value="0">Không giới hạn</option><option value="60">60 giây</option><option value="90" selected>90 giây</option><option value="120">120 giây</option><option value="180">180 giây</option></select></div>
+        </div>
+        <div class="card">
+          <h3>Cách chơi</h3>
+          <ol class="rules">
+            <li><b>Nhận từ:</b> chuyền máy, mỗi người giữ thẻ để xem từ khóa của mình rồi thả ra.</li>
+            <li><b>Mô tả:</b> lần lượt nói một câu về từ của mình, đừng nói quá lộ để gián điệp đoán ra.</li>
+            <li><b>Bỏ phiếu:</b> cả nhóm chọn một người bị loại. Trang sẽ lật vai người đó.</li>
+            <li><b>Thắng:</b> dân thắng khi loại hết gián điệp và Trắng. Phe gián điệp thắng khi còn ngang số dân. Trắng bị loại vẫn được đoán từ của dân để lật kèo.</li>
+          </ol>
+        </div>
+        <div class="card" id="scoreCard" hidden><h3>Bảng điểm</h3><ul class="score" id="score"></ul><div class="row" style="margin-top:10px"><button class="btn sm ghost" id="resetScore" type="button">Xóa bảng điểm</button></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVEAL -->
+  <section id="reveal" class="stage" hidden>
+    <div class="bar"><div><span class="eyebrow">Bước 1</span><h1 style="font-size:clamp(26px,4.5vw,38px)">Lần lượt nhận từ khóa</h1></div><span class="pill num" id="seenCount"></span></div>
+    <p class="sub" style="margin:0">Chạm vào tên của mình, giữ thẻ để xem từ, thả tay ra rồi chuyền máy cho người tiếp theo.</p>
+    <div class="pgrid" id="revealGrid"></div>
+    <div class="row"><button class="btn primary big" id="toTalk" type="button" disabled>Bắt đầu mô tả</button><button class="btn ghost" id="backSetup" type="button">Về cài đặt</button></div>
+  </section>
+
+  <!-- TALK + VOTE -->
+  <section id="talk" class="stage" hidden>
+    <div class="bar"><div><span class="eyebrow" id="roundLbl">Vòng 1</span><h1 style="font-size:clamp(26px,4.5vw,38px)" id="talkTitle">Lần lượt mô tả</h1></div><span class="pill num" id="aliveLbl"></span></div>
+    <div class="card" id="talkCard">
+      <p class="sub">Mỗi người nói một câu về từ của mình theo thứ tự dưới đây. Người có viền đậm nói trước.</p>
+      <ol class="order" id="order"></ol>
+      <div class="tbox" id="tbox"><div class="timer num" id="timer">1:30</div>
+        <div class="row"><button class="btn" id="tStart" type="button">Bắt đầu đếm giờ</button><button class="btn ghost" id="tReset" type="button">Đặt lại</button></div></div>
+      <div class="row" style="justify-content:center"><button class="btn primary big" id="toVote" type="button">Bỏ phiếu loại người</button></div>
+    </div>
+    <div class="card" id="voteCard" hidden>
+      <h3>Ai bị loại?</h3><p class="sub">Cả nhóm thống nhất rồi chạm vào tên người bị loại.</p>
+      <div class="pgrid" id="voteGrid"></div>
+      <div class="row" style="margin-top:14px"><button class="btn primary" id="doVote" type="button" disabled>Loại người này</button><button class="btn ghost" id="cancelVote" type="button">Mô tả thêm một vòng</button></div>
+    </div>
+  </section>
+
+  <!-- OVER -->
+  <section id="over" class="stage" hidden>
+    <div class="win" id="winBox"></div>
+    <div class="card"><h3>Lật bài</h3><ul class="roles" id="rolesList"></ul></div>
+    <div class="row"><button class="btn primary big" id="again" type="button">Ván mới, cùng người chơi</button><button class="btn" id="toSetup" type="button">Đổi người / cài đặt</button></div>
+  </section>
+</main>
+
+<div class="modal" id="mReveal" hidden><div class="mbox" role="dialog" aria-modal="true">
+  <span class="eyebrow">Đưa máy cho</span><h2 id="mrName"></h2>
+  <p>Giữ ngón tay trên thẻ để xem, thả ra thẻ sẽ úp lại.</p>
+  <div class="reveal" id="mrCard" tabindex="0"><div class="back"><svg class="i" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>Giữ để xem</div><div class="front" id="mrFront"></div></div>
+  <button class="btn primary" id="mrDone" type="button" disabled>Đã nhớ, chuyền máy</button>
+</div></div>
+
+<div class="modal" id="mVerdict" hidden><div class="mbox" role="dialog" aria-modal="true" id="mvBox"></div></div>
+
+<footer class="foot">Ai Là Gián Điệp · Game Hội Bạn</footer>
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const norm=s=>String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/đ/g,"d").replace(/[^a-z0-9]/g,"");
+
+const PACKS={
+ "Đồ ăn":[["Phở","Bún bò"],["Bánh mì","Bánh bao"],["Trà sữa","Cà phê sữa"],["Cơm tấm","Cơm gà"],["Bánh xèo","Bánh khọt"],["Gỏi cuốn","Chả giò"],["Kem","Sữa chua"],["Hủ tiếu","Mì Quảng"],["Lẩu","Đồ nướng"],["Xôi","Bánh chưng"],["Trà đá","Nước mía"],["Bánh flan","Rau câu"],["Sầu riêng","Mít"],["Xoài","Đu đủ"],["Pizza","Hamburger"]],
+ "Địa điểm":[["Bệnh viện","Phòng khám"],["Rạp chiếu phim","Nhà hát"],["Bãi biển","Hồ bơi"],["Sân bay","Ga tàu"],["Chợ nổi","Siêu thị"],["Thư viện","Nhà sách"],["Công viên","Sở thú"],["Quán karaoke","Quán bar"],["Chùa","Nhà thờ"],["Trường học","Trung tâm luyện thi"]],
+ "Đồ vật":[["Điện thoại","Máy tính bảng"],["Bút bi","Bút chì"],["Quạt","Máy lạnh"],["Gối","Mền"],["Cây dù","Áo mưa"],["Đồng hồ","Vòng tay"],["Kính râm","Kính cận"],["Ba lô","Vali"],["Tivi","Máy chiếu"],["Xe đạp","Xe máy"],["Nồi cơm điện","Lò vi sóng"],["Bàn chải","Kem đánh răng"]],
+ "Động vật":[["Chó","Mèo"],["Gà","Vịt"],["Cá sấu","Thằn lằn"],["Hổ","Sư tử"],["Voi","Tê giác"],["Bướm","Chuồn chuồn"],["Cá heo","Cá voi"],["Chuột","Sóc"]],
+ "Nghề nghiệp":[["Bác sĩ","Y tá"],["Giáo viên","Gia sư"],["Ca sĩ","Diễn viên"],["Cảnh sát","Bảo vệ"],["Đầu bếp","Phục vụ"],["Nông dân","Ngư dân"],["Phi công","Tiếp viên"],["YouTuber","TikToker"]],
+ "Đời sống":[["Kiểm tra","Thi học kỳ"],["Họp lớp","Sinh nhật"],["Đám cưới","Đám hỏi"],["Tết","Trung thu"],["Facebook","Zalo"],["Netflix","YouTube"],["Bóng đá","Bóng chuyền"],["Cầu lông","Quần vợt"],["Đàn guitar","Đàn piano"],["Mưa","Bão"],["Du lịch","Cắm trại"],["Ngủ trưa","Ngủ nướng"]]};
+const ICON={
+ dan:'<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="11" r="6" fill="#17a35e"/><path d="M5 29c0-6 5-10 11-10s11 4 11 10z" fill="#17a35e"/></svg>',
+ spy:'<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 14l3-8h12l3 8z" fill="#e2434b"/><rect x="4" y="13" width="24" height="3" rx="1.5" fill="#e2434b"/><circle cx="11" cy="21" r="4" fill="#e2434b"/><circle cx="21" cy="21" r="4" fill="#e2434b"/><path d="M15 21h2" stroke="#e2434b" stroke-width="2"/></svg>',
+ blank:'<svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="6" fill="#e0a100"/><text x="16" y="22" text-anchor="middle" font-size="16" font-weight="800" fill="#fff" font-family="Arial">?</text></svg>'};
+const ROLE_NAME={dan:"Dân thường",spy:"Gián điệp",blank:"Trắng"};
+
+/* ---------- settings ---------- */
+const DEF=["An","Bình","Chi","Dũng","Giang","Hạnh"];
+let names=(()=>{try{const v=JSON.parse(store.get("gd-names")||"null");return Array.isArray(v)&&v.length>=3?v:DEF.slice()}catch(e){return DEF.slice()}})();
+let opt=(()=>{try{return Object.assign({spies:1,blank:false,know:false,time:90,cats:Object.keys(PACKS),custom:[]},JSON.parse(store.get("gd-opt")||"{}"))}catch(e){return{spies:1,blank:false,know:false,time:90,cats:Object.keys(PACKS),custom:[]}}})();
+let scores=(()=>{try{return JSON.parse(store.get("gd-score")||"{}")}catch(e){return{}}})();
+const save=()=>{store.set("gd-names",JSON.stringify(names));store.set("gd-opt",JSON.stringify(opt));store.set("gd-score",JSON.stringify(scores))};
+const maxSpies=()=>Math.max(1,Math.floor((names.length-(opt.blank&&names.length>=5?1:0)-1)/2));
+
+function renderSetup(){
+ $("#names").innerHTML=names.map((n,i)=>`<li><span class="ix num">${i+1}</span><input value="${esc(n)}" maxlength="16" data-i="${i}" aria-label="Tên người chơi ${i+1}">${names.length>3?`<button class="x" type="button" data-x="${i}" aria-label="Xóa">×</button>`:""}</li>`).join("");
+ $("#names").querySelectorAll("input").forEach(el=>el.addEventListener("input",()=>{names[+el.dataset.i]=el.value;save()}));
+ $("#names").querySelectorAll("[data-x]").forEach(b=>b.addEventListener("click",()=>{names.splice(+b.dataset.x,1);clampOpt();save();renderSetup()}));
+ $("#addP").disabled=names.length>=12;$("#pcount").textContent=`${names.length} người`;
+ $("#spyN").textContent=opt.spies;$("#spyNote").textContent=`Tối đa ${maxSpies()} với ${names.length} người.`;
+ $("#optBlank").setAttribute("aria-checked",opt.blank&&names.length>=5);$("#optBlank").disabled=names.length<5;
+ $("#optKnow").setAttribute("aria-checked",opt.know);$("#optTime").value=String(opt.time);
+ $("#cats").innerHTML=Object.keys(PACKS).map(c=>`<button type="button" class="chip${opt.cats.includes(c)?" on":""}" data-c="${esc(c)}">${esc(c)} <small>${PACKS[c].length}</small></button>`).join("")+(opt.custom.length?`<button type="button" class="chip${opt.cats.includes("Của nhóm")?" on":""}" data-c="Của nhóm">Của nhóm <small>${opt.custom.length}</small></button>`:"");
+ $("#cats").querySelectorAll("[data-c]").forEach(b=>b.addEventListener("click",()=>{const c=b.dataset.c;opt.cats=opt.cats.includes(c)?opt.cats.filter(x=>x!==c):[...opt.cats,c];save();renderSetup()}));
+ $("#custlist").innerHTML=opt.custom.map((p,i)=>`<span class="chip">${esc(p[0])} / ${esc(p[1])} <button type="button" data-cx="${i}" aria-label="Xóa cặp" style="font-weight:900">×</button></span>`).join("");
+ $("#custlist").querySelectorAll("[data-cx]").forEach(b=>b.addEventListener("click",()=>{opt.custom.splice(+b.dataset.cx,1);save();renderSetup()}));
+ const sc=Object.entries(scores).sort((a,b)=>b[1]-a[1]);$("#scoreCard").hidden=!sc.length;
+ $("#score").innerHTML=sc.map(([n,p])=>`<li><span>${esc(n)}</span><span class="num">${p} điểm</span></li>`).join("");
+ $("#start").disabled=!pool().length}
+function clampOpt(){opt.spies=Math.min(Math.max(1,opt.spies),maxSpies());if(names.length<5)opt.blank=false}
+function pool(){let p=[];opt.cats.forEach(c=>{if(PACKS[c])p=p.concat(PACKS[c]);if(c==="Của nhóm")p=p.concat(opt.custom)});return p}
+$("#addP").addEventListener("click",()=>{if(names.length<12){names.push("Người "+(names.length+1));save();renderSetup();const ins=$("#names").querySelectorAll("input");ins[ins.length-1].select()}});
+$("#spyMinus").addEventListener("click",()=>{opt.spies--;clampOpt();save();renderSetup()});
+$("#spyPlus").addEventListener("click",()=>{opt.spies++;clampOpt();save();renderSetup()});
+$("#optBlank").addEventListener("click",()=>{opt.blank=!opt.blank;clampOpt();save();renderSetup()});
+$("#optKnow").addEventListener("click",()=>{opt.know=!opt.know;save();renderSetup()});
+$("#optTime").addEventListener("change",e=>{opt.time=+e.target.value;save()});
+$("#cadd").addEventListener("click",()=>{const a=$("#cw1").value.trim(),b=$("#cw2").value.trim();if(!a||!b||norm(a)===norm(b))return;opt.custom.push([a,b]);if(!opt.cats.includes("Của nhóm"))opt.cats.push("Của nhóm");$("#cw1").value=$("#cw2").value="";save();renderSetup()});
+$("#resetScore").addEventListener("click",()=>{scores={};save();renderSetup()});
+
+/* ---------- round ---------- */
+let R=null;
+function show(id){["setup","reveal","talk","over"].forEach(s=>$("#"+s).hidden=s!==id);window.scrollTo(0,0)}
+function newRound(){
+ names=names.map((n,i)=>n.trim()||"Người "+(i+1));clampOpt();save();
+ const n=names.length,pair=shuffle(pool())[0],flip=Math.random()<.5;
+ const civ=flip?pair[1]:pair[0],spy=flip?pair[0]:pair[1];
+ const roles=Array(n).fill("dan"),idx=shuffle([...Array(n).keys()]);
+ for(let k=0;k<opt.spies;k++)roles[idx[k]]="spy";
+ if(opt.blank&&n>=5)roles[idx[opt.spies]]="blank";
+ R={civ,spy,roles,seen:Array(n).fill(false),alive:Array(n).fill(true),start:Math.floor(Math.random()*n),round:1,voteSel:null,out:[]};
+ renderReveal();show("reveal")}
+function renderReveal(){
+ $("#revealGrid").innerHTML=names.map((nm,i)=>`<button type="button" class="pbtn${R.seen[i]?" done":""}" data-i="${i}"><span class="badge num">${R.seen[i]?"✓":i+1}</span><span><b>${esc(nm)}</b><small>${R.seen[i]?"Đã xem":"Chạm để nhận từ"}</small></span></button>`).join("");
+ $("#revealGrid").querySelectorAll("[data-i]").forEach(b=>b.addEventListener("click",()=>openReveal(+b.dataset.i)));
+ const c=R.seen.filter(Boolean).length;$("#seenCount").textContent=`${c}/${names.length} đã xem`;$("#toTalk").disabled=c<names.length}
+let cur=null;
+function cardFront(i){const r=R.roles[i];
+ if(r==="blank")return `--rc:#e0a100;--rink:#fff|<div class="art">${ICON.blank.replace(/#e0a100/g,"rgba(255,255,255,.25)")}</div><div class="big">Bạn là Trắng</div><small>Không có từ khóa. Nghe mọi người mô tả để đoán từ, và đừng để lộ.</small>`;
+ const w=r==="spy"?R.spy:R.civ;
+ if(r==="spy"&&opt.know)return `--rc:#e2434b;--rink:#fff|<small>Bạn là GIÁN ĐIỆP · từ của bạn</small><div class="big">${esc(w)}</div><small>Mọi người có từ khác, gần nghĩa. Mô tả khéo để hòa vào nhóm.</small>`;
+ return `--rc:var(--accent);--rink:var(--accent-ink)|<small>Từ khóa của bạn</small><div class="big">${esc(w)}</div><small>Mô tả khéo léo, đừng nói thẳng từ này.</small>`}
+function openReveal(i){cur=i;const [style,html]=cardFront(i).split("|");
+ $("#mrName").textContent=names[i];$("#mrFront").setAttribute("style",style);$("#mrFront").innerHTML=html;
+ $("#mrDone").disabled=true;$("#mrCard").classList.remove("show");$("#mReveal").hidden=false}
+const card=$("#mrCard");
+const showC=e=>{if(e)e.preventDefault();card.classList.add("show");$("#mrDone").disabled=false};
+const hideC=()=>card.classList.remove("show");
+card.addEventListener("pointerdown",e=>{card.setPointerCapture?.(e.pointerId);showC(e)});
+["pointerup","pointercancel","pointerleave","lostpointercapture"].forEach(t=>card.addEventListener(t,hideC));
+card.addEventListener("keydown",e=>{if(e.key===" "||e.key==="Enter")showC(e)});card.addEventListener("keyup",hideC);
+card.addEventListener("contextmenu",e=>e.preventDefault());
+$("#mrDone").addEventListener("click",()=>{hideC();R.seen[cur]=true;$("#mReveal").hidden=true;renderReveal()});
+$("#mReveal").addEventListener("click",e=>{if(e.target.id==="mReveal"){hideC();$("#mReveal").hidden=true}});
+
+/* ---------- talk / vote ---------- */
+let tLeft=0,tId=null;
+function aliveIdx(){return names.map((_,i)=>i).filter(i=>R.alive[i])}
+function renderTalk(){
+ const al=aliveIdx();let s=R.start;while(!R.alive[s])s=(s+1)%names.length;
+ const ord=[];for(let k=0;k<names.length;k++){const j=(s+k)%names.length;if(R.alive[j])ord.push(j)}
+ $("#roundLbl").textContent=`Vòng ${R.round}`;$("#aliveLbl").textContent=`Còn ${al.length} người`;
+ $("#order").innerHTML=ord.map((j,k)=>`<li class="${k===0?"first":""}">${esc(names[j])}</li>`).join("");
+ $("#talkCard").hidden=false;$("#voteCard").hidden=true;$("#talkTitle").textContent="Lần lượt mô tả";
+ $("#tbox").hidden=!opt.time;resetTimer()}
+function fmt(t){return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")}
+function resetTimer(){clearInterval(tId);tId=null;tLeft=opt.time;$("#timer").textContent=fmt(tLeft);$("#timer").classList.remove("warn");$("#tStart").textContent="Bắt đầu đếm giờ"}
+$("#tStart").addEventListener("click",()=>{if(tId){clearInterval(tId);tId=null;$("#tStart").textContent="Tiếp tục";return}
+ $("#tStart").textContent="Tạm dừng";tId=setInterval(()=>{tLeft--;$("#timer").textContent=fmt(Math.max(0,tLeft));$("#timer").classList.toggle("warn",tLeft<=10);
+  if(tLeft<=0){clearInterval(tId);tId=null;beep();$("#tStart").textContent="Hết giờ"}},1000)});
+$("#tReset").addEventListener("click",resetTimer);
+function beep(){try{const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.frequency.value=880;g.gain.value=.08;o.connect(g).connect(a.destination);o.start();o.stop(a.currentTime+.5)}catch(e){}}
+$("#toVote").addEventListener("click",()=>{clearInterval(tId);tId=null;R.voteSel=null;renderVote();$("#talkCard").hidden=true;$("#voteCard").hidden=false;$("#talkTitle").textContent="Bỏ phiếu"});
+$("#cancelVote").addEventListener("click",()=>{R.round++;renderTalk()});
+function renderVote(){
+ $("#voteGrid").innerHTML=names.map((nm,i)=>`<button type="button" class="pbtn${R.alive[i]?"":" dead"}${R.voteSel===i?" sel":""}" data-i="${i}" ${R.alive[i]?"":"disabled"}><span class="badge num">${i+1}</span><span><b>${esc(nm)}</b><small>${R.alive[i]?"Còn trong ván":"Đã bị loại"}</small></span></button>`).join("");
+ $("#voteGrid").querySelectorAll("[data-i]").forEach(b=>b.addEventListener("click",()=>{R.voteSel=+b.dataset.i;renderVote()}));
+ $("#doVote").disabled=R.voteSel==null;$("#doVote").textContent=R.voteSel==null?"Loại người này":`Loại ${names[R.voteSel]}`}
+$("#doVote").addEventListener("click",()=>{const i=R.voteSel;if(i==null)return;R.alive[i]=false;R.out.push(i);verdict(i)});
+function verdict(i){const r=R.roles[i],box=$("#mvBox");
+ const col=r==="spy"?"var(--bad)":r==="blank"?"#e0a100":"var(--good)";
+ let html=`<span class="eyebrow">${esc(names[i])} bị loại</span><div class="verdict"><div style="width:84px;height:84px">${ICON[r]}</div><div class="role" style="color:${col}">${ROLE_NAME[r]}</div>${r==="blank"?"<p>Trắng được một lần đoán từ của dân. Đoán đúng là phe gián điệp thắng!</p>":`<p>Từ của ${esc(names[i])}: <b>${esc(r==="spy"?R.spy:R.civ)}</b></p>`}</div>`;
+ if(r==="blank")html+=`<div class="row" style="justify-content:center"><input class="inp" id="guess" placeholder="Trắng đoán từ…" maxlength="24" aria-label="Từ đoán"><button class="btn primary" id="gOk" type="button">Đoán</button><button class="btn ghost" id="gSkip" type="button">Bỏ qua</button></div>`;
+ else html+=`<button class="btn primary" id="vOk" type="button">Tiếp tục</button>`;
+ box.innerHTML=html;$("#mVerdict").hidden=false;
+ if(r==="blank"){$("#gOk").addEventListener("click",()=>{const ok=norm($("#guess").value)===norm(R.civ);$("#mVerdict").hidden=true;if(ok){finish("blank")}else next()});
+  $("#gSkip").addEventListener("click",()=>{$("#mVerdict").hidden=true;next()});setTimeout(()=>$("#guess").focus(),50)}
+ else $("#vOk").addEventListener("click",()=>{$("#mVerdict").hidden=true;next()})}
+function next(){const al=aliveIdx(),bad=al.filter(i=>R.roles[i]!=="dan").length,good=al.length-bad;
+ if(bad===0)return finish("dan");
+ if(bad>=good)return finish("spy");
+ R.round++;renderTalk()}
+function finish(w){R.winner=w;
+ const winIdx=names.map((_,i)=>i).filter(i=>w==="dan"?R.roles[i]==="dan":R.roles[i]!=="dan");
+ winIdx.forEach(i=>{scores[names[i]]=(scores[names[i]]||0)+(w==="dan"?1:2)});save();
+ const theme=w==="dan"?["#17a35e","#0a7a5a"]:w==="blank"?["#e0a100","#b77400"]:["#e2434b","#9b1f2c"];
+ $("#winBox").style.setProperty("--wc1",theme[0]);$("#winBox").style.setProperty("--wc2",theme[1]);
+ $("#winBox").innerHTML=`<span class="eyebrow" style="color:#fff;opacity:.85">Kết thúc · ${R.round} vòng</span><h2>${w==="dan"?"Dân thường chiến thắng!":w==="blank"?"Trắng đoán trúng, lật kèo!":"Gián điệp chiến thắng!"}</h2>
+  <p>${w==="dan"?"Cả nhóm đã tìm ra hết kẻ lạc loài. Mỗi dân thường +1 điểm.":"Phe gián điệp qua mặt cả nhóm. Mỗi người phe gián điệp +2 điểm."}</p>
+  <div class="words"><span>Từ của dân: ${esc(R.civ)}</span><span>Từ của gián điệp: ${esc(R.spy)}</span></div>`;
+ $("#rolesList").innerHTML=names.map((nm,i)=>{const r=R.roles[i];return `<li class="${r}">${ICON[r]}<div><b>${esc(nm)}</b><small>${ROLE_NAME[r]}${r==="blank"?"":" · "+esc(r==="spy"?R.spy:R.civ)}${R.alive[i]?"":" · bị loại"}</small></div></li>`}).join("");
+ show("over")}
+
+$("#start").addEventListener("click",newRound);
+$("#toTalk").addEventListener("click",()=>{renderTalk();show("talk")});
+$("#backSetup").addEventListener("click",()=>{renderSetup();show("setup")});
+$("#again").addEventListener("click",newRound);
+$("#toSetup").addEventListener("click",()=>{renderSetup();show("setup")});
+clampOpt();renderSetup();
+})();
+</script>
+</body>
+</html>
