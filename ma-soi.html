@@ -4,27 +4,35 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Ma Sói · Game Hội Bạn</title>
-<meta name="description" content="Ma Sói: trang quản trò ảo chia vai bí mật, dẫn đêm và ngày, tự tính kết quả. 5–18 người.">
+<meta name="description" content="Ma Sói tự dẫn: 20 vai, có phe thứ ba, giọng đọc tự gọi từng vai, không cần quản trò. 5–24 người.">
 <meta name="theme-color" content="#1b1440">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231b1440'/%3E%3Cpath d='M44 38a16 16 0 0 1-18-22 16 16 0 1 0 18 22z' fill='%23ffe9a8'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;600;700;800;900&display=swap">
 <link rel="stylesheet" href="hub.css">
 <style>
-:root{--accent:#7a5cff;--accent-ink:#fff;--night-1:#241a5c;--night-2:#0e0b26;--moon:#ffe9a8;--day-1:#ffcf6b;--day-2:#ff8f4f}
+:root{--accent:#7a5cff;--accent-ink:#fff;--night-1:#241a5c;--night-2:#0e0b26;--moon:#ffe9a8;--day-1:#ffcf6b;--day-2:#ff8f4f;--t-dan:#17a35e;--t-soi:#b8323f;--t-ba:#e07a00}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:#9a82ff;--accent-ink:#120a33}}
 :root[data-theme="dark"]{--accent:#9a82ff;--accent-ink:#120a33}
 .head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
 .head h1{font-size:clamp(30px,5vw,44px)}
-.grid2{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;align-items:start}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:16px;align-items:start}
 .stack{display:grid;gap:16px}
-.roles-ed{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.roles-ed li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:14px;background:var(--tile-2)}
-.roles-ed .ri{width:44px;height:44px;border-radius:12px;background:var(--rc);display:grid;place-items:center}
-.roles-ed .ri svg{width:30px;height:30px}
-.roles-ed b{display:block}
-.roles-ed small{color:var(--muted);font-weight:700;font-size:12.5px;line-height:1.3;display:block}
-.total{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-weight:800}
+.note{background:color-mix(in srgb,var(--accent) 12%,var(--surface));border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:14px;padding:12px 14px;font-size:14px}
+.note b{color:var(--accent)}
+.team{margin-top:14px}
+.team:first-of-type{margin-top:0}
+.team h4{font-family:var(--f-body);font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);margin:0 0 8px;display:flex;justify-content:space-between}
+.roles-ed{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.roles-ed li{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:10px;align-items:center;padding:7px 9px;border:1px solid var(--line);border-radius:14px;background:var(--tile-2)}
+.roles-ed li.on{border-color:var(--tc);background:color-mix(in srgb,var(--tc) 9%,var(--surface))}
+.ri{width:40px;height:40px;border-radius:11px;background:var(--rc);display:grid;place-items:center;flex:none}
+.ri svg{width:28px;height:28px}
+.roles-ed b{display:block;font-size:14.5px}
+.roles-ed small{color:var(--muted);font-weight:700;font-size:12px;line-height:1.3;display:block}
+.roles-ed .stepper button{width:32px;height:32px;font-size:16px}
+.roles-ed .stepper b{min-width:22px;font-size:16px}
+.total{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;font-weight:800;flex-wrap:wrap}
 .total.bad{color:var(--bad)}
 .opt{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
 .opt:first-of-type{border-top:0}
@@ -33,14 +41,12 @@
 .switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .15s}
 .switch[aria-checked="true"]{background:var(--accent)}
 .switch[aria-checked="true"]::after{transform:translateX(20px)}
-.note{background:color-mix(in srgb,var(--accent) 12%,var(--surface));border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:14px;padding:12px 14px;font-size:14px}
-.note b{color:var(--accent)}
 .stage{display:grid;gap:16px}
 .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .pill{font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;background:var(--tile-2);border:1px solid var(--line);padding:6px 12px;border-radius:999px;color:var(--muted)}
-/* game board */
-.gm{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);gap:16px;align-items:start}
-.sky{position:relative;border-radius:22px;overflow:hidden;color:#fff;padding:20px;min-height:150px;background:linear-gradient(160deg,var(--night-1),var(--night-2));transition:background .6s}
+/* play */
+.gm{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,1fr);gap:16px;align-items:start}
+.sky{position:relative;border-radius:22px;overflow:hidden;color:#fff;padding:20px 22px;min-height:170px;background:linear-gradient(160deg,var(--night-1),var(--night-2));transition:background .6s}
 .sky.day{background:linear-gradient(160deg,var(--day-1),var(--day-2));color:#2a1300}
 .sky .orb{position:absolute;right:22px;top:18px;width:62px;height:62px;border-radius:50%;background:var(--moon);box-shadow:0 0 40px var(--moon)}
 .sky .orb::after{content:"";position:absolute;width:52px;height:52px;border-radius:50%;background:var(--night-1);left:18px;top:-6px;transition:opacity .6s}
@@ -48,42 +54,52 @@
 .sky.day .orb::after{opacity:0}
 .sky .stars{position:absolute;inset:0;background-image:radial-gradient(1.5px 1.5px at 20% 30%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 40% 15%,#fff 50%,transparent 51%),radial-gradient(1.2px 1.2px at 65% 40%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 12% 70%,#fff 50%,transparent 51%),radial-gradient(1.4px 1.4px at 55% 75%,#fff 50%,transparent 51%);opacity:.7;transition:opacity .6s}
 .sky.day .stars{opacity:0}
-.sky .phase{position:relative;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;opacity:.85}
-.sky h2{position:relative;font-size:clamp(26px,4.4vw,38px);margin:4px 0 10px;max-width:16ch}
-.script{position:relative;font-size:clamp(16px,2.4vw,20px);font-weight:700;line-height:1.45;max-width:46ch;background:rgba(255,255,255,.12);border-radius:14px;padding:12px 14px}
+.sky .phase{position:relative;font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;opacity:.85;display:flex;gap:10px;align-items:center}
+.sky .phase .live{width:8px;height:8px;border-radius:50%;background:#ff6b6b;box-shadow:0 0 0 0 rgba(255,107,107,.6);animation:live 1.4s infinite}
+@keyframes live{70%{box-shadow:0 0 0 8px rgba(255,107,107,0)}}
+.sky h2{position:relative;font-size:clamp(26px,4.4vw,38px);margin:4px 0 10px;max-width:15ch;display:flex;gap:12px;align-items:center}
+.sky h2 .ri{width:46px;height:46px}
+.script{position:relative;font-size:clamp(16px,2.4vw,20px);font-weight:700;line-height:1.45;max-width:48ch;background:rgba(255,255,255,.12);border-radius:14px;padding:12px 14px;min-height:1.45em}
 .sky.day .script{background:rgba(255,255,255,.35)}
-.speak{position:relative;margin-top:10px}
+.skybtns{position:relative;margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
 .sky .btn{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.35);color:inherit}
-.act{display:grid;gap:12px}
+.act{display:grid;gap:12px;min-height:120px}
 .act .pgrid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
-.result{border-radius:16px;padding:14px 16px;font-weight:800;font-size:18px;display:flex;gap:12px;align-items:center}
-.result svg{width:32px;height:32px;flex:none}
-.result.wolf{background:color-mix(in srgb,#c0392b 16%,var(--surface));color:#c0392b;border:2px solid #c0392b}
-.result.safe{background:color-mix(in srgb,var(--good) 14%,var(--surface));color:var(--good);border:2px solid var(--good)}
+.wait{display:grid;place-items:center;gap:10px;padding:26px 10px;text-align:center;color:var(--muted);font-weight:800}
+.wait .moon{width:54px;height:54px;border-radius:50%;background:var(--moon);box-shadow:0 0 30px var(--moon);position:relative;animation:float 3s ease-in-out infinite}
+.wait .moon::after{content:"";position:absolute;width:44px;height:44px;border-radius:50%;background:var(--surface);left:16px;top:-6px}
+@keyframes float{50%{transform:translateY(-6px)}}
+.result{border-radius:16px;padding:14px 16px;font-weight:800;font-size:18px;display:flex;gap:12px;align-items:center;border:2px solid var(--rc);background:color-mix(in srgb,var(--rc) 12%,var(--surface));color:var(--ink)}
+.result .ri{width:48px;height:48px}
 .potions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .potion{border:2px solid var(--line);border-radius:14px;padding:12px;display:grid;gap:4px;text-align:left;background:var(--surface)}
 .potion.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface))}
 .potion b{font-size:16px}.potion small{color:var(--muted);font-weight:700}
+.big{font-family:var(--f-display);font-weight:800;font-size:clamp(22px,3.6vw,30px);line-height:1.15}
 .side{display:grid;gap:12px;position:sticky;top:72px}
 .plist{list-style:none;margin:0;padding:0;display:grid;gap:6px}
 .plist li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;padding:7px 10px;border-radius:12px;background:var(--tile-2);border:1px solid var(--line)}
-.plist li.dead{opacity:.45}
+.plist li.dead{opacity:.5}
 .plist li.dead b{text-decoration:line-through}
-.plist .ri{width:34px;height:34px;border-radius:10px;background:var(--rc);display:grid;place-items:center}
+.plist .ri{width:34px;height:34px;border-radius:10px}
 .plist .ri svg{width:24px;height:24px}
+.plist .ri.unk{background:var(--line)}
+.plist .ri.unk svg{visibility:hidden}
 .plist b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .plist small{color:var(--muted);font-weight:700;font-size:12px}
-.tags{display:flex;gap:4px}
+.tags{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
 .tags span{font-size:11px;font-weight:900;padding:2px 7px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
-.tags .lv{color:#ff4f9e;border-color:#ff4f9e}
 .tags .dd{color:var(--bad);border-color:var(--bad)}
-.hiddenroles .plist .ri{background:var(--line)!important}
-.hiddenroles .plist .ri svg{visibility:hidden}
-.hiddenroles .plist small.rn{visibility:hidden}
+.tags .sl{color:var(--accent);border-color:var(--accent)}
+.votes{display:grid;gap:6px}
+.votes div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;font-weight:800}
+.votes i{display:block;height:10px;border-radius:6px;background:var(--accent);margin-top:4px}
 .win{border-radius:22px;padding:24px;color:#fff;background:linear-gradient(135deg,var(--wc1),var(--wc2))}
 .win h2{font-size:clamp(30px,6vw,46px)}
 .win p{margin:6px 0 0;opacity:.92}
 .reveal .front .art{width:120px;height:120px;border-radius:28px;background:rgba(255,255,255,.18);display:grid;place-items:center}
+.reveal .front .art svg{width:84px;height:84px}
+.teamtag{display:inline-block;margin-top:2px;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;background:rgba(255,255,255,.22);padding:3px 9px;border-radius:999px}
 @media (max-width:900px){.gm,.grid2{grid-template-columns:minmax(0,1fr)}.side{position:static}}
 </style>
 </head>
@@ -100,28 +116,31 @@
 <main class="wrap">
   <!-- SETUP -->
   <section id="setup">
-    <div class="head"><div><span class="eyebrow">Quản trò ảo · 5–18 người</span><h1>Ma Sói</h1></div>
+    <div class="head"><div><span class="eyebrow">Tự dẫn · không cần quản trò · 5–24 người</span><h1>Ma Sói</h1></div>
       <button class="btn primary big" id="start" type="button">Chia vai</button></div>
-    <div class="note" style="margin-bottom:16px">Cần <b>một người làm quản trò</b> cầm máy (không tham gia chơi). Trang sẽ chia vai bí mật, hiện lời dẫn cho từng bước và tự tính ai chết, phe nào thắng.</div>
+    <div class="note" style="margin-bottom:16px">Đặt máy giữa vòng và <b>bật âm lượng</b>. Ban đêm giọng đọc gọi từng vai thức dậy; ai được gọi thì cầm máy chọn, bấm xong máy tự gọi vai tiếp theo. Vai đã chết vẫn được gọi và chờ một lúc như thường, để không ai đoán được. Ban ngày mọi người chuyền máy bỏ phiếu kín.</div>
     <div class="grid2">
       <div class="stack">
         <div class="card">
-          <h3>Người chơi</h3><p class="sub">Nhập tên những người tham gia (không tính quản trò).</p>
+          <h3>Người chơi</h3><p class="sub">Tất cả cùng chơi, không ai phải đứng ngoài làm quản trò.</p>
           <ul class="plist-ed" id="names"></ul>
           <div class="row" style="margin-top:10px"><button class="btn sm" id="addP" type="button">+ Thêm người</button><span class="sub" id="pcount" style="margin:0"></span></div>
         </div>
         <div class="card">
           <h3>Tùy chỉnh</h3>
-          <div class="opt"><div><b>Lật vai khi chết</b><small>Ai chết sẽ được công bố vai.</small></div><button class="switch" id="optReveal" type="button" role="switch" aria-checked="true" aria-label="Lật vai khi chết"></button></div>
-          <div class="opt"><div><b>Đọc to lời dẫn</b><small>Máy tự đọc bằng giọng tiếng Việt (nếu thiết bị có).</small></div><button class="switch" id="optSpeak" type="button" role="switch" aria-checked="false" aria-label="Đọc to"></button></div>
-          <div class="opt"><div><b>Thời gian thảo luận ban ngày</b></div><select class="inp" id="optTime" aria-label="Thời gian thảo luận"><option value="0">Không giới hạn</option><option value="120">2 phút</option><option value="180" selected>3 phút</option><option value="300">5 phút</option></select></div>
+          <div class="opt"><div><b>Giọng đọc lời dẫn</b><small>Tắt thì phải có người đọc to và bấm “Tiếp”.</small></div><button class="switch" id="optSpeak" type="button" role="switch" aria-checked="true" aria-label="Giọng đọc"></button></div>
+          <div class="opt"><div><b>Bỏ phiếu kín</b><small>Chuyền máy cho từng người bỏ phiếu. Tắt: cả nhóm chọn công khai.</small></div><button class="switch" id="optSecret" type="button" role="switch" aria-checked="true" aria-label="Bỏ phiếu kín"></button></div>
+          <div class="opt"><div><b>Lật vai khi chết</b><small>Công bố vai của người vừa chết.</small></div><button class="switch" id="optReveal" type="button" role="switch" aria-checked="true" aria-label="Lật vai khi chết"></button></div>
+          <div class="opt"><div><b>Thời gian thảo luận</b></div><select class="inp" id="optTime" aria-label="Thời gian thảo luận"><option value="60">1 phút</option><option value="120">2 phút</option><option value="180" selected>3 phút</option><option value="300">5 phút</option><option value="0">Không giới hạn</option></select></div>
+          <div class="opt"><div><b>Tốc độ giọng đọc</b></div><select class="inp" id="optRate" aria-label="Tốc độ giọng đọc"><option value="0.85">Chậm</option><option value="1" selected>Vừa</option><option value="1.15">Nhanh</option></select></div>
+          <div class="row" style="margin-top:6px"><button class="btn sm" id="testVoice" type="button">Nghe thử giọng đọc</button><span class="sub" id="voiceNote" style="margin:0"></span></div>
         </div>
       </div>
       <div class="card">
-        <h3>Vai trong ván</h3><p class="sub">Số Dân làng tự điều chỉnh cho đủ người. Bấm “Gợi ý” để chia cân bằng theo số người.</p>
-        <ul class="roles-ed" id="rolesEd"></ul>
+        <div class="bar" style="margin-bottom:6px"><h3 style="margin:0">20 vai trong 3 phe</h3><button class="btn sm" id="suggest" type="button">Gợi ý theo số người</button></div>
+        <p class="sub">Dân làng tự bù cho đủ người. Bộ vai là công khai, mọi người đều biết ván này có những vai nào.</p>
+        <div id="rolesEd"></div>
         <div class="total" id="total"></div>
-        <div class="row" style="margin-top:10px"><button class="btn sm" id="suggest" type="button">Gợi ý theo số người</button></div>
       </div>
     </div>
   </section>
@@ -129,25 +148,22 @@
   <!-- REVEAL -->
   <section id="reveal" class="stage" hidden>
     <div class="bar"><div><span class="eyebrow">Chuẩn bị</span><h1 style="font-size:clamp(26px,4.5vw,38px)">Mỗi người xem vai của mình</h1></div><span class="pill num" id="seenCount"></span></div>
-    <p class="sub" style="margin:0">Quản trò đưa máy cho từng người. Người đó chạm tên mình, giữ thẻ để xem vai, thả ra rồi trả máy.</p>
+    <p class="sub" style="margin:0">Chuyền máy lần lượt. Chạm tên mình, giữ thẻ để xem vai, thả ra rồi chuyền cho người kế.</p>
     <div class="pgrid" id="revealGrid"></div>
-    <div class="row"><button class="btn primary big" id="toNight" type="button" disabled>Bắt đầu đêm đầu tiên</button><button class="btn ghost" id="backSetup" type="button">Về cài đặt</button></div>
+    <div class="row"><button class="btn primary big" id="toNight" type="button" disabled>Đặt máy giữa vòng, bắt đầu đêm</button><button class="btn ghost" id="backSetup" type="button">Về cài đặt</button></div>
   </section>
 
-  <!-- GAME -->
-  <section id="game" class="stage" hidden>
+  <!-- PLAY -->
+  <section id="play" class="stage" hidden>
     <div class="gm">
       <div class="stack">
         <div class="sky" id="sky"><div class="stars"></div><div class="orb"></div>
-          <div class="phase" id="phase">Đêm 1</div><h2 id="stepTitle"></h2><div class="script" id="script"></div>
-          <div class="speak row"><button class="btn sm" id="speakBtn" type="button">Đọc to lời dẫn</button></div></div>
+          <div class="phase"><span class="live"></span><span id="phase">Đêm 1</span></div><h2 id="stepTitle"></h2><div class="script" id="script"></div>
+          <div class="skybtns"><button class="btn sm" id="replay" type="button">Đọc lại</button><button class="btn sm" id="pause" type="button">Tạm dừng</button></div></div>
         <div class="card act" id="act"></div>
       </div>
-      <aside class="side" id="side">
-        <div class="card" style="padding:14px">
-          <div class="bar" style="margin-bottom:8px"><h3 style="font-size:18px;margin:0">Người chơi</h3><button class="btn sm" id="toggleRoles" type="button">Ẩn vai</button></div>
-          <ul class="plist" id="plist"></ul>
-        </div>
+      <aside class="side">
+        <div class="card" style="padding:14px"><div class="bar" style="margin-bottom:8px"><h3 style="font-size:18px;margin:0">Làng</h3><span class="pill num" id="aliveLbl"></span></div><ul class="plist" id="plist"></ul></div>
         <div class="card" style="padding:14px"><h3 style="font-size:18px">Diễn biến</h3><ul class="log" id="log"></ul></div>
         <button class="btn ghost danger" id="quit" type="button">Kết thúc ván</button>
       </aside>
@@ -166,7 +182,7 @@
   <span class="eyebrow">Đưa máy cho</span><h2 id="mrName"></h2>
   <p>Giữ ngón tay trên thẻ để xem vai, thả ra thẻ sẽ úp lại.</p>
   <div class="reveal" id="mrCard" tabindex="0"><div class="back"><svg class="i" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>Giữ để xem vai</div><div class="front" id="mrFront"></div></div>
-  <button class="btn primary" id="mrDone" type="button" disabled>Đã nhớ, trả máy</button>
+  <button class="btn primary" id="mrDone" type="button" disabled>Đã nhớ, chuyền máy</button>
 </div></div>
 
 <footer class="foot">Ma Sói · Game Hội Bạn</footer>
@@ -176,75 +192,139 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const SP=()=>window.__speed||1;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms*SP()));
+const rnd=(a,b)=>a+Math.random()*(b-a);
 
+/* ======================= ROLES ======================= */
+const W='fill="#fff"',S='fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"';
+const sv=x=>`<svg viewBox="0 0 32 32" aria-hidden="true">${x}</svg>`;
+const WOLF=`<path d="M6 4l6 7h8l6-7 1 11-4 9-7 4-7-4-4-9z" ${W}/>`;
 const ROLES={
- soi:{n:"Sói",team:"soi",c:"#b8323f",d:"Mỗi đêm cùng bầy sói chọn một người để cắn. Ban ngày giả làm dân.",
-  i:'<svg viewBox="0 0 32 32"><path d="M6 4l6 7h8l6-7 1 11-4 9-7 4-7-4-4-9z" fill="#fff"/><path d="M11 17l3 2M21 17l-3 2" stroke="#b8323f" stroke-width="2" stroke-linecap="round"/><path d="M14 24l2 1.5 2-1.5" stroke="#b8323f" stroke-width="1.6" fill="none"/></svg>'},
- dan:{n:"Dân làng",team:"dan",c:"#17a35e",d:"Không có chức năng ban đêm. Ban ngày thảo luận để tìm và treo cổ Sói.",
-  i:'<svg viewBox="0 0 32 32"><path d="M8 13l8-7 8 7z" fill="#fff"/><circle cx="16" cy="16" r="5" fill="#fff"/><path d="M6 29c0-6 4.5-9 10-9s10 3 10 9z" fill="#fff"/></svg>'},
- tientri:{n:"Tiên tri",team:"dan",c:"#1d8fe8",d:"Mỗi đêm soi một người để biết người đó có phải Sói không.",
-  i:'<svg viewBox="0 0 32 32"><path d="M3 16s5-9 13-9 13 9 13 9-5 9-13 9S3 16 3 16z" fill="#fff"/><circle cx="16" cy="16" r="5" fill="#1d8fe8"/><circle cx="16" cy="16" r="2" fill="#fff"/></svg>'},
- baove:{n:"Bảo vệ",team:"dan",c:"#0a9d86",d:"Mỗi đêm che chở một người khỏi bị Sói cắn. Không được chọn cùng một người hai đêm liền.",
-  i:'<svg viewBox="0 0 32 32"><path d="M16 3l11 4v8c0 7-5 12-11 14C10 27 5 22 5 15V7z" fill="#fff"/><path d="M11 16l4 4 7-8" stroke="#0a9d86" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'},
- phuthuy:{n:"Phù thủy",team:"dan",c:"#8e44ad",d:"Có một bình cứu và một bình độc, mỗi bình chỉ dùng một lần trong cả ván.",
-  i:'<svg viewBox="0 0 32 32"><path d="M12 3h8v3h-1v6l6 9a4 4 0 0 1-3.4 6H10.4A4 4 0 0 1 7 21l6-9V6h-1z" fill="#fff"/><path d="M9.5 21h13" stroke="#8e44ad" stroke-width="2"/><circle cx="14" cy="24" r="1.5" fill="#8e44ad"/><circle cx="18.5" cy="23.5" r="1" fill="#8e44ad"/></svg>'},
- thosan:{n:"Thợ săn",team:"dan",c:"#b5651d",d:"Khi chết được bắn chết theo một người bất kỳ. Nếu chết vì bình độc thì không bắn được.",
-  i:'<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="10" fill="none" stroke="#fff" stroke-width="3"/><circle cx="16" cy="16" r="3" fill="#fff"/><path d="M16 2v8M16 22v8M2 16h8M22 16h8" stroke="#fff" stroke-width="3"/></svg>'},
- cupid:{n:"Thần tình yêu",team:"dan",c:"#ff4f9e",d:"Đêm đầu tiên chọn hai người làm cặp đôi. Một người chết, người kia chết theo.",
-  i:'<svg viewBox="0 0 32 32"><path d="M16 27S5 20 5 12a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 8-11 15-11 15z" fill="#fff"/><path d="M4 26L26 6M22 6h4v4" stroke="#ff4f9e" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>'}};
-const ORDER=["soi","tientri","baove","phuthuy","thosan","cupid","dan"];
+ soi:{n:"Sói",t:"soi",c:"#b8323f",max:8,d:"Mỗi đêm cùng bầy chọn một người để cắn.",
+  i:sv(WOLF+'<path d="M11 17l3 2M21 17l-3 2" stroke="#b8323f" stroke-width="2" stroke-linecap="round"/>')},
+ soitientri:{n:"Sói tiên tri",t:"soi",c:"#8f1f45",d:"Là Sói. Mỗi đêm còn được soi đúng vai của một người.",
+  i:sv(WOLF+'<circle cx="16" cy="17" r="4" fill="#8f1f45"/><circle cx="16" cy="17" r="1.6" fill="#fff"/>')},
+ soicon:{n:"Sói con",t:"soi",c:"#d9534f",d:"Là Sói. Nếu Sói con chết, đêm sau bầy Sói được cắn hai người.",
+  i:sv('<path d="M9 8l4 5h6l4-5 1 8-3 7-5 3-5-3-3-7z" '+W+'/><circle cx="13.5" cy="17" r="1.3" fill="#d9534f"/><circle cx="18.5" cy="17" r="1.3" fill="#d9534f"/>')},
+ taysai:{n:"Tay sai",t:"soi",c:"#6d2a3a",d:"Phe Sói nhưng không cắn. Đêm đầu được biết ai là Sói. Tiên tri soi thấy là người thường.",
+  i:sv('<path d="M16 4c-6 0-9 6-9 12v13h18V16c0-6-3-12-9-12z" '+W+'/><circle cx="13" cy="16" r="1.6" fill="#6d2a3a"/><circle cx="19" cy="16" r="1.6" fill="#6d2a3a"/>')},
+ dan:{n:"Dân làng",t:"dan",c:"#17a35e",max:24,d:"Không có chức năng đêm. Ban ngày suy luận để treo cổ Sói.",
+  i:sv('<path d="M8 13l8-7 8 7z" '+W+'/><circle cx="16" cy="16" r="5" '+W+'/><path d="M6 29c0-6 4.5-9 10-9s10 3 10 9z" '+W+'/>')},
+ tientri:{n:"Tiên tri",t:"dan",c:"#1d8fe8",d:"Mỗi đêm soi một người để biết có phải Sói không.",
+  i:sv('<path d="M3 16s5-9 13-9 13 9 13 9-5 9-13 9S3 16 3 16z" '+W+'/><circle cx="16" cy="16" r="5" fill="#1d8fe8"/><circle cx="16" cy="16" r="2" fill="#fff"/>')},
+ baove:{n:"Bảo vệ",t:"dan",c:"#0a9d86",d:"Mỗi đêm che chở một người khỏi Sói và Sát nhân. Không chọn cùng người hai đêm liền.",
+  i:sv('<path d="M16 3l11 4v8c0 7-5 12-11 14C10 27 5 22 5 15V7z" '+W+'/><path d="M11 16l4 4 7-8" stroke="#0a9d86" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>')},
+ phuthuy:{n:"Phù thủy",t:"dan",c:"#8e44ad",d:"Một bình cứu và một bình độc, mỗi bình dùng một lần trong ván.",
+  i:sv('<path d="M12 3h8v3h-1v6l6 9a4 4 0 0 1-3.4 6H10.4A4 4 0 0 1 7 21l6-9V6h-1z" '+W+'/><circle cx="14" cy="23" r="1.6" fill="#8e44ad"/><circle cx="18.5" cy="22.5" r="1.1" fill="#8e44ad"/>')},
+ thosan:{n:"Thợ săn",t:"dan",c:"#b5651d",d:"Khi chết được bắn chết theo một người. Chết vì bình độc thì không bắn được.",
+  i:sv('<circle cx="16" cy="16" r="10" '+S+'/><circle cx="16" cy="16" r="3" '+W+'/><path d="M16 2v8M16 22v8M2 16h8M22 16h8" '+S+'/>')},
+ cupid:{n:"Thần tình yêu",t:"dan",c:"#ff4f9e",d:"Đêm đầu ghép đôi hai người. Một người chết, người kia chết theo.",
+  i:sv('<path d="M16 27S5 20 5 12a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 8-11 15-11 15z" '+W+'/>')},
+ gialang:{n:"Già làng",t:"dan",c:"#7f8c3d",d:"Chịu được một lần bị Sói cắn. Lần thứ hai mới chết.",
+  i:sv('<circle cx="15" cy="10" r="5" '+W+'/><path d="M7 29c0-7 3.5-11 8-11s8 4 8 11z" '+W+'/><path d="M25 13v16" '+S+'/>')},
+ thamtu:{n:"Thám tử",t:"dan",c:"#2e86ab",d:"Mỗi đêm chọn hai người để biết họ có cùng phe hay không.",
+  i:sv('<circle cx="13" cy="13" r="8" '+S+'/><path d="M19 19l8 8" '+S+'/>')},
+ hiepsi:{n:"Hiệp sĩ",t:"dan",c:"#5b6f79",d:"Một lần trong ván, ban ngày thách đấu một người: nếu là Sói thì Sói chết, nếu không thì Hiệp sĩ chết.",
+  i:sv('<path d="M16 2l3 4v14h-6V6z" '+W+'/><rect x="9" y="20" width="14" height="3" rx="1.5" '+W+'/><rect x="14.5" y="23" width="3" height="6" rx="1" '+W+'/>')},
+ thangngoc:{n:"Thằng ngốc",t:"dan",c:"#c79a00",d:"Bị dân treo cổ lần đầu thì lộ vai và sống sót, nhưng từ đó mất quyền bỏ phiếu.",
+  i:sv('<circle cx="16" cy="16" r="12" '+W+'/><path d="M12.5 12.5a3.5 3.5 0 1 1 5 3.2c-1 .5-1.5 1.2-1.5 2.3" stroke="#c79a00" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="16" cy="22" r="1.5" fill="#c79a00"/>')},
+ badong:{n:"Bà đồng",t:"dan",c:"#6c5ce7",d:"Mỗi đêm hỏi hồn một người đã chết để biết vai của họ.",
+  i:sv('<circle cx="16" cy="13" r="9" '+W+'/><path d="M8 27h16l-2-4H10z" '+W+'/><path d="M12 11q4-4 8 0" stroke="#6c5ce7" stroke-width="2" fill="none" stroke-linecap="round"/>')},
+ phongan:{n:"Phong ấn sư",t:"dan",c:"#3d5a80",d:"Mỗi đêm phong ấn một người: ngày hôm sau người đó không được nói (vẫn được bỏ phiếu).",
+  i:sv('<rect x="7" y="14" width="18" height="13" rx="3" '+W+'/><path d="M11 14v-3a5 5 0 0 1 10 0v3" '+S+'/>')},
+ tre:{n:"Đứa trẻ hoang",t:"dan",c:"#3a9d23",d:"Đêm đầu chọn một hình mẫu. Nếu hình mẫu chết, bạn hóa Sói và theo phe Sói.",
+  i:sv('<circle cx="15" cy="11" r="4.5" '+W+'/><path d="M8 29c0-6 3-9.5 7-9.5s7 3.5 7 9.5z" '+W+'/><path d="M21 7c5 0 6 3 6 6-4 0-6-2.5-6-6z" '+W+'/>')},
+ satnhan:{n:"Sát nhân",t:"ba",c:"#e07a00",d:"Phe riêng. Mỗi đêm giết một người, không sợ Sói cắn. Thắng khi chỉ còn mình hoặc đấu tay đôi.",
+  i:sv('<path d="M6 26L21 7l4 4L10 30z" '+W+'/><path d="M19 5l8 8" '+S+'/>')},
+ thanghe:{n:"Thằng hề",t:"ba",c:"#d35400",d:"Phe riêng. Thắng ngay nếu bị dân làng treo cổ ban ngày.",
+  i:sv('<path d="M4 22l4-14 8 8 8-8 4 14z" '+W+'/><circle cx="8" cy="7" r="2.4" '+W+'/><circle cx="24" cy="7" r="2.4" '+W+'/><circle cx="16" cy="13" r="2.4" '+W+'/><rect x="4" y="23" width="24" height="4" rx="2" '+W+'/>')},
+ thoisao:{n:"Kẻ thổi sáo",t:"ba",c:"#a0522d",d:"Phe riêng. Mỗi đêm thôi miên hai người. Thắng khi mọi người còn sống đều bị thôi miên.",
+  i:sv('<path d="M4 25L24 7l3 3L7 28z" '+W+'/><circle cx="12" cy="20" r="1.3" fill="#a0522d"/><circle cx="16" cy="16.4" r="1.3" fill="#a0522d"/><circle cx="20" cy="12.8" r="1.3" fill="#a0522d"/>')}};
+const TEAMS=[["soi","Phe Sói","var(--t-soi)",["soi","soitientri","soicon","taysai"]],
+ ["dan","Phe Dân","var(--t-dan)",["dan","tientri","baove","phuthuy","thosan","cupid","gialang","thamtu","hiepsi","thangngoc","badong","phongan","tre"]],
+ ["ba","Phe thứ ba","var(--t-ba)",["satnhan","thanghe","thoisao"]]];
+const TEAMNAME={soi:"Phe Sói",dan:"Phe Dân",ba:"Phe riêng"};
+const KILLERS=["soi","soitientri","soicon"];
 
-/* ---------- setup ---------- */
-const DEF=["An","Bình","Chi","Dũng","Giang","Hạnh","Khoa","Linh"];
-let names=(()=>{try{const v=JSON.parse(store.get("ms-names")||"null");return Array.isArray(v)&&v.length>=5?v:DEF.slice()}catch(e){return DEF.slice()}})();
-let opt=(()=>{try{return Object.assign({reveal:true,speak:false,time:180,counts:null},JSON.parse(store.get("ms-opt")||"{}"))}catch(e){return{reveal:true,speak:false,time:180,counts:null}}})();
-const save=()=>{store.set("ms-names",JSON.stringify(names));store.set("ms-opt",JSON.stringify(opt))};
-function suggest(n){return{soi:Math.max(1,Math.round(n/4)),tientri:n>=5?1:0,baove:n>=6?1:0,phuthuy:n>=7?1:0,thosan:n>=8?1:0,cupid:n>=9?1:0}}
+/* ======================= SETUP ======================= */
+const DEF=["An","Bình","Chi","Dũng","Giang","Hạnh","Khoa","Linh","Minh","Nga"];
+let names=(()=>{try{const v=JSON.parse(store.get("ms2-names")||"null");return Array.isArray(v)&&v.length>=5?v:DEF.slice()}catch(e){return DEF.slice()}})();
+let opt=(()=>{const d={speak:true,secret:true,reveal:true,time:180,rate:1,counts:null};try{return Object.assign(d,JSON.parse(store.get("ms2-opt")||"{}"))}catch(e){return d}})();
+const save=()=>{store.set("ms2-names",JSON.stringify(names));store.set("ms2-opt",JSON.stringify(opt))};
+function suggest(n){const pri=[["tientri",5],["baove",6],["phuthuy",7],["thosan",8],["cupid",9],["satnhan",10],["thanghe",11],["soicon",12],["gialang",12],["thamtu",13],["taysai",14],["badong",15],["thoisao",16],["soitientri",17],["hiepsi",17],["phongan",18],["thangngoc",19],["tre",20]];
+ const c={},W=Math.max(1,Math.round(n/4.5));let keys=pri.filter(([k,m])=>n>=m).map(([k])=>k);
+ const tot=()=>Object.values(c).reduce((a,b)=>a+b,0);
+ const build=()=>{Object.keys(c).forEach(k=>delete c[k]);keys.forEach(k=>c[k]=1);c.soi=Math.max(1,W-(c.soicon||0)-(c.soitientri||0))};
+ build();while(tot()>n-1&&keys.length){const drop=[...keys].reverse().find(k=>k!=="soicon"&&k!=="soitientri")||keys[keys.length-1];keys=keys.filter(k=>k!==drop);build()}
+ return c}
 if(!opt.counts)opt.counts=suggest(names.length);
-const special=()=>ORDER.filter(r=>r!=="dan").reduce((a,r)=>a+(opt.counts[r]||0),0);
+const cnt=k=>k==="dan"?danCount():(opt.counts[k]||0);
+const special=()=>Object.keys(ROLES).filter(k=>k!=="dan").reduce((a,k)=>a+(opt.counts[k]||0),0);
 const danCount=()=>names.length-special();
-function valid(){const w=opt.counts.soi||0;return names.length>=5&&w>=1&&danCount()>=0&&w<names.length-w}
+const wolvesSet=()=>KILLERS.reduce((a,k)=>a+(opt.counts[k]||0),0);
+function problem(){const n=names.length,w=wolvesSet(),wt=w+(opt.counts.taysai||0);
+ if(n<5)return "Cần ít nhất 5 người chơi.";
+ if(danCount()<0)return "Số vai đặc biệt nhiều hơn số người.";
+ if(w<1)return "Cần ít nhất một Sói, Sói con hoặc Sói tiên tri.";
+ if(wt>=n-wt)return "Phe Sói đang đông bằng hoặc hơn phần còn lại.";
+ return ""}
 function renderSetup(){
  $("#names").innerHTML=names.map((n,i)=>`<li><span class="ix num">${i+1}</span><input value="${esc(n)}" maxlength="16" data-i="${i}" aria-label="Tên người chơi ${i+1}">${names.length>5?`<button class="x" type="button" data-x="${i}" aria-label="Xóa">×</button>`:""}</li>`).join("");
  $("#names").querySelectorAll("input").forEach(el=>el.addEventListener("input",()=>{names[+el.dataset.i]=el.value;save()}));
  $("#names").querySelectorAll("[data-x]").forEach(b=>b.addEventListener("click",()=>{names.splice(+b.dataset.x,1);save();renderSetup()}));
- $("#addP").disabled=names.length>=18;$("#pcount").textContent=`${names.length} người chơi`;
- $("#rolesEd").innerHTML=ORDER.map(r=>{const R=ROLES[r],v=r==="dan"?danCount():(opt.counts[r]||0),max=r==="soi"?6:1;
-  return `<li><span class="ri" style="--rc:${R.c}">${R.i}</span><div><b>${R.n}</b><small>${R.d}</small></div>${r==="dan"?`<span class="stepper"><b class="num" style="min-width:52px">${v}</b></span>`:`<span class="stepper"><button type="button" data-m="${r}" aria-label="Bớt ${R.n}">−</button><b class="num">${v}</b><button type="button" data-p="${r}" aria-label="Thêm ${R.n}" ${v>=max?"disabled":""}>+</button></span>`}</li>`}).join("");
- $("#rolesEd").querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{const r=b.dataset.m;opt.counts[r]=Math.max(0,(opt.counts[r]||0)-1);save();renderSetup()}));
- $("#rolesEd").querySelectorAll("[data-p]").forEach(b=>b.addEventListener("click",()=>{const r=b.dataset.p;opt.counts[r]=(opt.counts[r]||0)+1;save();renderSetup()}));
- const ok=valid(),t=$("#total");t.classList.toggle("bad",!ok);
- t.innerHTML=ok?`<span>${opt.counts.soi} Sói · ${names.length-opt.counts.soi} phe Dân</span><span>${names.length} vai</span>`
-  :`<span>${names.length<5?"Cần ít nhất 5 người chơi.":danCount()<0?"Số vai đặc biệt nhiều hơn số người.":"Số Sói phải ít hơn phe Dân và có ít nhất 1 Sói."}</span>`;
- $("#start").disabled=!ok;
- $("#optReveal").setAttribute("aria-checked",opt.reveal);$("#optSpeak").setAttribute("aria-checked",opt.speak);$("#optTime").value=String(opt.time)}
-$("#addP").addEventListener("click",()=>{if(names.length<18){names.push("Người "+(names.length+1));save();renderSetup();const ins=$("#names").querySelectorAll("input");ins[ins.length-1].select()}});
+ $("#addP").disabled=names.length>=24;$("#pcount").textContent=`${names.length} người chơi`;
+ $("#rolesEd").innerHTML=TEAMS.map(([t,label,col,keys])=>{const tot=keys.reduce((a,k)=>a+cnt(k),0);
+  return `<div class="team" style="--tc:${col}"><h4><span>${label}</span><span class="num">${tot} người</span></h4><ul class="roles-ed">${keys.map(k=>{const R=ROLES[k],v=cnt(k),max=R.max||1;
+   return `<li class="${v>0?"on":""}" style="--tc:${col}"><span class="ri" style="--rc:${R.c}">${R.i}</span><div><b>${R.n}</b><small>${R.d}</small></div>${k==="dan"?`<span class="stepper"><b class="num" style="min-width:40px">${v}</b></span>`:`<span class="stepper"><button type="button" data-m="${k}" aria-label="Bớt ${R.n}" ${v<=0?"disabled":""}>−</button><b class="num">${v}</b><button type="button" data-p="${k}" aria-label="Thêm ${R.n}" ${v>=max||danCount()<=0?"disabled":""}>+</button></span>`}</li>`}).join("")}</ul></div>`}).join("");
+ $("#rolesEd").querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{const k=b.dataset.m;opt.counts[k]=Math.max(0,(opt.counts[k]||0)-1);save();renderSetup()}));
+ $("#rolesEd").querySelectorAll("[data-p]").forEach(b=>b.addEventListener("click",()=>{const k=b.dataset.p;opt.counts[k]=(opt.counts[k]||0)+1;save();renderSetup()}));
+ const pr=problem(),t=$("#total");t.classList.toggle("bad",!!pr);
+ t.innerHTML=pr?`<span>${pr}</span>`:`<span>${names.length} người · ${Object.keys(ROLES).filter(k=>cnt(k)>0).length} loại vai</span><span class="num">Sói ${wolvesSet()} · thứ ba ${["satnhan","thanghe","thoisao"].reduce((a,k)=>a+cnt(k),0)}</span>`;
+ $("#start").disabled=!!pr;
+ $("#optSpeak").setAttribute("aria-checked",opt.speak);$("#optSecret").setAttribute("aria-checked",opt.secret);$("#optReveal").setAttribute("aria-checked",opt.reveal);
+ $("#optTime").value=String(opt.time);$("#optRate").value=String(opt.rate)}
+$("#addP").addEventListener("click",()=>{if(names.length<24){names.push("Người "+(names.length+1));save();renderSetup();const ins=$("#names").querySelectorAll("input");ins[ins.length-1].select()}});
 $("#suggest").addEventListener("click",()=>{opt.counts=suggest(names.length);save();renderSetup()});
-$("#optReveal").addEventListener("click",()=>{opt.reveal=!opt.reveal;save();renderSetup()});
-$("#optSpeak").addEventListener("click",()=>{opt.speak=!opt.speak;save();renderSetup()});
+[["#optSpeak","speak"],["#optSecret","secret"],["#optReveal","reveal"]].forEach(([id,k])=>$(id).addEventListener("click",()=>{opt[k]=!opt[k];save();renderSetup()}));
 $("#optTime").addEventListener("change",e=>{opt.time=+e.target.value;save()});
+$("#optRate").addEventListener("change",e=>{opt.rate=+e.target.value;save()});
 
-/* ---------- speech ---------- */
+/* ======================= VOICE & SOUND ======================= */
 let viVoice=null;
-function pickVoice(){try{const v=speechSynthesis.getVoices();viVoice=v.find(x=>/^vi/i.test(x.lang))||null}catch(e){}}
-if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
-function say(t){if(!("speechSynthesis" in window))return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/<[^>]+>/g,""));u.lang="vi-VN";if(viVoice)u.voice=viVoice;u.rate=.95;speechSynthesis.speak(u)}catch(e){}}
+function pickVoice(){try{const v=speechSynthesis.getVoices();viVoice=v.find(x=>/^vi/i.test(x.lang))||null;
+ $("#voiceNote").textContent=!("speechSynthesis" in window)?"Trình duyệt này không có giọng đọc.":viVoice?`Giọng: ${viVoice.name}`:"Chưa thấy giọng tiếng Việt, máy sẽ đọc bằng giọng mặc định."}catch(e){}}
+if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}else pickVoice();
+let ac=null;
+function tone(f,d,t0=0,vol=.07,type="sine"){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain(),n=ac.currentTime+t0;
+ o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,n);g.gain.exponentialRampToValueAtTime(.0008,n+d);o.connect(g).connect(ac.destination);o.start(n);o.stop(n+d+.05)}catch(e){}}
+const chimeUp=()=>{tone(523,.5);tone(784,.7,.18)},chimeDown=()=>{tone(784,.5);tone(523,.7,.18)},bell=()=>{tone(392,1.2,0,.08,"triangle");tone(587,1.2,.05,.05,"triangle")};
+function speak(text){return new Promise(res=>{const plain=text.replace(/<[^>]+>/g,"");const est=900+plain.length*75/opt.rate;
+ if(!opt.speak||!("speechSynthesis" in window)){res();return}
+ let done=false;const fin=()=>{if(!done){done=true;res()}};
+ try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(plain);u.lang="vi-VN";if(viVoice)u.voice=viVoice;u.rate=opt.rate;u.onend=fin;u.onerror=fin;speechSynthesis.speak(u)}catch(e){fin()}
+ setTimeout(fin,(est+2500)*SP())})}
+$("#testVoice").addEventListener("click",()=>{chimeUp();speak("Màn đêm buông xuống. Mọi người nhắm mắt lại.")});
 
-/* ---------- game state ---------- */
-let G=null;
-function show(id){["setup","reveal","game","over"].forEach(s=>$("#"+s).hidden=s!==id);window.scrollTo(0,0)}
+/* ======================= GAME STATE ======================= */
+let G=null,token=0;
+const ABORT={};
+function show(id){["setup","reveal","play","over"].forEach(s=>$("#"+s).hidden=s!==id);window.scrollTo(0,0)}
 function newGame(){
  names=names.map((n,i)=>n.trim()||"Người "+(i+1));save();
- let deck=[];ORDER.forEach(r=>{const k=r==="dan"?danCount():(opt.counts[r]||0);for(let j=0;j<k;j++)deck.push(r)});deck=shuffle(deck);
- G={players:names.map((n,i)=>({name:n,role:deck[i],alive:true,lover:false})),seen:Array(names.length).fill(false),
-  night:0,day:0,lastProtect:null,heal:true,poison:true,log:[],queue:[],step:null,sel:[],hideRoles:false,tonight:{}};
- renderReveal();show("reveal")}
+ let deck=[];Object.keys(ROLES).forEach(k=>{for(let j=0;j<cnt(k);j++)deck.push(k)});deck=shuffle(deck);
+ G={players:names.map((n,i)=>({name:n,role:deck[i],team:ROLES[deck[i]].t,alive:true,lover:false,lives:deck[i]==="gialang"?2:1,charmed:false,model:null,wild:false,idiot:false,silenced:false})),
+  inGame:new Set(deck),seen:Array(names.length).fill(false),night:0,day:0,lastProtect:null,lastSilence:null,heal:true,poison:true,knight:false,rage:false,hunters:[],log:[],over:null};
+ token++;renderReveal();show("reveal")}
 const P=i=>G.players[i];
 const alive=()=>G.players.map((_,i)=>i).filter(i=>P(i).alive);
-const has=r=>G.players.some(p=>p.role===r&&p.alive);
-function log(t){G.log.unshift(t)}
+const isWolf=i=>KILLERS.includes(P(i).role)||(P(i).role==="tre"&&P(i).wild);
+const roleAlive=k=>G.players.some(p=>p.alive&&p.role===k);
+const roleName=i=>ROLES[P(i).role].n+(P(i).role==="tre"&&P(i).wild?" (đã hóa Sói)":"");
+function log(t){G.log.unshift(t);renderSide()}
+function chk(my){if(my!==token||!G||G.over)throw ABORT}
 
-/* reveal */
+/* reveal cards */
 function renderReveal(){
  $("#revealGrid").innerHTML=G.players.map((p,i)=>`<button type="button" class="pbtn${G.seen[i]?" done":""}" data-i="${i}"><span class="badge num">${G.seen[i]?"✓":i+1}</span><span><b>${esc(p.name)}</b><small>${G.seen[i]?"Đã xem vai":"Chạm để xem vai"}</small></span></button>`).join("");
  $("#revealGrid").querySelectorAll("[data-i]").forEach(b=>b.addEventListener("click",()=>openReveal(+b.dataset.i)));
@@ -252,8 +332,8 @@ function renderReveal(){
 let curR=null;
 function openReveal(i){curR=i;const R=ROLES[P(i).role];
  $("#mrName").textContent=P(i).name;$("#mrFront").setAttribute("style",`--rc:${R.c};--rink:#fff`);
- const mates=P(i).role==="soi"?G.players.filter((q,j)=>j!==i&&q.role==="soi").map(q=>q.name):[];
- $("#mrFront").innerHTML=`<small>Vai của bạn</small><div class="art">${R.i}</div><div class="big">${R.n}</div><small>${R.d}${mates.length?`<br><br>Đồng bọn: <b>${mates.map(esc).join(", ")}</b>`:""}</small>`;
+ const mates=KILLERS.includes(P(i).role)?G.players.filter((q,j)=>j!==i&&KILLERS.includes(q.role)).map(q=>q.name):[];
+ $("#mrFront").innerHTML=`<small>Vai của bạn</small><div class="art">${R.i}</div><div class="big" style="font-size:clamp(28px,7vw,38px)">${R.n}</div><span class="teamtag">${TEAMNAME[R.t]}</span><small>${R.d}${mates.length?`<br><br>Đồng bọn: <b>${mates.map(esc).join(", ")}</b>`:""}</small>`;
  $("#mrDone").disabled=true;$("#mrCard").classList.remove("show");$("#mReveal").hidden=false}
 const card=$("#mrCard");
 const showC=e=>{if(e)e.preventDefault();card.classList.add("show");$("#mrDone").disabled=false};
@@ -265,139 +345,221 @@ card.addEventListener("contextmenu",e=>e.preventDefault());
 $("#mrDone").addEventListener("click",()=>{hideC();G.seen[curR]=true;$("#mReveal").hidden=true;renderReveal()});
 $("#mReveal").addEventListener("click",e=>{if(e.target.id==="mReveal"){hideC();$("#mReveal").hidden=true}});
 
-/* ---------- deaths ---------- */
-let pendingHunter=[];
-function kill(i,cause){if(!P(i).alive)return[];P(i).alive=false;const out=[i];
- if(P(i).role==="thosan"&&cause!=="poison")pendingHunter.push(i);
- if(P(i).lover){const j=G.players.findIndex((q,k)=>k!==i&&q.lover);if(j>=0&&P(j).alive)out.push(...kill(j,"love"))}
- return out}
-const CAUSE={wolf:"bị Sói cắn",poison:"trúng bình độc",love:"chết theo người yêu",vote:"bị dân làng treo cổ",shot:"bị Thợ săn bắn"};
-function deathText(list){return list.map(d=>`${P(d.i).name}${opt.reveal?` (${ROLES[P(d.i).role].n})`:""}`).join(", ")}
+/* ======================= SCREEN HELPERS ======================= */
+let lastLine="",paused=false,resume=null;
+async function gate(my){while(paused){await new Promise(r=>resume=r)}chk(my)}
+function sky(phase,title,role){const d=phase==="day";$("#sky").classList.toggle("day",d);
+ $("#phase").textContent=d?`Ngày ${G.day}`:`Đêm ${G.night}`;
+ $("#stepTitle").innerHTML=(role?`<span class="ri" style="--rc:${ROLES[role].c}">${ROLES[role].i}</span>`:"")+esc(title)}
+async function say(my,text){lastLine=text;$("#script").textContent=text;chk(my);
+ if(opt.speak){await speak(text);chk(my)}
+ else{await new Promise(r=>{act(`<div class="row"><button class="btn primary big" id="nx" type="button">Đã đọc xong, tiếp</button></div>`);$("#nx").addEventListener("click",r)});chk(my)}}
+function act(html){$("#act").innerHTML=html}
+function waitScreen(text){act(`<div class="wait"><div class="moon"></div><div>${esc(text||"Mọi người nhắm mắt…")}</div></div>`)}
+function cardHTML(i,sel,sub){return `<button type="button" class="pbtn${sel?" sel":""}" data-i="${i}"><span class="badge num">${i+1}</span><span><b>${esc(P(i).name)}</b>${sub?`<small>${sub}</small>`:""}</span></button>`}
+/* pick n players. opts:{ids,count,min,note,confirm,extra:[{label,value}],sub(i),top} → array|extra value */
+function pick(my,o){return new Promise(res=>{let sel=[];const count=o.count||1,min=o.min??count;
+ const draw=()=>{act(`${o.top||""}${o.note?`<p class="sub" style="margin:0">${o.note}</p>`:""}<div class="pgrid">${o.ids.map(i=>cardHTML(i,sel.includes(i),o.sub?o.sub(i):"")).join("")}</div>
+  <div class="row"><button class="btn primary" id="ok" type="button" ${sel.length>=min&&sel.length<=count?"":"disabled"}>${o.confirm||"Xác nhận"}</button>${(o.extra||[]).map((e,k)=>`<button class="btn ghost" type="button" data-e="${k}">${e.label}</button>`).join("")}</div>`);
+  $("#act").querySelectorAll(".pgrid [data-i]").forEach(b=>b.addEventListener("click",()=>{const i=+b.dataset.i;if(sel.includes(i))sel=sel.filter(x=>x!==i);else{sel.push(i);if(sel.length>count)sel.shift()}draw()}));
+  $("#ok").addEventListener("click",()=>{if(my!==token)return;res(sel.slice())});
+  $("#act").querySelectorAll("[data-e]").forEach(b=>b.addEventListener("click",()=>res(o.extra[+b.dataset.e].value)))};
+ if(!o.ids.length){act(`${o.top||""}<p class="sub" style="margin:0">Không có ai để chọn.</p><div class="row"><button class="btn primary" id="ok" type="button">Tiếp</button></div>`);$("#ok").addEventListener("click",()=>res([]));return}
+ draw()})}
+function info(my,html,btn){return new Promise(res=>{act(`${html}<div class="row"><button class="btn primary" id="ok" type="button">${btn||"Đã xem"}</button></div>`);$("#ok").addEventListener("click",()=>res())})}
+const resultBox=(i,text,color)=>`<div class="result" style="--rc:${color}"><span class="ri" style="--rc:${color}">${i}</span><span>${text}</span></div>`;
 
-/* ---------- steps ---------- */
-// a step: {phase:"night"|"day", title, script, kind, ...}
-function startNight(){G.night++;G.tonight={victim:null,protect:null,healed:false,poisoned:null,seer:null};
- const q=[];
- q.push({phase:"night",title:"Màn đêm buông xuống",script:`Đêm thứ ${G.night}. Cả làng nhắm mắt, đi ngủ.`,kind:"info",btn:"Mọi người đã nhắm mắt"});
- if(G.night===1&&has("cupid"))q.push({phase:"night",kind:"cupid",title:"Thần tình yêu",script:"Thần tình yêu thức dậy, chọn hai người để ghép thành một cặp đôi. Rồi Thần tình yêu đi ngủ."});
- if(G.night===1&&has("cupid"))q.push({phase:"night",kind:"lovers",title:"Cặp đôi",script:"Quản trò chạm nhẹ vào vai hai người được ghép đôi. Hai người mở mắt nhìn nhau, rồi nhắm mắt lại."});
- if(has("baove"))q.push({phase:"night",kind:"baove",title:"Bảo vệ",script:"Bảo vệ thức dậy, chọn một người để che chở đêm nay. Rồi Bảo vệ đi ngủ."});
- q.push({phase:"night",kind:"soi",title:"Bầy Sói",script:"Sói thức dậy, nhìn nhau và thống nhất chọn một người để cắn. Rồi Sói đi ngủ."});
- if(has("tientri"))q.push({phase:"night",kind:"tientri",title:"Tiên tri",script:"Tiên tri thức dậy, chỉ vào một người để soi. Quản trò ra hiệu: giơ ngón cái lên là Sói, chỉ xuống là không phải Sói."});
- if(has("phuthuy")&&(G.heal||G.poison))q.push({phase:"night",kind:"phuthuy",title:"Phù thủy",script:"Phù thủy thức dậy. Quản trò chỉ cho Phù thủy người bị Sói cắn đêm nay. Phù thủy có muốn cứu không? Có muốn đầu độc ai không?"});
- q.push({phase:"night",kind:"dawn"});
- G.queue=q;nextStepChecked()}
-function nextStep(){G.sel=[];G.step=G.queue.shift()||null;if(!G.step)return;
- if(G.step.kind==="dawn")return resolveNight();
- renderGame();if(opt.speak)say(G.step.script)}
-function resolveNight(){const t=G.tonight,dead=[];
- if(t.victim!=null&&t.victim!==t.protect&&!t.healed)kill(t.victim,"wolf").forEach((i,k)=>dead.push({i,c:k?"love":"wolf"}));
- if(t.poisoned!=null&&P(t.poisoned).alive)kill(t.poisoned,"poison").forEach((i,k)=>dead.push({i,c:k?"love":"poison"}));
- G.lastProtect=t.protect;G.day++;
- const txt=dead.length?`Trời sáng. Đêm qua ${deathText(dead)} đã chết.`:"Trời sáng. Đêm qua cả làng bình yên, không ai chết.";
- log(`Đêm ${G.night}: ${dead.length?dead.map(d=>`${P(d.i).name} ${CAUSE[d.c]}`).join("; "):"không ai chết"}`);
- G.queue=[{phase:"day",kind:"info",title:`Ngày ${G.day}`,script:txt,btn:"Tiếp tục"}];
- pushHunter("day");
- G.queue.push({phase:"day",kind:"check"});
- G.queue.push({phase:"day",kind:"talk",title:"Thảo luận",script:"Cả làng thảo luận, tìm ra kẻ đáng ngờ. Khi đã thống nhất, quản trò ghi nhận người bị treo cổ."});
- G.queue.push({phase:"day",kind:"vote",title:"Treo cổ",script:"Dân làng bỏ phiếu. Ai bị nhiều phiếu nhất sẽ bị treo cổ."});
- nextStepChecked()}
-function pushHunter(phase){while(pendingHunter.length){const h=pendingHunter.shift();
-  G.queue.push({phase,kind:"hunter",hunter:h,title:"Phát súng cuối của Thợ săn",script:`${P(h).name} là Thợ săn. Trước khi gục xuống, Thợ săn được bắn chết theo một người.`},{phase,kind:"check"})}}
-function nextStepChecked(){G.sel=[];G.step=G.queue.shift()||null;if(!G.step)return;
- if(G.step.kind==="check"){if(checkWin())return;return nextStepChecked()}
- if(G.step.kind==="dawn")return resolveNight();
- renderGame();if(opt.speak)say(G.step.script)}
-function checkWin(){const al=alive(),w=al.filter(i=>P(i).role==="soi").length,v=al.length-w;
- if(al.length===2&&al.every(i=>P(i).lover)&&P(al[0]).role!==P(al[1]).role&&(P(al[0]).role==="soi"||P(al[1]).role==="soi"))return over("love");
- if(w===0)return over("dan");if(w>=v)return over("soi");return false}
+/* ======================= DEATH ======================= */
+const CAUSE={wolf:"bị Sói cắn",sk:"bị Sát nhân giết",poison:"trúng bình độc",love:"chết theo người yêu",vote:"bị dân làng treo cổ",shot:"bị Thợ săn bắn",duel:"thua cuộc thách đấu",knight:"bị Hiệp sĩ hạ"};
+function kill(i,cause,list){if(!P(i).alive)return list;P(i).alive=false;list.push({i,c:cause});const p=P(i);
+ if(p.role==="thosan"&&cause!=="poison")G.hunters.push(i);
+ if(p.role==="soicon")G.rage=true;
+ G.players.forEach((q,j)=>{if(q.alive&&q.role==="tre"&&!q.wild&&q.model===i){q.wild=true;q.team="soi";log(`${q.name} đã âm thầm hóa Sói`)}});
+ if(p.lover){const j=G.players.findIndex((q,k)=>k!==i&&q.lover);if(j>=0&&P(j).alive)kill(j,"love",list)}
+ return list}
+const deathText=list=>list.map(d=>`${P(d.i).name}${opt.reveal?` (${roleName(d.i)})`:""}`).join(", ");
 
-/* ---------- rendering the current step ---------- */
-function renderGame(){const s=G.step;show("game");
- const sky=$("#sky");sky.classList.toggle("day",s.phase==="day");
- $("#phase").textContent=s.phase==="night"?`Đêm ${G.night}`:`Ngày ${G.day}`;
- $("#stepTitle").textContent=s.title||"";$("#script").textContent=s.script||"";
- const a=$("#act");a.innerHTML="";
- const grid=(filter,max,note)=>{const ids=alive().filter(filter);
-  a.insertAdjacentHTML("beforeend",`${note?`<p class="sub" style="margin:0">${note}</p>`:""}<div class="pgrid">${ids.map(i=>`<button type="button" class="pbtn${G.sel.includes(i)?" sel":""}" data-i="${i}"><span class="badge num">${i+1}</span><span><b>${esc(P(i).name)}</b><small>${roleLine(i)}</small></span></button>`).join("")}</div>`);
-  a.querySelectorAll(".pgrid [data-i]").forEach(b=>b.addEventListener("click",()=>{const i=+b.dataset.i;
-   if(G.sel.includes(i))G.sel=G.sel.filter(x=>x!==i);else{G.sel.push(i);if(G.sel.length>max)G.sel.shift()}renderGame()}))};
- const buttons=(html)=>a.insertAdjacentHTML("beforeend",`<div class="row">${html}</div>`);
- const on=(id,fn)=>{const b=a.querySelector("#"+id);if(b)b.addEventListener("click",fn)};
- switch(s.kind){
-  case "info":buttons(`<button class="btn primary big" id="ok" type="button">${s.btn||"Tiếp"}</button>`);on("ok",nextStepChecked);break;
-  case "cupid":grid(()=>true,2,"Chọn đúng hai người.");buttons(`<button class="btn primary" id="ok" type="button" ${G.sel.length===2?"":"disabled"}>Ghép đôi</button>`);
-   on("ok",()=>{G.sel.forEach(i=>P(i).lover=true);log(`Cặp đôi: ${G.sel.map(i=>P(i).name).join(" và ")}`);nextStepChecked()});break;
-  case "lovers":{const L=G.players.filter(p=>p.lover).map(p=>p.name);a.insertAdjacentHTML("beforeend",`<p style="margin:0;font-weight:800;font-size:18px">Cặp đôi: ${L.map(esc).join(" ♥ ")}</p>`);
-   buttons(`<button class="btn primary" id="ok" type="button">Xong</button>`);on("ok",nextStepChecked);break}
-  case "baove":grid(i=>i!==G.lastProtect,1,G.lastProtect!=null?`Không được chọn lại ${esc(P(G.lastProtect).name)} (đã bảo vệ đêm trước).`:"");
-   buttons(`<button class="btn primary" id="ok" type="button" ${G.sel.length?"":"disabled"}>Bảo vệ người này</button>`);
-   on("ok",()=>{G.tonight.protect=G.sel[0];nextStepChecked()});break;
-  case "soi":{const ws=alive().filter(i=>P(i).role==="soi").map(i=>P(i).name);
-   grid(i=>P(i).role!=="soi",1,`Bầy sói còn sống: <b>${ws.map(esc).join(", ")}</b>`);
-   buttons(`<button class="btn primary" id="ok" type="button" ${G.sel.length?"":"disabled"}>Cắn người này</button><button class="btn ghost" id="skip" type="button">Sói không cắn</button>`);
-   on("ok",()=>{G.tonight.victim=G.sel[0];nextStepChecked()});on("skip",()=>{G.tonight.victim=null;nextStepChecked()});break}
-  case "tientri":
-   if(G.tonight.seer==null){grid(i=>P(i).role!=="tientri",1,"");buttons(`<button class="btn primary" id="ok" type="button" ${G.sel.length?"":"disabled"}>Soi người này</button>`);
-    on("ok",()=>{G.tonight.seer=G.sel[0];renderGame()})}
-   else{const i=G.tonight.seer,w=P(i).role==="soi";
-    a.insertAdjacentHTML("beforeend",`<div class="result ${w?"wolf":"safe"}"><span class="ri" style="display:grid;place-items:center;width:48px;height:48px;border-radius:12px;background:${w?ROLES.soi.c:ROLES.dan.c};flex:none">${w?ROLES.soi.i:ROLES.dan.i}</span><span>${esc(P(i).name)} ${w?"LÀ SÓI · giơ ngón cái lên":"không phải Sói · chỉ ngón cái xuống"}</span></div>`);
-    buttons(`<button class="btn primary" id="ok" type="button">Tiên tri đi ngủ</button>`);on("ok",()=>{G.tonight.seer=null;nextStepChecked()})}
-   break;
-  case "phuthuy":{const t=G.tonight,v=t.victim!=null&&t.victim!==t.protect?t.victim:t.victim;
-   const victimTxt=t.victim==null?"Đêm nay Sói không cắn ai.":`Sói đã cắn: <b>${esc(P(t.victim).name)}</b>`;
-   a.insertAdjacentHTML("beforeend",`<p style="margin:0;font-size:17px">${victimTxt}</p>
-    <div class="potions"><button type="button" class="potion${t.healed?" on":""}" id="heal" ${G.heal&&t.victim!=null?"":"disabled"}><b>Bình cứu</b><small>${G.heal?(t.victim!=null?"Chạm để cứu người bị cắn":"Không có ai để cứu"):"Đã dùng"}</small></button>
-    <button type="button" class="potion${s.poisonMode?" on":""}" id="pois" ${G.poison?"":"disabled"}><b>Bình độc</b><small>${G.poison?(t.poisoned!=null?"Đầu độc: "+esc(P(t.poisoned).name):"Chạm để chọn người đầu độc"):"Đã dùng"}</small></button></div>`);
-   on("heal",()=>{t.healed=!t.healed;renderGame()});on("pois",()=>{s.poisonMode=!s.poisonMode;if(!s.poisonMode)t.poisoned=null;renderGame()});
-   if(s.poisonMode){grid(i=>P(i).role!=="phuthuy",1,"Chọn người bị đầu độc:");if(G.sel.length)t.poisoned=G.sel[0]}
-   buttons(`<button class="btn primary" id="ok" type="button">Phù thủy đi ngủ</button>`);
-   on("ok",()=>{if(s.poisonMode&&G.sel.length)t.poisoned=G.sel[0];if(t.healed){G.heal=false;log(`Phù thủy cứu ${P(t.victim).name}`)}if(t.poisoned!=null){G.poison=false;log(`Phù thủy đầu độc ${P(t.poisoned).name}`)}nextStepChecked()});break}
-  case "hunter":grid(i=>i!==s.hunter,1,"");
-   buttons(`<button class="btn primary" id="ok" type="button" ${G.sel.length?"":"disabled"}>Bắn người này</button><button class="btn ghost" id="skip" type="button">Không bắn</button>`);
-   on("ok",()=>{const d=kill(G.sel[0],"shot");log(`Thợ săn ${P(s.hunter).name} bắn ${P(G.sel[0]).name}`);
-    const t=d.map((i,k)=>({i,c:k?"love":"shot"}));G.queue.unshift({phase:s.phase,kind:"info",title:"Tiếng súng vang lên",script:`${deathText(t)} đã chết.`,btn:"Tiếp tục"});pushHunter(s.phase);nextStepChecked()});
-   on("skip",nextStepChecked);break;
-  case "talk":{const tt=opt.time;a.insertAdjacentHTML("beforeend",tt?`<div style="display:grid;justify-items:center;gap:10px"><div class="timer num" id="timer">${fmt(tt)}</div><div class="row"><button class="btn" id="tgo" type="button">Bắt đầu đếm giờ</button><button class="btn ghost" id="trs" type="button">Đặt lại</button></div></div>`:"");
-   buttons(`<button class="btn primary big" id="ok" type="button">Bắt đầu bỏ phiếu</button>`);
-   if(tt){let left=tt,id=null;on("tgo",()=>{const b=a.querySelector("#tgo");if(id){clearInterval(id);id=null;b.textContent="Tiếp tục";return}b.textContent="Tạm dừng";
-     id=setInterval(()=>{left--;const el=a.querySelector("#timer");if(!el){clearInterval(id);return}el.textContent=fmt(Math.max(0,left));el.classList.toggle("warn",left<=15);if(left<=0){clearInterval(id);id=null;if(opt.speak)say("Hết giờ thảo luận.");b.textContent="Hết giờ"}},1000);G.timerId=id});
-    on("trs",()=>{left=tt;const el=a.querySelector("#timer");el.textContent=fmt(tt);el.classList.remove("warn")})}
-   on("ok",()=>{clearInterval(G.timerId);nextStepChecked()});break}
-  case "vote":grid(()=>true,1,"Chọn người bị nhiều phiếu nhất.");
-   buttons(`<button class="btn primary" id="ok" type="button" ${G.sel.length?"":"disabled"}>Treo cổ người này</button><button class="btn ghost" id="skip" type="button">Hòa phiếu, không treo ai</button>`);
-   on("ok",()=>{const v=G.sel[0],d=kill(v,"vote"),t=d.map((i,k)=>({i,c:k?"love":"vote"}));log(`Ngày ${G.day}: ${t.map(x=>`${P(x.i).name} ${CAUSE[x.c]}`).join("; ")}`);
-    G.queue=[{phase:"day",kind:"info",title:"Bản án",script:`${deathText(t)} đã bị dân làng treo cổ${t.length>1?" (kèm người yêu)":""}.`,btn:"Tiếp tục"}];pushHunter("day");
-    G.queue.push({phase:"day",kind:"check"},{phase:"night",kind:"night"});nextStepChecked()});
-   on("skip",()=>{log(`Ngày ${G.day}: không ai bị treo`);G.queue=[{phase:"night",kind:"night"}];nextStepChecked()});break;
-  case "night":return startNight();
- }
- renderSide()}
-function roleLine(i){return G.hideRoles?"":ROLES[P(i).role].n+(P(i).lover?" · ♥":"")}
+/* ======================= WIN ======================= */
+function winner(){const al=alive();
+ if(!al.length)return "hoa";
+ if(al.length===2&&al.every(i=>P(i).lover)&&P(al[0]).team!==P(al[1]).team)return "love";
+ const pip=al.find(i=>P(i).role==="thoisao");
+ if(pip!=null&&al.filter(i=>i!==pip).every(i=>P(i).charmed))return "thoisao";
+ const sk=al.some(i=>P(i).role==="satnhan"),w=al.filter(isWolf).length;
+ if(sk&&al.length<=2)return "satnhan";
+ if(!w&&!sk&&pip==null)return "dan";
+ if(w&&!sk){const wt=al.filter(i=>P(i).team==="soi").length;if(wt>=al.length-wt)return "soi"}
+ return null}
+function endIf(){const w=winner();if(w){over(w);return true}return false}
+
+/* ======================= NIGHT ======================= */
+const NIGHT=[
+ {k:"cupid",first:true,wake:"Thần tình yêu thức dậy. Hãy cầm máy và chọn hai người để ghép đôi.",sleep:"Thần tình yêu đi ngủ.",
+  run:async my=>{const s=await pick(my,{ids:alive(),count:2,confirm:"Ghép đôi hai người này"});s.forEach(i=>P(i).lover=true);if(s.length===2)log(`Cặp đôi: ${P(s[0]).name} và ${P(s[1]).name}`)}},
+ {k:"cupid",first:true,lovers:true,title:"Cặp đôi",wake:"Hai người vừa được ghép đôi, hãy mở mắt và nhìn màn hình để biết người yêu của mình.",sleep:"Cặp đôi nhắm mắt lại.",
+  run:async my=>{const L=G.players.map((p,i)=>p.lover?i:-1).filter(i=>i>=0);await info(my,`<div class="big">${L.map(i=>esc(P(i).name)).join(" ♥ ")}</div><p class="sub" style="margin:0">Hai bạn sống chết có nhau. Nếu khác phe, hai bạn thắng khi chỉ còn lại hai người.</p>`,"Đã biết")}},
+ {k:"tre",wake:"Đứa trẻ hoang thức dậy.",sleep:"Đứa trẻ hoang đi ngủ.",
+  run:async my=>{const me=G.players.findIndex(p=>p.alive&&p.role==="tre");
+   if(G.night===1){const s=await pick(my,{ids:alive().filter(i=>i!==me),confirm:"Chọn làm hình mẫu",note:"Chọn một người làm hình mẫu. Nếu người này chết, bạn sẽ hóa Sói."});if(s.length)P(me).model=s[0]}
+   else{const q=P(me);await info(my,q.wild?resultBox(ROLES.soi.i,"Hình mẫu của bạn đã chết. Bạn đã hóa Sói! Từ giờ hãy mở mắt cùng bầy Sói.",ROLES.soi.c)
+    :resultBox(ROLES.tre.i,`Hình mẫu ${esc(P(q.model).name)} vẫn còn sống. Bạn vẫn là dân làng.`,ROLES.tre.c))}}},
+ {k:"taysai",first:true,wake:"Tay sai thức dậy và nhìn màn hình để biết ai là Sói.",sleep:"Tay sai đi ngủ.",
+  run:async my=>{const w=G.players.map((p,i)=>KILLERS.includes(p.role)?i:-1).filter(i=>i>=0);await info(my,`<p class="sub" style="margin:0">Bầy Sói là:</p><div class="big">${w.map(i=>esc(P(i).name)).join(", ")}</div><p class="sub" style="margin:0">Sói không biết bạn là ai. Hãy giúp họ thắng.</p>`,"Đã biết")}},
+ {k:"phongan",wake:"Phong ấn sư thức dậy. Chọn một người không được nói vào ngày mai.",sleep:"Phong ấn sư đi ngủ.",
+  run:async my=>{const s=await pick(my,{ids:alive().filter(i=>i!==G.lastSilence),confirm:"Phong ấn người này",note:G.lastSilence!=null?`Không được chọn lại ${esc(P(G.lastSilence).name)}.`:"",extra:[{label:"Không phong ấn ai",value:[]}]});G.T.silence=s[0]??null}},
+ {k:"baove",wake:"Bảo vệ thức dậy. Chọn một người để che chở đêm nay.",sleep:"Bảo vệ đi ngủ.",
+  run:async my=>{const s=await pick(my,{ids:alive().filter(i=>i!==G.lastProtect),confirm:"Bảo vệ người này",note:G.lastProtect!=null?`Không được bảo vệ ${esc(P(G.lastProtect).name)} hai đêm liền.`:""});G.T.protect=s[0]??null}},
+ {k:"soi",wolf:true,wake:"Bầy Sói thức dậy, nhìn nhau và cầm máy chọn người để cắn.",sleep:"Bầy Sói đi ngủ.",
+  run:async my=>{const ws=alive().filter(isWolf),n=G.rage?2:1;
+   const s=await pick(my,{ids:alive().filter(i=>!isWolf(i)),count:n,min:n,confirm:n>1?"Cắn hai người này":"Cắn người này",
+    top:`<p style="margin:0;font-weight:800">Bầy Sói còn sống: ${ws.map(i=>esc(P(i).name)).join(", ")}</p>${n>1?`<p style="margin:0;font-weight:800;color:var(--bad)">Sói con đã chết. Đêm nay được cắn hai người!</p>`:""}`,
+    extra:[{label:"Không cắn ai",value:[]}]});G.T.bites=s;G.rage=false}},
+ {k:"soitientri",wake:"Sói tiên tri thức dậy. Chọn một người để biết vai thật của họ.",sleep:"Sói tiên tri đi ngủ.",
+  run:async my=>{const me=G.players.findIndex(p=>p.alive&&p.role==="soitientri");const s=await pick(my,{ids:alive().filter(i=>i!==me),confirm:"Soi người này"});
+   if(s.length){const R=ROLES[P(s[0]).role];await info(my,resultBox(R.i,`${esc(P(s[0]).name)} là <b>${roleName(s[0])}</b>`,R.c))}}},
+ {k:"satnhan",wake:"Sát nhân thức dậy. Chọn một người để ra tay.",sleep:"Sát nhân đi ngủ.",
+  run:async my=>{const me=G.players.findIndex(p=>p.alive&&p.role==="satnhan");const s=await pick(my,{ids:alive().filter(i=>i!==me),confirm:"Ra tay",extra:[{label:"Đêm nay nghỉ tay",value:[]}]});G.T.sk=s[0]??null}},
+ {k:"tientri",wake:"Tiên tri thức dậy. Chọn một người để soi.",sleep:"Tiên tri đi ngủ.",
+  run:async my=>{const me=G.players.findIndex(p=>p.alive&&p.role==="tientri");const s=await pick(my,{ids:alive().filter(i=>i!==me),confirm:"Soi người này"});
+   if(s.length){const w=isWolf(s[0]);await info(my,resultBox(w?ROLES.soi.i:ROLES.dan.i,`${esc(P(s[0]).name)} ${w?"<b>LÀ SÓI</b>":"không phải Sói"}`,w?ROLES.soi.c:ROLES.dan.c))}}},
+ {k:"thamtu",wake:"Thám tử thức dậy. Chọn hai người để so phe.",sleep:"Thám tử đi ngủ.",
+  run:async my=>{const me=G.players.findIndex(p=>p.alive&&p.role==="thamtu");const s=await pick(my,{ids:alive().filter(i=>i!==me),count:2,confirm:"So phe hai người"});
+   if(s.length===2){const same=P(s[0]).team===P(s[1]).team;await info(my,resultBox(ROLES.thamtu.i,`${esc(P(s[0]).name)} và ${esc(P(s[1]).name)} <b>${same?"CÙNG PHE":"KHÁC PHE"}</b>`,same?"var(--good)":"var(--bad)"))}}},
+ {k:"badong",wake:"Bà đồng thức dậy. Chọn một linh hồn để hỏi chuyện.",sleep:"Bà đồng đi ngủ.",
+  run:async my=>{const dead=G.players.map((p,i)=>p.alive?-1:i).filter(i=>i>=0);
+   if(!dead.length){await info(my,`<p style="margin:0;font-weight:800">Chưa có ai chết để hỏi chuyện.</p>`);return}
+   const s=await pick(my,{ids:dead,confirm:"Hỏi hồn người này"});if(s.length){const R=ROLES[P(s[0]).role];await info(my,resultBox(R.i,`Linh hồn ${esc(P(s[0]).name)} là <b>${roleName(s[0])}</b>`,R.c))}}},
+ {k:"phuthuy",wake:"Phù thủy thức dậy.",sleep:"Phù thủy đi ngủ.",
+  run:async my=>{const me=G.players.findIndex(p=>p.alive&&p.role==="phuthuy");const T=G.T,bitten=(T.bites||[]).filter(i=>P(i).alive);
+   if(!G.heal&&!G.poison){await info(my,`<p style="margin:0;font-weight:800">Bạn đã dùng hết cả hai bình.</p>`,"Đi ngủ");return}
+   await new Promise(res=>{let heal=null,pmode=false,ptarget=null;
+    const draw=()=>{act(`<p style="margin:0;font-size:17px">${bitten.length?`Sói đã cắn: <b>${bitten.map(i=>esc(P(i).name)).join(", ")}</b>`:"Đêm nay Sói không cắn ai."}</p>
+     <div class="potions"><button type="button" class="potion${heal!=null?" on":""}" id="heal" ${G.heal&&bitten.length?"":"disabled"}><b>Bình cứu</b><small>${!G.heal?"Đã dùng":!bitten.length?"Không có ai để cứu":heal!=null?"Cứu "+esc(P(heal).name):"Chạm để cứu"}</small></button>
+     <button type="button" class="potion${pmode?" on":""}" id="pois" ${G.poison?"":"disabled"}><b>Bình độc</b><small>${!G.poison?"Đã dùng":ptarget!=null?"Đầu độc "+esc(P(ptarget).name):"Chạm để chọn người"}</small></button></div>
+     ${pmode?`<div class="pgrid">${alive().filter(i=>i!==me).map(i=>cardHTML(i,ptarget===i)).join("")}</div>`:""}
+     <div class="row"><button class="btn primary" id="ok" type="button">Xong</button></div>`);
+     $("#heal").addEventListener("click",()=>{const k=heal==null?0:bitten.indexOf(heal)+1;heal=k<bitten.length?bitten[k]:null;draw()});
+     $("#pois").addEventListener("click",()=>{pmode=!pmode;if(!pmode)ptarget=null;draw()});
+     $("#act").querySelectorAll(".pgrid [data-i]").forEach(b=>b.addEventListener("click",()=>{ptarget=+b.dataset.i;draw()}));
+     $("#ok").addEventListener("click",()=>{if(heal!=null){T.heal=heal;G.heal=false;log(`Phù thủy dùng bình cứu`)}if(ptarget!=null){T.poison=ptarget;G.poison=false;log(`Phù thủy dùng bình độc`)}res()})};draw()})}},
+ {k:"thoisao",wake:"Kẻ thổi sáo thức dậy. Chọn hai người để thôi miên.",sleep:"Kẻ thổi sáo đi ngủ.",
+  run:async my=>{const me=G.players.findIndex(p=>p.alive&&p.role==="thoisao");const ids=alive().filter(i=>i!==me&&!P(i).charmed),n=Math.min(2,ids.length);
+   const s=await pick(my,{ids,count:n,min:n,confirm:"Thôi miên",top:`<p class="sub" style="margin:0">Đã bị thôi miên: ${G.players.filter(p=>p.charmed&&p.alive).map(p=>esc(p.name)).join(", ")||"chưa có ai"}</p>`});
+   s.forEach(i=>P(i).charmed=true)}}];
+function actorAlive(st){if(st.wolf)return alive().some(isWolf);if(st.lovers)return G.players.some(p=>p.lover&&p.alive);return roleAlive(st.k)}
+async function nightPhase(my){G.night++;G.T={bites:[],protect:null,heal:null,poison:null,sk:null,silence:null};
+ sky("night","Màn đêm buông xuống");waitScreen();renderSide();bell();
+ await say(my,G.night===1?"Màn đêm đầu tiên buông xuống. Mọi người đặt máy ở giữa và nhắm mắt lại.":`Đêm thứ ${G.night}. Mọi người nhắm mắt lại.`);
+ await sleep(1200);chk(my);
+ for(const st of NIGHT){
+  if(st.wolf?!KILLERS.some(k=>G.inGame.has(k)):!G.inGame.has(st.k))continue;
+  if(st.first&&G.night!==1)continue;
+  await gate(my);
+  const R=ROLES[st.k];sky("night",st.title||R.n,st.lovers?"cupid":st.k);waitScreen(`${st.title||R.n} đang thức…`);chimeUp();
+  await say(my,st.wake);
+  if(actorAlive(st)&&!(st.lovers&&!G.players.some(p=>p.lover))){await st.run(my);chk(my)}
+  else{waitScreen(`${st.title||R.n} đang thức…`);await sleep(rnd(5500,9500));chk(my)}
+  waitScreen();chimeDown();await say(my,st.sleep);await sleep(900);chk(my)}
+ G.lastProtect=G.T.protect;G.lastSilence=G.T.silence}
+
+/* ======================= DAY ======================= */
+async function hunterShots(my,phase){while(G.hunters.length){const h=G.hunters.shift();await gate(my);
+  sky(phase,"Phát súng cuối","thosan");await say(my,`${P(h).name} là Thợ săn. Trước khi gục xuống, Thợ săn hãy cầm máy và chọn người để bắn theo.`);
+  const s=await pick(my,{ids:alive(),confirm:"Bắn người này",extra:[{label:"Không bắn",value:[]}]});chk(my);
+  if(s.length){const d=kill(s[0],"shot",[]);log(`Thợ săn ${P(h).name} bắn ${deathText(d)}`);waitScreen("Đoàng!");await say(my,`Đoàng! ${deathText(d)} đã chết.`)}
+  else await say(my,"Thợ săn không bắn ai.");
+  renderSide();if(endIf())throw ABORT}}
+async function dayPhase(my){G.day++;G.players.forEach(p=>p.silenced=false);
+ const T=G.T,d=[];
+ (T.bites||[]).forEach(v=>{const p=P(v);if(!p.alive||v===T.protect||v===T.heal||p.role==="satnhan")return;if(p.role==="gialang"&&p.lives>1){p.lives--;log(`Già làng ${p.name} bị cắn nhưng còn sống`);return}kill(v,"wolf",d)});
+ if(T.sk!=null&&T.sk!==T.protect&&P(T.sk).alive)kill(T.sk,"sk",d);
+ if(T.poison!=null&&P(T.poison).alive)kill(T.poison,"poison",d);
+ log(`Đêm ${G.night}: ${d.length?d.map(x=>`${P(x.i).name} ${CAUSE[x.c]}`).join("; "):"bình yên"}`);
+ sky("day","Trời sáng");renderSide();bell();
+ waitScreen("Mọi người mở mắt");
+ await say(my,`Trời sáng rồi, mọi người mở mắt ra. ${d.length?`Đêm qua, ${deathText(d)} đã chết.`:"Đêm qua làng bình yên, không ai chết."}`);
+ if(endIf())throw ABORT;
+ await hunterShots(my,"day");
+ if(T.silence!=null&&P(T.silence).alive){P(T.silence).silenced=true;renderSide();await say(my,`${P(T.silence).name} đã bị phong ấn, hôm nay không được nói, nhưng vẫn được bỏ phiếu.`)}
+ await discussion(my);
+ await vote(my)}
+async function discussion(my){await gate(my);sky("day","Thảo luận");
+ await say(my,"Cả làng thảo luận để tìm ra kẻ đáng ngờ.");
+ await new Promise(res=>{let left=opt.time,id=null,ended=false;const kn=G.inGame.has("hiepsi")&&roleAlive("hiepsi")&&!G.knight;
+  const draw=()=>{act(`${opt.time?`<div style="display:grid;justify-items:center;gap:10px"><div class="timer num" id="timer">${fmt(left)}</div></div>`:""}
+   <div class="row" style="justify-content:center">${opt.time?`<button class="btn" id="add" type="button">+30 giây</button>`:""}<button class="btn primary big" id="ok" type="button">Bắt đầu bỏ phiếu</button>${kn?`<button class="btn" id="kn" type="button">Hiệp sĩ thách đấu</button>`:""}</div>`);
+   $("#ok").addEventListener("click",()=>{clearInterval(id);ended=true;res()});
+   if($("#add"))$("#add").addEventListener("click",()=>{left+=30;$("#timer").textContent=fmt(left)});
+   if($("#kn"))$("#kn").addEventListener("click",async()=>{clearInterval(id);ended=true;try{await duel(my)}catch(e){}res()})};
+  draw();
+  if(opt.time)id=setInterval(()=>{if(my!==token){clearInterval(id);return}left--;const el=$("#timer");if(el){el.textContent=fmt(Math.max(0,left));el.classList.toggle("warn",left<=15)}
+   if(left<=0&&!ended){clearInterval(id);ended=true;speak("Hết giờ thảo luận.").then(res)}},1000*SP())});chk(my)}
+async function duel(my){sky("day","Hiệp sĩ thách đấu","hiepsi");
+ const kn=G.players.findIndex(p=>p.alive&&p.role==="hiepsi");
+ await say(my,"Hiệp sĩ hãy cầm máy và chọn người để thách đấu.");
+ const s=await pick(my,{ids:alive().filter(i=>i!==kn),confirm:"Thách đấu người này",note:"Hiệp sĩ sẽ bị lộ vai."});chk(my);
+ if(!s.length)return;G.knight=true;const t=s[0],w=isWolf(t),d=kill(w?t:kn,w?"knight":"duel",[]);
+ log(`Hiệp sĩ ${P(kn).name} thách đấu ${P(t).name}: ${w?"thắng":"thua"}`);
+ await say(my,w?`${P(kn).name} là Hiệp sĩ và đã hạ gục ${deathText(d)}. Đó đúng là Sói!`:`${P(kn).name} là Hiệp sĩ, nhưng ${P(t).name} không phải Sói. ${deathText(d)} đã chết.`);
+ renderSide();if(endIf())throw ABORT;await hunterShots(my,"day")}
+async function vote(my){await gate(my);sky("day","Bỏ phiếu");
+ const voters=alive().filter(i=>!P(i).idiot);let target=null;
+ if(opt.secret){await say(my,"Bỏ phiếu kín. Chuyền máy lần lượt cho từng người.");
+  const tally={};let blanks=0;
+  for(const v of voters){chk(my);
+   await new Promise(r=>{act(`<div class="wait" style="padding:14px"><div class="big">Đưa máy cho ${esc(P(v).name)}</div><div>Những người khác đừng nhìn.</div></div><div class="row" style="justify-content:center"><button class="btn primary big" id="ok" type="button">Tôi là ${esc(P(v).name)}</button></div>`);$("#ok").addEventListener("click",r)});
+   const s=await pick(my,{ids:alive().filter(i=>i!==v),confirm:"Bỏ phiếu",note:`${esc(P(v).name)}, bạn muốn treo cổ ai?`,extra:[{label:"Phiếu trắng",value:[]}]});chk(my);
+   if(s.length)tally[s[0]]=(tally[s[0]]||0)+1;else blanks++}
+  const rows=Object.entries(tally).sort((a,b)=>b[1]-a[1]),top=rows[0]?rows[0][1]:0,lead=rows.filter(r=>r[1]===top);
+  const mx=Math.max(1,top);
+  act(`<div class="votes">${rows.map(([i,n])=>`<div><span>${esc(P(+i).name)}<i style="width:${n/mx*100}%"></i></span><span class="num">${n} phiếu</span></div>`).join("")||"<p>Không ai bị bỏ phiếu.</p>"}${blanks?`<p class="sub" style="margin:0">${blanks} phiếu trắng</p>`:""}</div>`);
+  if(top>0&&lead.length===1)target=+lead[0][0];
+  await say(my,target!=null?`Kết quả: ${P(target).name} nhận nhiều phiếu nhất với ${top} phiếu.`:top>0?"Kết quả hòa phiếu. Hôm nay không ai bị treo cổ.":"Không ai bị treo cổ hôm nay.");await sleep(1200)}
+ else{await say(my,"Cả làng biểu quyết và chọn một người để treo cổ.");
+  const s=await pick(my,{ids:alive(),confirm:"Treo cổ người này",extra:[{label:"Không treo ai",value:[]}]});target=s[0]??null}
+ chk(my);
+ if(target==null){log(`Ngày ${G.day}: không ai bị treo`);return}
+ const p=P(target);
+ if(p.role==="thanghe"){p.alive=false;log(`Ngày ${G.day}: ${p.name} bị treo cổ`);await say(my,`${p.name} bị treo cổ… và bật cười. ${p.name} là Thằng hề!`);over("thanghe");throw ABORT}
+ if(p.role==="thangngoc"&&!p.idiot){p.idiot=true;log(`Ngày ${G.day}: ${p.name} lộ là Thằng ngốc`);renderSide();await say(my,`${p.name} là Thằng ngốc nên được tha. Từ nay ${p.name} không được bỏ phiếu.`);return}
+ const d=kill(target,"vote",[]);log(`Ngày ${G.day}: ${d.map(x=>`${P(x.i).name} ${CAUSE[x.c]}`).join("; ")}`);renderSide();
+ await say(my,`${deathText(d)} đã bị dân làng treo cổ.`);
+ if(endIf())throw ABORT;await hunterShots(my,"day")}
 function fmt(t){return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")}
-function renderSide(){$("#side").classList.toggle("hiddenroles",G.hideRoles);$("#toggleRoles").textContent=G.hideRoles?"Hiện vai":"Ẩn vai";
- $("#plist").innerHTML=G.players.map((p,i)=>{const R=ROLES[p.role];return `<li class="${p.alive?"":"dead"}"><span class="ri" style="--rc:${R.c}">${R.i}</span><div><b>${esc(p.name)}</b><small class="rn">${R.n}</small></div><span class="tags">${p.lover?'<span class="lv">♥</span>':""}${p.alive?"":'<span class="dd">Chết</span>'}</span></li>`}).join("");
+
+/* ======================= LOOP ======================= */
+async function run(){const my=token;show("play");renderSide();
+ try{while(true){await nightPhase(my);await dayPhase(my);if(endIf())return}}
+ catch(e){if(e!==ABORT)console.error(e)}}
+function renderSide(){if(!G)return;const al=alive().length;$("#aliveLbl").textContent=`Còn ${al}/${G.players.length}`;
+ $("#plist").innerHTML=G.players.map((p,i)=>{const R=ROLES[p.role],known=!p.alive&&opt.reveal||p.idiot;
+  return `<li class="${p.alive?"":"dead"}"><span class="ri${known?"":" unk"}" style="--rc:${R.c}">${R.i}</span><div><b>${esc(p.name)}</b><small>${known?roleName(i):p.alive?"Còn sống":"Đã chết"}</small></div><span class="tags">${p.silenced&&p.alive?'<span class="sl">Phong ấn</span>':""}${p.idiot?'<span>Không bỏ phiếu</span>':""}${p.alive?"":'<span class="dd">Chết</span>'}</span></li>`}).join("");
  $("#log").innerHTML=G.log.slice(0,14).map(t=>`<li>${esc(t)}</li>`).join("")||'<li>Chưa có gì xảy ra.</li>'}
-$("#toggleRoles").addEventListener("click",()=>{G.hideRoles=!G.hideRoles;renderGame()});
-$("#speakBtn").addEventListener("click",()=>{if(G&&G.step)say(G.step.script)});
+$("#replay").addEventListener("click",()=>{if(lastLine)speak(lastLine)});
+$("#pause").addEventListener("click",()=>{paused=!paused;$("#pause").textContent=paused?"Tiếp tục":"Tạm dừng";if(!paused&&resume){resume();resume=null}});
 $("#quit").addEventListener("click",()=>{const b=$("#quit");if(b.dataset.arm){delete b.dataset.arm;b.textContent="Kết thúc ván";over("quit");return}b.dataset.arm="1";b.textContent="Bấm lần nữa để kết thúc";setTimeout(()=>{delete b.dataset.arm;b.textContent="Kết thúc ván"},3000)});
 
-function over(w){G.over=w;try{speechSynthesis.cancel()}catch(e){}
- const th={dan:["#17a35e","#0b6b44","Dân làng chiến thắng!","Bầy Sói đã bị tiêu diệt hết. Ngôi làng lại bình yên."],
-  soi:["#b8323f","#5d1220","Bầy Sói chiến thắng!","Sói đã đông ngang dân làng. Ngôi làng chìm trong bóng tối."],
+function over(w){if(!G||G.over)return;G.over=w;token++;paused=false;try{speechSynthesis.cancel()}catch(e){}
+ const th={dan:["#17a35e","#0b6b44","Dân làng chiến thắng!","Mọi mối nguy đã bị loại bỏ. Ngôi làng lại bình yên."],
+  soi:["#b8323f","#5d1220","Bầy Sói chiến thắng!","Phe Sói đã đông ngang dân làng. Ngôi làng chìm trong bóng tối."],
   love:["#ff4f9e","#a31d63","Cặp đôi chiến thắng!","Hai người yêu nhau khác phe đã sống sót đến cuối cùng."],
-  quit:["#5b6f79","#2c3a41","Ván đã kết thúc","Quản trò đã dừng ván giữa chừng."]}[w];
+  satnhan:["#e07a00","#7a3e00","Sát nhân chiến thắng!","Kẻ giết người hàng loạt là người cuối cùng đứng vững."],
+  thanghe:["#d35400","#7b2d00","Thằng hề chiến thắng!","Cả làng đã mắc bẫy, treo cổ đúng người muốn bị treo cổ."],
+  thoisao:["#a0522d","#4e2510","Kẻ thổi sáo chiến thắng!","Tất cả những người còn sống đã bị thôi miên."],
+  hoa:["#5b6f79","#2c3a41","Không ai sống sót","Cả làng đã chết hết. Ván này hòa."],
+  quit:["#5b6f79","#2c3a41","Ván đã kết thúc","Ván được dừng giữa chừng."]}[w];
  $("#winBox").style.setProperty("--wc1",th[0]);$("#winBox").style.setProperty("--wc2",th[1]);
  $("#winBox").innerHTML=`<span class="eyebrow" style="color:#fff;opacity:.85">Sau ${G.night} đêm</span><h2>${th[2]}</h2><p>${th[3]}</p>`;
- if(opt.speak&&w!=="quit")say(th[2]);
- $("#finalList").innerHTML=G.players.map(p=>{const R=ROLES[p.role];return `<li class="${p.alive?"":"dead"}"><span class="ri" style="--rc:${R.c}">${R.i}</span><div><b>${esc(p.name)}</b><small>${R.n}${p.lover?" · cặp đôi":""}</small></div><span class="tags">${p.alive?'<span>Sống</span>':'<span class="dd">Chết</span>'}</span></li>`}).join("");
- show("over");return true}
+ if(w!=="quit"){chimeUp();setTimeout(()=>speak(th[2]+" "+th[3]),400)}
+ $("#finalList").innerHTML=G.players.map((p,i)=>{const R=ROLES[p.role];return `<li class="${p.alive?"":"dead"}"><span class="ri" style="--rc:${R.c}">${R.i}</span><div><b>${esc(p.name)}</b><small>${roleName(i)} · ${TEAMNAME[p.team]}${p.lover?" · cặp đôi":""}${p.charmed?" · bị thôi miên":""}</small></div><span class="tags">${p.alive?'<span>Sống</span>':'<span class="dd">Chết</span>'}</span></li>`}).join("");
+ show("over")}
 
 $("#start").addEventListener("click",newGame);
 $("#backSetup").addEventListener("click",()=>{renderSetup();show("setup")});
-$("#toNight").addEventListener("click",()=>{pendingHunter=[];startNight()});
+$("#toNight").addEventListener("click",()=>{try{speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(""))}catch(e){}run()});
 $("#again").addEventListener("click",newGame);
 $("#toSetup").addEventListener("click",()=>{renderSetup();show("setup")});
+window.__ms={get G(){return G},opt,winner};
 renderSetup();
 })();
 </script>

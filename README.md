@@ -7,7 +7,7 @@ Trang board game cho hội bạn, chơi ngay trên trình duyệt (điện tho�
 | Trò chơi | Người chơi | Cách chơi |
 |---|---|---|
 | [Cờ Tỷ Phú Du Lịch](https://buuhaucantho-ship-it.github.io/game-hoi-ban/co-ty-phu.html) | 2–10 | Chung một máy, hoặc online mỗi người một máy theo mã phòng |
-| [Ma Sói](https://buuhaucantho-ship-it.github.io/game-hoi-ban/ma-soi.html) | 5–18 + 1 quản trò | Chuyền máy xem vai; trang làm quản trò ảo |
+| [Ma Sói](https://buuhaucantho-ship-it.github.io/game-hoi-ban/ma-soi.html) | 5–24 | Tự dẫn bằng giọng đọc, không cần quản trò; 20 vai, 3 phe |
 | [Ai Là Gián Điệp](https://buuhaucantho-ship-it.github.io/game-hoi-ban/gian-diep.html) | 3–12 | Chuyền máy nhận từ khóa, mô tả và bỏ phiếu |
 
 ## Cờ Tỷ Phú Du Lịch
@@ -18,11 +18,14 @@ Trang board game cho hội bạn, chơi ngay trên trình duyệt (điện tho�
 
 ## Ma Sói
 
-Một người làm quản trò cầm máy. Trang chia vai bí mật (chuyền máy, giữ để xem), sau đó dẫn từng bước:
-đêm (Thần tình yêu → Bảo vệ → Sói → Tiên tri → Phù thủy) và ngày (công bố người chết → thảo luận có đếm giờ → treo cổ).
-Trang tự tính người chết (bảo vệ, bình cứu, bình độc, cặp đôi chết theo, thợ săn bắn theo) và tự báo phe thắng. Có thể bật đọc to lời dẫn.
+Tự dẫn, không cần quản trò. Chuyền máy để mỗi người giữ thẻ xem vai, rồi đặt máy giữa vòng và bật âm lượng.
+Ban đêm giọng đọc gọi từng vai thức dậy; vai được gọi cầm máy chọn, bấm xong máy tự gọi vai tiếp theo.
+Vai đã chết vẫn được gọi và chờ một lúc ngẫu nhiên để không lộ. Ban ngày: công bố người chết, thảo luận có đếm giờ, bỏ phiếu kín chuyền máy (hoặc biểu quyết công khai). Trang tự tính kết quả và báo phe thắng.
 
-Vai: Sói, Dân làng, Tiên tri, Bảo vệ, Phù thủy, Thợ săn, Thần tình yêu.
+20 vai trong 3 phe:
+- **Phe Sói:** Sói, Sói tiên tri, Sói con, Tay sai.
+- **Phe Dân:** Dân làng, Tiên tri, Bảo vệ, Phù thủy, Thợ săn, Thần tình yêu, Già làng, Thám tử, Hiệp sĩ, Thằng ngốc, Bà đồng, Phong ấn sư, Đứa trẻ hoang.
+- **Phe thứ ba:** Sát nhân (thắng khi còn lại một mình hoặc đấu tay đôi), Thằng hề (thắng nếu bị treo cổ), Kẻ thổi sáo (thắng khi mọi người còn sống bị thôi miên). Cặp đôi khác phe cũng thắng riêng nếu là hai người cuối cùng.
 
 ## Ai Là Gián Điệp
 
