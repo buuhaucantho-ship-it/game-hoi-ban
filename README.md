@@ -6,12 +6,18 @@ Trang board game cho hội bạn, chơi ngay trên trình duyệt (điện tho�
 
 | Trò chơi | Người chơi | Cách chơi |
 |---|---|---|
-| [Cờ Tỷ Phú Cần Thơ](https://buuhaucantho-ship-it.github.io/game-hoi-ban/co-ty-phu.html) | 2–10 | Chung một máy, hoặc online mỗi người một máy theo mã phòng |
+| [Cờ Tỷ Phú (Cần Thơ / Tây Du Ký)](https://buuhaucantho-ship-it.github.io/game-hoi-ban/co-ty-phu.html) | 2–10 | Chung một máy, hoặc online mỗi người một máy theo mã phòng |
 | [Ma Sói](https://buuhaucantho-ship-it.github.io/game-hoi-ban/ma-soi.html) | 5–24 | Tự dẫn bằng giọng đọc, không cần quản trò; 20 vai, 3 phe |
 | [Ai Là Gián Điệp](https://buuhaucantho-ship-it.github.io/game-hoi-ban/gian-diep.html) | 3–12 | Chuyền máy nhận từ khóa, mô tả và bỏ phiếu |
 | [Đảo Khai Hoang](https://buuhaucantho-ship-it.github.io/game-hoi-ban/khai-hoang.html) | 3–4, mở rộng 5–6 | Chung một máy, mỗi ghế chọn người hoặc máy |
 
-## Cờ Tỷ Phú Cần Thơ
+## Cờ Tỷ Phú (2 chủ đề)
+
+Nút chọn chủ đề ở trang cài đặt và trên thanh trên cùng (đổi được cả giữa ván, luật giữ nguyên):
+- **Cần Thơ:** đời sinh viên Tây Đô (chi tiết bên dưới).
+- **Tây Du Ký:** đường thỉnh kinh từ Trường An tới Đại Lôi Âm Tự. Núi Ngũ Hành (bị giam), Cân Đẩu Vân (bay tới ô bất kỳ), Hội Bàn Đào (thuê ×2), Hỏa Diệm Sơn, Bạch Long Mã (thêm lượt), Thông quan văn điệp; thẻ Thiên Cơ (Cơ hội) và Kiếp Nạn (Khí vận); tiên cảnh Hoa Quả Sơn, Long Cung, Phổ Đà Sơn, Quảng Hàn Cung, Ngũ Trang Quán. 10 nhân vật tự vẽ theo truyện: Đường Tăng, Tôn Ngộ Không, Trư Bát Giới, Sa Tăng, Bạch Long Mã, Thổ Địa, Na Tra, Ngưu Ma Vương, Hồng Hài Nhi, Ngọc Hoàng. Màu đỏ son, vàng kim, nhạc ngũ cung có tiếng cồng.
+
+### Chủ đề Cần Thơ
 
 - Chủ đề Tây Đô, phong cách Gen Z: mỳ cay Omega, mỳ cay Itada, bún đậu Xưa, hồng trà Ngô Gia, music box, karaoke, chợ đêm, Vincom Xuân Khánh, các con đường lớn, nhà cổ Bình Thủy, Đại học Cần Thơ, cầu đi bộ Ninh Kiều, cầu Cần Thơ. Khu du lịch: chợ nổi Cái Răng, vườn cò Bằng Lăng, Mỹ Khánh, Cồn Sơn, Thiền viện Trúc Lâm.
 - Ô đặc biệt: Bến Ninh Kiều (xuất phát), Kẹt xe, Đêm nhạc (thuê ×2), Đi phượt (đi đâu cũng được), thẻ Kèo và Drama, Triều cường, Đèn xanh, Bill cuối tháng.

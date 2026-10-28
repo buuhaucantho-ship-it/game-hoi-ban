@@ -663,6 +663,43 @@ body.dev-phone .say{font-size:11.5px;padding:5px 8px;max-width:62%}
 .sq.fill .pr.sub2{color:rgba(255,255,255,.92);font-size:calc(clamp(7px,1.15cqi,9.5px) * var(--k));font-weight:800;margin-top:1px;letter-spacing:.06em;text-transform:uppercase}
 .sq.fill.dark .pr.sub2{color:rgba(22,24,63,.7)}
 body.dev-phone .sq.fill .pr.sub2{font-size:6.5px;margin-top:0}
+
+/* ---- theme switch ---- */
+.thpick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0 0 18px}
+.thpick button{display:flex;gap:14px;align-items:center;text-align:left;background:var(--surface);color:var(--ink);border-radius:20px;padding:12px 14px;box-shadow:0 4px 0 var(--drop);border:3px solid transparent;transition:transform .15s}
+.thpick button:hover{transform:translateY(-2px)}
+.thpick button.on{border-color:var(--sun);box-shadow:0 4px 0 var(--drop),0 0 0 4px color-mix(in srgb,var(--sun) 35%,transparent)}
+.thpick b{display:block;font-family:var(--f-display);font-weight:400;font-size:20px}
+.thpick small{display:block;color:var(--muted);font-weight:700;font-size:12.5px;margin-top:2px}
+.thart{flex:none;width:64px;height:64px;border-radius:16px;background:var(--grain),var(--g);position:relative;overflow:hidden}
+.thart.ct{--g:linear-gradient(160deg,#2c6df2,#1640a8)}.thart.ct::after{content:"";position:absolute;left:0;right:0;bottom:0;height:30px;background:var(--rainbow-ct);background-size:34px 17px;background-repeat:repeat-x;background-position:0 100%}
+.thart.tdk{--g:linear-gradient(160deg,#c21f36,#5e0d18)}.thart.tdk::after{content:"";position:absolute;inset:auto 0 0 0;height:30px;background:var(--rainbow-tdk);background-size:34px 17px;background-repeat:repeat-x;background-position:0 100%}
+:root{--rainbow-ct:radial-gradient(circle at 50% 100%,#fff 0 3px,#ff4f9a 3px 6px,#ffe14a 6px 9px,#5cc85a 9px 12px,#3ec7f0 12px 15px,transparent 15.5px);
+ --rainbow-tdk:radial-gradient(circle at 50% 100%,#fff 0 3px,#2a5fc4 3px 6px,#fff 6px 7px,#2aa38b 7px 10px,#ffcf4a 10px 13px,#fff 13px 14px,transparent 15.5px)}
+@media (max-width:640px){.thpick{grid-template-columns:minmax(0,1fr)}.thart{width:48px;height:48px}}
+body.dev-phone .thsw button span{display:none}
+body.dev-phone .topbtns{gap:5px}
+body.dev-phone .topbtns .pill{padding:6px 9px;min-height:32px}
+body.dev-phone .devsw button{padding:4px 7px;min-height:30px}
+body.dev-phone.ingame .seal{width:30px;height:30px}
+/* ---- Tây Du Ký palette ---- */
+:root.th-tdk{--bg:#8c1424;--frame:#5e0d18;--sea-1:#3b2a8f;--sea-2:#170f4d;--sun:#ffcf4a;--accent:#ffcf4a;--pink:#ff6a3d;--surface:#fff7e6;--tile:#fffaf0;--tile-2:#f7ecd2;--line:#ecd8b0;--ink:#2a1414;--muted:#7a5a52;
+ --drop:rgba(60,6,14,.5);--rainbow:radial-gradient(circle at 50% 100%,#fff 0 4px,#2a5fc4 4px 9px,#fff 9px 11px,#2aa38b 11px 16px,#fff 16px 18px,#ffcf4a 18px 23px,#fff 23px 25px,#1f3f8a 25px 34px,transparent 34.5px)}
+@media (prefers-color-scheme:dark){:root.th-tdk:not([data-theme="light"]){--bg:#4a0a14;--frame:#2e0710;--surface:#2a1420;--tile-2:#3a1c2a;--ink:#fff1e6;--muted:#d8b8b0;--line:#5a2a36;--sea-1:#2a1f70;--sea-2:#100a38}}
+:root.th-tdk[data-theme="dark"]{--bg:#4a0a14;--frame:#2e0710;--surface:#2a1420;--tile-2:#3a1c2a;--ink:#fff1e6;--muted:#d8b8b0;--line:#5a2a36}
+.th-tdk body{background-image:radial-gradient(circle at 12% -5%,rgba(255,207,74,.18),transparent 40%),radial-gradient(circle at 95% 105%,rgba(255,106,61,.22),transparent 42%)}
+.th-tdk .hero{background:linear-gradient(160deg,#c21f36,#5e0d18)}
+.th-tdk .hero h2 em{color:#ffd98a}
+.th-tdk .sticker{background:var(--sun);color:#5e0d18}
+.th-tdk .seal{background:var(--sun);color:#8c1424}
+.th-tdk .board{box-shadow:0 6px 0 #3a0810,0 18px 40px rgba(40,5,10,.4)}
+.th-tdk .cloud{color:#ffd98a}
+.th-tdk .wm .w2 .l:nth-child(3n+1){color:var(--sun)}.th-tdk .wm .w2 .l:nth-child(3n+2){color:#fff}.th-tdk .wm .w2 .l:nth-child(3n){color:#ffb08a}
+.th-tdk .devsw button.on{background:#8c1424}
+.th-tdk .handoff{background:var(--grain),linear-gradient(168deg,rgba(194,31,54,.97),rgba(94,13,24,.98))}
+.th-tdk .face.red i{background:#c8102e}
+.th-tdk .btn.primary{box-shadow:0 4px 0 #b8860b}
+.th-tdk .seg button.on{background:#8c1424}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -679,6 +716,10 @@ body.dev-phone .sq.fill .pr.sub2{font-size:6.5px;margin-top:0}
       <a class="gtab" href="khai-hoang.html" style="--tc:#d9822b"><svg class="i" viewBox="0 0 24 24"><path d="M12 2l8.5 5v10L12 22l-8.5-5V7z"/><path d="M8 15l4-6 4 6z"/></svg>Khai Hoang</a>
     </div>
     <div class="topbtns">
+      <div class="thsw devsw" role="group" aria-label="Chủ đề bàn cờ">
+        <button type="button" data-th="cantho" title="Chủ đề Cần Thơ"><svg class="i" viewBox="0 0 24 24"><path d="M2 15h20l-4 5H6z"/><path d="M12 14V4l6 10z"/></svg><span>Cần Thơ</span></button>
+        <button type="button" data-th="tdk" title="Chủ đề Tây Du Ký"><svg class="i" viewBox="0 0 24 24"><path d="M3 16q0-4 4-4 1-4 5-4t5 4q4 0 4 4z"/><path d="M8 20q2-2 4 0t4 0"/></svg><span>Tây Du Ký</span></button>
+      </div>
       <div class="devsw" role="group" aria-label="Giao diện theo thiết bị">
         <button type="button" data-dev="auto" title="Tự chọn theo màn hình"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg><span>Tự động</span></button>
         <button type="button" data-dev="phone" title="Điện thoại"><svg class="i" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg><span>Điện thoại</span></button>
@@ -696,16 +737,20 @@ body.dev-phone .sq.fill .pr.sub2{font-size:6.5px;margin-top:0}
   <section id="setup">
     <div class="hero">
       <div>
-        <span class="sticker">Phiên bản Tây Đô · Gen Z</span>
-        <h2>Quẩy khắp <span>Tây Đô</span>, làm chủ cả <em>Cần Thơ</em></h2>
-        <p>Từ mỳ cay Omega, Itada, bún đậu Xưa, hồng trà Ngô Gia, music box, Vincom Xuân Khánh đến chợ nổi Cái Răng và cầu Cần Thơ: 2 đến 10 dân chơi cùng mua chỗ, xây nhà, mở khách sạn và tranh nhau các khu du lịch xịn nhất.</p>
+        <span class="sticker" id="heroSticker">Phiên bản Tây Đô · Gen Z</span>
+        <h2 id="heroH2">Quẩy khắp <span>Tây Đô</span>, làm chủ cả <em>Cần Thơ</em></h2>
+        <p id="heroP">Từ mỳ cay Omega, Itada, bún đậu Xưa, hồng trà Ngô Gia, music box, Vincom Xuân Khánh đến chợ nổi Cái Răng và cầu Cần Thơ: 2 đến 10 dân chơi cùng mua chỗ, xây nhà, mở khách sạn và tranh nhau các khu du lịch xịn nhất.</p>
       </div><svg class="cloud c1" viewBox="0 0 130 44" aria-hidden="true"><path d="M6 30h56a9 9 0 1 0-9-9M34 18h50a8 8 0 1 1 8 8h30" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M6 30h56a9 9 0 1 0-9-9M34 18h50a8 8 0 1 1 8 8h30" fill="none" stroke="#ff9ccb" stroke-width="2" stroke-linecap="round"/></svg><svg class="cloud c2" viewBox="0 0 130 44" aria-hidden="true"><path d="M6 30h56a9 9 0 1 0-9-9M34 18h50a8 8 0 1 1 8 8h30" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M6 30h56a9 9 0 1 0-9-9M34 18h50a8 8 0 1 1 8 8h30" fill="none" stroke="#ff9ccb" stroke-width="2" stroke-linecap="round"/></svg><div class="rb" aria-hidden="true"></div>
       <div class="parade" id="parade" aria-hidden="true"></div>
     </div>
+    <div class="thpick" role="group" aria-label="Chọn chủ đề bàn cờ">
+      <button type="button" data-th="cantho"><span class="thart ct"></span><span><b>Cần Thơ</b><small>Đời sinh viên Tây Đô: mỳ cay, bún đậu, music box, chợ nổi, cầu Cần Thơ.</small></span></button>
+      <button type="button" data-th="tdk"><span class="thart tdk"></span><span><b>Tây Du Ký</b><small>Đường thỉnh kinh: Hoa Quả Sơn, Nữ Nhi Quốc, Hỏa Diệm Sơn, Cân Đẩu Vân.</small></span></button>
+    </div>
     <div class="setup">
       <div class="card">
-        <h3>Danh sách dân chơi</h3>
-        <p class="sub"><b>Chơi chung một máy, không cần mạng.</b> Bấm vào nhân vật để đổi người (10 nhân vật dân gian khắp ba miền), đặt tên và chọn người chơi thật hoặc máy.</p>
+        <h3 id="seatsT">Danh sách dân chơi</h3>
+        <p class="sub"><b>Chơi chung một máy, không cần mạng.</b> Bấm vào nhân vật để đổi người <span id="charNote">(10 nhân vật dân gian khắp ba miền)</span>, đặt tên và chọn người chơi thật hoặc máy.</p>
         <div class="fields">
           <label class="field" for="nPlayers"><span>Số người chơi</span>
             <select id="nPlayers"><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select></label>
@@ -734,7 +779,7 @@ body.dev-phone .sq.fill .pr.sub2{font-size:6.5px;margin-top:0}
           <div><b>Mua lại.</b> Chỉ mua lại được đất <b>đang cầm cố</b>, với giá gốc: ngân hàng thu nợ, chủ cũ nhận phần còn lại (45%).</div>
           <div><b>Cùng màu thu gấp đôi.</b> Sở hữu trọn các ô cùng màu thì tiền thuê mọi ô màu đó ×2. Đổ đôi được đi tiếp; đổ đôi 3 lần liền thì bị Kẹt xe.</div>
           <div><b>Khu du lịch</b> (chợ nổi, vườn cò, Mỹ Khánh, Cồn Sơn…). Không xây nhà; tiền thuê tăng theo số khu du lịch cùng một người sở hữu (25K → 50K → 100K → 200K → 300K).</div>
-          <div><b>Kẹt xe.</b> Phải đổ được đôi mới ra; chờ đủ 3 lượt thì được ra miễn phí. Đang kẹt xe thì không thu được tiền thuê.</div>
+          <div id="ruleJail"><b>Kẹt xe.</b> Phải đổ được đôi mới ra; chờ đủ 3 lượt thì được ra miễn phí. Đang kẹt xe thì không thu được tiền thuê.</div>
           <div><b>Thắng.</b> Gom đủ tất cả khu du lịch, hoặc trọn 3 tuyến màu, hoặc là người cuối cùng còn trụ lại. Hết số vòng giới hạn thì người giàu nhất thắng.</div>
         </div>
       </div>
@@ -752,7 +797,7 @@ body.dev-phone .sq.fill .pr.sub2{font-size:6.5px;margin-top:0}
       </div>
       <div class="card">
         <h3>Ô đặc biệt trên bàn cờ</h3>
-        <p class="sub">Kèo là ô Cơ hội, Drama là ô Khí vận, viết lại theo đời sinh viên. Bàn lớn 40 ô có 3 ô Kèo, 3 ô Drama, thêm 6 điểm vui chơi và khu Thiền viện Trúc Lâm.</p>
+        <p class="sub" id="legendSub">Kèo là ô Cơ hội, Drama là ô Khí vận, viết lại theo đời sinh viên. Bàn lớn 40 ô có 3 ô Kèo, 3 ô Drama, thêm 6 điểm vui chơi và khu Thiền viện Trúc Lâm.</p>
         <ul class="legend" id="legend"></ul>
       </div>
       </div>
@@ -791,14 +836,14 @@ body.dev-phone .sq.fill .pr.sub2{font-size:6.5px;margin-top:0}
       <div class="layer" id="fx"></div>
     </div></div>
     <aside class="rail" id="rail" aria-label="Thông tin ván">
-      <div class="card"><h3>Dân chơi</h3><div id="railPl"></div></div>
+      <div class="card"><h3 id="railPlT">Dân chơi</h3><div id="railPl"></div></div>
       <div class="card"><h3>Nhật ký</h3><ul class="log" id="log"></ul></div>
     </aside>
     <div hidden><input type="checkbox" id="gForecast"><input type="checkbox" id="gFast"></div>
   </section>
 </div>
 
-<footer class="foot">Cờ Tỷ Phú Cần Thơ · trò chơi giải trí cho hội bạn · không thu thập dữ liệu, phòng online kết nối trực tiếp giữa các máy.</footer>
+<footer class="foot"><span id="footT">Cờ Tỷ Phú Cần Thơ</span> · trò chơi giải trí cho hội bạn · không thu thập dữ liệu, phòng online kết nối trực tiếp giữa các máy.</footer>
 
 <div class="modal" id="over" hidden><canvas id="confetti"></canvas><div class="mbox win" id="overbox" role="dialog" aria-modal="true"></div></div>
 <div class="modal" id="assetModal" hidden><div class="mbox" id="assetBox" role="dialog" aria-modal="true"></div></div>
@@ -813,16 +858,16 @@ const m=v=>Math.round(v).toLocaleString("vi-VN")+"K";
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 
 /* ---------- characters: folk cartoon people from across Vietnam ---------- */
-const ANIMALS=[["coba","Cô Ba Nam Bộ"],["anhhai","Anh Hai khăn rằn"],["cohue","Cô gái Huế"],["anhca","Anh Cả Bắc Bộ"],["lienchi","Liền chị Quan họ"],["hmong","Cô gái H'Mông"],["ede","Chàng Ê Đê"],["cham","Cô gái Chăm"],["khmer","Cô gái Khmer"],["ongtu","Ông Tư miệt vườn"]];
+let ANIMALS=[["coba","Cô Ba Nam Bộ"],["anhhai","Anh Hai khăn rằn"],["cohue","Cô gái Huế"],["anhca","Anh Cả Bắc Bộ"],["lienchi","Liền chị Quan họ"],["hmong","Cô gái H'Mông"],["ede","Chàng Ê Đê"],["cham","Cô gái Chăm"],["khmer","Cô gái Khmer"],["ongtu","Ông Tư miệt vườn"]];
 const OLDK=["cat","bear","rabbit","fox","panda","frog","penguin","owl","mouse","pig"];
-const normKind=k=>ANIMALS.some(a=>a[0]===k)?k:ANIMALS[Math.max(0,OLDK.indexOf(k))][0];
+const normKind=k=>{if(ANIMALS.some(a=>a[0]===k))return k;for(const L of (typeof ALLCH!=="undefined"?ALLCH:[OLDK])){const i=L.indexOf(k);if(i>=0)return ANIMALS[i%ANIMALS.length][0]}return ANIMALS[0][0]};
 const EY=(y=38)=>`<ellipse cx="26.5" cy="${y}" rx="1.8" ry="2.2" fill="#2b1a12"/><ellipse cx="37.5" cy="${y}" rx="1.8" ry="2.2" fill="#2b1a12"/><circle cx="27.2" cy="${y-.9}" r=".7" fill="#fff"/><circle cx="38.2" cy="${y-.9}" r=".7" fill="#fff"/>`;
 const BL=(y=42)=>`<circle cx="22.5" cy="${y}" r="2.8" fill="#ff6f6f" opacity=".42"/><circle cx="41.5" cy="${y}" r="2.8" fill="#ff6f6f" opacity=".42"/>`;
 const MO=(y=45)=>`<path d="M29 ${y}q3 2.6 6 0" stroke="#8a3a22" stroke-width="1.6" fill="none" stroke-linecap="round"/>`;
 const FACE=(sk,y=37)=>`<rect x="28.5" y="46" width="7" height="8" fill="${sk}"/><circle cx="32" cy="${y}" r="13.5" fill="${sk}"/>`;
 const BODY=(c,x="")=>`<path d="M9 66q1-15 23-15t23 15z" fill="${c}"/>${x}`;
 const BROW=(c="#1d130d")=>`<path d="M24 33.6q2.5-1.4 5 0M35 33.6q2.5-1.4 5 0" stroke="${c}" stroke-width="1.4" fill="none" stroke-linecap="round"/>`;
-const FACES={
+let FACES={
  coba:`<path d="M18 37q0-15 14-15t14 15l1 16H17z" fill="#24160f"/>`+BODY("#f49ac1",`<path d="M32 51v15" stroke="#e070a0" stroke-width="1"/><circle cx="32" cy="56.5" r="1.1" fill="#fff"/><circle cx="32" cy="61.5" r="1.1" fill="#fff"/>`)+FACE("#f7cfa8")+EY()+BL()+MO()+
   `<path d="M20 31q2 15 12 16q10-1 12-16" stroke="#e8333f" stroke-width="1" fill="none" opacity=".75"/><path d="M4 28L32 5l28 23q-28 7-56 0z" fill="#f3d27e"/><path d="M4 28q28 7 56 0" stroke="#c99a3e" stroke-width="1.6" fill="none"/><path d="M32 5L14 26M32 5l-8 22M32 5v23M32 5l8 22M32 5l18 21" stroke="#dcb15a" stroke-width=".8"/>`,
  anhhai:BODY("#8a5a35",`<path d="M20 52q12 7 24 0l2 5q-14 8-28 0z" fill="#22222a"/><path d="M22 54l1.5 2M27 56l1.5 2M32 57l1.5 2M37 56l1.5 2M42 54l1 2" stroke="#fff" stroke-width="1"/>`)+FACE("#d9a173")+
@@ -853,14 +898,14 @@ const SALARY=200;
 const LV=["Đất trống","1 nhà","2 nhà","3 nhà","4 nhà","Khách sạn"];
 const RENT=[0.1,0.3,0.8,1.6,2.2,2.8];
 const ZONE=g=>g<=2?"Khu bình dân":g<=4?"Khu trung lưu":g<=6?"Khu cao cấp":"Khu hạng sang";
-const GLBL={1:"MỲ CAY",2:"ĂN UỐNG",3:"CHỢ ĐÊM",4:"QUẨY",5:"ĐƯỜNG LỚN",6:"DI TÍCH",7:"TRUNG TÂM",8:"BIỂU TƯỢNG"};
+let GLBL={1:"MỲ CAY",2:"ĂN UỐNG",3:"CHỢ ĐÊM",4:"QUẨY",5:"ĐƯỜNG LỚN",6:"DI TÍCH",7:"TRUNG TÂM",8:"BIỂU TƯỢNG"};
 const ISL_RENT=[0,25,50,100,200,300];
-const GCOL={1:"#b8773a",2:"#f2a100",3:"#ef5da8",4:"#8a5cf0",5:"#ff6a2b",6:"#e23b3b",7:"#2fae55",8:"#2457e6"};
-const ISL_COL="#0eb0c9";
+let GCOL={1:"#b8773a",2:"#f2a100",3:"#ef5da8",4:"#8a5cf0",5:"#ff6a2b",6:"#e23b3b",7:"#2fae55",8:"#2457e6"};
+let ISL_COL="#0eb0c9";
 const PCOL=["#e8333f","#2457e6","#2fae55","#ff7a1a","#8a5cf0","#00a8b5","#ff4f9a","#3a3f63","#b8773a","#7a9a12"];
 const DEF_NAMES=["An","Bình","Chi","Dũng","Giang","Hạnh","Khoa","Linh","Minh","Nga"];
-const C=(n,g,p)=>({t:"city",n,g,p,cc:GLBL[g]}), I=(n)=>({t:"island",n,p:150}), X=(t,n)=>({t,n});
-const MAPS={
+const C=(n,g,p)=>({t:"city",n,g,p}), I=(n)=>({t:"island",n,p:150}), X=(t,n)=>({t,n});
+let MAPS={
  32:[X("start","Bến Ninh Kiều"),C("Mỳ cay Omega",1,60),X("bag","Drama"),C("Mỳ cay Itada",1,60),X("tax","Bill cuối tháng"),I("Vườn cò Bằng Lăng"),C("Bún đậu Xưa",2,100),C("Hồng trà Ngô Gia",2,100),
   X("jail","Kẹt xe"),C("Chợ đêm Tây Đô",3,140),X("chance","Kèo"),C("Phố đi bộ Hai Bà Trưng",3,140),X("storm","Triều cường"),I("Làng du lịch Mỹ Khánh"),C("Music box",4,180),C("Karaoke",4,180),
   X("fest","Đêm nhạc"),C("Đường Mậu Thân",5,220),X("chance","Kèo"),C("Đường 3 Tháng 2",5,220),I("Cồn Sơn"),C("Nhà cổ Bình Thủy",6,260),X("bag","Drama"),C("Chùa Ông",6,260),
@@ -900,12 +945,12 @@ spicy2:'<path d="M5 16h38q-2 13-19 13T5 16z"/><path d="M29 3L15 15M35 4L19 15" s
 tea:'<path d="M15 6h18l-2.5 24h-13z" opacity=".3"/><path d="M15.8 13h16.4L30.5 30h-13z"/><circle cx="31" cy="10" r="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M26 2l3 6" stroke="currentColor" stroke-width="1.8"/><path d="M37 25q6-9 10-4-4 6-10 4z" opacity=".75"/><path d="M18 18h12" stroke="#fff" stroke-width="1.3" opacity=".5"/>',
 mall:'<rect x="3" y="8" width="31" height="22" rx="1.5" opacity=".85"/><g fill="#fff" opacity=".7"><rect x="6" y="11" width="6" height="4"/><rect x="15" y="11" width="6" height="4"/><rect x="24" y="11" width="6" height="4"/><rect x="6" y="17" width="6" height="4"/><rect x="15" y="17" width="6" height="4"/><rect x="24" y="17" width="6" height="4"/></g><rect x="13" y="23" width="11" height="7" fill="#fff" opacity=".5"/><path d="M36 16h10l-1.5 14h-7z"/><path d="M38.5 16v-2a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.4" fill="none"/>',
 palm:'<circle cx="40" cy="7" r="4" opacity=".5"/><path d="M0 30q24-10 48 0z" opacity=".55"/><path d="M22 24q1-9-1-15" stroke="currentColor" stroke-width="2.2" fill="none"/><path d="M21 9q-8-3-13 2 7-1 13-2zM21 9q8-4 13 1-7-1-13-1zM21 9q-2-7 4-8-3 4-4 8z"/>'};
-const ARTMAP={"Mỳ cay Omega":"spicy","Mỳ cay Itada":"spicy2","Bún đậu Xưa":"bunbau","Hồng trà Ngô Gia":"tea","Vincom Xuân Khánh":"mall","Bún đậu hẻm":"bunbau","Hủ tiếu gõ":"hutieu","Trà sữa Xuân Khánh":"trasua","Cà phê sân vườn":"coffee","Bánh xèo miền Tây":"banhxeo","Chợ đêm Tây Đô":"market","Phố đi bộ Hai Bà Trưng":"lantern","Chợ Cổ Cần Thơ":"clock",
+let ARTMAP={"Mỳ cay Omega":"spicy","Mỳ cay Itada":"spicy2","Bún đậu Xưa":"bunbau","Hồng trà Ngô Gia":"tea","Vincom Xuân Khánh":"mall","Bún đậu hẻm":"bunbau","Hủ tiếu gõ":"hutieu","Trà sữa Xuân Khánh":"trasua","Cà phê sân vườn":"coffee","Bánh xèo miền Tây":"banhxeo","Chợ đêm Tây Đô":"market","Phố đi bộ Hai Bà Trưng":"lantern","Chợ Cổ Cần Thơ":"clock",
  "Music box":"musicbox","Karaoke":"mic","Phòng game":"game","Đường Mậu Thân":"road","Đường 3 Tháng 2":"road","Đường Nguyễn Văn Cừ":"road","Nhà cổ Bình Thủy":"oldhouse","Chùa Ông":"temple","Bảo tàng Cần Thơ":"museum",
  "Đại lộ Hòa Bình":"blvd","Đại học Cần Thơ":"campus","Công viên Lưu Hữu Phước":"park","Cầu đi bộ Ninh Kiều":"footbridge","Cầu Cần Thơ":"cablebridge",
  "Vườn cò Bằng Lăng":"storks","Làng du lịch Mỹ Khánh":"orchard","Cồn Sơn":"isle","Chợ nổi Cái Răng":"floatmarket","Thiền viện Trúc Lâm":"pagoda"};
 const artSVG=n=>`<svg viewBox="0 0 48 32" fill="currentColor" aria-hidden="true">${ART[ARTMAP[n]||"palm"]}</svg>`;
-const SHORT={"Vincom Xuân Khánh":"Vincom Xuân Khánh","Hồng trà Ngô Gia":"Hồng trà Ngô Gia","Phố đi bộ Hai Bà Trưng":"Phố đi bộ","Làng du lịch Mỹ Khánh":"Mỹ Khánh","Vườn cò Bằng Lăng":"Vườn cò","Đường 3 Tháng 2":"Đường 3/2","Đường Nguyễn Văn Cừ":"Nguyễn Văn Cừ","Công viên Lưu Hữu Phước":"CV Lưu Hữu Phước",
+let SHORT={"Vincom Xuân Khánh":"Vincom Xuân Khánh","Hồng trà Ngô Gia":"Hồng trà Ngô Gia","Phố đi bộ Hai Bà Trưng":"Phố đi bộ","Làng du lịch Mỹ Khánh":"Mỹ Khánh","Vườn cò Bằng Lăng":"Vườn cò","Đường 3 Tháng 2":"Đường 3/2","Đường Nguyễn Văn Cừ":"Nguyễn Văn Cừ","Công viên Lưu Hữu Phước":"CV Lưu Hữu Phước",
  "Trà sữa Xuân Khánh":"Trà sữa","Cà phê sân vườn":"Cà phê vườn","Thiền viện Trúc Lâm":"Trúc Lâm","Bánh xèo miền Tây":"Bánh xèo","Cầu đi bộ Ninh Kiều":"Cầu đi bộ","Đại lộ Hòa Bình":"ĐL Hòa Bình","Đường Mậu Thân":"Mậu Thân","Chợ Cổ Cần Thơ":"Chợ Cổ"};
 
 /* per-place tile identity: background tint, pattern, illustration colour */
@@ -916,7 +961,7 @@ const PW=c=>`radial-gradient(circle at 50% 100%,transparent 4px,${c} 4.6px 6px,t
 const PL=c=>`radial-gradient(ellipse 4.5px 2.6px at 50% 50%,${c} 96%,transparent 100%) 0 0/14px 10px,radial-gradient(ellipse 4.5px 2.6px at 50% 50%,${c} 96%,transparent 100%) 7px 5px/14px 10px`;
 const PCK=(c,z)=>`linear-gradient(45deg,${c} 25%,transparent 25% 75%,${c} 75%) 0 0/${z}px ${z}px,linear-gradient(45deg,${c} 25%,transparent 25% 75%,${c} 75%) ${z/2}px ${z/2}px/${z}px ${z}px`;
 const ROAD=PS(90,"rgba(70,70,95,.07)",5,5);
-const THEME={
+let THEME={
  "Mỳ cay Omega":["#fff0e6",PD("rgba(232,51,63,.24)",12,2.2)+","+PD("rgba(255,150,0,.22)",12,1.6,6),"#e8333f"],
  "Mỳ cay Itada":["#fff3df",PS(135,"rgba(255,106,43,.17)",3,7),"#f05a1a"],
  "Bún đậu Xưa":["#fbf1d8",PS(45,"rgba(160,110,50,.15)",2.5,5)+","+PS(-45,"rgba(160,110,50,.15)",2.5,5),"#9a6a2c"],
@@ -965,9 +1010,9 @@ const ICON={
  island:SVG('<path d="M12 21v-9M12 12c-2-4-6-4-8-2M12 12c2-4 6-4 8-2M12 12c-1-4 1-7 4-8M5 21h14"/>'),
  bulb:SVG('<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>'),
  radar:SVG('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6-6"/>')};
-const TCOL={start:"#2fae55",jail:"#ff7a1a",fest:"#8a5cf0",fly:"#0eb0c9",chance:"#ff4f9a",bag:"#ffd23d",tax:"#e8333f",lux:"#e8333f",storm:"#2a7fe0",highway:"#2fae55",island:ISL_COL};
-const DARKT=new Set(["bag"]);
-const LEGEND=[
+let TCOL={start:"#2fae55",jail:"#ff7a1a",fest:"#8a5cf0",fly:"#0eb0c9",chance:"#ff4f9a",bag:"#ffd23d",tax:"#e8333f",lux:"#e8333f",storm:"#2a7fe0",highway:"#2fae55",island:ISL_COL};
+let DARKT=new Set(["bag"]);
+let LEGEND=[
  ["start","Bến Ninh Kiều","Điểm xuất phát. Đi qua nhận 200K, dừng đúng bến nhận thêm 100K."],
  ["fly","Đi phượt","Full bình xăng: chọn bất kỳ ô nào trên bàn cờ để phóng xe tới."],
  ["fest","Đêm nhạc","Mở đêm nhạc ở một chỗ của bạn, tiền thuê ở đó tăng gấp đôi."],
@@ -980,7 +1025,7 @@ const LEGEND=[
  ["tax","Bill cuối tháng","Tiền trọ, điện nước, 4G: nộp 10% tổng tài sản."]];
 
 /* ---------- cards ---------- */
-const CHANCE=[
+let CHANCE=[
  {t:"Dậy sớm đi học, tiện ghé ngắm bình minh: chạy về Bến Ninh Kiều.",f:async()=>{await walkTo(0,true);await land()}},
  {t:"Nhóm chat rủ đi Music box hát xả stress sau thi: chạy tới Music box.",f:async()=>{await walkTo(idxOf("Music box"),true);await land()}},
  {t:"Quên thẻ sinh viên ở quán, quay lại lấy: lùi 3 ô.",f:async()=>{await walk(3,-1);await land()}},
@@ -997,7 +1042,7 @@ const CHANCE=[
  {t:"Bắt kịp chuyến xe buýt cuối: tiến lên 5 ô.",f:async()=>{await walk(5);await land()}},
  {t:"Ngân hàng có gói hỗ trợ sinh viên: chuộc miễn phí một chỗ đang cầm cố của bạn.",f:async()=>{const g=owned(S.turn).filter(i=>S.props[i].mg);if(g.length){S.props[g[0]].mg=false;log(`${cur().name} được chuộc miễn phí ${SQ[g[0]].n}`);fx(g[0],"Chuộc lại","good")}else gain(S.turn,50);finish()}},
  {t:"Qua môn khó nhất kỳ, ba mẹ thưởng nóng: nhận 100K.",f:async()=>{gain(S.turn,100);finish()}}];
-const BAG=[
+let BAG=[
  {t:"Đạt học bổng khuyến khích học tập: nhận 150K.",f:async()=>{gain(S.turn,150);finish()}},
  {t:"Làm rơi điện thoại xuống sông Hậu lúc sống ảo: mất 100K.",f:async()=>{charge(S.turn,100);finish()}},
  {t:"Bị cấm thi vì vắng quá buổi, phải đóng tiền học lại: trả 60K.",f:async()=>{charge(S.turn,60);finish()}},
@@ -1084,21 +1129,21 @@ function schedMusic(){const m0=mus;if(!m0)return;const A=m0.A;if(m0.next<A.curre
   if(m0.s===0){if(m0.want!==m0.mood){m0.mood=m0.want;m0.mb=0}else m0.mb++}}}
 function mStep(o,t,sp){const s=o.s,mb=o.mb,M=o.mood,b4=mb%4,goingUp=(o.want==="hype"||o.want==="win")&&M!=="hype"&&M!=="win";
  if(M==="calm"){
-  if(s===0){iPad(o,t,RTA[b4]+12,16*sp,560,.05);iBass(o,t,mtof(RTA[b4]-12),sp*12,.16)}
+  if(s===0){iPad(o,t,TM.RA[b4]+12,16*sp,560,.05);iBass(o,t,mtof(TM.RA[b4]-12),sp*12,.16);if(TM.gong&&mb%4===0)iGong(o,t,98,.06)}
   if(s===0&&mb%2===0)iWood(o,t,180,.12);
-  for(const n of MA[b4])if(n[0]===s&&n[0]%4===0)iPluck(o,t,mtof(SCL[n[1]]+12),n[2]*sp*1.5,n[3],.16);
-  if(b4===1&&s===0)iBau(o,t,mtof(SCL[7]+12),sp*14)}
+  for(const n of TM.A[b4])if(n[0]===s&&n[0]%4===0)iPluck(o,t,mtof(TM.S[n[1]]+12),n[2]*sp*1.5,n[3],.16);
+  if(b4===1&&s===0)iBau(o,t,mtof(TM.S[7]+12),sp*14)}
  else if(M==="tense"){const r=RTT[b4];
   if(s===0)iPad(o,t,r,16*sp,380,.05);
   if(s===0||s===3)iKick(o,t,s?.22:.38);
   for(const n of MT[b4])if(n[0]===s)iPluck(o,t,mtof(SCL[n[1]]+12),n[2]*sp,n[3],.17);
   if(b4%2===1&&s===4)iBau(o,t,mtof(SCL[5]+12),sp*10,.89,.08);
   if(s===8)iWood(o,t,700,.08)}
- else if(M==="play"){const form=Math.floor((mb%16)/4),mot=[MA,MA,MB,MA][form][b4],root=[RTA,RTA,RTB,RTA][form][b4];
-  if(s===0){iPad(o,t,root+12,16*sp);iWood(o,t,180,.14)}
+ else if(M==="play"){const form=Math.floor((mb%16)/4),mot=[TM.A,TM.A,TM.B,TM.A][form][b4],root=[TM.RA,TM.RA,TM.RB,TM.RA][form][b4];
+  if(s===0){iPad(o,t,root+12,16*sp);iWood(o,t,180,.14);if(TM.gong&&mb%8===0)iGong(o,t,98,.07)}
   if(s===3||s===10||s===14||(s===7&&mb%2))iWood(o,t,s===14?1320:940);
-  for(const n of mot)if(n[0]===s)iPluck(o,t,mtof(SCL[n[1]]+12),n[2]*sp,n[3]);
-  if(form===3&&b4===1&&s===0)iBau(o,t,mtof(SCL[7]+12),sp*14);
+  for(const n of mot)if(n[0]===s)iPluck(o,t,mtof(TM.S[n[1]]+12),n[2]*sp,n[3]);
+  if(form===3&&b4===1&&s===0)iBau(o,t,mtof(TM.S[7]+12),sp*14);
   if(s===0||s===8)iKick(o,t,.42);if(s===4||s===12)iSnare(o,t,.11);if(s%4===2)iHat(o,t,.05);
   const bp={0:0,3:12,8:0,10:7,14:12};if(s in bp)iBass(o,t,mtof(root-12+bp[s]),sp*(s%8===0?2.6:1.4))}
  else{const W=M==="win",root=RTC[b4];
@@ -1136,7 +1181,7 @@ const sfx={
 document.addEventListener("click",e=>{if(e.target.closest("button,.gtab")&&!e.target.closest("#tray"))sfx.click()},true);
 
 /* ---------- character voices (miền Tây expressions) + speech bubbles ---------- */
-const LINES={
+let LINES={
  roll:["Đổ nè bà con!","Hên xui nha!","Lạy trời ra số đẹp!","Quất luôn!","Chơi tới bến nghen!","Ráng lên, qua môn là được!"],
  buy:["Chốt đơn! Chỗ này của tui rồi nghen.","Mua liền, hổng suy nghĩ!","Đẹp quá trời, lấy luôn!","Tiền học bổng để dành là đây!"],
  build:["Cất thêm cái nhà cho oách!","Xây nhà rồi nha, ghé chơi nghen!"],
@@ -1150,8 +1195,8 @@ const LINES={
  start:["Về bến Ninh Kiều, lãnh tiền thôi!","Có tiền rồi, đi ăn bún đậu!"],
  fest:["Mở đêm nhạc, quẩy lên!"],fly:["Lên xe, đi phượt nè!"],storm:["Nước ngập tới đầu gối rồi nè!"],
  win:["Tỷ phú Cần Thơ là tui đây!","Hết xẩy con cào cào!"],broke:["Cháy túi rồi, về quê nuôi cá thôi!"]};
-const CATCH={ongtu:["Ờ con nè, ","Trời đất, "],coba:["Ui cha, ","Trời ơi, "],anhhai:["Ê bây, ",""],cohue:["Ôi chao, ",""],anhca:["",""],lienchi:["Người ơi, ",""],hmong:["",""],ede:["",""],cham:["",""],khmer:["",""]};
-const VOX={coba:[1.35,1.08],anhhai:[.95,1.05],cohue:[1.3,.98],anhca:[.85,1],lienchi:[1.25,1],hmong:[1.4,1.05],ede:[.9,1.02],cham:[1.3,1.02],khmer:[1.35,1.05],ongtu:[.7,.92]};
+let CATCH={ongtu:["Ờ con nè, ","Trời đất, "],coba:["Ui cha, ","Trời ơi, "],anhhai:["Ê bây, ",""],cohue:["Ôi chao, ",""],anhca:["",""],lienchi:["Người ơi, ",""],hmong:["",""],ede:["",""],cham:["",""],khmer:["",""]};
+let VOX={coba:[1.35,1.08],anhhai:[.95,1.05],cohue:[1.3,.98],anhca:[.85,1],lienchi:[1.25,1],hmong:[1.4,1.05],ede:[.9,1.02],cham:[1.3,1.02],khmer:[1.35,1.05],ongtu:[.7,.92]};
 let VI=null,lastSay=0;
 function pickVoice(){try{const vs=speechSynthesis.getVoices().filter(v=>/^vi/i.test(v.lang));VI=vs.find(v=>/nam|south|sài gòn|saigon|hcm/i.test(v.name))||vs[0]||null}catch(e){VI=null}}
 if(window.speechSynthesis){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
@@ -1159,7 +1204,7 @@ function babble(o,t,n,pi){for(let k=0;k<Math.min(9,n);k++){const A=o.A,a=A.creat
  a.frequency.setValueAtTime(f,t+k*.085);a.frequency.linearRampToValueAtTime(f*(k%2?1.12:.92),t+k*.085+.07);a.connect(g);g.connect(o.out);eg(g,t+k*.085,.01,.08,.06);a.start(t+k*.085);a.stop(t+k*.085+.1)}}
 function say(i,ev,force){if(!voiceOn||!S||!S.players[i]||$("#game").hidden)return;const now=performance.now();if(!force&&now-lastSay<1500)return;
  const L=LINES[ev];if(!L)return;lastSay=now;const p=S.players[i],k=normKind(p.kind),c=(CATCH[k]||[""])[Math.floor(Math.random()*2)]||"";
- const l0=L[Math.floor(Math.random()*L.length)],t=c?c+l0[0].toLowerCase()+l0.slice(1):l0;bubble(i,t);const [pi,ra]=VOX[k]||[1,1];
+ const l0=L[Math.floor(Math.random()*L.length)],t=c?c+l0[0].toLowerCase()+l0.slice(1):l0[0].toUpperCase()+l0.slice(1);bubble(i,t);const [pi,ra]=VOX[k]||[1,1];
  if(S.fast&&p.bot&&!force)return;
  if(window.speechSynthesis&&VI){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.voice=VI;u.lang=VI.lang;u.pitch=pi;u.rate=ra*1.06;duck(true);u.onend=u.onerror=()=>duck(false);speechSynthesis.speak(u)}catch(e){}}
  else if(soundOn){try{const o=sbus();babble(o,o.A.currentTime+.02,t.split(" ").length,pi)}catch(e){}}}
@@ -1210,7 +1255,7 @@ function charge(pi,amt,to=null){const p=S.players[pi];if(amt<=0)return true;
  if(paid<amt){p.out=true;p.cash=0;owned(pi).forEach(i=>{delete S.props[i];if(S.festival===i)S.festival=null});
   log(`${p.name} phá sản, đất trả về ngân hàng`);sfx.broke();setTimeout(()=>{lastSay=0;say(pi,"broke",1)},300);if(pi===S.turn)S.extra=false;renderPawns();return false}
  return true}
-function sendJail(){const p=cur();sfx.jail();p.pos=JAIL;p.jail=true;p.tries=0;S.extra=false;log(`${p.name} bị Kẹt xe`);renderPawns(true);renderTiles()}
+function sendJail(){const p=cur();sfx.jail();p.pos=JAIL;p.jail=true;p.tries=0;S.extra=false;log(`${p.name} ${TX.jailLog}`);renderPawns(true);renderTiles()}
 
 /* asset actions */
 function sellLevel(i){const pr=S.props[i];if(!pr||pr.l<1)return;const v=refund(i),hot=pr.l===5;pr.l--;S.players[pr.o].cash+=v;log(`${S.players[pr.o].name} bán ${hot?"khách sạn":"một nhà"} ở ${SQ[i].n} (+${m(v)})`);fx(i,"+"+m(v),"good");sfx.coin()}
@@ -1225,9 +1270,9 @@ function newGame(){
  const players=seats.map((el,i)=>({name:el.querySelector("input").value.trim()||DEF_NAMES[i],bot:el.dataset.bot==="1",kind:el.dataset.kind,color:PCOL[i],cash,pos:0,out:false,jail:false,tries:0,free:0}));
  saveSeats();
  S={map:mapId,players,props:{},turn:0,round:1,maxRound:+$("#maxRound").value,phase:"roll",dice:[3,4],rollId:0,showSum:false,doubles:0,extra:false,
-  festival:null,log:["Bắt đầu quẩy Cần Thơ!"],ev:null,offer:null,pick:null,upgraded:false,over:null,info:null,landed:null,
+  festival:null,log:[TX.startLog],ev:null,offer:null,pick:null,upgraded:false,over:null,info:null,landed:null,
   forecast:$("#optForecast").checked,fast:$("#optFast").checked,pass:$("#optPass").checked,handoff:false};
- ev(`Lượt của ${players[0].name}`,"Đổ xúc xắc ở giữa bàn cờ để bắt đầu quẩy.","","Bắt đầu");
+ ev(`Lượt của ${players[0].name}`,TX.firstTx,"","Bắt đầu");
  show("game");buildBoard();render();
 }
 
@@ -1255,12 +1300,12 @@ async function roll(){
  say(S.turn,"roll");await throwDice();
  const [a,b]=S.dice,dbl=a===b,p=cur();log(`${p.name} đổ được ${a} + ${b}${dbl?" (đôi)":""}`);
  if(p.jail){
-  if(dbl){p.jail=false;S.extra=false;say(S.turn,"out",1);ev("Thoát Kẹt xe!",`Đổ đôi ${a}–${b}, đường đã thông.`,"good","Kẹt xe");renderCenter();await walk(a+b);await land()}
+  if(dbl){p.jail=false;S.extra=false;say(S.turn,"out",1);ev(TX.outT,TX.outTx(a,b),"good",TX.jailN);renderCenter();await walk(a+b);await land()}
   else{p.tries++;
-   if(p.tries>=3){ev("Hết kẹt xe","Đã chờ đủ 3 lượt, đường thông, được đi tiếp theo số vừa đổ.","good","Kẹt xe");p.jail=false;log(`${p.name} ra khỏi Kẹt xe sau 3 lượt`);renderCenter();await walk(a+b);await land()}
-   else{ev("Vẫn còn kẹt xe",`Chưa đổ được đôi (lần ${p.tries}/3). ${3-p.tries===1?"Lượt sau chắc chắn được ra.":"Còn "+(3-p.tries)+" lượt nữa là được ra."} Trong lúc kẹt xe, đất của bạn không thu được tiền thuê.`,"bad","Kẹt xe");finish()}}
+   if(p.tries>=3){ev(TX.out3T,TX.out3Tx,"good",TX.jailN);p.jail=false;log(`${p.name} ${TX.out3Log}`);renderCenter();await walk(a+b);await land()}
+   else{ev(TX.stillT,`Chưa đổ được đôi (lần ${p.tries}/3). ${3-p.tries===1?"Lượt sau chắc chắn được ra.":"Còn "+(3-p.tries)+" lượt nữa là được ra."} ${TX.noRent}`,"bad",TX.jailN);finish()}}
  }else{
-  if(dbl){S.doubles++;if(S.doubles>=3){ev("Đổ đôi 3 lần liền!","Chạy quá tốc độ, bị giữ lại ở ô Kẹt xe.","bad","Phạt");sendJail();finish();busy=false;scheduleBot();return}S.extra=true}
+  if(dbl){S.doubles++;if(S.doubles>=3){ev("Đổ đôi 3 lần liền!",TX.speed3,"bad","Phạt");sendJail();finish();busy=false;scheduleBot();return}S.extra=true}
   else S.extra=false;
   renderCenter();await walk(a+b);await land();
  }
@@ -1294,7 +1339,7 @@ function coinRain(i){if(reduced())return;const [x,y]=sqCenter(i);for(let k=0;k<1
 async function walk(steps,dir=1,fast=false){const i=S.turn,p=cur();
  for(let k=0;k<steps;k++){
   await hopTo(i,k,steps,fast,dir);
-  if(dir>0&&p.pos===0){p.cash+=SALARY;log(`${p.name} đi qua Bến Ninh Kiều, nhận ${m(SALARY)}`);fx(0,"+"+m(SALARY),"good");coinRain(0);sfx.start();say(S.turn,"start")}
+  if(dir>0&&p.pos===0){p.cash+=SALARY;log(`${p.name} đi qua ${TX.startN}, nhận ${m(SALARY)}`);fx(0,"+"+m(SALARY),"good");coinRain(0);sfx.start();say(S.turn,"start")}
   renderPlayers()}
  S.moving=null;renderPawns()}
 async function walkTo(t,fast=false){await walk((t-cur().pos+N)%N,1,fast)}
@@ -1306,38 +1351,38 @@ async function land(){
   case "city":case "island":{const pr=S.props[i];
    if(pr&&pr.o!==S.turn){const ow=S.players[pr.o];
     if(pr.mg)ev(s.n,`Đất của ${ow.name} đang cầm cố ở ngân hàng nên không thu tiền thuê. Bạn có thể mua lại với giá gốc ${m(s.p)}.`,"good","Đất cầm cố");
-    else if(ow.jail){ev(s.n,`Đất của ${ow.name}, nhưng ${ow.name} đang kẹt xe nên không thu được tiền thuê. Bạn đi qua miễn phí!`,"good","Miễn phí");log(`${ow.name} đang kẹt xe, ${p.name} không phải trả tiền thuê ${s.n}`)}
+    else if(ow.jail){ev(s.n,`Đất của ${ow.name}, nhưng ${ow.name} đang ${TX.jailed} nên không thu được tiền thuê. Bạn đi qua miễn phí!`,"good","Miễn phí");log(`${ow.name} đang ${TX.jailed}, ${p.name} không phải trả tiền thuê ${s.n}`)}
     else{const r=rent(i);ev(s.n,`Đất của ${ow.name}${s.t==="city"&&pr.l?" · "+LV[pr.l]:""}. Trả tiền thuê ${m(r)}${S.festival===i?" (đang có lễ hội, tính gấp đôi)":""}.`,"bad","Trả tiền thuê");
      const oi=pr.o;if(!charge(S.turn,r,pr.o)){finish();return}say(S.turn,"pay",1);if(r>=150)boost(10);setTimeout(()=>{lastSay=0;say(oi,"get")},1700)}}
-   else if(!pr)ev(s.n,`Chưa có chủ. Giá ${m(s.p)}.`,"",s.t==="island"?"Khu du lịch":"Đất trống");
+   else if(!pr)ev(s.n,`Chưa có chủ. Giá ${m(s.p)}.`,"",s.t==="island"?TX.islN:"Đất trống");
    else ev(s.n,pr.mg?`Đất của bạn đang cầm cố. Chuộc lại với giá ${m(redeemCost(i))}.`:s.t==="city"?`Đất của bạn, hiện là ${LV[pr.l]}.`:"Khu du lịch của bạn.","good","Về nhà");
    propertyOffer();return}
-  case "start":ev("Cập bến Ninh Kiều!","Dừng đúng bến, thưởng thêm 100K.","good","Bến Ninh Kiều");gain(S.turn,100);finish();return;
-  case "tax":{const a=Math.max(20,r10(assets(S.turn)*.1));ev("Bill cuối tháng",`Tiền trọ, điện nước, 4G: nộp 10% tổng tài sản, ${m(a)}.`,"bad","Chi tiêu");charge(S.turn,a);finish();return}
+  case "start":ev(TX.startT,TX.startTx,"good",TX.startN);gain(S.turn,100);finish();return;
+  case "tax":{const a=Math.max(20,r10(assets(S.turn)*.1));ev(TX.taxN,`${TX.taxTx}, ${m(a)}.`,"bad",TX.taxTag);charge(S.turn,a);finish();return}
   case "lux":ev("Săn sale","Lỡ tay chốt đơn: nộp 100K.","bad","Chi tiêu");charge(S.turn,100);finish();return;
   case "chance":case "bag":{const deck=s.t==="chance"?CHANCE:BAG,c=deck[Math.floor(Math.random()*deck.length)];
-   ev(s.t==="chance"?"Có kèo!":"Drama sinh viên!",c.t,s.t,s.t==="chance"?"Thẻ Kèo · Cơ hội":"Thẻ Drama · Khí vận");log(`${p.name} rút thẻ: ${c.t}`);sfx.card();say(S.turn,s.t,1);renderCenter();
+   ev(s.t==="chance"?TX.chanceT:TX.bagT,c.t,s.t,s.t==="chance"?TX.chanceTag:TX.bagTag);log(`${p.name} rút thẻ: ${c.t}`);sfx.card();say(S.turn,s.t,1);renderCenter();
    await sleep(S.fast&&p.bot?500:1100);await c.f();return}
   case "storm":{sfx.storm();say(S.turn,"storm",1);const built=owned(S.turn).filter(j=>S.props[j].l>0);
    if(built.length){const j=built[Math.floor(Math.random()*built.length)];S.props[j].l--;
-    ev("Triều cường",`Nước ngập làm hư một công trình ở ${SQ[j].n}, còn lại: ${LV[S.props[j].l]}.`,"bad","Ngập đường");log(`Triều cường làm giảm cấp công trình ở ${SQ[j].n}`);fx(j,"−1 cấp","bad")}
-   else{ev("Triều cường","Xe chết máy giữa đường ngập, mất 40K sửa xe.","bad","Ngập đường");charge(S.turn,40)}
+    ev(TX.stormN,TX.stormHit(SQ[j].n,LV[S.props[j].l]),"bad",TX.stormTag);log(`${TX.stormN} làm giảm cấp công trình ở ${SQ[j].n}`);fx(j,"−1 cấp","bad")}
+   else{ev(TX.stormN,TX.stormNo,"bad",TX.stormTag);charge(S.turn,40)}
    finish();return}
-  case "highway":sfx.build();ev("Đèn xanh một mạch","Đường thông, bạn được đổ thêm một lượt.","good","Đèn xanh");S.extra=true;log(`${p.name} được đổ thêm lượt`);finish();return;
-  case "jail":sfx.jail();say(S.turn,"jail",1);ev("Kẹt xe giờ tan học!","Phải đổ được đôi mới ra, hoặc chờ đủ 3 lượt. Trong lúc kẹt xe, đất của bạn không thu được tiền thuê.","bad","Ùn tắc");sendJail();finish();return;
+  case "highway":sfx.build();ev(TX.hwT,TX.hwTx,"good",TX.hwTag);S.extra=true;log(`${p.name} được đổ thêm lượt`);finish();return;
+  case "jail":sfx.jail();say(S.turn,"jail",1);ev(TX.jailT,"Phải đổ được đôi mới ra, hoặc chờ đủ 3 lượt. "+TX.noRent,"bad",TX.jailTag);sendJail();finish();return;
   case "fest":say(S.turn,"fest",1);startFest();return;
   case "fly":sfx.fly();say(S.turn,"fly",1);startFly();return;
  }}
 function startFest(){const mine=owned(S.turn).filter(i=>!S.props[i].mg);
- if(!mine.length){ev("Đêm nhạc","Bạn chưa có chỗ nào (không cầm cố) để mở đêm nhạc.","","Đêm nhạc");finish();return}
+ if(!mine.length){ev(TX.festN,TX.festNone,"",TX.festN);finish();return}
  S.pick={k:"fest",allowed:mine};S.phase="pick";
- ev("Mở đêm nhạc","Chọn một chỗ của bạn đang phát sáng trên bàn cờ. Tiền thuê ở đó sẽ tăng gấp đôi.","good","Đêm nhạc");render()}
+ ev(TX.festOpen,"Chọn một chỗ của bạn đang phát sáng trên bàn cờ. Tiền thuê ở đó sẽ tăng gấp đôi.","good",TX.festN);render()}
 function startFly(){S.pick={k:"fly",allowed:SQ.map((_,i)=>i).filter(i=>i!==FLY&&i!==cur().pos)};S.phase="pick";
- ev("Đi phượt","Chọn bất kỳ ô nào để phóng xe tới. Chạy qua Bến Ninh Kiều vẫn được nhận 200K.","good","Đi phượt");render()}
+ ev(TX.flyN,TX.flyTx,"good",TX.flyN);render()}
 async function onPick(i){if(busy||S.phase!=="pick"||!S.pick.allowed.includes(i)||!canAct())return;mark();const k=S.pick.k;S.pick=null;
- if(k==="fest"){S.festival=i;log(`${cur().name} mở đêm nhạc tại ${SQ[i].n}`);fx(i,"Đêm nhạc ×2","good");sfx.fest();
-  ev("Đêm nhạc cháy vé!",`Tiền thuê tại ${SQ[i].n} tăng gấp đôi.`,"good","Đêm nhạc");sfx.card();finish()}
- else{busy=true;S.phase="busy";log(`${cur().name} phượt tới ${SQ[i].n}`);render();await walkTo(i,true);await land();busy=false;scheduleBot()}}
+ if(k==="fest"){S.festival=i;log(`${cur().name} ${TX.festLog} ${SQ[i].n}`);fx(i,TX.festFx,"good");sfx.fest();
+  ev(TX.festDone,`Tiền thuê tại ${SQ[i].n} tăng gấp đôi.`,"good",TX.festN);sfx.card();finish()}
+ else{busy=true;S.phase="busy";log(`${cur().name} ${TX.flyVerb} ${SQ[i].n}`);render();await walkTo(i,true);await land();busy=false;scheduleBot()}}
 
 function propertyOffer(){const p=cur(),i=p.pos,s=SQ[i],pr=S.props[i],o=[];
  if(!p.out){
@@ -1362,7 +1407,7 @@ function doOffer(k){if(S.phase!=="decide"||!canAct())return;mark();const p=cur()
 
 function finish(){S.offer=null;if(checkWin())return;S.phase="end";render()}
 function checkWin(){const al=alive();
- if(al.length===1)return gameOver(al[0],"là dân chơi cuối cùng chưa cháy túi");
+ if(al.length===1)return gameOver(al[0],TX.last);
  for(const i of al){if(ISL.every(j=>S.props[j]&&S.props[j].o===i))return gameOver(i,"sở hữu tất cả khu du lịch trên bản đồ");
   if([1,2,3,4,5,6,7,8].filter(g=>ownsGroup(i,g)).length>=3)return gameOver(i,"sở hữu trọn 3 tuyến cùng màu")}
  return false}
@@ -1377,9 +1422,9 @@ function endTurn(){if(busy||S.phase!=="end"||!canAct())return;mark();const p=cur
   S.turn=j;break}
  const q=cur();S.doubles=0;S.extra=false;S.showSum=false;S.phase=q.jail?"jail":"roll";
  S.handoff=!S.online&&S.pass!==false&&!q.bot&&S.players.filter(x=>!x.bot&&!x.out).length>=2;
- ev(`Lượt của ${q.name}`,q.jail?`Đang kẹt xe: đổ đôi để ra (lần thử ${(q.tries||0)+1}/3). Đến lần thứ 3 thì chắc chắn được ra.`:"Đổ xúc xắc ở giữa bàn cờ để di chuyển.",q.jail?"bad":"",q.jail?"Kẹt xe":"Lượt mới");render()}
-function payJail(){const p=cur();if(busy||S.handoff||S.phase!=="jail"||!canAct())return;mark();if(!charge(S.turn,50)){finish();return}p.jail=false;S.phase="roll";ev("Đã gọi cứu hộ","Trả 50K, giờ hãy đổ xúc xắc.","good","Kẹt xe");render()}
-function useCard(){const p=cur();if(busy||S.handoff||S.phase!=="jail"||!p.free||!canAct())return;mark();p.free--;p.jail=false;S.phase="roll";log(`${p.name} dùng Thẻ cứu hộ`);ev("Thẻ cứu hộ","Thoát Kẹt xe miễn phí, hãy đổ xúc xắc.","good","Kẹt xe");render()}
+ ev(`Lượt của ${q.name}`,q.jail?`Đang ${TX.jailed}: đổ đôi để ra (lần thử ${(q.tries||0)+1}/3). Đến lần thứ 3 thì chắc chắn được ra.`:"Đổ xúc xắc ở giữa bàn cờ để di chuyển.",q.jail?"bad":"",q.jail?TX.jailN:"Lượt mới");render()}
+function payJail(){const p=cur();if(busy||S.handoff||S.phase!=="jail"||!canAct())return;mark();if(!charge(S.turn,50)){finish();return}p.jail=false;S.phase="roll";ev(TX.payJailT,"Trả 50K, giờ hãy đổ xúc xắc.","good",TX.jailN);render()}
+function useCard(){const p=cur();if(busy||S.handoff||S.phase!=="jail"||!p.free||!canAct())return;mark();p.free--;p.jail=false;S.phase="roll";log(`${p.name} dùng ${TX.Free}`);ev(TX.Free,TX.freeTx,"good",TX.jailN);render()}
 
 /* ---------- smart layer ---------- */
 function forecast(){if(!S.forecast||S.phase!=="roll"||cur().bot||S.over)return null;
@@ -1401,17 +1446,17 @@ function advice(){
   if(f.best)t+=`. Cơ hội tốt: ${esc(SQ[f.best.d].n)} (${Math.round(f.map[f.best.d]*100)}%)${completes(S.turn,f.best.d)?" giúp hoàn thành tuyến":""}`;
   const mg=owned(S.turn).filter(j=>S.props[j].mg);if(mg.length)t+=`. Bạn có ${mg.length} đất đang cầm cố, dễ bị người khác mua mất`;
   return t+"."}
- if(S.phase==="jail"){return p.free?"Bạn có thẻ cứu hộ, dùng để ra ngay.":p.tries>=2?"Lần thứ 3: đổ bao nhiêu cũng được ra.":"Mỗi lần đổ có khoảng <b>17%</b> ra đôi; sau 3 lần sẽ tự trả 50K."}
+ if(S.phase==="jail"){return p.free?`Bạn có ${TX.free}, dùng để ra ngay.`:p.tries>=2?"Lần thứ 3: đổ bao nhiêu cũng được ra.":"Mỗi lần đổ có khoảng <b>17%</b> ra đôi; sau 3 lần sẽ tự trả 50K."}
  if(S.phase==="decide"){const k=S.offer[0].k;
   if(k==="buy"){const after=p.cash-s.p;let t="";
-   if(completes(S.turn,i))t=s.t==="island"?`Mua là đủ <b>${ISL.length} khu du lịch</b>, bạn thắng ngay!`:`Mua để <b>hoàn thành tuyến</b> ${esc(routeName(s.g))}: tiền thuê ×2.`;
-   else if(s.t==="island")t=`Bạn sẽ có ${ISL.filter(j=>S.props[j]&&S.props[j].o===S.turn).length+1}/${ISL.length} khu du lịch, tiền thuê mỗi khu tăng lên.`;
+   if(completes(S.turn,i))t=s.t==="island"?`Mua là đủ <b>${ISL.length} ${TX.isl}</b>, bạn thắng ngay!`:`Mua để <b>hoàn thành tuyến</b> ${esc(routeName(s.g))}: tiền thuê ×2.`;
+   else if(s.t==="island")t=`Bạn sẽ có ${ISL.filter(j=>S.props[j]&&S.props[j].o===S.turn).length+1}/${ISL.length} ${TX.isl}, tiền thuê mỗi khu tăng lên.`;
    else{const others=groupIdx(s.g).filter(j=>j!==i&&S.props[j]&&S.props[j].o!==S.turn);t=others.length?`${esc(S.players[S.props[others[0]].o].name)} đang giữ ${esc(SQ[others[0]].n)}; mua để chặn tuyến của họ.`:`Tuyến ${esc(routeName(s.g))} còn trống, mua để giữ chỗ.`}
    return t+(after<120?` Sau khi mua chỉ còn <b>${m(after)}</b>, cẩn thận khi phải trả tiền thuê.`:` Sau khi mua còn ${m(after)}.`)}
   if(k==="up"){const pr=S.props[i],now=rent(i);pr.l++;const nx=rent(i);pr.l--;return `${pr.l<4?"Mua nhà thứ "+(pr.l+1):"Đổi 4 nhà lấy khách sạn"}: tiền thuê tăng từ ${m(now)} lên <b>${m(nx)}</b>. Sau khi xây còn ${m(p.cash-bc(i))}.${ownsGroup(S.turn,s.g)?"":" Gom trọn tuyến "+esc(routeName(s.g))+" để thu gấp đôi."}`}
   if(k==="redeem")return `Chuộc lại để đất thu tiền thuê trở lại và không bị người khác mua mất.`;
   if(k==="take"){const ow=S.players[S.props[i].o];return `Đất của ${esc(ow.name)} đang cầm cố: mua với giá gốc ${m(s.p)}${completes(S.turn,i)?" và <b>hoàn thành tuyến</b> của bạn":""}. ${esc(ow.name)} nhận ${m(s.p-redeemCost(i))}.`}}
- if(S.phase==="pick"&&S.pick.k==="fly"){const b=botFly();return `Gợi ý: phượt tới <b>${esc(SQ[b].n)}</b>.`}
+ if(S.phase==="pick"&&S.pick.k==="fly"){const b=botFly();return `Gợi ý: ${TX.flyVerb} <b>${esc(SQ[b].n)}</b>.`}
  if(S.phase==="pick"&&S.pick.k==="fest"){const b=botFest();return `Gợi ý: <b>${esc(SQ[b].n)}</b> đang có tiền thuê cao nhất (${m(rent(b))}).`}
  if(S.phase==="end"&&p.cash<60&&owned(S.turn).length)return "Tiền mặt đang thấp. Mở <b>Tài sản</b> để cầm cố hoặc bán bớt nhà nếu cần.";
  return ""}
@@ -1473,23 +1518,23 @@ function fx(i,text,kind,delay){if(!S||$("#game").hidden)return;const [x,y]=sqCen
  d.className="float "+kind;d.textContent=text;d.style.left=x+"px";d.style.top=(y-14)+"px";if(delay)d.style.animationDelay=".35s";
  $("#fx").appendChild(d);setTimeout(()=>d.remove(),2100)}
 function tileHTML(i,f){const s=SQ[i],pr=S.props[i];let h="";
- if(s.t==="city"){h+=`<span class="hd" style="--g:${GCOL[s.g]}"><span>${s.cc}</span><span class="st">${pr&&pr.l?(pr.l===5?'<i class="htl">KS</i>':'<i class="hs"></i>'.repeat(pr.l)):""}</span></span>`}
- else if(s.t==="island"){h+=`<span class="hd" style="--g:${ISL_COL}"><span>DU LỊCH</span><span>${pr?ISL.filter(j=>S.props[j]&&S.props[j].o===pr.o).length+"/"+ISL.length:""}</span></span>`}
+ if(s.t==="city"){h+=`<span class="hd" style="--g:${GCOL[s.g]}"><span>${GLBL[s.g]}</span><span class="st">${pr&&pr.l?(pr.l===5?'<i class="htl">KS</i>':'<i class="hs"></i>'.repeat(pr.l)):""}</span></span>`}
+ else if(s.t==="island"){h+=`<span class="hd" style="--g:${ISL_COL}"><span>${TX.islHd}</span><span>${pr?ISL.filter(j=>S.props[j]&&S.props[j].o===pr.o).length+"/"+ISL.length:""}</span></span>`}
  else if(i%SIDE===0)h+=`<span class="tic">${ICON[s.t]}</span>`;
  else h+=`<span class="tic" style="background:${TCOL[s.t]}">${ICON[s.t]}</span>`;
  h+=`<span class="nm">${esc(SHORT[s.n]||s.n)}</span>`;
  if(PROPS.includes(i))h+=`<span class="art" style="--g:${thOf(i).art}">${artSVG(s.n)}</span>`;
- if(PROPS.includes(i))h+=pr&&!pr.mg?(S.players[pr.o].jail?`<span class="pr">Chủ kẹt xe</span>`:`<span class="pr rent num">Thuê ${m(rent(i))}</span>`):`<span class="pr num">${m(s.p)}</span>`;
+ if(PROPS.includes(i))h+=pr&&!pr.mg?(S.players[pr.o].jail?`<span class="pr">Chủ ${TX.jailed}</span>`:`<span class="pr rent num">Thuê ${m(rent(i))}</span>`):`<span class="pr num">${m(s.p)}</span>`;
  else if(i===0)h+=`<span class="pr">Nhận ${m(SALARY)}</span>`;
- else if(s.t==="jail")h+=`<span class="pr">Đổ đôi để đi</span>`;
+ else if(s.t==="jail")h+=`<span class="pr">${TX.jailPr}</span>`;
  else if(s.t==="fest")h+=`<span class="pr">Thuê ×2</span>`;
- else if(s.t==="fly")h+=`<span class="pr">Đi đâu cũng được</span>`;
+ else if(s.t==="fly")h+=`<span class="pr">${TX.flyPr}</span>`;
  else if(s.t==="lux")h+=`<span class="pr">Nộp 100K</span>`;
  else if(s.t==="chance")h+=`<span class="pr sub2">Cơ hội</span>`;
  else if(s.t==="bag")h+=`<span class="pr sub2">Khí vận</span>`;
  if(pr)h+=`<span class="own" style="--own:${S.players[pr.o].color}">${esc(S.players[pr.o].name.slice(0,10))}</span>`;
  if(pr&&pr.mg)h+=`<span class="mg"><span>CẦM CỐ</span></span>`;
- if(S.festival===i)h+=`<span class="fest">ĐÊM NHẠC ×2</span>`;
+ if(S.festival===i)h+=`<span class="fest">${TX.festBadge}</span>`;
  if(f&&f.map[i])h+=`<span class="fc ${fcKind(i)}">${Math.round(f.map[i]*100)}%</span>`;
  return h}
 const TKEY={};
@@ -1511,7 +1556,7 @@ function renderCenter(){const p=cur();
   const ek=e.title+"|"+e.text;if(ek!==LASTEV){LASTEV=ek;if(!reduced())box.animate([{opacity:0,transform:"translateY(14px) scale(.97)"},{opacity:1,transform:"none"}],{duration:420,easing:"cubic-bezier(.2,.9,.3,1.2)"})}}
  if(S.turn!==LASTTURN){LASTTURN=S.turn;if(!reduced())$("#who").animate([{opacity:0,transform:"translateX(-16px)"},{opacity:1,transform:"none"}],{duration:380,easing:"cubic-bezier(.2,.9,.3,1.2)"})}
  $("#tray").classList.toggle("rollable",["roll","jail"].includes(S.phase)&&!S.over&&!busy&&!p.bot&&canAct()&&S.info==null&&!S.handoff);
- {const ho=$("#handoff");if(S.handoff&&!S.over&&!p.bot){ho.hidden=false;ho.innerHTML=`<div><small>Chơi chung một máy</small>${avatar(p.kind,p.color)}<h2>Đến lượt ${esc(p.name)}</h2><p>Chuyền máy cho ${esc(p.name)} (${esc(animalName(p.kind))}) rồi bấm sẵn sàng.</p><button type="button" class="btn primary big" id="hoGo">Mình là ${esc(p.name)}, quẩy thôi!</button></div>`;
+ {const ho=$("#handoff");if(S.handoff&&!S.over&&!p.bot){ho.hidden=false;ho.innerHTML=`<div><small>Chơi chung một máy</small>${avatar(p.kind,p.color)}<h2>Đến lượt ${esc(p.name)}</h2><p>Chuyền máy cho ${esc(p.name)} (${esc(animalName(p.kind))}) rồi bấm sẵn sàng.</p><button type="button" class="btn primary big" id="hoGo">Mình là ${esc(p.name)}, ${TX.ready}</button></div>`;
   $("#hoGo").addEventListener("click",()=>{S.handoff=false;render()});$("#actions").innerHTML="";return}else ho.hidden=true}
  const adv=advice(),h=$("#hint");h.hidden=!adv;if(adv)h.innerHTML=`${S.phase==="roll"?ICON.radar:ICON.bulb}<span>${adv}</span>`;
  const a=$("#actions");a.innerHTML="";
@@ -1520,9 +1565,9 @@ function renderCenter(){const p=cur();
  if(!canAct()){a.innerHTML=`<span class="waitnote"><span class="dots"><i></i><i></i><i></i></span>Đang chờ ${esc(p.name)} chơi trên máy của họ…</span>`;return}
  const add=(label,fn,primary,dis)=>{const b=document.createElement("button");b.type="button";b.className="btn"+(primary?" primary":"");b.textContent=label;b.disabled=!!dis;b.addEventListener("click",fn);a.appendChild(b)};
  if(S.phase==="roll"||S.phase==="busy")add("Đổ xúc xắc",roll,true,S.phase==="busy");
- if(S.phase==="jail"){add(p.tries>=2?"Đổ xúc xắc (lần cuối, chắc chắn ra)":"Đổ tìm số đôi",roll,true);if(p.free)add(`Dùng thẻ cứu hộ (${p.free})`,useCard)}
+ if(S.phase==="jail"){add(p.tries>=2?"Đổ xúc xắc (lần cuối, chắc chắn ra)":"Đổ tìm số đôi",roll,true);if(p.free)add(`Dùng ${TX.free} (${p.free})`,useCard)}
  if(S.phase==="decide"){S.offer.forEach(o=>add(o.label,()=>doOffer(o.k),true));add("Bỏ qua",()=>doOffer("skip"))}
- if(S.phase==="pick"&&S.pick.k==="fest")add("Bỏ qua đêm nhạc",()=>{S.pick=null;finish()});
+ if(S.phase==="pick"&&S.pick.k==="fest")add(TX.festSkip,()=>{S.pick=null;finish()});
  if(S.phase==="pick"&&S.pick.k==="fly")add("Ở lại, không đi",()=>{S.pick=null;finish()});
  if(S.phase==="end")add(S.extra&&!p.jail&&!p.out?"Đổ tiếp lượt nữa":"Kết thúc lượt",endTurn,true);
  if(["roll","jail","decide","end"].includes(S.phase)&&owned(S.turn).length)add(`Tài sản (${owned(S.turn).length})`,openAssets);
@@ -1530,15 +1575,15 @@ function renderCenter(){const p=cur();
 function renderInfo(){const pop=$("#infopop");
  if(S.info==null||S.phase==="pick"){pop.hidden=true;return}
  const i=S.info,s=SQ[i],pr=S.props[i],col=s.t==="city"?GCOL[s.g]:s.t==="island"?ISL_COL:TCOL[s.t]||"#063a4a";
- const st=pr?(esc(S.players[pr.o].name)+(pr.mg?" · đang cầm cố":S.players[pr.o].jail?" · đang kẹt xe":"")):"Chưa có";
+ const st=pr?(esc(S.players[pr.o].name)+(pr.mg?" · đang cầm cố":S.players[pr.o].jail?" · đang "+TX.jailed:"")):"Chưa có";
  let tag="Ô đặc biệt",body="",art="";
- if(s.t==="city"){tag=`${ZONE(s.g)} · ${s.cc}`;
+ if(s.t==="city"){tag=`${ZONE(s.g)} · ${GLBL[s.g]}`;
   body=`<dl><dt>Giá đất</dt><dd class="num">${m(s.p)}</dd><dt>1 nhà / khách sạn</dt><dd class="num">${m(hc(i))} / ${m(ht(i))}</dd>
    <dt>Hiện có</dt><dd>${pr?LV[pr.l]:"—"}</dd><dt>Cầm cố / chuộc</dt><dd class="num">${m(mgVal(i))} / ${m(redeemCost(i))}</dd>
    <dt>Chủ sở hữu</dt><dd>${st}</dd><dt>Tuyến</dt><dd>${esc(routeName(s.g))}</dd></dl>
    <div class="ladder">${RENT.map((x,k)=>`<span class="num${pr&&!pr.mg&&pr.l===k?" cur":""}">${LV[k]}: ${m(r5(s.p*x))}</span>`).join("")}</div>
    <p style="margin-top:8px;font-size:12.5px;color:var(--muted)">Trọn tuyến cùng màu: mọi mức thuê ×2.</p>`;art=artSVG(s.n)}
- else if(s.t==="island"){tag="Khu du lịch";const c=pr?ISL.filter(j=>S.props[j]&&S.props[j].o===pr.o).length:0;
+ else if(s.t==="island"){tag=TX.islN;const c=pr?ISL.filter(j=>S.props[j]&&S.props[j].o===pr.o).length:0;
   body=`<dl><dt>Giá</dt><dd class="num">${m(s.p)}</dd><dt>Cầm cố / chuộc</dt><dd class="num">${m(mgVal(i))} / ${m(redeemCost(i))}</dd><dt>Chủ sở hữu</dt><dd>${st}</dd></dl>
    <div class="ladder">${ISL_RENT.slice(1,ISL.length+1).map((r,k)=>`<span class="num${c===k+1?" cur":""}">${k+1} khu: ${m(r)}</span>`).join("")}</div>`;art=artSVG(s.n)}
  else{const L=LEGEND.find(x=>x[0]===s.t);body=`<p>${L?L[2]:s.t==="lux"?"Nộp 100K khi dừng ở ô này.":""}</p>`}
@@ -1556,7 +1601,7 @@ function cashCls(i,c){const now=performance.now();if(PREVC[i]!=null&&PREVC[i]!==
 function renderPlayers(){const max=Math.max(1,...S.players.map((_,i)=>assets(i)));
  const few=S.players.length<=4;$("#plist").classList.toggle("few",few);layoutPlayers();
  $("#plist").innerHTML=S.players.map((p,i)=>{const own=owned(i).sort((a,b)=>a-b),isl=own.filter(j=>SQ[j].t==="island").length,mgc=own.filter(j=>S.props[j].mg).length;
-  const st=(p.bot&&!p.out?"Máy · ":"")+(p.out?"Phá sản":p.jail?`Kẹt xe (${p.tries||0}/3)`:`${own.length} chỗ · ${isl} DL${mgc?" · "+mgc+" cố":""}${p.free?" · "+p.free+" thẻ":""}`);
+  const st=(p.bot&&!p.out?"Máy · ":"")+(p.out?"Phá sản":p.jail?`${TX.jailN} (${p.tries||0}/3)`:`${own.length} chỗ · ${isl} DL${mgc?" · "+mgc+" cố":""}${p.free?" · "+p.free+" thẻ":""}`);
   const [cf,cd]=cashCls(i,p.cash);
   const chips=own.map(j=>{const s=SQ[j],full=s.t==="city"?ownsGroup(i,s.g):false,pr=S.props[j];
    return `<span class="${full?"full":""}${pr.mg?" mg":""}" style="--g:${s.t==="city"?GCOL[s.g]:ISL_COL}" title="${esc(s.n)}${pr.mg?" (cầm cố)":""}">${pr.l?`<b>${pr.l===5?"K":pr.l}</b>`:""}</span>`}).join("");
@@ -1576,7 +1621,7 @@ function renderAssets(){const box=$("#assetBox"),p=cur(),own=owned(S.turn).sort(
    const btns=[pr.l>0?`<button type="button" class="btn sm" data-a="sell" data-i="${i}">${pr.l===5?"Bán khách sạn":"Bán 1 nhà"} +${m(refund(i))}</button>`:"",
     !pr.mg&&pr.l===0?`<button type="button" class="btn sm" data-a="mg" data-i="${i}">Cầm cố +${m(mgVal(i))}</button>`:"",
     pr.mg?`<button type="button" class="btn sm" data-a="rd" data-i="${i}" ${p.cash<redeemCost(i)?"disabled":""}>Chuộc −${m(redeemCost(i))}</button>`:""].join("");
-   return `<li><i style="--g:${s.t==="city"?GCOL[s.g]:ISL_COL}"></i><div><b>${esc(s.n)}</b><small>${pr.mg?"Đang cầm cố":s.t==="city"?LV[pr.l]+" · thuê "+m(rent(i)):"Khu DL · thuê "+m(rent(i))}</small></div><div class="btns">${btns}</div></li>`}).join("")}</ul>`:`<div class="empty">Bạn chưa sở hữu đất nào.</div>`}
+   return `<li><i style="--g:${s.t==="city"?GCOL[s.g]:ISL_COL}"></i><div><b>${esc(s.n)}</b><small>${pr.mg?"Đang cầm cố":s.t==="city"?LV[pr.l]+" · thuê "+m(rent(i)):TX.islN+" · thuê "+m(rent(i))}</small></div><div class="btns">${btns}</div></li>`}).join("")}</ul>`:`<div class="empty">Bạn chưa sở hữu đất nào.</div>`}
   <div class="actions"><button class="btn primary" type="button" id="closeAssets">Xong</button></div>`;
  box.querySelectorAll("[data-a]").forEach(b=>b.addEventListener("click",()=>{const i=+b.dataset.i;
   mark();if(b.dataset.a==="sell")sellLevel(i);if(b.dataset.a==="mg")mortgage(i);if(b.dataset.a==="rd")redeem(i);
@@ -1587,7 +1632,7 @@ let confettiId=null,overShown=null;
 function renderOver(){const o=$("#over");if(!S.over){o.hidden=true;return}
  const ok=(S.code||"local")+":"+S.round+":"+S.over.w;if(overShown===ok)return;overShown=ok;
  const w=S.players[S.over.w],rank=S.players.map((p,i)=>i).sort((a,b)=>(S.players[a].out-S.players[b].out)||assets(b)-assets(a));
- $("#overbox").innerHTML=`<span class="tag">Hết kèo!</span><h2>${esc(w.name)} là Tỷ phú Cần Thơ!</h2><p>${esc(w.name)} ${esc(S.over.reason)}.</p>
+ $("#overbox").innerHTML=`<span class="tag">${esc(TX.winTag)}</span><h2>${esc(TX.winT(w.name))}</h2><p>${esc(w.name)} ${esc(S.over.reason)}.</p>
   <ol class="rank">${rank.map((i,k)=>{const p=S.players[i];return `<li><span class="r num">${k+1}</span>${avatar(p.kind,p.color)}<span>${esc(p.name)}${p.out?" · phá sản":""}</span><span class="m num">${m(assets(i))}</span></li>`}).join("")}</ol>
   <div class="actions"><button class="btn primary" type="button" id="againBtn">Chơi ván mới</button><button class="btn" type="button" id="viewBtn">Xem lại bàn cờ</button></div>`;
  o.hidden=false;confetti();
@@ -1604,6 +1649,206 @@ function render(){if(!S)return;setMood();renderTiles();renderPawns();renderCente
  if(S.online&&dirty&&S.phase!=="busy"){dirty=false;pushState()}
  scheduleBot()}
 
+/* ===================== THEMES ===================== */
+const TX_CT={charNote:"(10 nhân vật dân gian khắp ba miền)",islN:"Khu du lịch",isl:"khu du lịch",islHd:"DU LỊCH",jailN:"Kẹt xe",jailed:"kẹt xe",outT:"Thoát Kẹt xe!",outTx:(a,b)=>`Đổ đôi ${a}–${b}, đường đã thông.`,out3T:"Hết kẹt xe",out3Tx:"Đã chờ đủ 3 lượt, đường thông, được đi tiếp theo số vừa đổ.",out3Log:"ra khỏi Kẹt xe sau 3 lượt",
+ stillT:"Vẫn còn kẹt xe",noRent:"Trong lúc kẹt xe, đất của bạn không thu được tiền thuê.",speed3:"Chạy quá tốc độ, bị giữ lại ở ô Kẹt xe.",jailLog:"bị Kẹt xe",
+ startN:"Bến Ninh Kiều",startT:"Cập bến Ninh Kiều!",startTx:"Dừng đúng bến, thưởng thêm 100K.",
+ taxN:"Bill cuối tháng",taxTx:"Tiền trọ, điện nước, 4G: nộp 10% tổng tài sản",taxTag:"Chi tiêu",
+ chanceT:"Có kèo!",chanceTag:"Thẻ Kèo · Cơ hội",bagT:"Drama sinh viên!",bagTag:"Thẻ Drama · Khí vận",
+ stormN:"Triều cường",stormHit:(n,l)=>`Nước ngập làm hư một công trình ở ${n}, còn lại: ${l}.`,stormNo:"Xe chết máy giữa đường ngập, mất 40K sửa xe.",stormTag:"Ngập đường",
+ hwT:"Đèn xanh một mạch",hwTx:"Đường thông, bạn được đổ thêm một lượt.",hwTag:"Đèn xanh",
+ jailT:"Kẹt xe giờ tan học!",jailTag:"Ùn tắc",
+ festN:"Đêm nhạc",festNone:"Bạn chưa có chỗ nào (không cầm cố) để mở đêm nhạc.",festOpen:"Mở đêm nhạc",festDone:"Đêm nhạc cháy vé!",festLog:"mở đêm nhạc tại",festFx:"Đêm nhạc ×2",festBadge:"ĐÊM NHẠC ×2",festSkip:"Bỏ qua đêm nhạc",
+ flyN:"Đi phượt",flyTx:"Chọn bất kỳ ô nào để phóng xe tới. Chạy qua Bến Ninh Kiều vẫn được nhận 200K.",flyVerb:"phượt tới",flyPr:"Đi đâu cũng được",jailPr:"Đổ đôi để đi",
+ free:"thẻ cứu hộ",Free:"Thẻ cứu hộ",payJailT:"Đã gọi cứu hộ",freeTx:"Thoát Kẹt xe miễn phí, hãy đổ xúc xắc.",
+ last:"là dân chơi cuối cùng chưa cháy túi",winTag:"Hết kèo!",winT:n=>`${n} là Tỷ phú Cần Thơ!`,startLog:"Bắt đầu quẩy Cần Thơ!",firstTx:"Đổ xúc xắc ở giữa bàn cờ để bắt đầu quẩy.",
+ players:"Dân chơi",ready:"quẩy thôi!",go:"Quẩy thôi!",seatsT:"Danh sách dân chơi",
+ ruleJail:"<b>Kẹt xe.</b> Phải đổ được đôi mới ra; chờ đủ 3 lượt thì được ra miễn phí. Đang kẹt xe thì không thu được tiền thuê.",
+ legendSub:"Kèo là ô Cơ hội, Drama là ô Khí vận, viết lại theo đời sinh viên. Bàn lớn 40 ô có 3 ô Kèo, 3 ô Drama, thêm 6 điểm vui chơi và khu Thiền viện Trúc Lâm.",
+ w1:"Cờ Tỷ Phú",w2:"Cần Thơ",small:"Phiên bản Tây Đô",title:"Cờ Tỷ Phú Cần Thơ",sticker:"Phiên bản Tây Đô · Gen Z",
+ h2:'Quẩy khắp <span>Tây Đô</span>, làm chủ cả <em>Cần Thơ</em>',
+ hp:"Từ mỳ cay Omega, Itada, bún đậu Xưa, hồng trà Ngô Gia, music box, Vincom Xuân Khánh đến chợ nổi Cái Răng và cầu Cần Thơ: 2 đến 10 dân chơi cùng mua chỗ, xây nhà, mở khách sạn và tranh nhau các khu du lịch xịn nhất.",
+ pick:"Đời sinh viên Tây Đô: mỳ cay, bún đậu, music box, chợ nổi, cầu Cần Thơ."};
+const TX_TDK={charNote:"(10 nhân vật Tây Du Ký: thầy trò Đường Tăng, Na Tra, Ngưu Ma Vương…)",islN:"Tiên cảnh",isl:"tiên cảnh",islHd:"TIÊN CẢNH",jailN:"Núi Ngũ Hành",jailed:"bị đè dưới núi",outT:"Thoát khỏi núi!",outTx:(a,b)=>`Đổ đôi ${a}–${b}, núi Ngũ Hành rung chuyển, bạn thoát ra!`,out3T:"Hết hạn bị giam",out3Tx:"Đã chờ đủ 3 lượt, Đường Tăng gỡ bùa, được đi tiếp theo số vừa đổ.",out3Log:"thoát khỏi Núi Ngũ Hành sau 3 lượt",
+ stillT:"Vẫn bị đè dưới núi",noRent:"Trong lúc bị giam, đất của bạn không thu được tiền thuê.",speed3:"Phá phách quá đà, bị Phật Tổ đè dưới Núi Ngũ Hành.",jailLog:"bị đè dưới Núi Ngũ Hành",
+ startN:"Trường An",startT:"Về tới Trường An!",startTx:"Vua Đường ban thưởng thêm 100K.",
+ taxN:"Thông quan",taxTx:"Đóng dấu thông quan văn điệp, nộp lễ vật: 10% tổng tài sản",taxTag:"Lệ phí",
+ chanceT:"Thiên cơ!",chanceTag:"Thẻ Thiên Cơ · Cơ hội",bagT:"Kiếp nạn!",bagTag:"Thẻ Kiếp Nạn · Khí vận",
+ stormN:"Hỏa Diệm Sơn",stormHit:(n,l)=>`Lửa Hỏa Diệm Sơn thiêu một công trình ở ${n}, còn lại: ${l}.`,stormNo:"Chưa có công trình nào, mất 40K mua nhầm quạt Ba Tiêu giả.",stormTag:"Lửa cháy",
+ hwT:"Bạch Long Mã phi nước đại",hwTx:"Ngựa thần phi nhanh, bạn được đổ thêm một lượt.",hwTag:"Bạch Long Mã",
+ jailT:"Bị đè dưới Núi Ngũ Hành!",jailTag:"Giam cầm",
+ festN:"Hội Bàn Đào",festNone:"Bạn chưa có chỗ nào (không cầm cố) để mở Hội Bàn Đào.",festOpen:"Mở Hội Bàn Đào",festDone:"Hội Bàn Đào linh đình!",festLog:"mở Hội Bàn Đào tại",festFx:"Bàn Đào ×2",festBadge:"BÀN ĐÀO ×2",festSkip:"Bỏ qua Hội Bàn Đào",
+ flyN:"Cân Đẩu Vân",flyTx:"Chọn bất kỳ ô nào để cưỡi mây tới. Bay qua Trường An vẫn được nhận 200K.",flyVerb:"cưỡi mây tới",flyPr:"Bay khắp Tam Giới",jailPr:"Đổ đôi để thoát",
+ free:"bùa hộ thân",Free:"Bùa hộ thân",payJailT:"Đã nhờ Thổ Địa",freeTx:"Bùa hộ thân giúp bạn thoát núi, hãy đổ xúc xắc.",
+ last:"là người cuối cùng chưa bị yêu quái lấy sạch",winTag:"Thỉnh kinh viên mãn!",winT:n=>`${n} là Tỷ phú Tây Thiên!`,startLog:"Lên đường thỉnh kinh!",firstTx:"Đổ xúc xắc ở giữa bàn cờ để bắt đầu hành trình.",
+ players:"Đoàn thỉnh kinh",ready:"lên đường!",go:"Lên đường!",seatsT:"Đoàn thỉnh kinh",
+ ruleJail:"<b>Núi Ngũ Hành.</b> Phải đổ được đôi mới thoát; chờ đủ 3 lượt thì được ra miễn phí. Đang bị giam thì không thu được tiền thuê.",
+ legendSub:"Thiên Cơ là ô Cơ hội, Kiếp Nạn là ô Khí vận, lấy từ 81 kiếp nạn trên đường thỉnh kinh. Bàn lớn 40 ô có thêm 6 vùng đất và tiên cảnh Ngũ Trang Quán.",
+ w1:"Cờ Tỷ Phú",w2:"Tây Du Ký",small:"Đường đi thỉnh kinh",title:"Cờ Tỷ Phú Tây Du Ký",sticker:"81 kiếp nạn · 1 tỷ phú",
+ h2:'Từ <span>Trường An</span> tới <em>Tây Thiên</em>, ai giàu nhất Tam Giới?',
+ hp:"Đi theo đường thỉnh kinh: Cao Lão Trang, Lưu Sa Hà, Bạch Hổ Lĩnh, Nữ Nhi Quốc, Hỏa Diệm Sơn… tới Đại Lôi Âm Tự. Mua đất, xây am, dựng cung điện, giành Hoa Quả Sơn và Long Cung. Coi chừng bị đè dưới Núi Ngũ Hành!",
+ pick:"Đường thỉnh kinh: Hoa Quả Sơn, Nữ Nhi Quốc, Hỏa Diệm Sơn, Cân Đẩu Vân."};
+let TX=TX_CT,THEME_ID="cantho";
+
+/* ---- Tây Du Ký characters (drawn from the classic novel, original designs) ---- */
+const TDK_CH=[["tangtang","Đường Tăng"],["ngokhong","Tôn Ngộ Không"],["batgioi","Trư Bát Giới"],["satang","Sa Tăng"],["bachlong","Bạch Long Mã"],["thodia","Thổ Địa"],["natra","Na Tra"],["nguma","Ngưu Ma Vương"],["honghai","Hồng Hài Nhi"],["ngochoang","Ngọc Hoàng"]];
+const TDK_FACES={
+ tangtang:BODY("#d23a2a",`<path d="M12 60l38-8v6l-38 8z" fill="#f2c14e"/><path d="M20 58l4-1M30 56l4-1M40 54l4-1" stroke="#a8281c" stroke-width="2"/>`)+FACE("#f7cfa8")+`<path d="M24.5 38.3q2-1.6 4 0M35.5 38.3q2-1.6 4 0" stroke="#2b1a12" stroke-width="1.5" fill="none" stroke-linecap="round"/>`+BL()+MO()+
+  `<circle cx="32" cy="32" r="1" fill="#d23a2a"/><path d="M18 28l3-11 5 5 6-10 6 10 5-5 3 11z" fill="#f2c14e"/><path d="M18 27.5h28v3.5H18z" fill="#c9952a"/><circle cx="32" cy="19" r="1.7" fill="#d23a2a"/><circle cx="22" cy="22" r="1.1" fill="#d23a2a"/><circle cx="42" cy="22" r="1.1" fill="#d23a2a"/>`,
+ ngokhong:`<rect x="45" y="6" width="3.4" height="58" rx="1.7" transform="rotate(22 46.7 35)" fill="#c0392b"/><rect x="45" y="6" width="3.4" height="6" transform="rotate(22 46.7 35)" fill="#f2c14e"/>`+BODY("#e8a21e",`<path d="M20 52l12 8 12-8" stroke="#c0392b" stroke-width="3" fill="none"/>`)+
+  `<circle cx="17" cy="37" r="5" fill="#c9862e"/><circle cx="47" cy="37" r="5" fill="#c9862e"/><circle cx="17" cy="37" r="2.5" fill="#f6d2a8"/><circle cx="47" cy="37" r="2.5" fill="#f6d2a8"/><circle cx="32" cy="36" r="14.5" fill="#c9862e"/>`+
+  `<path d="M21 39q0-9 6-9 3 0 5 3 2-3 5-3 6 0 6 9 0 9-11 11-11-2-11-11z" fill="#f6d2a8"/>`+EY(38)+`<ellipse cx="32" cy="43" rx="1.6" ry="1" fill="#7a3b25"/><path d="M28 46q4 3 8 0" stroke="#7a3b25" stroke-width="1.6" fill="none" stroke-linecap="round"/>`+
+  `<path d="M17.5 28.5q14.5-8 29 0v3.6q-14.5-8-29 0z" fill="#f2c14e"/><circle cx="18.5" cy="31" r="1.6" fill="#f2c14e"/><circle cx="45.5" cy="31" r="1.6" fill="#f2c14e"/><path d="M26 23q6-6 12 0" stroke="#a8691e" stroke-width="2" fill="none"/>`,
+ batgioi:BODY("#2f4a7a",`<path d="M22 52q10 7 20 0" stroke="#f2c14e" stroke-width="2" fill="none"/>`)+`<path d="M15 27l-6 16 10-4zM49 27l6 16-10-4z" fill="#ec95a8"/><circle cx="32" cy="37" r="15" fill="#f6b3c2"/>`+
+  `<path d="M25 33.5h4M35 33.5h4" stroke="#7a3b4a" stroke-width="1.4" stroke-linecap="round"/><circle cx="26.5" cy="36.5" r="1.7" fill="#2b1a12"/><circle cx="37.5" cy="36.5" r="1.7" fill="#2b1a12"/><ellipse cx="32" cy="42.5" rx="6.5" ry="4.6" fill="#ec95a8"/><ellipse cx="29.6" cy="42.5" rx="1.3" ry="1.9" fill="#a8455e"/><ellipse cx="34.4" cy="42.5" rx="1.3" ry="1.9" fill="#a8455e"/><path d="M28 48.5q4 2 8 0" stroke="#a8455e" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M20 24q12-6 24 0" stroke="#2b2b3a" stroke-width="3" fill="none" stroke-linecap="round"/>`,
+ satang:BODY("#7a5a3a",`<g fill="#8a5a2a" stroke="#5a3a1a" stroke-width=".8"><circle cx="20" cy="52" r="3"/><circle cx="26" cy="55" r="3"/><circle cx="32" cy="56" r="3"/><circle cx="38" cy="55" r="3"/><circle cx="44" cy="52" r="3"/></g>`)+FACE("#c99a72")+BROW("#6a2a1a")+EY()+
+  `<path d="M19 40q2 14 13 15 11-1 13-15-4 6-13 6t-13-6z" fill="#8a3a22"/><path d="M28.5 45q3.5 2 7 0" stroke="#4a1a0a" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M19 30q13-6 26 0" stroke="#6a5a4a" stroke-width="2.4" fill="none"/>`,
+ bachlong:BODY("#f2f4fa",`<path d="M26 51l6 6 6-6" stroke="#3a7fd0" stroke-width="2" fill="none"/><path d="M14 60q4-3 8 0t8 0 8 0 8 0 8 0" stroke="#bcd4f2" stroke-width="1.6" fill="none"/>`)+FACE("#f7d6b4")+EY()+BL()+MO()+
+  `<path d="M19 33q2-10 13-10t13 10q-6-4-13-4t-13 4z" fill="#1d130d"/><path d="M28 21q4-6 8 0z" fill="#1d130d"/><path d="M22 25l-4-10 6 5 1-5 2 8zM42 25l4-10-6 5-1-5-2 8z" fill="#e8eefc" stroke="#9ab0d8" stroke-width=".8"/>`,
+ thodia:BODY("#c98a2a",`<path d="M32 51v15" stroke="#a86a1a" stroke-width="1"/>`)+`<rect x="49" y="26" width="3" height="38" rx="1.5" fill="#7a4a1a"/><circle cx="50.5" cy="25" r="3.5" fill="#a86a1a"/>`+FACE("#f2c9a0")+
+  `<path d="M24.5 38.3q2-1.8 4 0M35.5 38.3q2-1.8 4 0" stroke="#2b1a12" stroke-width="1.5" fill="none" stroke-linecap="round"/>`+BL(41)+`<path d="M22 43q10 7 20 0q-1 12-10 14-9-2-10-14z" fill="#f4f4f4"/><path d="M26 43q3-2.5 6 0q3-2.5 6 0" stroke="#e2e2e2" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M23 33.5q3-2 6 0M35 33.5q3-2 6 0" stroke="#f2f2f2" stroke-width="2.1" fill="none" stroke-linecap="round"/>`+
+  `<path d="M18 28q2-10 14-10t14 10z" fill="#2a2a3a"/><path d="M14 29h36" stroke="#2a2a3a" stroke-width="3" stroke-linecap="round"/><path d="M14 29l-4 3M50 29l4 3" stroke="#2a2a3a" stroke-width="2" stroke-linecap="round"/>`,
+ natra:BODY("#e8333f",`<path d="M8 58q12-10 24-2t24-4" stroke="#ff6b8a" stroke-width="4" fill="none" stroke-linecap="round"/>`)+FACE("#f7d0aa")+EY()+`<circle cx="22.5" cy="42" r="3.2" fill="#ff5f6f" opacity=".5"/><circle cx="41.5" cy="42" r="3.2" fill="#ff5f6f" opacity=".5"/>`+MO()+
+  `<path d="M19 33q2-10 13-10t13 10q-6-4-13-4t-13 4z" fill="#1d130d"/><circle cx="21" cy="21" r="5.5" fill="#1d130d"/><circle cx="43" cy="21" r="5.5" fill="#1d130d"/><path d="M17 19h8M39 19h8" stroke="#e8333f" stroke-width="2"/><circle cx="32" cy="31.5" r="1.4" fill="#e8333f"/>`,
+ nguma:`<path d="M18 27q-12-2-14-14 8 6 16 8zM46 27q12-2 14-14-8 6-16 8z" fill="#efe6d0" stroke="#b8a888" stroke-width="1"/>`+BODY("#3a3a48",`<path d="M14 56h36v5H14z" fill="#d4a21a"/><circle cx="32" cy="58.5" r="2.5" fill="#c0392b"/>`)+FACE("#a8764e")+
+  `<path d="M23 33l6 1.5M41 33l-6 1.5" stroke="#1d130d" stroke-width="2" stroke-linecap="round"/>`+EY()+`<path d="M20 42q2 12 12 13 10-1 12-13-4 4-12 4t-12-4z" fill="#1d130d"/><ellipse cx="32" cy="42" rx="4.5" ry="3" fill="#8a5a3a"/><circle cx="30.3" cy="42" r=".9" fill="#2b1a12"/><circle cx="33.7" cy="42" r=".9" fill="#2b1a12"/><path d="M19 30q13-8 26 0" stroke="#1d130d" stroke-width="3" fill="none"/>`,
+ honghai:`<path d="M14 30q-2-14 8-20-1 8 4 10 1-9 8-12-2 8 4 10 4-6 10-4-4 4-2 10 6-2 6 6z" fill="#ff7a1a" opacity=".85"/>`+BODY("#c0392b",`<path d="M24 51h16l-3 10H27z" fill="#ffb02a"/>`)+FACE("#f7cba2")+EY()+`<circle cx="22.5" cy="42" r="3" fill="#ff5f4f" opacity=".5"/><circle cx="41.5" cy="42" r="3" fill="#ff5f4f" opacity=".5"/><path d="M28.5 44.5q3.5 3.5 7 0" stroke="#8a3a22" stroke-width="1.7" fill="none" stroke-linecap="round"/>`+
+  `<path d="M20 30q4-8 12-6 8-2 12 6-6-3-12-2-6-1-12 2z" fill="#3a1d10"/><path d="M30 24q2-7 5-9-1 5 1 9z" fill="#3a1d10"/>`,
+ ngochoang:BODY("#e8b81e",`<path d="M18 54q14 6 28 0" stroke="#c0392b" stroke-width="2" fill="none"/><circle cx="32" cy="59" r="2" fill="#c0392b"/>`)+FACE("#f2c9a0")+BROW()+EY()+`<path d="M24 44q8 14 16 0q-2 14-8 16-6-2-8-16z" fill="#1d130d"/><path d="M27 43.5q5-2.5 10 0" stroke="#1d130d" stroke-width="2" fill="none"/>`+
+  `<path d="M19 28q0-8 13-8t13 8z" fill="#1d130d"/><rect x="12" y="17" width="40" height="4" rx="1" fill="#2a2a3a"/><g stroke="#f2c14e" stroke-width="1.1"><path d="M14 21v8M18 21v9M22 21v8M42 21v8M46 21v9M50 21v8"/></g><g fill="#e8333f"><circle cx="14" cy="29.5" r="1.1"/><circle cx="18" cy="30.5" r="1.1"/><circle cx="22" cy="29.5" r="1.1"/><circle cx="42" cy="29.5" r="1.1"/><circle cx="46" cy="30.5" r="1.1"/><circle cx="50" cy="29.5" r="1.1"/></g>`};
+
+/* ---- Tây Du Ký art ---- */
+Object.assign(ART,{
+ stream:'<path d="M0 30q8-6 16-2t16-4 16 2v6H0z" opacity=".6"/><path d="M4 18l6-10 5 7 4-5 7 8z"/><path d="M28 20l6-12 8 12z" opacity=".8"/><path d="M38 6q3 2 6 0" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M6 25q6-3 12 0" stroke="#fff" stroke-width="1.4" fill="none" opacity=".7"/>',
+ village:'<path d="M3 18l10-9 10 9z"/><rect x="5" y="18" width="16" height="11" opacity=".7"/><rect x="11" y="22" width="4" height="7" fill="#fff" opacity=".6"/><path d="M25 20l10-10 10 10z" opacity=".85"/><rect x="27" y="20" width="16" height="9" opacity=".6"/><path d="M0 30h48" stroke="currentColor" stroke-width="1.6"/><circle cx="40" cy="5" r="3" opacity=".5"/>',
+ waves:'<path d="M0 14q6-6 12 0t12 0 12 0 12 0v4q-6-6-12 0t-12 0-12 0-12 0z"/><path d="M0 22q6-6 12 0t12 0 12 0 12 0v4q-6-6-12 0t-12 0-12 0-12 0z" opacity=".7"/><path d="M0 30q6-6 12 0t12 0 12 0 12 0" stroke="currentColor" stroke-width="2" fill="none" opacity=".5"/><circle cx="38" cy="6" r="3.5" opacity=".6"/>',
+ windmtn:'<path d="M2 30l14-20 8 10 8-14 14 24z"/><path d="M6 8q8-5 16 0t16 0" stroke="currentColor" stroke-width="1.6" fill="none" opacity=".6"/><path d="M10 13q6-3 12 0" stroke="currentColor" stroke-width="1.2" fill="none" opacity=".5"/>',
+ ridge:'<path d="M0 30l12-16 8 6 10-14 18 24z"/><path d="M12 18l3 4M30 10l2 5M34 14l3 4M22 22l2 3" stroke="#fff" stroke-width="2" opacity=".75"/>',
+ gourd:'<circle cx="24" cy="10" r="6"/><circle cx="24" cy="22" r="9"/><path d="M24 4V1" stroke="currentColor" stroke-width="2"/><path d="M26 2q5-2 6 2" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M20 20q4-3 8 0" stroke="#fff" stroke-width="1.4" fill="none" opacity=".6"/>',
+ firecave:'<path d="M4 30q0-22 20-22t20 22z" opacity=".55"/><path d="M14 30q-2-8 4-14 0 6 3 7 0-8 6-13-1 8 3 10 2-4 5-4-2 5 0 9 2 3 1 5z"/>',
+ castle:'<rect x="6" y="14" width="36" height="16" opacity=".75"/><path d="M4 14h40l-5-6H9z"/><path d="M16 8l8-6 8 6z" opacity=".85"/><path d="M20 30v-8a4 4 0 0 1 8 0v8z" fill="#fff" opacity=".7"/><g opacity=".9"><rect x="9" y="18" width="4" height="4" fill="#fff" opacity=".6"/><rect x="35" y="18" width="4" height="4" fill="#fff" opacity=".6"/></g>',
+ river2:'<path d="M0 18q12-8 24 0t24 0v12H0z" opacity=".55"/><path d="M8 18l6-4 6 4-6 3z"/><path d="M0 24q6-3 12 0t12 0 12 0 12 0" stroke="#fff" stroke-width="1.4" fill="none" opacity=".7"/><circle cx="36" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/>',
+ flowerpalace:'<path d="M6 14q18-8 36 0l-3 2H9z"/><rect x="9" y="16" width="30" height="13" opacity=".7"/><rect x="20" y="20" width="8" height="9" fill="#fff" opacity=".6"/><g><circle cx="6" cy="26" r="3"/><circle cx="42" cy="26" r="3"/><circle cx="6" cy="26" r="1.2" fill="#fff"/><circle cx="42" cy="26" r="1.2" fill="#fff"/></g>',
+ web:'<g fill="none" stroke="currentColor" stroke-width="1.2"><path d="M24 2v28M10 4l28 24M38 4L10 28M2 16h44"/><path d="M24 8l8 2 4 6-4 6-8 2-8-2-4-6 4-6z"/><path d="M24 4l12 3 6 9-6 9-12 3-12-3-6-9 6-9z" opacity=".6"/></g><circle cx="24" cy="16" r="3.2"/>',
+ lionmtn:'<path d="M2 30l12-18 10 10 10-16 12 24z"/><circle cx="32" cy="16" r="4" fill="#fff" opacity=".7"/><path d="M29 14l-2-3M35 14l2-3M30 18q2 1.5 4 0" stroke="currentColor" stroke-width="1"/>',
+ stupa:'<path d="M24 1l2 8h-4z"/><path d="M17 20q0-11 7-11t7 11z"/><rect x="13" y="20" width="22" height="4" opacity=".75"/><rect x="9" y="24" width="30" height="6"/><path d="M5 20l3-8 3 8zM37 20l3-8 3 8z" opacity=".55"/>',
+ skypalace:'<path d="M8 12q16-8 32 0l-3 2H11z"/><rect x="12" y="14" width="24" height="9" opacity=".75"/><rect x="21" y="16" width="6" height="7" fill="#fff" opacity=".6"/><path d="M2 27q5-4 10 0 5-5 12-1 6-5 12 0 5-3 10 1z" opacity=".55"/><path d="M4 26h40" stroke="#fff" stroke-width="1" opacity=".6"/>',
+ furnace:'<path d="M10 12h28l-3 14H13z"/><path d="M8 12h32" stroke="currentColor" stroke-width="2.4"/><path d="M14 26l-2 4M34 26l2 4M24 26v4" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="18" r="4" fill="#fff" opacity=".7"/><path d="M18 9q2-4 0-7M24 9q2-4 0-7M30 9q2-4 0-7" stroke="currentColor" stroke-width="1.4" fill="none" opacity=".6"/>',
+ horse:'<path d="M14 30l2-12q-6-4-4-10 4-4 10-2l8 2 6-4-1 6q6 4 4 12l-4 8h-4l2-7-9 1-2 6z"/><circle cx="16" cy="9" r="1" fill="#fff"/><path d="M26 6q4-4 8-2" stroke="currentColor" stroke-width="1.4" fill="none"/>',
+ leiyin:'<circle cx="24" cy="10" r="9" opacity=".3"/><path d="M6 15q18-9 36 0l-3 2H9z"/><rect x="10" y="17" width="28" height="12" opacity=".75"/><rect x="20" y="20" width="8" height="9" fill="#fff" opacity=".6"/><path d="M4 30h40" stroke="currentColor" stroke-width="2"/>',
+ peak:'<path d="M2 30l16-22 8 9 6-7 14 20z"/><path d="M18 8V1M12 8l-4-5M24 8l4-5" stroke="currentColor" stroke-width="1.4" opacity=".7"/><path d="M14 12l4-4 4 4" stroke="#fff" stroke-width="1.6" fill="none" opacity=".7"/>',
+ fruitmtn:'<path d="M2 30l14-22 10 12 6-6 14 16z" opacity=".75"/><path d="M20 30V14" stroke="#fff" stroke-width="2.4" opacity=".7"/><circle cx="36" cy="10" r="4"/><path d="M36 6q2-3 4-2" stroke="currentColor" stroke-width="1.2" fill="none"/><circle cx="42" cy="15" r="3" opacity=".85"/>',
+ dragonpalace:'<path d="M0 26q6-4 12 0t12 0 12 0 12 0v6H0z" opacity=".6"/><path d="M10 14q14-7 28 0l-3 2H13z"/><rect x="13" y="16" width="22" height="9" opacity=".75"/><circle cx="24" cy="6" r="4"/><circle cx="24" cy="6" r="1.6" fill="#fff"/>',
+ lotus:'<path d="M24 26q-10-4-12-14 8 2 12 8 4-6 12-8-2 10-12 14z"/><path d="M24 22q-4-8 0-16 4 8 0 16z" opacity=".8"/><path d="M4 28q10-4 20 0t20 0" stroke="currentColor" stroke-width="1.6" fill="none" opacity=".5"/><path d="M6 22q4-4 8 0" opacity=".6"/>',
+ moon:'<circle cx="24" cy="15" r="12"/><path d="M28 10q-6 4-2 10" fill="none" stroke="#fff" stroke-width="1.4" opacity=".5"/><path d="M16 18q1-4 4-4 2 1 1 4 3 0 3 3-2 3-6 2-3-1-2-5z" fill="#fff" opacity=".8"/>',
+ peachtree:'<circle cx="24" cy="12" r="11" opacity=".75"/><rect x="23" y="20" width="2.4" height="10"/><g fill="#fff" opacity=".9"><circle cx="18" cy="11" r="2.4"/><circle cx="28" cy="8" r="2.4"/><circle cx="30" cy="15" r="2.4"/><circle cx="20" cy="17" r="2.4"/></g>'});
+
+const TDK_GLBL={1:"KHỞI HÀNH",2:"SÔNG NÚI",3:"YÊU ĐỘNG",4:"VƯƠNG QUỐC",5:"KỲ QUỐC",6:"TÂY VỰC",7:"THIÊN ĐÌNH",8:"LINH SƠN"};
+const TDK_MAPS={
+ 32:[X("start","Trường An"),C("Ưng Sầu Giản",1,60),X("bag","Kiếp Nạn"),C("Cao Lão Trang",1,60),X("tax","Thông quan"),I("Hoa Quả Sơn"),C("Lưu Sa Hà",2,100),C("Hắc Phong Sơn",2,100),
+  X("jail","Núi Ngũ Hành"),C("Bạch Hổ Lĩnh",3,140),X("chance","Thiên Cơ"),C("Bình Đỉnh Sơn",3,140),X("storm","Hỏa Diệm Sơn"),I("Long Cung Đông Hải"),C("Bảo Tượng Quốc",4,180),C("Ô Kê Quốc",4,180),
+  X("fest","Hội Bàn Đào"),C("Thông Thiên Hà",5,220),X("chance","Thiên Cơ"),C("Nữ Nhi Quốc",5,220),I("Phổ Đà Sơn"),C("Sư Đà Lĩnh",6,260),X("bag","Kiếp Nạn"),C("Tỳ Kheo Quốc",6,260),
+  X("fly","Cân Đẩu Vân"),C("Lăng Tiêu Bảo Điện",7,300),C("Đâu Suất Cung",7,300),X("highway","Bạch Long Mã"),I("Quảng Hàn Cung"),C("Đại Lôi Âm Tự",8,350),X("chance","Thiên Cơ"),C("Đỉnh Linh Sơn",8,350)],
+ 40:[X("start","Trường An"),C("Ưng Sầu Giản",1,60),X("bag","Kiếp Nạn"),C("Cao Lão Trang",1,60),X("tax","Thông quan"),I("Hoa Quả Sơn"),C("Lưu Sa Hà",2,100),X("chance","Thiên Cơ"),C("Hắc Phong Sơn",2,100),C("Quan Âm Thiền Viện",2,120),
+  X("jail","Núi Ngũ Hành"),C("Bạch Hổ Lĩnh",3,140),X("storm","Hỏa Diệm Sơn"),C("Bình Đỉnh Sơn",3,140),C("Hỏa Vân Động",3,160),I("Long Cung Đông Hải"),C("Bảo Tượng Quốc",4,180),X("bag","Kiếp Nạn"),C("Ô Kê Quốc",4,180),C("Xa Trì Quốc",4,200),
+  X("fest","Hội Bàn Đào"),C("Thông Thiên Hà",5,220),X("chance","Thiên Cơ"),C("Nữ Nhi Quốc",5,220),C("Bàn Tơ Động",5,240),I("Phổ Đà Sơn"),C("Sư Đà Lĩnh",6,260),C("Tỳ Kheo Quốc",6,260),X("highway","Bạch Long Mã"),C("Thiên Trúc",6,280),
+  X("fly","Cân Đẩu Vân"),C("Lăng Tiêu Bảo Điện",7,300),C("Đâu Suất Cung",7,300),X("bag","Kiếp Nạn"),C("Ngự Mã Giám",7,320),I("Quảng Hàn Cung"),X("chance","Thiên Cơ"),C("Đại Lôi Âm Tự",8,350),I("Ngũ Trang Quán"),C("Đỉnh Linh Sơn",8,400)]};
+const TDK_ARTMAP={"Ưng Sầu Giản":"stream","Cao Lão Trang":"village","Lưu Sa Hà":"waves","Hắc Phong Sơn":"windmtn","Quan Âm Thiền Viện":"temple","Bạch Hổ Lĩnh":"ridge","Bình Đỉnh Sơn":"gourd","Hỏa Vân Động":"firecave",
+ "Bảo Tượng Quốc":"castle","Ô Kê Quốc":"castle","Xa Trì Quốc":"castle","Thông Thiên Hà":"river2","Nữ Nhi Quốc":"flowerpalace","Bàn Tơ Động":"web","Sư Đà Lĩnh":"lionmtn","Tỳ Kheo Quốc":"stupa","Thiên Trúc":"pagoda",
+ "Lăng Tiêu Bảo Điện":"skypalace","Đâu Suất Cung":"furnace","Ngự Mã Giám":"horse","Đại Lôi Âm Tự":"leiyin","Đỉnh Linh Sơn":"peak","Hoa Quả Sơn":"fruitmtn","Long Cung Đông Hải":"dragonpalace","Phổ Đà Sơn":"lotus","Quảng Hàn Cung":"moon","Ngũ Trang Quán":"peachtree"};
+const TDK_SHORT={"Long Cung Đông Hải":"Long Cung","Lăng Tiêu Bảo Điện":"Lăng Tiêu Điện","Quan Âm Thiền Viện":"Quan Âm Viện"};
+const PCL=c=>`radial-gradient(circle at 30% 70%,transparent 2.6px,${c} 3.2px 4.3px,transparent 4.9px) 0 0/15px 11px,radial-gradient(circle at 70% 70%,transparent 2.6px,${c} 3.2px 4.3px,transparent 4.9px) 0 0/15px 11px`;
+const TDK_THEME={
+ "Ưng Sầu Giản":["#eaf6f2",PW("rgba(31,163,138,.25)"),"#1f8a74"],"Cao Lão Trang":["#f8f0dc",PS(90,"rgba(150,110,50,.13)",3,6),"#8a6a3a"],
+ "Lưu Sa Hà":["#f3ecd8",PW("rgba(180,140,60,.28)"),"#a8782a"],"Hắc Phong Sơn":["#ececf2",PCL("rgba(60,60,90,.2)"),"#3a3a5a"],"Quan Âm Thiền Viện":["#f6f3ff",PD("rgba(138,92,240,.16)",10,1.6),"#7a4fd0"],
+ "Bạch Hổ Lĩnh":["#f2f2f4",PS(135,"rgba(60,60,70,.12)",3,6),"#4a4a5a"],"Bình Đỉnh Sơn":["#f6f0e2",PD("rgba(160,110,40,.2)",11,2),"#a8701e"],"Hỏa Vân Động":["#fff0e4",PS(120,"rgba(255,106,26,.18)",3,6),"#e8551a"],
+ "Bảo Tượng Quốc":["#fdf3e4",PCK("rgba(212,138,26,.13)",12),"#c07a12"],"Ô Kê Quốc":["#fdf3e4",PCK("rgba(212,138,26,.13)",12),"#a8601a"],"Xa Trì Quốc":["#fdf3e4",PCK("rgba(212,138,26,.13)",12),"#8a4a12"],
+ "Thông Thiên Hà":["#e6f2ff",PW("rgba(58,111,216,.25)"),"#2a5fc4"],"Nữ Nhi Quốc":["#ffeef4",PD("rgba(224,90,138,.24)",11,2)+","+PD("rgba(242,193,78,.3)",11,1.4,5.5),"#d0457a"],"Bàn Tơ Động":["#f2f0f4",PS(60,"rgba(80,70,100,.1)",1,6)+","+PS(-60,"rgba(80,70,100,.1)",1,6),"#5a4a7a"],
+ "Sư Đà Lĩnh":["#f6efe4",PS(135,"rgba(170,100,40,.12)",2,7),"#a8601e"],"Tỳ Kheo Quốc":["#fff6e0",PD("rgba(212,162,26,.25)",10,1.6),"#b88a12"],"Thiên Trúc":["#fff3e6",PS(0,"rgba(192,57,43,.1)",2,8)+","+PS(90,"rgba(212,162,26,.14)",2,8),"#c0392b"],
+ "Lăng Tiêu Bảo Điện":["#eef2ff",PCL("rgba(58,95,208,.2)"),"#3a5fd0"],"Đâu Suất Cung":["#fff4e8",PCK("rgba(232,85,26,.1)",10),"#c0461a"],"Ngự Mã Giám":["#f0f6ff",PCL("rgba(58,95,208,.16)"),"#2a4fb0"],
+ "Đại Lôi Âm Tự":["#fff8e2",PD("rgba(212,162,26,.3)",9,1.6)+","+PCL("rgba(212,162,26,.18)"),"#c08a0a"],"Đỉnh Linh Sơn":["#fffbe8","repeating-conic-gradient(from 0deg at 50% 110%,rgba(242,193,78,.22) 0 6deg,transparent 6deg 14deg)","#b8860b"],
+ "Hoa Quả Sơn":["#eefbe8",PL("rgba(47,174,85,.22)")+","+PD("rgba(255,140,90,.22)",13,2,6.5),"#2a9a4a"],"Long Cung Đông Hải":["#e4f4ff",PW("rgba(31,120,200,.28)"),"#1a6fc0"],
+ "Phổ Đà Sơn":["#f0fbf6",PL("rgba(31,163,138,.2)"),"#1f9a80"],"Quảng Hàn Cung":["#eef0ff",PD("rgba(255,255,255,.9)",9,1.4)+","+PD("rgba(90,95,200,.2)",9,1.4,4.5),"#5b5fd0"],"Ngũ Trang Quán":["#f4fbe6",PD("rgba(255,120,110,.25)",12,2.2),"#3c8a3c"]};
+const TDK_LEGEND=[
+ ["start","Trường An","Nơi đoàn thỉnh kinh xuất phát. Đi qua nhận 200K, dừng đúng ô nhận thêm 100K."],
+ ["fly","Cân Đẩu Vân","Lộn một vòng 108.000 dặm: chọn bất kỳ ô nào trên bàn cờ để bay tới."],
+ ["fest","Hội Bàn Đào","Mở tiệc đào tiên ở một chỗ của bạn, tiền thuê ở đó tăng gấp đôi."],
+ ["jail","Núi Ngũ Hành","Bị Phật Tổ đè dưới núi: phải đổ đôi mới thoát, hoặc chờ đủ 3 lượt. Đang bị giam thì không thu được tiền thuê."],
+ ["chance","Thiên Cơ · Cơ hội","Ô Cơ hội của bản Tây Du: Quan Âm chỉ đường, cưỡi mây, về Hoa Quả Sơn… thường đưa bạn tới chỗ khác."],
+ ["bag","Kiếp Nạn · Khí vận","Ô Khí vận của bản Tây Du: yêu quái cướp hành lý, Bát Giới ăn vụng, được phong Bật Mã Ôn…"],
+ ["island","Tiên cảnh","Hoa Quả Sơn, Long Cung, Phổ Đà Sơn, Quảng Hàn Cung… Thu tiền theo số tiên cảnh cùng chủ: 25K → 300K. Gom đủ là thắng ngay."],
+ ["storm","Hỏa Diệm Sơn","Lửa núi thiêu: một công trình của bạn giảm một cấp, hoặc mất 40K."],
+ ["highway","Bạch Long Mã","Ngựa thần phi nước đại: được đổ thêm một lượt."],
+ ["tax","Thông quan","Đóng dấu thông quan văn điệp: nộp 10% tổng tài sản."]];
+const TDK_CHANCE=[
+ {t:"Cân đẩu vân đưa bạn về thẳng Trường An.",f:async()=>{await walkTo(0,true);await land()}},
+ {t:"Quan Âm hiện linh chỉ đường: tới Phổ Đà Sơn.",f:async()=>{await walkTo(idxOf("Phổ Đà Sơn"),true);await land()}},
+ {t:"Lạc đường giữa sa mạc: lùi 3 ô.",f:async()=>{await walk(3,-1);await land()}},
+ {t:"Đi viếng tiên cảnh gần nhất phía trước.",f:async()=>{let j=cur().pos;do{j=(j+1)%N}while(SQ[j].t!=="island");await walkTo(j,true);await land()}},
+ {t:"Đại náo Thiên Cung, bị Phật Tổ đè dưới Núi Ngũ Hành! Không đi qua Trường An.",f:async()=>{sendJail();finish()}},
+ {t:"Thổ Địa tặng Bùa hộ thân: giữ lại để thoát Núi Ngũ Hành miễn phí.",f:async()=>{cur().free++;finish()}},
+ {t:"Vương Mẫu mời bạn mở Hội Bàn Đào: chọn một chỗ của bạn để tiền thuê tăng gấp đôi.",f:async()=>startFest()},
+ {t:"Lộn một vòng cân đẩu vân 108.000 dặm: chọn bất kỳ ô nào để bay tới.",f:async()=>startFly()},
+ {t:"Bát Giới đòi ghé Cao Lão Trang thăm vợ: chạy tới Cao Lão Trang.",f:async()=>{await walkTo(idxOf("Cao Lão Trang"),true);await land()}},
+ {t:"Nhớ đàn khỉ con: về Hoa Quả Sơn.",f:async()=>{await walkTo(idxOf("Hoa Quả Sơn"),true);await land()}},
+ {t:"Lỡ bước vào Nữ Nhi Quốc, nữ vương mời ở lại: chạy tới Nữ Nhi Quốc.",f:async()=>{await walkTo(idxOf("Nữ Nhi Quốc"),true);await land()}},
+ {t:"Ngọc Hoàng triệu kiến: lên Lăng Tiêu Bảo Điện.",f:async()=>{await walkTo(idxOf("Lăng Tiêu Bảo Điện"),true);await land()}},
+ {t:"Long Vương mời uống trà: xuống Long Cung Đông Hải.",f:async()=>{await walkTo(idxOf("Long Cung Đông Hải"),true);await land()}},
+ {t:"Gió thuận buồm xuôi qua sông: tiến lên 5 ô.",f:async()=>{await walk(5);await land()}},
+ {t:"Thổ Địa giúp chuộc lại đất: chuộc miễn phí một chỗ đang cầm cố của bạn.",f:async()=>{const g=owned(S.turn).filter(i=>S.props[i].mg);if(g.length){S.props[g[0]].mg=false;log(`${cur().name} được chuộc miễn phí ${SQ[g[0]].n}`);fx(g[0],"Chuộc lại","good")}else gain(S.turn,50);finish()}},
+ {t:"Diệt được yêu quái, dân làng tạ lễ: nhận 100K.",f:async()=>{gain(S.turn,100);finish()}}];
+const TDK_BAG=[
+ {t:"Được Ngọc Hoàng phong chức Bật Mã Ôn, lãnh lương: nhận 150K.",f:async()=>{gain(S.turn,150);finish()}},
+ {t:"Yêu quái cướp hành lý giữa đường: mất 100K.",f:async()=>{charge(S.turn,100);finish()}},
+ {t:"Bát Giới ăn vụng hết lương khô, phải mua bù: trả 60K.",f:async()=>{charge(S.turn,60);finish()}},
+ {t:"Sinh nhật của bạn! Mỗi người chơi mừng bạn 20K.",f:async()=>{alive().forEach(i=>{if(i!==S.turn)charge(i,20,S.turn)});finish()}},
+ {t:"Bao cả đoàn một bữa chay: trả mỗi người 20K.",f:async()=>{for(const i of alive()){if(i!==S.turn&&!charge(S.turn,20,i))break}finish()}},
+ {t:"Hái được đào tiên đem bán: nhận 100K.",f:async()=>{gain(S.turn,100);finish()}},
+ {t:"Sửa chùa sau trận đánh yêu quái: trả 25K mỗi nhà và 100K mỗi khách sạn bạn sở hữu.",f:async()=>{const c=owned(S.turn).reduce((a,i)=>{const l=S.props[i].l;return a+(l===5?100:25*l)},0);if(c)charge(S.turn,c);finish()}},
+ {t:"Màn 72 phép biến hóa của bạn nổi tiếng khắp Tam Giới: nhận 200K.",f:async()=>{gain(S.turn,200);finish()}},
+ {t:"Bạch Long Mã đau chân, mua thuốc: trả 50K.",f:async()=>{charge(S.turn,50);finish()}},
+ {t:"Bán bớt bảo bối không dùng tới: nhận 80K.",f:async()=>{gain(S.turn,80);finish()}},
+ {t:"Lỡ uống nước sông Tử Mẫu ở Nữ Nhi Quốc, mua thuốc giải: trả 80K.",f:async()=>{charge(S.turn,80);finish()}},
+ {t:"Thắng cuộc đấu phép cầu mưa ở Xa Trì Quốc: nhận 120K.",f:async()=>{gain(S.turn,120);finish()}},
+ {t:"Gánh hết hành lý cả đoàn như Sa Tăng, được thưởng: nhận 60K.",f:async()=>{gain(S.turn,60);finish()}},
+ {t:"Lỡ tay làm đổ lò bát quái của Thái Thượng Lão Quân: trả 30K.",f:async()=>{charge(S.turn,30);finish()}},
+ {t:"Thổ Địa lì xì đầu năm: nhận 70K.",f:async()=>{gain(S.turn,70);finish()}},
+ {t:"Bị niệm chú Khẩn Cô đau đầu, mua dầu gió: trả 40K.",f:async()=>{charge(S.turn,40);finish()}}];
+const TDK_LINES={
+ roll:["xin trời cho số đẹp!","lên đường thỉnh kinh nào!","tới đâu hay tới đó!","biến!"],
+ buy:["chỗ này ta chiếm rồi nhé!","mua luôn, khỏi mặc cả!","đất lành, lập động phủ ở đây!"],
+ build:["xây thêm cái am nhỏ!","cất nhà cho khỉ con ở!"],hotel:["cung điện nguy nga, Thiên Đình cũng thua!","giàu như Long Vương rồi!"],
+ pay:["mất tiền rồi, khóc ròng!","yêu quái thu phí cắt cổ!","hết lương khô rồi trời ơi!"],get:["đa tạ thí chủ ghé thăm!","tiền vào như nước Đông Hải!"],
+ jail:["bị đè dưới núi Ngũ Hành rồi!","cứu với, ai gỡ bùa đi!","năm trăm năm nữa mới ra hả trời!"],out:["thoát rồi, cưỡi mây bay!","núi lở, ta tự do rồi!"],
+ chance:["thiên cơ bất khả lộ… mà lộ rồi!","có lộc trời ban!"],bag:["lại một kiếp nạn nữa!","sư phụ bị bắt nữa rồi!","yêu quái tới kìa!"],
+ start:["về Trường An lãnh lộc vua ban!"],fest:["mở Hội Bàn Đào, ăn đào tiên!"],fly:["cân đẩu vân, đi!"],storm:["Hỏa Diệm Sơn nóng quá, mượn quạt đi!"],
+ win:["thỉnh kinh viên mãn, giàu nhất Tam Giới!","Tề Thiên Đại Thánh vô địch!"],broke:["hết sạch, về Hoa Quả Sơn ăn chuối thôi!"]};
+const TDK_CATCH={tangtang:["A di đà Phật, ","Lành thay, "],ngokhong:["Lão Tôn đây! ","Hà hà, "],batgioi:["Sư phụ ơi, ","Đói quá, "],satang:["Đại sư huynh ơi, ",""],bachlong:["",""],thodia:["Bẩm Đại Thánh, ",""],natra:["",""],nguma:["Hừ! ",""],honghai:["Hé hé, ",""],ngochoang:["Trẫm phán: ",""]};
+const TDK_VOX={tangtang:[.95,.9],ngokhong:[1.4,1.2],batgioi:[.75,.95],satang:[.7,.9],bachlong:[1.05,1],thodia:[.8,.9],natra:[1.6,1.15],nguma:[.55,.85],honghai:[1.7,1.2],ngochoang:[.75,.85]};
+const THEMES={
+ cantho:{TX:TX_CT,GLBL,MAPS,ARTMAP,SHORT,THEME,LEGEND,CHANCE,BAG,ANIMALS,FACES,LINES,CATCH,VOX,GCOL,ISL_COL,TCOL,DARKT,
+  TM:{S:SCL,A:MA,B:MB,RA:RTA,RB:RTB}},
+ tdk:{TX:TX_TDK,GLBL:TDK_GLBL,MAPS:TDK_MAPS,ARTMAP:TDK_ARTMAP,SHORT:TDK_SHORT,THEME:TDK_THEME,LEGEND:TDK_LEGEND,CHANCE:TDK_CHANCE,BAG:TDK_BAG,ANIMALS:TDK_CH,FACES:TDK_FACES,LINES:TDK_LINES,CATCH:TDK_CATCH,VOX:TDK_VOX,
+  GCOL:{1:"#8a6a4a",2:"#2f8fa8",3:"#5a5a72",4:"#d4861a",5:"#e0558a",6:"#c0392b",7:"#3a5fd0",8:"#c99a0a"},ISL_COL:"#1fa38a",
+  TCOL:{start:"#c8102e",jail:"#7a5232",fest:"#e8608e",fly:"#3a6fd8",chance:"#8a4fd1",bag:"#e0562a",tax:"#b8860b",lux:"#b8860b",storm:"#e8452a",highway:"#2aa38b",island:"#1fa38a"},DARKT:new Set(),
+  TM:{S:SCF,A:[[[0,5,2],[2,4,1],[3,3,1],[4,4,2],[6,5,2],[8,7,4,1],[12,6,4]],[[0,5,2],[2,4,2],[4,3,4,1],[8,2,2],[10,3,2],[12,4,4]],[[0,7,2],[2,8,2],[4,9,2],[6,8,2],[8,7,2],[10,6,2],[12,5,4,1]],[[0,4,3],[3,5,1],[4,3,4,1],[8,2,2],[10,1,2],[12,5,4]]],
+   B:[[[0,8,2],[2,9,2],[4,10,4,1],[8,9,2],[10,8,2],[12,7,4]],[[0,6,2],[2,7,2],[4,8,4],[8,7,2],[10,6,2],[12,5,4,1]],[[0,5,1],[1,6,1],[2,7,2],[4,8,2],[6,7,2],[8,9,2],[10,8,2],[12,7,4]],[[0,6,4,1],[4,5,2],[6,4,2],[8,5,8,1]]],RA:[48,45,43,48],RB:[41,43,45,48],gong:true}}};
+let TM=THEMES.cantho.TM;
+var ALLCH=[ANIMALS.map(a=>a[0]),TDK_CH.map(a=>a[0]),OLDK];
+function setTheme(id,quiet){const T=THEMES[id]||THEMES.cantho;THEME_ID=THEMES[id]?id:"cantho";
+ ({TX,GLBL,MAPS,ARTMAP,SHORT,THEME,LEGEND,CHANCE,BAG,ANIMALS,FACES,LINES,CATCH,VOX,GCOL,ISL_COL,TCOL,DARKT,TM}=T);
+ document.documentElement.classList.toggle("th-tdk",THEME_ID==="tdk");document.documentElement.classList.toggle("th-cantho",THEME_ID==="cantho");
+ document.title=TX.title+" · Game Hội Bạn";
+ const wm=document.querySelector(".wm");wm.innerHTML=`<small>${TX.small}</small><span class="w w1">${TX.w1}</span> <span class="w w2">${TX.w2}</span>`;splitWM();
+ $("#heroSticker").textContent=TX.sticker;$("#heroH2").innerHTML=TX.h2;$("#heroP").textContent=TX.hp;$("#seatsT").textContent=TX.seatsT;$("#startBtn").textContent=TX.go;
+ $("#ruleJail").innerHTML=TX.ruleJail;$("#legendSub").textContent=TX.legendSub;$("#footT").textContent=TX.title;$("#railPlT").textContent=TX.players;$("#charNote").textContent=TX.charNote;
+ $("#parade").innerHTML=ANIMALS.map((a,i)=>avatar(a[0],PCOL[i])).join("");
+ $("#legend").innerHTML=LEGEND.map(([k,t,d])=>`<li><span class="ti${DARKT.has(k)?" dark":""}" style="background:${TCOL[k]}">${ICON[k]}</span><div><b>${t}</b><span>${d}</span></div></li>`).join("");
+ document.querySelectorAll(".thsw button,.thpick button").forEach(b=>{const on=b.dataset.th===THEME_ID;b.classList.toggle("on",on);b.setAttribute("aria-pressed",on)});
+ if($("#seats").children.length)buildSeats();
+ if(S){setMap(S.map);if(!$("#game").hidden){buildBoard();render()}}
+ if(!quiet)store.set("ctp-theme",THEME_ID);setMood()}
+
 /* ---------- device modes ---------- */
 let devPref=store.get("ctp-dev")||"auto";
 function autoDev(){const w=innerWidth,h=innerHeight;if(Math.min(w,h)<520)return "phone";if(w>=1200&&h>=640&&!matchMedia("(pointer:coarse)").matches)return "desktop";return "tablet"}
@@ -1614,8 +1859,8 @@ function applyDev(force){const d=devPref==="auto"?autoDev():devPref,ch=d!==DEV;D
  setTopH();if((ch||force)&&S&&!$("#game").hidden){buildBoard();render()}}
 document.querySelectorAll(".devsw button").forEach(b=>b.addEventListener("click",()=>{devPref=b.dataset.dev;store.set("ctp-dev",devPref);applyDev()}));
 let rzT=null;addEventListener("resize",()=>{clearTimeout(rzT);rzT=setTimeout(()=>applyDev(),160)});
-document.querySelectorAll(".wm .w").forEach(w=>{const t=w.textContent.normalize("NFC");w.textContent="";[...t].forEach((ch,k)=>{const sp=document.createElement("span");sp.className="l";sp.textContent=ch===" "?"\u00a0":ch;
- sp.style.setProperty("--r",((k*37+w.className.length*5)%11-5)+"deg");sp.style.setProperty("--y",((k*53)%5-2)+"px");w.appendChild(sp)})});
+function splitWM(){document.querySelectorAll(".wm .w").forEach(w=>{const t=w.textContent.normalize("NFC");w.textContent="";[...t].forEach((ch,k)=>{const sp=document.createElement("span");sp.className="l";sp.textContent=ch===" "?"\u00a0":ch;
+ sp.style.setProperty("--r",((k*37+w.className.length*5)%11-5)+"deg");sp.style.setProperty("--y",((k*53)%5-2)+"px");w.appendChild(sp)})})}splitWM();
 DEV=devPref==="auto"?autoDev():devPref;applyDev();
 /* ---------- setup ---------- */
 function loadSeats(){try{return JSON.parse(store.get("ctp-seats2")||"null")||[]}catch(e){return[]}}
@@ -1636,7 +1881,7 @@ function buildSeats(){const n=+$("#nPlayers").value,saved=loadSeats(),prev=seatD
 function mapNote(){const n=+$("#nPlayers").value,id=chosenMap(n),M=MAPS[id],c=t=>M.filter(x=>t.includes(x.t)).length;$("#mapNote").textContent=`Bàn cờ ${id} ô · ${c(["city"])} điểm vui chơi, ${c(["island"])} khu du lịch, ${c(["chance","bag"])} ô thẻ`}
 $("#parade").innerHTML=ANIMALS.map((a,i)=>avatar(a[0],PCOL[i])).join("");
 $("#legend").innerHTML=LEGEND.map(([k,t,d])=>`<li><span class="ti${DARKT.has(k)?" dark":""}" style="background:${TCOL[k]}">${ICON[k]}</span><div><b>${t}</b><span>${d}</span></div></li>`).join("");
-buildSeats();$("#nPlayers").addEventListener("change",buildSeats);$("#mapSel").addEventListener("change",mapNote);
+buildSeats();setTheme(store.get("ctp-theme")||"cantho",true);document.querySelectorAll(".thsw button,.thpick button").forEach(b=>b.addEventListener("click",()=>setTheme(b.dataset.th)));$("#nPlayers").addEventListener("change",buildSeats);$("#mapSel").addEventListener("change",mapNote);
 $("#startBtn").addEventListener("click",newGame);
 const saved=(()=>{try{return JSON.parse(store.get("ctp-game")||"null")}catch(e){return null}})();
 if(saved&&saved.players&&saved.map){$("#resumeBtn").hidden=false;$("#resumeBtn").addEventListener("click",()=>resume(saved))}
@@ -1797,7 +2042,7 @@ async function startOnline(){if(!isHost)return;const d=ROOM,st=d.settings||{};se
  const seats=d.seats.filter(x=>x.uid||x.bot);if(seats.length<2){netMsg("#lMsg","Cần ít nhất 2 người chơi (người hoặc máy).",true);return}
  const players=seats.map(x=>{const i=d.seats.indexOf(x);return {name:(x.name||DEF_NAMES[i]).slice(0,16),uid:x.uid||null,bot:!!x.bot,kind:x.kind,color:PCOL[i],cash:st.cash||1500,pos:0,out:false,jail:false,tries:0,free:0}});
  const ns={online:true,code:d.code,gameId:Date.now().toString(36),ver:1,map:st.map||32,players,props:{},turn:0,round:1,maxRound:st.maxRound??15,phase:"roll",dice:[3,4],rollId:0,showSum:false,doubles:0,extra:false,
-  festival:null,log:["Ván online bắt đầu quẩy!"],ev:{title:`Lượt của ${players[0].name}`,text:"Đổ xúc xắc ở giữa bàn cờ để bắt đầu quẩy.",kind:"",tag:"Bắt đầu"},offer:null,pick:null,boughtNow:false,over:null,info:null,landed:null,forecast:st.forecast!==false,fast:!!st.fast};
+  festival:null,log:[TX.startLog],ev:{title:`Lượt của ${players[0].name}`,text:TX.firstTx,kind:"",tag:"Bắt đầu"},offer:null,pick:null,boughtNow:false,over:null,info:null,landed:null,forecast:st.forecast!==false,fast:!!st.fast};
  try{await DB.doc("rooms/"+d.code).set({...d,status:"playing",state:ns})}catch(e){netMsg("#lMsg",errText(e),true)}}
 $("#oName").value=store.get("ctp-oname")||"";
 $("#oCreate").addEventListener("click",createRoom);$("#oJoin").addEventListener("click",joinRoom);
