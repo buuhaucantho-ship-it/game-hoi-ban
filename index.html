@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Game Hội Bạn</title>
-<meta name="description" content="Board game cho hội bạn: Cờ Tỷ Phú Du Lịch, Ma Sói, Ai Là Gián Điệp. Chơi ngay trên điện thoại, iPad, máy tính.">
+<meta name="description" content="Board game cho hội bạn: Cờ Tỷ Phú Du Lịch, Ma Sói, Ai Là Gián Điệp, Đảo Khai Hoang. Chơi ngay trên điện thoại, iPad, máy tính.">
 <meta name="theme-color" content="#063a4a">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23063a4a'/%3E%3Cpath fill='%23ffbe2e' d='M54 40v-5L34 22V9a4 4 0 0 0-8 0v13L6 35v5l20-6v12l-5 4v4l9-3 9 3v-4l-5-4V34z'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,7 @@
 .hero h1 span{color:var(--sun)}
 .hero p{max-width:52ch;margin:12px 0 0;opacity:.92;font-size:16px}
 .hero .dice{position:absolute;right:28px;top:50%;transform:translateY(-50%) rotate(12deg);width:min(220px,30vw);opacity:.95}
-.games{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.games{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .game{display:grid;grid-template-rows:auto 1fr;border-radius:20px;overflow:hidden;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);text-decoration:none;color:var(--ink);transition:transform .15s,box-shadow .15s}
 @media (hover:hover){.game:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(6,40,52,.18)}}
 .game .art{aspect-ratio:16/10;background:var(--gc);display:grid;place-items:center;position:relative;overflow:hidden}
@@ -31,7 +31,8 @@
 .how div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
 .how b{display:block;font-family:var(--f-display);font-size:18px;margin-bottom:4px}
 .how p{margin:0;color:var(--muted);font-size:14px}
-@media (max-width:860px){.games,.how{grid-template-columns:minmax(0,1fr)}.hero .dice{opacity:.25}}
+@media (max-width:860px){.how{grid-template-columns:minmax(0,1fr)}.hero .dice{opacity:.25}}
+@media (max-width:600px){.games{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body>
@@ -41,13 +42,14 @@
     <a class="gtab" href="co-ty-phu.html" style="--tc:#ff6a3d"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></svg>Cờ Tỷ Phú</a>
     <a class="gtab" href="ma-soi.html" style="--tc:#7a5cff"><svg class="i" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>Ma Sói</a>
     <a class="gtab" href="gian-diep.html" style="--tc:#0a9d86"><svg class="i" viewBox="0 0 24 24"><path d="M3 12h18M6 12l2-6h8l2 6"/><circle cx="8" cy="16" r="2.5"/><circle cx="16" cy="16" r="2.5"/><path d="M10.5 16h3"/></svg>Gián Điệp</a>
+    <a class="gtab" href="khai-hoang.html" style="--tc:#d9822b"><svg class="i" viewBox="0 0 24 24"><path d="M12 2l8.5 5v10L12 22l-8.5-5V7z"/><path d="M8 15l4-6 4 6z"/></svg>Khai Hoang</a>
   </div>
 </div></nav>
 
 <main class="wrap">
   <section class="hero">
     <h1>Board game cho <span>hội bạn thân</span></h1>
-    <p>Ba trò chơi tập thể, mở là chơi ngay trên điện thoại, iPad hay máy tính. Không cần tài khoản, không cài đặt, không quảng cáo.</p>
+    <p>Bốn trò chơi tập thể, mở là chơi ngay trên điện thoại, iPad hay máy tính. Không cần tài khoản, không cài đặt, không quảng cáo.</p>
     <svg class="dice" viewBox="0 0 120 120" aria-hidden="true"><rect x="8" y="8" width="104" height="104" rx="24" fill="#fff"/><g fill="#e2434b"><circle cx="38" cy="38" r="10"/><circle cx="82" cy="82" r="10"/></g><g fill="#10222b"><circle cx="82" cy="38" r="10"/><circle cx="38" cy="82" r="10"/><circle cx="60" cy="60" r="10"/></g></svg>
   </section>
 
@@ -66,6 +68,11 @@
       <div class="art"><svg viewBox="0 0 160 100" aria-hidden="true"><g fill="#063a4a"><path d="M44 46l10-22h52l10 22z"/><rect x="34" y="44" width="92" height="7" rx="3.5"/></g><circle cx="64" cy="66" r="12" fill="#063a4a"/><circle cx="96" cy="66" r="12" fill="#063a4a"/><path d="M76 66h8" stroke="#063a4a" stroke-width="4"/><circle cx="64" cy="66" r="7" fill="#7ff0dc"/><circle cx="96" cy="66" r="7" fill="#7ff0dc"/></svg></div>
       <div class="body"><h2>Ai Là Gián Điệp</h2><p>Mọi người nhận một từ khóa, riêng gián điệp nhận từ khác. Mô tả khéo, tìm ra kẻ lạc loài trước khi hắn qua mặt cả nhóm.</p>
         <div class="meta"><span>3–12 người</span><span>10–20 phút</span><span>70 cặp từ</span></div><span class="go">Vào chơi →</span></div>
+    </a>
+    <a class="game" href="khai-hoang.html" style="--gc:#d9822b">
+      <div class="art" style="background:#1b6f93"><svg viewBox="0 0 160 100" aria-hidden="true"><g stroke="#f6efd9" stroke-width="2"><path d="M80 14l17 10v20l-17 10-17-10V24z" fill="#3f9b4a"/><path d="M46 34l17 10v20l-17 10-17-10V44z" fill="#e3b52f"/><path d="M114 34l17 10v20l-17 10-17-10V44z" fill="#8d93a3"/><path d="M80 54l17 10v20l-17 10-17-10V64z" fill="#c8693e"/><path d="M46 74l17 10v-0" fill="none"/></g><circle cx="80" cy="34" r="7" fill="#fbf3dc"/><text x="80" y="37.5" font-size="9" font-weight="800" text-anchor="middle" fill="#c0392b" font-family="Arial">8</text><path d="M60 50l6-6 6 6v6H60z" fill="#e2434b" stroke="#fff" stroke-width="1.5"/><path d="M63 54l34 0" stroke="#1b1b1b" stroke-width="5"/><path d="M63 54l34 0" stroke="#2f6fe0" stroke-width="3"/></svg></div>
+      <div class="body"><h2>Đảo Khai Hoang</h2><p>Thu gỗ, gạch, lúa, cừu, quặng; giao thương và xây làng, thành phố trên hòn đảo lục giác. Có người chơi máy.</p>
+        <div class="meta"><span>3–4 người</span><span>Mở rộng 5–6</span><span>60–90 phút</span></div><span class="go">Vào chơi →</span></div>
     </a>
   </div>
 

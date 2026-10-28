@@ -9,6 +9,7 @@ Trang board game cho hội bạn, chơi ngay trên trình duyệt (điện tho�
 | [Cờ Tỷ Phú Du Lịch](https://buuhaucantho-ship-it.github.io/game-hoi-ban/co-ty-phu.html) | 2–10 | Chung một máy, hoặc online mỗi người một máy theo mã phòng |
 | [Ma Sói](https://buuhaucantho-ship-it.github.io/game-hoi-ban/ma-soi.html) | 5–24 | Tự dẫn bằng giọng đọc, không cần quản trò; 20 vai, 3 phe |
 | [Ai Là Gián Điệp](https://buuhaucantho-ship-it.github.io/game-hoi-ban/gian-diep.html) | 3–12 | Chuyền máy nhận từ khóa, mô tả và bỏ phiếu |
+| [Đảo Khai Hoang](https://buuhaucantho-ship-it.github.io/game-hoi-ban/khai-hoang.html) | 3–4, mở rộng 5–6 | Chung một máy, mỗi ghế chọn người hoặc máy |
 
 ## Cờ Tỷ Phú Du Lịch
 
@@ -32,7 +33,17 @@ Vai đã chết vẫn được gọi và chờ một lúc ngẫu nhiên để kh
 Mỗi người nhận một từ khóa, gián điệp nhận từ gần nghĩa khác. Lần lượt mô tả, bỏ phiếu loại người.
 Có thể thêm người Trắng (không có từ, bị loại được đoán từ để lật kèo), đổi số gián điệp, chọn chủ đề hoặc tự thêm cặp từ của nhóm. Có bảng điểm qua nhiều ván.
 
+## Đảo Khai Hoang
+
+Trò chơi khai hoang, giao thương trên đảo lục giác (lấy cảm hứng từ thể loại này, không dùng thương hiệu nào).
+- **Bản cơ bản 3–4 người:** đảo 19 ô, 9 cảng, ngân hàng 19 lá mỗi loại, 25 thẻ phát triển.
+- **Bản mở rộng 5–6 người:** đảo 30 ô, 11 cảng, ngân hàng 24 lá mỗi loại, 34 thẻ phát triển, có pha xây thêm sau mỗi lượt.
+- 5 tài nguyên: gỗ, gạch, lúa, cừu, quặng. Đường (gỗ + gạch), làng (gỗ + gạch + lúa + cừu), thành phố (3 quặng + 2 lúa), thẻ phát triển (lúa + cừu + quặng).
+- Số 7: ai cầm hơn 7 lá bỏ một nửa, người đổ dời băng cướp và lấy 1 lá. Giao thương với ngân hàng 4:1, cảng 3:1 / 2:1, hoặc với người chơi khác.
+- Thẻ phát triển: Hiệp sĩ, Điểm thưởng, Làm đường, Bội thu, Độc quyền. Đường dài nhất (từ 5 đoạn) và Đội quân mạnh nhất (từ 3 hiệp sĩ) mỗi cái 2 điểm.
+- Chọn 8, 10 hoặc 12 điểm để thắng. Ván được tự lưu để chơi tiếp.
+
 ## Kỹ thuật
 
-Các trang HTML tĩnh, không cần build: `index.html` (trang chủ), `co-ty-phu.html`, `ma-soi.html`, `gian-diep.html`, `hub.css`.
+Các trang HTML tĩnh, không cần build: `index.html` (trang chủ), `co-ty-phu.html`, `ma-soi.html`, `gian-diep.html`, `khai-hoang.html`, `hub.css`.
 Nhân vật và hình minh họa là SVG tự vẽ. Thư viện ngoài duy nhất là [PeerJS](https://peerjs.com/) cho chế độ online của Cờ Tỷ Phú.

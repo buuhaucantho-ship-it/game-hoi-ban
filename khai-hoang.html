@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Đảo Khai Hoang · Game Hội Bạn</title>
+<meta name="description" content="Đảo Khai Hoang: thu tài nguyên, giao thương, xây làng và thành phố trên hòn đảo lục giác. Bản 3–4 người và bản mở rộng 5–6 người, có người chơi máy.">
+<meta name="theme-color" content="#0b5a7a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b5a7a'/%3E%3Cpath d='M32 10l18 10v24L32 54 14 44V20z' fill='%23e9c046'/%3E%3Cpath d='M24 38l8-12 8 12z' fill='%238d93a3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="hub.css">
+<style>
+:root{--accent:#d9822b;--accent-ink:#fff;--sea:#1b6f93;--sea-2:#0b4a66;--wood:#3f9b4a;--brick:#c8693e;--grain:#e3b52f;--wool:#93cc63;--ore:#8d93a3;--desert:#e7d4a5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--accent:#f0a04b;--accent-ink:#2a1500}}
+:root[data-theme="dark"]{--accent:#f0a04b;--accent-ink:#2a1500}
+.wrap.wide{max-width:1500px;padding-block:12px 24px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.head h1{font-size:clamp(30px,5vw,44px)}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.stack{display:grid;gap:16px}
+.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mode{border:2px solid var(--line);border-radius:16px;padding:14px;text-align:left;background:var(--surface);display:grid;gap:4px}
+.mode.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+.mode b{font-family:var(--f-display);font-size:20px}
+.mode small{color:var(--muted);font-weight:700}
+.counts{display:flex;gap:6px;margin-top:6px}
+.counts button{width:42px;height:38px;border-radius:10px;border:1px solid var(--line);font-weight:900;background:var(--surface)}
+.counts button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.seats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.seat{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;background:var(--tile-2);padding:5px 5px 5px 8px;min-width:0}
+.seat i{width:22px;height:22px;border-radius:7px;flex:none;box-shadow:inset 0 0 0 2px rgba(255,255,255,.6)}
+.seat input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;font-weight:800;padding:7px 2px}
+.seat input:focus{outline:none}
+.seg{display:flex;border-radius:9px;background:var(--surface);border:1px solid var(--line);padding:2px;flex:none}
+.seg button{padding:4px 8px;border-radius:7px;font-size:12px;font-weight:800;color:var(--muted)}
+.seg button.on{background:var(--frame);color:#fff}
+.opt{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.opt:first-of-type{border-top:0}
+.opt b{display:block}.opt small{color:var(--muted);font-weight:700}
+.switch{position:relative;width:50px;height:30px;border-radius:999px;background:var(--line);flex:none;transition:background .15s}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .15s}
+.switch[aria-checked="true"]{background:var(--accent)}
+.switch[aria-checked="true"]::after{transform:translateX(20px)}
+.costs{display:grid;gap:8px}
+.costs div{display:grid;grid-template-columns:110px minmax(0,1fr) auto;gap:10px;align-items:center;font-weight:800;font-size:14px}
+.costs .pts{color:var(--muted);font-size:12.5px}
+.rules{margin:0;padding-left:18px;display:grid;gap:6px;color:var(--muted);font-size:14px}
+.rules b{color:var(--ink)}
+/* resource chip */
+.rc{display:inline-flex;align-items:center;gap:3px;font-weight:900}
+.rc svg{width:20px;height:20px;flex:none}
+.rcs{display:inline-flex;gap:6px;flex-wrap:wrap;align-items:center}
+
+/* ---------- play ---------- */
+.kh{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:14px;align-items:start}
+.boardbox{position:relative;border-radius:22px;background:radial-gradient(circle at 50% 45%,var(--sea),var(--sea-2));box-shadow:var(--shadow);overflow:hidden;min-width:0}
+.boardbox svg{display:block;width:100%;height:auto;max-height:calc(100dvh - 92px);touch-action:manipulation}
+.boardbox .hintbar{position:absolute;left:12px;right:12px;top:10px;display:flex;justify-content:center;pointer-events:none}
+.boardbox .hintbar span{background:rgba(0,0,0,.55);color:#fff;font-weight:800;font-size:14px;padding:7px 14px;border-radius:999px;backdrop-filter:blur(4px)}
+.tile .hexp{stroke:#f6efd9;stroke-width:3}
+.tile.hot .hexp{stroke:#fff36b;stroke-width:6}
+.tile.pick{cursor:pointer}
+.tile.pick .hexp{stroke:#fff;stroke-width:5;stroke-dasharray:10 6;animation:dash 1s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-32}}
+.tok circle{fill:#fbf3dc;stroke:#a88b52;stroke-width:1.5}
+.tok text{font-family:var(--f-display);font-weight:800;text-anchor:middle;dominant-baseline:central}
+.tok .hi{fill:#c0392b}
+.vx{cursor:pointer}
+.vx .dot{fill:#fff;stroke:var(--accent);stroke-width:3.5;animation:pulse 1.1s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.vx .hit{fill:transparent;stroke:none}
+@keyframes pulse{50%{transform:scale(1.35)}}
+.ex{cursor:pointer}
+.ex line.hit{stroke:transparent;stroke-width:22}
+.ex line.vis{stroke:#fff;stroke-width:6;stroke-dasharray:6 6;stroke-linecap:round;animation:dash 1s linear infinite}
+.road{stroke-linecap:round}
+.bld{stroke:#fff;stroke-width:2.2;stroke-linejoin:round}
+.bld.pick{cursor:pointer;stroke:#fff36b;stroke-width:4}
+.port text{font-family:var(--f-body);font-weight:900;font-size:11px;text-anchor:middle;dominant-baseline:central;fill:#10222b}
+.robber{transition:transform .35s ease}
+
+.panel{display:grid;gap:10px;position:sticky;top:66px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px}
+.turn{display:flex;align-items:center;gap:10px}
+.turn .sw{width:34px;height:34px;border-radius:10px;flex:none;box-shadow:inset 0 0 0 3px rgba(255,255,255,.5)}
+.turn b{font-family:var(--f-display);font-size:22px;line-height:1;display:block}
+.turn small{color:var(--muted);font-weight:800}
+.dice{display:flex;gap:8px;align-items:center;margin-left:auto}
+.die{width:38px;height:38px;background:#fff;border-radius:9px;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:5px;box-sizing:border-box;box-shadow:inset 0 -3px 0 #d6dde2,0 2px 6px rgba(0,0,0,.25)}
+.die i{width:6px;height:6px;border-radius:50%;background:#1b2730;place-self:center;visibility:hidden}
+.die i.on{visibility:visible}
+.die.red i{background:#e2434b}
+.die.roll{animation:tumble .45s linear}
+@keyframes tumble{30%{transform:rotate(120deg) scale(.85)}70%{transform:rotate(280deg) scale(1.05)}100%{transform:rotate(360deg)}}
+.dsum{font-family:var(--f-display);font-weight:800;font-size:24px;min-width:30px;text-align:center}
+.hand{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.rcard{border-radius:11px;padding:6px 2px 5px;text-align:center;color:#fff;font-weight:900;display:grid;justify-items:center;gap:1px;background:var(--cc)}
+.rcard svg{width:28px;height:28px}
+.rcard b{font-family:var(--f-display);font-size:20px;line-height:1}
+.rcard small{font-size:10.5px;opacity:.95}
+.rcard.zero{opacity:.38}
+.acts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.acts .btn{min-height:46px;padding:7px 8px;font-size:13.5px;flex-direction:column;gap:2px;line-height:1.15}
+.acts .btn small{font-weight:800;font-size:10.5px;opacity:.85;display:flex;gap:2px;align-items:center}
+.acts .btn small svg{width:13px;height:13px}
+.acts .btn.wide{grid-column:1/-1;flex-direction:row}
+.acts .btn.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--surface))}
+.plist{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.pl{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:9px;align-items:center;padding:7px 9px;border-radius:12px;border:1px solid var(--line);background:var(--tile-2)}
+.pl.cur{border:2px solid var(--pc);background:color-mix(in srgb,var(--pc) 10%,var(--surface))}
+.pl .sw{width:26px;height:26px;border-radius:8px;background:var(--pc)}
+.pl b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14.5px}
+.pl small{display:flex;gap:8px;color:var(--muted);font-weight:800;font-size:11.5px;flex-wrap:wrap}
+.pl .vp{font-family:var(--f-display);font-weight:800;font-size:22px;text-align:right;line-height:1}
+.pl .vp small{display:block;font-family:var(--f-body);font-size:10px}
+.badge2{font-size:10px;font-weight:900;padding:1px 6px;border-radius:999px;background:var(--sun);color:#3a2700}
+.tagbot{font-size:9.5px;font-weight:900;background:var(--frame);color:#fff;border-radius:5px;padding:0 5px;margin-left:5px;vertical-align:2px}
+.logl{list-style:none;margin:0;padding:0;display:grid;gap:3px;font-size:12.5px;max-height:150px;overflow:auto}
+.logl li{color:var(--muted);padding-left:8px;border-left:2px solid var(--line)}
+.logl li:first-child{color:var(--ink);font-weight:800;border-left-color:var(--accent)}
+.thinking{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--muted)}
+.dots i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:3px;animation:dot 1s infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes dot{50%{opacity:.2}}
+
+/* modal pieces */
+.mbox.left{text-align:left;width:min(560px,100%)}
+.mbox h3{font-size:24px;margin-bottom:4px}
+.rpick{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:8px 0}
+.rpick .cell{border-radius:12px;background:var(--cc);color:#fff;display:grid;justify-items:center;gap:2px;padding:6px 2px}
+.rpick .cell svg{width:26px;height:26px}
+.rpick .cell b{font-family:var(--f-display);font-size:20px;line-height:1}
+.rpick .cell .st{display:flex;gap:4px}
+.rpick .cell .st button{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.25);color:#fff;font-weight:900;font-size:16px}
+.rpick .cell .st button:disabled{opacity:.35}
+.rpick .cell small{font-size:10.5px;font-weight:800}
+.offers{display:grid;gap:6px;margin-top:8px}
+.offers div{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:12px;background:var(--tile-2);border:1px solid var(--line);font-weight:800}
+.devs{display:grid;gap:8px}
+.dev{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border-radius:14px;border:1px solid var(--line);background:var(--tile-2)}
+.dev .ic{width:44px;height:44px;border-radius:12px;background:var(--dc);display:grid;place-items:center;color:#fff;font-family:var(--f-display);font-weight:800;font-size:20px}
+.dev b{display:block}.dev small{color:var(--muted);font-weight:700;font-size:12.5px}
+.win{border-radius:22px;padding:24px;color:#fff;background:linear-gradient(135deg,var(--wc),color-mix(in srgb,var(--wc) 55%,#000))}
+.win h2{font-size:clamp(30px,6vw,46px)}
+.rank{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px}
+.rank li{display:grid;grid-template-columns:1.6em 22px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 12px;border-radius:12px;background:var(--tile-2)}
+.rank li i{width:22px;height:22px;border-radius:7px}
+.rank .r{font-family:var(--f-display);font-weight:800;font-size:18px}
+@media (max-width:1020px){.kh{grid-template-columns:minmax(0,1fr)}.panel{position:static}.boardbox svg{max-height:none}}
+@media (max-width:760px){.grid2{grid-template-columns:minmax(0,1fr)}.seats{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<nav class="gnav" aria-label="Chọn trò chơi"><div class="gnav-in">
+  <a class="gbrand" href="./"><span class="dot"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 15v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V8l-8 5v2l8-2.5V18l-2 1.5V21l3.5-1 3.5 1v-1.5L13 18v-5.5z"/></svg></span><span>Game Hội Bạn</span></a>
+  <div class="gtabs">
+    <a class="gtab" href="co-ty-phu.html" style="--tc:#ff6a3d"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></svg>Cờ Tỷ Phú</a>
+    <a class="gtab" href="ma-soi.html" style="--tc:#7a5cff"><svg class="i" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>Ma Sói</a>
+    <a class="gtab" href="gian-diep.html" style="--tc:#0a9d86"><svg class="i" viewBox="0 0 24 24"><path d="M3 12h18M6 12l2-6h8l2 6"/><circle cx="8" cy="16" r="2.5"/><circle cx="16" cy="16" r="2.5"/><path d="M10.5 16h3"/></svg>Gián Điệp</a>
+    <a class="gtab" href="khai-hoang.html" style="--tc:#d9822b" aria-current="page"><svg class="i" viewBox="0 0 24 24"><path d="M12 2l8.5 5v10L12 22l-8.5-5V7z"/><path d="M8 15l4-6 4 6z"/></svg>Khai Hoang</a>
+  </div>
+</div></nav>
+
+<main class="wrap" id="wrap">
+  <!-- SETUP -->
+  <section id="setup">
+    <div class="head"><div><span class="eyebrow">Thu hoạch · giao thương · xây dựng</span><h1>Đảo Khai Hoang</h1></div>
+      <div class="row"><button class="btn" id="resume" type="button" hidden>Tiếp tục ván đang chơi</button><button class="btn primary big" id="start" type="button">Lên đảo</button></div></div>
+    <div class="grid2">
+      <div class="stack">
+        <div class="card">
+          <h3>Chọn phiên bản</h3>
+          <div class="modes">
+            <button type="button" class="mode" data-mode="base"><b>Bản cơ bản</b><small>Đảo 19 ô · 9 cảng · 3–4 người</small><span class="counts"><span class="cbtn" data-n="3">3</span><span class="cbtn" data-n="4">4</span></span></button>
+            <button type="button" class="mode" data-mode="big"><b>Bản mở rộng</b><small>Đảo 30 ô · 11 cảng · 5–6 người</small><span class="counts"><span class="cbtn" data-n="5">5</span><span class="cbtn" data-n="6">6</span></span></button>
+          </div>
+          <div class="counts" id="counts" style="margin-top:12px"></div>
+          <div class="seats" id="seats"></div>
+        </div>
+        <div class="card">
+          <h3>Tùy chỉnh</h3>
+          <div class="opt"><div><b>Điểm để thắng</b></div><select class="inp" id="optVP" aria-label="Điểm để thắng"><option value="8">8 điểm (ván nhanh)</option><option value="10" selected>10 điểm</option><option value="12">12 điểm</option></select></div>
+          <div class="opt"><div><b>Pha xây thêm</b><small>Bản mở rộng: sau mỗi lượt, những người khác được xây thêm (không giao thương).</small></div><button class="switch" id="optSpecial" type="button" role="switch" aria-checked="true" aria-label="Pha xây thêm"></button></div>
+          <div class="opt"><div><b>Máy chơi nhanh</b></div><button class="switch" id="optFast" type="button" role="switch" aria-checked="false" aria-label="Máy chơi nhanh"></button></div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <h3>Giá xây dựng</h3>
+          <div class="costs" id="costTable"></div>
+        </div>
+        <div class="card">
+          <h3>Cách chơi</h3>
+          <ol class="rules">
+            <li><b>Đầu ván:</b> mỗi người đặt 2 làng và 2 con đường (lượt đi rồi lượt về). Làng thứ hai cho tài nguyên ngay.</li>
+            <li><b>Đổ xúc xắc:</b> ô nào có số trùng tổng điểm thì mọi làng cạnh ô đó nhận 1 tài nguyên, thành phố nhận 2.</li>
+            <li><b>Số 7:</b> ai cầm hơn 7 lá phải bỏ một nửa. Người đổ dời băng cướp sang ô khác (ô đó ngừng sản xuất) và lấy 1 lá của người ở cạnh ô.</li>
+            <li><b>Giao thương:</b> đổi với ngân hàng 4:1, ở cảng 3:1 hoặc 2:1, hoặc đề nghị đổi với người khác.</li>
+            <li><b>Điểm:</b> làng 1, thành phố 2, đường dài nhất (từ 5 đoạn) 2, đội quân mạnh nhất (từ 3 hiệp sĩ) 2, thẻ điểm 1. Ai đủ điểm trong lượt của mình thì thắng.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAY -->
+  <section id="play" hidden>
+    <div class="kh">
+      <div class="boardbox" id="boardbox"><svg id="board" role="img" aria-label="Bàn chơi"></svg><div class="hintbar"><span id="hint" hidden></span></div></div>
+      <aside class="panel">
+        <div class="box"><div class="turn" id="turnBox"></div></div>
+        <div class="box" id="handBox"></div>
+        <div class="box" id="actBox"></div>
+        <div class="box"><ul class="plist" id="plist"></ul></div>
+        <div class="box"><ul class="logl" id="log"></ul></div>
+        <div class="row"><button class="btn sm ghost" id="quit" type="button">Thoát ván</button><button class="btn sm ghost" id="sound" type="button"></button></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- OVER -->
+  <section id="over" hidden>
+    <div class="win" id="winBox"></div>
+    <div class="row" style="margin-top:14px"><button class="btn primary big" id="again" type="button">Ván mới</button><button class="btn" id="viewBoard" type="button">Xem lại bàn chơi</button></div>
+  </section>
+</main>
+
+<div class="modal" id="modal" hidden><div class="mbox left" id="mbox" role="dialog" aria-modal="true"></div></div>
+<footer class="foot" id="foot">Đảo Khai Hoang · Game Hội Bạn · trò chơi gốc lấy cảm hứng từ thể loại khai hoang, giao thương</footer>
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const SP=()=>window.__speed||1;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms*SP()));
+
+/* ===================== DATA ===================== */
+const RES=["wood","brick","grain","wool","ore"];
+const RN={wood:"Gỗ",brick:"Gạch",grain:"Lúa",wool:"Cừu",ore:"Quặng"};
+const RCOL={wood:"#3f9b4a",brick:"#c8693e",grain:"#d9a51f",wool:"#7fbf4f",ore:"#7d8496"};
+const RICON={
+ wood:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l6 9h-3l4 6H5l4-6H6z" fill="#fff"/><rect x="10.5" y="17" width="3" height="5" fill="#fff"/></svg>',
+ brick:'<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="#fff"><rect x="2" y="5" width="9" height="5" rx="1"/><rect x="13" y="5" width="9" height="5" rx="1"/><rect x="7" y="12" width="10" height="5" rx="1"/><rect x="2" y="19" width="9" height="3" rx="1"/><rect x="13" y="19" width="9" height="3" rx="1"/></g></svg>',
+ grain:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22V8" stroke="#fff" stroke-width="2" stroke-linecap="round"/><g fill="#fff"><ellipse cx="9" cy="10" rx="2.2" ry="3.6" transform="rotate(-25 9 10)"/><ellipse cx="15" cy="10" rx="2.2" ry="3.6" transform="rotate(25 15 10)"/><ellipse cx="9" cy="15" rx="2.2" ry="3.6" transform="rotate(-25 9 15)"/><ellipse cx="15" cy="15" rx="2.2" ry="3.6" transform="rotate(25 15 15)"/><ellipse cx="12" cy="5" rx="2" ry="3.4"/></g></svg>',
+ wool:'<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="#fff"><circle cx="8" cy="11" r="4"/><circle cx="13" cy="9" r="4.5"/><circle cx="16.5" cy="12.5" r="3.6"/><circle cx="11" cy="14" r="4"/><rect x="8" y="16" width="2" height="5" rx="1"/><rect x="14" y="16" width="2" height="5" rx="1"/></g><circle cx="19.5" cy="9.5" r="2.4" fill="#fff"/></svg>',
+ ore:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19l5-9 4 4 3-6 6 11z" fill="#fff"/><path d="M8 10l2 4" stroke="#7d8496" stroke-width="1.4"/></svg>'};
+const TER={forest:{r:"wood",n:"Rừng",c:"#3f9b4a"},hill:{r:"brick",n:"Đồi đất sét",c:"#c8693e"},field:{r:"grain",n:"Ruộng lúa",c:"#e3b52f"},pasture:{r:"wool",n:"Đồng cỏ",c:"#93cc63"},mountain:{r:"ore",n:"Núi đá",c:"#8d93a3"},desert:{r:null,n:"Sa mạc",c:"#e7d4a5"}};
+const COST={road:{wood:1,brick:1},sett:{wood:1,brick:1,grain:1,wool:1},city:{grain:2,ore:3},dev:{grain:1,wool:1,ore:1}};
+const LIMIT={road:15,sett:5,city:4};
+const PIPS={2:1,3:2,4:3,5:4,6:5,8:5,9:4,10:3,11:2,12:1};
+const PCOL=["#e2434b","#2f6fe0","#f39c12","#f2f2f2","#22a06b","#8b5a2b"];
+const PNAME=["Đỏ","Xanh dương","Cam","Trắng","Xanh lá","Nâu"];
+const DEF_NAMES=["An","Bình","Chi","Dũng","Giang","Hạnh"];
+const DEVS={knight:{n:"Hiệp sĩ",c:"#5b4bc4",d:"Dời băng cướp và lấy 1 lá của người cạnh ô đó. Tính vào đội quân."},vp:{n:"Điểm thưởng",c:"#d9a51f",d:"Giữ kín, tự cộng 1 điểm."},road:{n:"Làm đường",c:"#c8693e",d:"Xây miễn phí 2 con đường."},plenty:{n:"Bội thu",c:"#3f9b4a",d:"Lấy 2 tài nguyên bất kỳ từ ngân hàng."},mono:{n:"Độc quyền",c:"#a83279",d:"Gọi tên 1 loại tài nguyên, mọi người phải đưa hết loại đó cho bạn."}};
+const VPNAMES=["Thư viện","Chợ phiên","Giảng đường","Nhà thờ","Dinh thự"];
+const rIcon=(r,n)=>`<span class="rc" style="color:${RCOL[r]}"><span style="display:inline-grid;place-items:center;width:22px;height:22px;border-radius:6px;background:${RCOL[r]}">${RICON[r].replace('viewBox','style="width:16px;height:16px" viewBox')}</span>${n!=null?n:""}</span>`;
+const costHTML=c=>`<span class="rcs">${RES.filter(r=>c[r]).map(r=>rIcon(r,c[r]>1?"×"+c[r]:"")).join("")}</span>`;
+$("#costTable").innerHTML=[["Đường",COST.road,"0 điểm"],["Làng",COST.sett,"1 điểm"],["Thành phố",COST.city,"2 điểm · nâng từ làng"],["Thẻ phát triển",COST.dev,"bất ngờ"]].map(([n,c,p])=>`<div><span>${n}</span>${costHTML(c)}<span class="pts">${p}</span></div>`).join("");
+
+/* ===================== SETUP UI ===================== */
+let cfg=(()=>{const d={n:4,vp:10,special:true,fast:false,seats:[]};try{return Object.assign(d,JSON.parse(store.get("dkh-cfg")||"{}"))}catch(e){return d}})();
+const saveCfg=()=>store.set("dkh-cfg",JSON.stringify(cfg));
+function seatAt(i){return cfg.seats[i]||(cfg.seats[i]={name:DEF_NAMES[i],bot:i>0})}
+function renderSetup(){
+ document.querySelectorAll(".mode").forEach(b=>b.classList.toggle("on",(b.dataset.mode==="big")===(cfg.n>=5)));
+ document.querySelectorAll(".cbtn").forEach(b=>{b.style.cssText="display:inline-grid;place-items:center;width:38px;height:30px;border-radius:9px;border:1px solid var(--line);font-weight:900;"+(+b.dataset.n===cfg.n?"background:var(--accent);color:var(--accent-ink);border-color:var(--accent)":"background:var(--surface)")});
+ $("#counts").innerHTML="";
+ $("#seats").innerHTML=Array.from({length:cfg.n},(_,i)=>{const s=seatAt(i);return `<div class="seat"><i style="background:${PCOL[i]}"></i><input id="sn${i}" maxlength="14" value="${esc(s.name)}" aria-label="Tên người chơi ${i+1}"><span class="seg"><button type="button" class="${s.bot?"":"on"}" data-s="${i}" data-v="0">Người</button><button type="button" class="${s.bot?"on":""}" data-s="${i}" data-v="1">Máy</button></span></div>`}).join("");
+ $("#seats").querySelectorAll("input").forEach((el,i)=>el.addEventListener("input",()=>{seatAt(i).name=el.value;saveCfg()}));
+ $("#seats").querySelectorAll("[data-s]").forEach(b=>b.addEventListener("click",()=>{seatAt(+b.dataset.s).bot=b.dataset.v==="1";saveCfg();renderSetup()}));
+ $("#optVP").value=String(cfg.vp);$("#optSpecial").setAttribute("aria-checked",cfg.special);$("#optFast").setAttribute("aria-checked",cfg.fast);
+ $("#optSpecial").closest(".opt").style.opacity=cfg.n>=5?1:.5;
+ $("#resume").hidden=!store.get("dkh-game")}
+document.querySelectorAll(".mode").forEach(b=>b.addEventListener("click",e=>{const c=e.target.closest(".cbtn");cfg.n=c?+c.dataset.n:(b.dataset.mode==="big"?(cfg.n>=5?cfg.n:5):(cfg.n<=4?cfg.n:4));saveCfg();renderSetup()}));
+$("#optVP").addEventListener("change",e=>{cfg.vp=+e.target.value;saveCfg()});
+$("#optSpecial").addEventListener("click",()=>{cfg.special=!cfg.special;saveCfg();renderSetup()});
+$("#optFast").addEventListener("click",()=>{cfg.fast=!cfg.fast;saveCfg();renderSetup();if(G)G.fast=cfg.fast});
+
+/* ===================== BOARD ===================== */
+const SQ3=Math.sqrt(3);
+function genBoard(big){
+ const rows=big?[3,4,5,6,5,4,3]:[3,4,5,4,3],tiles=[];
+ rows.forEach((L,r)=>{for(let c=0;c<L;c++)tiles.push({x:(c-(L-1)/2)*SQ3,y:(r-(rows.length-1)/2)*1.5})});
+ const bag=big?{forest:6,pasture:6,field:6,hill:5,mountain:5,desert:2}:{forest:4,pasture:4,field:4,hill:3,mountain:3,desert:1};
+ const nums=big?[2,2,3,3,3,4,4,4,5,5,5,6,6,6,8,8,8,9,9,9,10,10,10,11,11,11,12,12]:[2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12];
+ const near=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y)<SQ3*1.05;
+ for(let tries=0;tries<400;tries++){
+  let ter=[];Object.entries(bag).forEach(([k,n])=>{for(let i=0;i<n;i++)ter.push(k)});ter=shuffle(ter);
+  const ns=shuffle(nums);let k=0;tiles.forEach((t,i)=>{t.t=ter[i];t.n=ter[i]==="desert"?0:ns[k++]});
+  const bad=tiles.some((a,i)=>(a.n===6||a.n===8)&&tiles.some((b,j)=>j>i&&(b.n===6||b.n===8)&&near(a,b)));
+  const same=tiles.some((a,i)=>a.n&&tiles.some((b,j)=>j>i&&b.n===a.n&&near(a,b)));
+  if(!bad&&(!same||tries>250))break}
+ const verts=[],vmap={},edges=[],emap={};
+ const vid=(x,y)=>{const k=Math.round(x*100)+","+Math.round(y*100);if(vmap[k]==null){vmap[k]=verts.length;verts.push({x,y,t:[],n:[],e:[],b:null,port:null})}return vmap[k]};
+ tiles.forEach((t,ti)=>{t.v=[];for(let c=0;c<6;c++){const a=(-90+60*c)*Math.PI/180;const v=vid(t.x+Math.cos(a),t.y+Math.sin(a));t.v.push(v);verts[v].t.push(ti)}
+  for(let c=0;c<6;c++){const a=t.v[c],b=t.v[(c+1)%6],k=Math.min(a,b)+"-"+Math.max(a,b);
+   if(emap[k]==null){emap[k]=edges.length;edges.push({a,b,t:[],r:null});verts[a].e.push(emap[k]);verts[b].e.push(emap[k]);verts[a].n.push(b);verts[b].n.push(a)}edges[emap[k]].t.push(ti)}});
+ const coast=edges.map((e,i)=>i).filter(i=>edges[i].t.length===1).sort((i,j)=>{const m=k=>{const e=edges[k];return Math.atan2((verts[e.a].y+verts[e.b].y)/2,(verts[e.a].x+verts[e.b].x)/2)};return m(i)-m(j)});
+ const nP=big?11:9,types=shuffle(big?["any","any","any","any","any","wood","brick","grain","wool","wool","ore"]:["any","any","any","any","wood","brick","grain","wool","ore"]);
+ const off=Math.floor(Math.random()*coast.length),ports=[];
+ for(let k=0;k<nP;k++){const e=coast[(Math.round(k*coast.length/nP)+off)%coast.length];ports.push({e,t:types[k]});verts[edges[e].a].port=types[k];verts[edges[e].b].port=types[k]}
+ const robber=tiles.findIndex(t=>t.t==="desert");
+ return{tiles,verts,edges,ports,robber}}
+
+/* ===================== GAME STATE ===================== */
+let G=null,token=0;
+const B=()=>G.board;
+const cur=()=>G.players[G.turn];
+const actor=()=>G.players[G.actor??G.turn];
+function newGame(){
+ const n=cfg.n,big=n>=5;
+ const players=Array.from({length:n},(_,i)=>{const s=seatAt(i);return{name:(s.name||"").trim()||DEF_NAMES[i],bot:!!s.bot,color:PCOL[i],res:{wood:0,brick:0,grain:0,wool:0,ore:0},dev:[],knights:0,roads:0,setts:0,cities:0,lrLen:0}});
+ const deck=[];const DC=big?{knight:20,vp:5,road:3,plenty:3,mono:3}:{knight:14,vp:5,road:2,plenty:2,mono:2};Object.entries(DC).forEach(([k,v])=>{for(let i=0;i<v;i++)deck.push(k)});
+ const order=[...Array(n).keys(),...[...Array(n).keys()].reverse()];
+ G={big,board:genBoard(big),players,turn:0,actor:null,phase:"setup",setupOrder:order,setupIdx:0,setupV:null,dice:[3,4],bank:Object.fromEntries(RES.map(r=>[r,big?24:19])),deck:shuffle(deck),
+  lr:null,la:null,log:[],devUsed:false,turnNo:0,free:0,winVP:cfg.vp,special:cfg.special&&big,fast:cfg.fast,mode:null,hot:[],over:null,afterRobber:null,rolled:false};
+ log("Các đoàn khai hoang cập bến!");token++;show("play");drawBoard();setupStep()}
+function log(t){G.log.unshift(t);G.log=G.log.slice(0,60)}
+const total=p=>RES.reduce((a,r)=>a+p.res[r],0);
+const canPay=(p,c)=>RES.every(r=>p.res[r]>=(c[r]||0));
+function pay(p,c){RES.forEach(r=>{const k=c[r]||0;p.res[r]-=k;G.bank[r]+=k})}
+function give(p,r,k){const g=Math.min(k,G.bank[r]);p.res[r]+=g;G.bank[r]-=g;return g}
+function vp(i,hidden){const p=G.players[i];return p.setts+2*p.cities+(G.lr===i?2:0)+(G.la===i?2:0)+(hidden?p.dev.filter(d=>d.t==="vp").length:0)}
+const pIdx=p=>G.players.indexOf(p);
+
+/* legality */
+function freeSpot(v){const V=B().verts[v];return!V.b&&V.n.every(u=>!B().verts[u].b)}
+function legalSetts(i,setup){const bd=B();return bd.verts.map((V,v)=>v).filter(v=>freeSpot(v)&&(setup||bd.verts[v].e.some(e=>bd.edges[e].r===i)))}
+function legalRoads(i,fromV){const bd=B();return bd.edges.map((E,e)=>e).filter(e=>{const E=bd.edges[e];if(E.r!=null)return false;
+ if(fromV!=null)return E.a===fromV||E.b===fromV;
+ return[E.a,E.b].some(v=>{const V=bd.verts[v];if(V.b&&V.b.p===i)return true;if(V.b&&V.b.p!==i)return false;return V.e.some(x=>x!==e&&bd.edges[x].r===i)})})}
+function legalCities(i){return B().verts.map((V,v)=>v).filter(v=>{const b=B().verts[v].b;return b&&b.p===i&&b.k==="s"})}
+function ratio(i,r){let best=4;B().verts.forEach(V=>{if(V.b&&V.b.p===i&&V.port){if(V.port==="any")best=Math.min(best,3);else if(V.port===r)best=2}});return best}
+
+/* building */
+function buildRoad(i,e,free){const p=G.players[i];if(!free)pay(p,COST.road);B().edges[e].r=i;p.roads++;updateLR()}
+function buildSett(i,v,free){const p=G.players[i];if(!free)pay(p,COST.sett);B().verts[v].b={p:i,k:"s"};p.setts++;updateLR()}
+function buildCity(i,v){const p=G.players[i];pay(p,COST.city);B().verts[v].b.k="c";p.setts--;p.cities++}
+function longest(i){const bd=B();let best=0;
+ const dfs=(v,used)=>{const V=bd.verts[v];if(used.size&&V.b&&V.b.p!==i)return 0;let m=0;
+  for(const e of V.e){if(bd.edges[e].r!==i||used.has(e))continue;used.add(e);const E=bd.edges[e];m=Math.max(m,1+dfs(E.a===v?E.b:E.a,used));used.delete(e)}return m};
+ bd.edges.forEach((E,e)=>{if(E.r===i){best=Math.max(best,dfs(E.a,new Set()),dfs(E.b,new Set()))}});return best}
+function updateLR(){const L=G.players.map((_,i)=>longest(i));G.players.forEach((p,i)=>p.lrLen=L[i]);const prev=G.lr;
+ if(prev!=null&&L[prev]>=5&&L.every((x,j)=>j===prev||x<=L[prev]))return;
+ const mx=Math.max(...L);if(mx<5){G.lr=null}else{const c=L.map((x,j)=>x===mx?j:-1).filter(j=>j>=0);G.lr=prev!=null&&c.includes(prev)?prev:(c.length===1?c[0]:null)}
+ if(G.lr!==prev&&G.lr!=null){log(`${G.players[G.lr].name} giành Đường dài nhất (${mx} đoạn)`);sfx.badge()}}
+function updateLA(i){const k=G.players[i].knights;if(k>=3&&(G.la==null||k>G.players[G.la].knights)&&G.la!==i){G.la=i;log(`${G.players[i].name} có Đội quân mạnh nhất`);sfx.badge()}}
+
+/* ===================== SOUND ===================== */
+let soundOn=store.get("dkh-sound")!=="0",ac=null;
+function tone(f,d,t0=0,vol=.06,type="triangle"){if(!soundOn)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain(),n=ac.currentTime+t0;o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,n);g.gain.exponentialRampToValueAtTime(.0008,n+d);o.connect(g).connect(ac.destination);o.start(n);o.stop(n+d+.05)}catch(e){}}
+const sfx={dice(){for(let i=0;i<6;i++)tone(180+Math.random()*300,.05,i*.06,.04,"square")},build(){[392,523,659].forEach((f,i)=>tone(f,.16,i*.06))},coin(){tone(988,.1);tone(1319,.2,.07)},bad(){tone(220,.3,0,.05,"sawtooth")},badge(){[523,659,784,1047].forEach((f,i)=>tone(f,.25,i*.08))}};
+function paintSound(){$("#sound").textContent="Âm thanh: "+(soundOn?"bật":"tắt")}
+$("#sound").addEventListener("click",()=>{soundOn=!soundOn;store.set("dkh-sound",soundOn?"1":"0");paintSound()});paintSound();
+
+/* ===================== DRAW ===================== */
+const S=58;
+function hexPath(t,sc=1){let d="";for(let c=0;c<6;c++){const a=(-90+60*c)*Math.PI/180;d+=(c?"L":"M")+((t.x+Math.cos(a)*sc)*S).toFixed(1)+","+((t.y+Math.sin(a)*sc)*S).toFixed(1)}return d+"Z"}
+function terrainArt(t){const x=t.x*S,y=t.y*S-10;
+ switch(t.t){
+  case "forest":return `<g fill="#2b7537">${[[-18,6],[0,-6],[18,6]].map(([dx,dy])=>`<path d="M${x+dx},${y+dy-14}l9,14h-5l7,10h-22l7-10h-5z"/>`).join("")}</g>`;
+  case "hill":return `<g fill="#a84e27">${[[-16,-2],[4,-2],[-6,8],[14,8]].map(([dx,dy])=>`<rect x="${x+dx-8}" y="${y+dy-4}" width="18" height="8" rx="1.5"/>`).join("")}</g>`;
+  case "field":return `<g stroke="#b88a12" stroke-width="2.4" stroke-linecap="round" fill="none">${[-16,-6,4,14].map(dx=>`<path d="M${x+dx},${y+12}v-20M${x+dx},${y-2}l-4,-4M${x+dx},${y-2}l4,-4M${x+dx},${y-8}l-4,-4M${x+dx},${y-8}l4,-4"/>`).join("")}</g>`;
+  case "pasture":return `<g fill="#fff">${[[-12,0],[12,4]].map(([dx,dy])=>`<ellipse cx="${x+dx}" cy="${y+dy}" rx="10" ry="7"/><circle cx="${x+dx+10}" cy="${y+dy-3}" r="4" fill="#5d4b3a"/>`).join("")}</g>`;
+  case "mountain":return `<path d="M${x-26},${y+12}L${x-8},${y-14}L${x+2},${y-2}L${x+12},${y-16}L${x+28},${y+12}Z" fill="#6c7282"/><path d="M${x-8},${y-14}l5,7l-5,-2l-5,2zM${x+12},${y-16}l5,7l-5,-2l-5,2z" fill="#fff"/>`;
+  case "desert":return `<path d="M${x-26},${y+8}q13,-12 26,0t26,0" stroke="#c9ad6a" stroke-width="3" fill="none"/><path d="M${x+6},${y+8}v-16m0,6h-6v-6m6,8h6v-8" stroke="#6f9a3d" stroke-width="3" fill="none" stroke-linecap="round"/>`}}
+function tokenSVG(t){if(!t.n)return"";const x=t.x*S,y=t.y*S+16,hi=t.n===6||t.n===8,p=PIPS[t.n];
+ return `<g class="tok"><circle cx="${x}" cy="${y}" r="15"/><text x="${x}" y="${y-2}" font-size="15" class="${hi?"hi":""}" fill="${hi?"#c0392b":"#10222b"}">${t.n}</text>${Array.from({length:p},(_,k)=>`<circle cx="${x+(k-(p-1)/2)*3.6}" cy="${y+9}" r="1.3" fill="${hi?"#c0392b":"#10222b"}" stroke="none"/>`).join("")}</g>`}
+function houseSVG(x,y,col,city,cls,v){const stroke=col==="#f2f2f2"?"#444":"#fff";
+ if(city)return `<path class="bld ${cls||""}" ${v!=null?`data-v="${v}"`:""} d="M${x-13},${y+10}V${y-4}l7-7l7,7v-1h12v15z" fill="${col}" stroke="${stroke}" style="stroke:${stroke}"/>`;
+ return `<path class="bld ${cls||""}" ${v!=null?`data-v="${v}"`:""} d="M${x-9},${y+8}V${y-2}l9-8l9,8V${y+8}z" fill="${col}" stroke="${stroke}" style="stroke:${stroke}"/>`}
+function drawBoard(){const bd=B(),xs=bd.verts.map(v=>v.x*S),ys=bd.verts.map(v=>v.y*S);
+ const pad=44,minX=Math.min(...xs)-pad,maxX=Math.max(...xs)+pad,minY=Math.min(...ys)-pad,maxY=Math.max(...ys)+pad;
+ const svg=$("#board");svg.setAttribute("viewBox",`${minX} ${minY} ${maxX-minX} ${maxY-minY}`);
+ const m=G.mode,me=G.actor??G.turn;let legalV=[],legalE=[],legalT=[],legalC=[];
+ if(m==="setupSett")legalV=legalSetts(me,true);
+ if(m==="sett")legalV=legalSetts(me,false);
+ if(m==="setupRoad")legalE=legalRoads(me,G.setupV);
+ if(m==="road"||m==="free")legalE=legalRoads(me);
+ if(m==="city")legalC=legalCities(me);
+ if(m==="robber")legalT=bd.tiles.map((t,i)=>i).filter(i=>i!==bd.robber);
+ let h="";
+ // sea ring
+ h+=`<g opacity=".25">${bd.tiles.map(t=>`<path d="${hexPath(t,1.32)}" fill="#0a3f57"/>`).join("")}</g>`;
+ // ports
+ bd.ports.forEach(pt=>{const E=bd.edges[pt.e],a=bd.verts[E.a],b=bd.verts[E.b],t=bd.tiles[E.t[0]];
+  const mx=(a.x+b.x)/2,my=(a.y+b.y)/2,dx=mx-t.x,dy=my-t.y,L=Math.hypot(dx,dy),px=(mx+dx/L*.62)*S,py=(my+dy/L*.62)*S;
+  const col=pt.t==="any"?"#fbf3dc":RCOL[pt.t];
+  h+=`<g class="port"><line x1="${a.x*S}" y1="${a.y*S}" x2="${px}" y2="${py}" stroke="#d9c79a" stroke-width="4"/><line x1="${b.x*S}" y1="${b.y*S}" x2="${px}" y2="${py}" stroke="#d9c79a" stroke-width="4"/>
+   <circle cx="${px}" cy="${py}" r="16" fill="${col}" stroke="#fff" stroke-width="2"/>${pt.t==="any"?`<text x="${px}" y="${py}">3:1</text>`:`<g transform="translate(${px-9} ${py-13}) scale(.75)">${RICON[pt.t].replace(/<svg[^>]*>|<\/svg>/g,"")}</g><text x="${px}" y="${py+9}" style="fill:#fff;font-size:9px">2:1</text>`}</g>`});
+ // tiles
+ bd.tiles.forEach((t,i)=>{const pick=legalT.includes(i),hot=G.hot.includes(i);
+  h+=`<g class="tile${pick?" pick":""}${hot?" hot":""}" ${pick?`data-t="${i}"`:""}><path class="hexp" d="${hexPath(t,.97)}" fill="${TER[t.t].c}"/>${terrainArt(t)}${tokenSVG(t)}</g>`});
+ // robber
+ {const t=bd.tiles[bd.robber],x=t.x*S+(t.n?-24:0),y=t.y*S+(t.n?10:4);
+  h+=`<g class="robber" pointer-events="none"><ellipse cx="${x}" cy="${y+14}" rx="10" ry="3" fill="rgba(0,0,0,.35)"/><path d="M${x-8},${y+13}q-1,-12 4,-16a7,7 0 1 1 8,0q5,4 4,16z" fill="#2b2b33" stroke="#fff" stroke-width="1.6"/></g>`}
+ // roads
+ bd.edges.forEach((E,e)=>{if(E.r==null)return;const a=bd.verts[E.a],b=bd.verts[E.b],col=G.players[E.r].color;
+  const x1=a.x*S+(b.x-a.x)*S*.14,y1=a.y*S+(b.y-a.y)*S*.14,x2=b.x*S-(b.x-a.x)*S*.14,y2=b.y*S-(b.y-a.y)*S*.14;
+  h+=`<line class="road" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#1b1b1b" stroke-width="10"/><line class="road" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="6.5"/>`});
+ // legal edges
+ legalE.forEach(e=>{const E=bd.edges[e],a=bd.verts[E.a],b=bd.verts[E.b];h+=`<g class="ex" data-e="${e}"><line class="vis" x1="${a.x*S}" y1="${a.y*S}" x2="${b.x*S}" y2="${b.y*S}"/><line class="hit" x1="${a.x*S}" y1="${a.y*S}" x2="${b.x*S}" y2="${b.y*S}"/></g>`});
+ // buildings
+ bd.verts.forEach((V,v)=>{if(!V.b)return;h+=houseSVG(V.x*S,V.y*S,G.players[V.b.p].color,V.b.k==="c",legalC.includes(v)?"pick":"",legalC.includes(v)?v:null)});
+ // legal vertices
+ legalV.forEach(v=>{const V=bd.verts[v];h+=`<g class="vx" data-v="${v}"><circle class="hit" cx="${V.x*S}" cy="${V.y*S}" r="17"/><circle class="dot" cx="${V.x*S}" cy="${V.y*S}" r="7"/></g>`});
+ svg.innerHTML=h;
+ const hint={setupSett:"Chạm chấm sáng để đặt làng",setupRoad:"Chạm đoạn sáng để đặt đường",sett:"Chạm chấm sáng để xây làng",road:"Chạm đoạn sáng để xây đường",free:`Chạm đoạn sáng để xây đường miễn phí (còn ${G.free})`,city:"Chạm vào làng để nâng lên thành phố",robber:"Chạm vào một ô để dời băng cướp"}[m];
+ $("#hint").hidden=!hint||G.players[me].bot;if(hint)$("#hint").textContent=hint}
+$("#board").addEventListener("click",e=>{if(!G||G.over)return;const me=G.actor??G.turn;if(G.players[me].bot)return;
+ const v=e.target.closest("[data-v]"),ed=e.target.closest("[data-e]"),t=e.target.closest("[data-t]");
+ if(v)onVertex(+v.dataset.v);else if(ed)onEdge(+ed.dataset.e);else if(t)onTile(+t.dataset.t)});
+
+/* ===================== UI PANEL ===================== */
+const PIP9={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+const dieHTML=(v,roll)=>`<div class="die${v===1||v===4?" red":""}${roll?" roll":""}">${Array.from({length:9},(_,k)=>`<i class="${PIP9[v].includes(k)?"on":""}"></i>`).join("")}</div>`;
+function render(rolling){if(!G)return;drawBoard();const me=G.actor??G.turn,P=G.players[me],c=cur();
+ const sub=G.phase==="setup"?"Đặt nhà đầu ván":G.phase==="special"?`Pha xây thêm · lượt chính: ${esc(c.name)}`:`Lượt ${G.turnNo+1}`;
+ $("#turnBox").innerHTML=`<span class="sw" style="background:${P.color}"></span><div><b>${esc(P.name)}${P.bot?'<span class="tagbot">MÁY</span>':""}</b><small>${sub}</small></div><div class="dice">${dieHTML(G.dice[0],rolling)}${dieHTML(G.dice[1],rolling)}<span class="dsum num">${G.rolled||G.phase!=="roll"&&G.phase!=="setup"?G.dice[0]+G.dice[1]:""}</span></div>`;
+ $("#handBox").innerHTML=`<div class="hand">${RES.map(r=>`<div class="rcard${P.res[r]?"":" zero"}" style="--cc:${RCOL[r]}">${RICON[r]}<b class="num">${P.res[r]}</b><small>${RN[r]}</small></div>`).join("")}</div>`;
+ renderActs();renderPlayers();$("#log").innerHTML=G.log.slice(0,25).map(t=>`<li>${esc(t)}</li>`).join("");
+ save()}
+function btn(id,label,small,dis,cls){return `<button type="button" class="btn${cls?" "+cls:""}" id="${id}" ${dis?"disabled":""}>${label}${small?`<small>${small}</small>`:""}</button>`}
+function renderActs(){const box=$("#actBox"),me=G.actor??G.turn,P=G.players[me];
+ if(G.over){box.innerHTML="";return}
+ if(P.bot){box.innerHTML=`<div class="thinking"><span class="dots"><i></i><i></i><i></i></span>${esc(P.name)} đang tính toán…</div>`;return}
+ if(G.phase==="setup"){box.innerHTML=`<p style="margin:0;font-weight:800">${G.mode==="setupSett"?"Chọn chỗ đặt làng (chấm sáng trên bàn).":"Đặt con đường nối với làng vừa đặt."}</p>`;return}
+ if(G.mode==="robber"){box.innerHTML=`<p style="margin:0;font-weight:800">Chọn ô để dời băng cướp tới.</p>`;return}
+ if(G.phase==="seven"||G.phase==="rolling"){box.innerHTML=`<p style="margin:0;font-weight:800">${G.phase==="seven"?"Số 7! Những người cầm hơn 7 lá đang bỏ bài…":"Đang đổ xúc xắc…"}</p>`;return}
+ if(G.mode==="free"){box.innerHTML=`<p style="margin:0;font-weight:800">Xây miễn phí ${G.free} con đường.</p><div class="acts" style="margin-top:8px">${btn("aStopFree","Dừng, không xây nữa","",false,"wide")}</div>`;$("#aStopFree").onclick=()=>{G.free=0;G.mode=null;render()};return}
+ const i=me,inMain=G.phase==="main",special=G.phase==="special",hasPlayable=P.dev.some(d=>d.t!=="vp"&&d.turn<G.turnNo);
+ let h=`<div class="acts">`;
+ if(G.phase==="roll"){h+=btn("aRoll","Đổ xúc xắc","",false,"primary wide");
+  if(!G.devUsed&&P.dev.some(d=>d.t==="knight"&&d.turn<G.turnNo))h+=btn("aKnight","Dùng Hiệp sĩ trước","",false,"wide")}
+ else{
+  const can=k=>canPay(P,COST[k]);
+  h+=btn("aRoad",`${G.mode==="road"?"Hủy · ":""}Đường`,costHTML(COST.road),!(G.mode==="road"||can("road")&&P.roads<LIMIT.road&&legalRoads(i).length),G.mode==="road"?"on":"");
+  h+=btn("aSett",`${G.mode==="sett"?"Hủy · ":""}Làng`,costHTML(COST.sett),!(G.mode==="sett"||can("sett")&&P.setts<LIMIT.sett&&legalSetts(i).length),G.mode==="sett"?"on":"");
+  h+=btn("aCity",`${G.mode==="city"?"Hủy · ":""}Thành phố`,costHTML(COST.city),!(G.mode==="city"||can("city")&&P.cities<LIMIT.city&&legalCities(i).length),G.mode==="city"?"on":"");
+  h+=btn("aDev","Mua thẻ",costHTML(COST.dev),!(can("dev")&&G.deck.length));
+  if(inMain){h+=btn("aTrade","Giao thương","đổi ngân hàng / người",false);h+=btn("aCards",`Thẻ của tôi (${P.dev.length})`,hasPlayable&&!G.devUsed?"có thẻ dùng được":"",!P.dev.length)}
+  h+=btn("aEnd",special?"Xong, không xây nữa":"Kết thúc lượt","",false,"primary wide")}
+ h+="</div>";box.innerHTML=h;
+ const on=(id,f)=>{const b=$("#"+id);if(b)b.onclick=f};
+ on("aRoll",()=>humanRoll());on("aKnight",()=>playDev(i,"knight"));
+ on("aRoad",()=>{G.mode=G.mode==="road"?null:"road";render()});on("aSett",()=>{G.mode=G.mode==="sett"?null:"sett";render()});on("aCity",()=>{G.mode=G.mode==="city"?null:"city";render()});
+ on("aDev",()=>{buyDev(i);render()});on("aTrade",()=>openTrade());on("aCards",()=>openCards());
+ on("aEnd",()=>{G.mode=null;special?nextSpecial():endTurn()})}
+function renderPlayers(){$("#plist").innerHTML=G.players.map((p,i)=>{const me=(G.actor??G.turn)===i,pub=vp(i,false),hid=p.dev.filter(d=>d.t==="vp").length;
+ return `<li class="pl${me?" cur":""}" style="--pc:${p.color}"><span class="sw"></span><div><b>${esc(p.name)}${p.bot?'<span class="tagbot">MÁY</span>':""}</b><small><span>${total(p)} lá</span><span>${p.dev.length} thẻ</span><span>⚔ ${p.knights}</span><span>đường ${p.lrLen}</span>${G.lr===i?'<span class="badge2">Đường dài</span>':""}${G.la===i?'<span class="badge2">Quân mạnh</span>':""}</small></div><span class="vp num">${pub}${me&&!p.bot&&hid?`<small>+${hid} ẩn</small>`:"<small>điểm</small>"}</span></li>`}).join("")}
+
+/* ===================== MODALS ===================== */
+function modal(html){$("#mbox").innerHTML=html;$("#modal").hidden=false}
+function closeModal(){$("#modal").hidden=true}
+function resPicker(id,limit,title){/* returns {get(), el} via DOM */
+ return `<div class="rpick" id="${id}">${RES.map(r=>`<div class="cell" style="--cc:${RCOL[r]}">${RICON[r]}<b class="num" data-r="${r}">0</b><small>${limit?`có ${limit[r]}`:RN[r]}</small><span class="st"><button type="button" data-m="${r}" aria-label="Bớt ${RN[r]}">−</button><button type="button" data-p="${r}" aria-label="Thêm ${RN[r]}">+</button></span></div>`).join("")}</div>`}
+function bindPicker(id,limit,onChange){const val=Object.fromEntries(RES.map(r=>[r,0])),el=$("#"+id);
+ const paint=()=>{RES.forEach(r=>{el.querySelector(`[data-r="${r}"]`).textContent=val[r];el.querySelector(`[data-m="${r}"]`).disabled=val[r]<=0;el.querySelector(`[data-p="${r}"]`).disabled=limit?val[r]>=limit[r]:false});onChange&&onChange(val)};
+ el.querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{val[b.dataset.m]--;paint()}));
+ el.querySelectorAll("[data-p]").forEach(b=>b.addEventListener("click",()=>{val[b.dataset.p]++;paint()}));paint();return val}
+const sum=o=>RES.reduce((a,r)=>a+(o[r]||0),0);
+const listRes=o=>RES.filter(r=>o[r]).map(r=>`${o[r]} ${RN[r]}`).join(", ")||"không có gì";
+
+function openTrade(){const i=G.turn,P=cur();
+ modal(`<h3>Giao thương</h3><p style="margin:0 0 6px">Bạn đưa:</p>${resPicker("tGive",P.res)}<p style="margin:0 0 6px">Bạn nhận:</p>${resPicker("tGet")}
+  <div id="tInfo" class="sub" style="margin:6px 0"></div><div class="row"><button class="btn primary" id="tBank" type="button">Đổi với ngân hàng</button><button class="btn" id="tOffer" type="button">Đề nghị người chơi</button><button class="btn ghost" id="tClose" type="button">Đóng</button></div><div class="offers" id="tOffers"></div>
+  <p class="sub" style="margin:10px 0 0">Tỉ lệ ngân hàng của bạn: ${RES.map(r=>`${RN[r]} ${ratio(i,r)}:1`).join(" · ")}</p>`);
+ let gv,gt;const upd=()=>{if(!gv||!gt)return;const okBank=bankOK(i,gv,gt);$("#tBank").disabled=!okBank;$("#tOffer").disabled=!(sum(gv)&&sum(gt));
+  $("#tInfo").textContent=okBank?"Ngân hàng đồng ý đổi.":sum(gv)&&sum(gt)?"Ngân hàng chưa đồng ý: mỗi loại đưa phải đủ bội số tỉ lệ, và số lá nhận bằng số lần đổi.":"Chọn tài nguyên muốn đưa và muốn nhận."};
+ gv=bindPicker("tGive",P.res,upd);gt=bindPicker("tGet",null,upd);upd();
+ $("#tClose").onclick=()=>{closeModal();render()};
+ $("#tBank").onclick=()=>{if(!bankOK(i,gv,gt))return;pay(P,gv);RES.forEach(r=>{if(gt[r])giveRes(P,r,gt[r])});log(`${P.name} đổi với ngân hàng: ${listRes(gv)} lấy ${listRes(gt)}`);sfx.coin();closeModal();render()};
+ $("#tOffer").onclick=()=>{const g={...gv},w={...gt};
+  $("#tOffers").innerHTML=G.players.map((q,j)=>{if(j===i)return"";const has=RES.every(r=>q.res[r]>=(w[r]||0));
+   if(q.bot){const ok=has&&botAccept(j,w,g);return `<div><span>${esc(q.name)} <span class="tagbot">MÁY</span></span>${ok?`<button class="btn sm primary" type="button" data-acc="${j}">Đồng ý · chốt</button>`:`<span style="color:var(--muted)">${has?"Từ chối":"Không đủ"}</span>`}</div>`}
+   return `<div><span>${esc(q.name)}</span>${has?`<button class="btn sm" type="button" data-acc="${j}">${esc(q.name)} đồng ý</button>`:`<span style="color:var(--muted)">Không đủ</span>`}</div>`}).join("");
+  $("#tOffers").querySelectorAll("[data-acc]").forEach(b=>b.onclick=()=>{const j=+b.dataset.acc,q=G.players[j];if(!RES.every(r=>P.res[r]>=(g[r]||0)&&q.res[r]>=(w[r]||0)))return;
+   RES.forEach(r=>{P.res[r]+=-(g[r]||0)+(w[r]||0);q.res[r]+=(g[r]||0)-(w[r]||0)});log(`${P.name} đổi với ${q.name}: ${listRes(g)} lấy ${listRes(w)}`);sfx.coin();closeModal();render()})}}
+function giveRes(p,r,k){return give(p,r,k)}
+function bankOK(i,gv,gt){let turns=0;for(const r of RES){const k=gv[r]||0,rt=ratio(i,r);if(k%rt)return false;turns+=k/rt;if(gv[r]&&gt[r])return false}
+ const need=sum(gt);return turns>0&&turns===need&&RES.every(r=>G.bank[r]>=(gt[r]||0))}
+function openCards(){const i=G.turn,P=cur();const groups={};P.dev.forEach(d=>{(groups[d.t]=groups[d.t]||[]).push(d)});
+ modal(`<h3>Thẻ phát triển</h3><p class="sub">Mỗi lượt dùng tối đa 1 thẻ. Thẻ mua trong lượt này chưa dùng được.</p><div class="devs">${Object.entries(groups).map(([t,arr])=>{const D=DEVS[t],ready=arr.some(d=>d.turn<G.turnNo);
+  return `<div class="dev"><span class="ic" style="--dc:${D.c}">${arr.length}</span><div><b>${D.n}</b><small>${D.d}</small></div>${t==="vp"?`<span class="sub" style="margin:0">Tự tính</span>`:`<button type="button" class="btn sm primary" data-play="${t}" ${ready&&!G.devUsed?"":"disabled"}>Dùng</button>`}</div>`}).join("")}</div><div class="row" style="margin-top:12px"><button class="btn ghost" id="cClose" type="button">Đóng</button></div>`);
+ $("#cClose").onclick=closeModal;$("#mbox").querySelectorAll("[data-play]").forEach(b=>b.onclick=()=>{closeModal();playDev(i,b.dataset.play)})}
+function chooseRes(title,count,cb){let picked=[];const draw=()=>{modal(`<h3>${title}</h3><div class="rpick">${RES.map(r=>`<button type="button" class="cell" style="--cc:${RCOL[r]};border:0" data-r="${r}">${RICON[r]}<b>${picked.filter(x=>x===r).length||""}</b><small>${RN[r]} · NH ${G.bank[r]}</small></button>`).join("")}</div><div class="row"><button class="btn primary" id="crOk" type="button" ${picked.length===count?"":"disabled"}>Xác nhận</button><button class="btn ghost" id="crReset" type="button">Chọn lại</button></div>`);
+  $("#mbox").querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{if(picked.length<count)picked.push(b.dataset.r);draw()});
+  $("#crReset").onclick=()=>{picked=[];draw()};$("#crOk").onclick=()=>{closeModal();cb(picked)}};draw()}
+
+/* ===================== FLOW: SETUP ===================== */
+function setupStep(){const my=token;if(G.setupIdx>=G.setupOrder.length){G.phase="roll";G.turn=0;G.mode=null;log("Bắt đầu khai hoang!");beginTurn();return}
+ G.turn=G.setupOrder[G.setupIdx];G.actor=null;G.mode="setupSett";render();
+ if(cur().bot)botSetup(my)}
+function onVertex(v){const i=G.actor??G.turn,P=G.players[i];
+ if(G.mode==="setupSett"&&legalSetts(i,true).includes(v)){buildSett(i,v,true);G.setupV=v;sfx.build();
+  if(G.setupIdx>=G.players.length){B().verts[v].t.forEach(t=>{const T=B().tiles[t];if(TER[T.t].r)give(P,TER[T.t].r,1)})}
+  log(`${P.name} đặt làng`);G.mode="setupRoad";render();return}
+ if(G.mode==="sett"&&legalSetts(i).includes(v)&&canPay(P,COST.sett)){buildSett(i,v);sfx.build();log(`${P.name} xây làng`);G.mode=null;afterBuild();return}
+ if(G.mode==="city"&&legalCities(i).includes(v)&&canPay(P,COST.city)){buildCity(i,v);sfx.build();log(`${P.name} lên thành phố`);G.mode=null;afterBuild();return}}
+function onEdge(e){const i=G.actor??G.turn,P=G.players[i];
+ if(G.mode==="setupRoad"&&legalRoads(i,G.setupV).includes(e)){buildRoad(i,e,true);G.mode=null;G.setupIdx++;setupStep();return}
+ if(G.mode==="road"&&legalRoads(i).includes(e)&&canPay(P,COST.road)){buildRoad(i,e);sfx.build();log(`${P.name} xây đường`);G.mode=null;afterBuild();return}
+ if(G.mode==="free"&&legalRoads(i).includes(e)){buildRoad(i,e,true);sfx.build();G.free--;if(G.free<=0||P.roads>=LIMIT.road||!legalRoads(i).length){G.free=0;G.mode=null}afterBuild();return}}
+function onTile(t){if(G.mode==="robber"&&t!==B().robber)moveRobber(G.turn,t)}
+function afterBuild(){render();checkWin()}
+
+/* ===================== FLOW: TURN ===================== */
+function beginTurn(){const my=token;G.phase="roll";G.actor=null;G.devUsed=false;G.rolled=false;G.mode=null;G.hot=[];
+ if(checkWin())return;render();if(cur().bot)botTurn(my)}
+async function doRoll(){if(G.phase!=="roll")return;G.phase="rolling";const a=1+Math.floor(Math.random()*6),b=1+Math.floor(Math.random()*6);G.dice=[a,b];G.rolled=true;sfx.dice();render(true);await sleep(450);
+ const s=a+b;log(`${cur().name} đổ được ${s}`);
+ if(s===7){G.hot=[];G.phase="seven";sfx.bad();await handleSeven();return}
+ produce(s);G.phase="main";render()}
+function humanRoll(){if(G.phase!=="roll")return;doRoll()}
+function produce(s){const bd=B(),dem={};G.hot=bd.tiles.map((t,i)=>t.n===s&&i!==bd.robber?i:-1).filter(i=>i>=0);
+ G.hot.forEach(ti=>{const t=bd.tiles[ti],r=TER[t.t].r;t.v.forEach(v=>{const b=bd.verts[v].b;if(!b)return;(dem[r]=dem[r]||{})[b.p]=((dem[r]||{})[b.p]||0)+(b.k==="c"?2:1)})});
+ const got=G.players.map(()=>({}));
+ Object.entries(dem).forEach(([r,by])=>{const need=Object.values(by).reduce((a,b)=>a+b,0),who=Object.keys(by);
+  if(need>G.bank[r]&&who.length>1){log(`Ngân hàng hết ${RN[r]}, không ai nhận`);return}
+  who.forEach(p=>{const g=give(G.players[p],r,by[p]);if(g)got[p][r]=g})});
+ got.forEach((o,i)=>{if(sum(o))log(`${G.players[i].name} nhận ${listRes(o)}`)})}
+async function handleSeven(){const my=token;
+ for(let k=0;k<G.players.length;k++){const j=(G.turn+k)%G.players.length,p=G.players[j],t=total(p);if(t<=7)continue;const n=Math.floor(t/2);
+  if(p.bot){botDiscard(j,n);log(`${p.name} bỏ ${n} lá`);continue}
+  await new Promise(res=>{G.actor=j;render();modal(`<h3>${esc(p.name)} bỏ ${n} lá</h3><p class="sub">Đưa máy cho ${esc(p.name)}. Bạn đang cầm ${t} lá, phải bỏ một nửa.</p>${resPicker("dPick",p.res)}<div class="row"><button class="btn primary" id="dOk" type="button" disabled>Bỏ các lá này</button></div>`);
+   const val=bindPicker("dPick",p.res,v=>{$("#dOk").disabled=sum(v)!==n});$("#dOk").onclick=()=>{if(sum(val)!==n)return;pay(p,val);log(`${p.name} bỏ ${n} lá`);closeModal();res()}});
+  if(my!==token)return}
+ G.actor=null;G.afterRobber="main";startRobber()}
+function startRobber(){const my=token;G.mode="robber";render();if(cur().bot)botRobber(my)}
+function moveRobber(i,t){const bd=B();bd.robber=t;G.mode=null;sfx.bad();log(`${G.players[i].name} dời băng cướp tới ${TER[bd.tiles[t].t].n}${bd.tiles[t].n?" số "+bd.tiles[t].n:""}`);
+ const vict=[...new Set(bd.tiles[t].v.map(v=>bd.verts[v].b).filter(b=>b&&b.p!==i).map(b=>b.p))].filter(j=>total(G.players[j])>0);
+ const fin=()=>{G.phase=G.afterRobber||"main";G.afterRobber=null;render();if(cur().bot&&G.phase==="roll"){} };
+ if(!vict.length){fin();return}
+ if(vict.length===1||G.players[i].bot){const j=G.players[i].bot?vict.sort((a,b)=>vp(b)-vp(a)||total(G.players[b])-total(G.players[a]))[0]:vict[0];steal(i,j);fin();return}
+ modal(`<h3>Lấy 1 lá của ai?</h3><div class="offers">${vict.map(j=>`<div><span>${esc(G.players[j].name)} · ${total(G.players[j])} lá</span><button type="button" class="btn sm primary" data-j="${j}">Lấy</button></div>`).join("")}</div>`);
+ $("#mbox").querySelectorAll("[data-j]").forEach(b=>b.onclick=()=>{closeModal();steal(i,+b.dataset.j);fin()})}
+function steal(i,j){const q=G.players[j],pool=[];RES.forEach(r=>{for(let k=0;k<q.res[r];k++)pool.push(r)});if(!pool.length)return;const r=pool[Math.floor(Math.random()*pool.length)];
+ q.res[r]--;G.players[i].res[r]++;log(`${G.players[i].name} lấy 1 lá của ${q.name}`)}
+function buyDev(i){const p=G.players[i];if(!canPay(p,COST.dev)||!G.deck.length)return false;pay(p,COST.dev);const t=G.deck.pop();p.dev.push({t,turn:G.turnNo,nm:t==="vp"?VPNAMES[Math.floor(Math.random()*VPNAMES.length)]:null});
+ log(`${p.name} mua thẻ phát triển`);sfx.coin();if(!p.bot)toast(`Bạn rút được: ${DEVS[t].n}${t==="vp"?" (+1 điểm ẩn)":""}`);checkWin();return true}
+function toast(t){const d=document.createElement("div");d.textContent=t;d.style.cssText="position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#10222b;color:#fff;padding:10px 16px;border-radius:12px;font-weight:800;z-index:60;box-shadow:0 8px 24px rgba(0,0,0,.3)";document.body.appendChild(d);setTimeout(()=>d.remove(),2600)}
+function playDev(i,t){const p=G.players[i];const k=p.dev.findIndex(d=>d.t===t&&d.turn<G.turnNo);if(k<0||G.devUsed||t==="vp")return false;
+ p.dev.splice(k,1);G.devUsed=true;log(`${p.name} dùng thẻ ${DEVS[t].n}`);
+ if(t==="knight"){p.knights++;updateLA(i);G.afterRobber=G.phase==="roll"?"roll":"main";if(checkWin())return true;startRobber();return true}
+ if(t==="road"){G.free=Math.min(2,LIMIT.road-p.roads);if(G.free&&legalRoads(i).length){G.mode="free"}else G.free=0;render();return true}
+ if(t==="plenty"){if(p.bot){botPlenty(i)}else chooseRes("Bội thu: chọn 2 tài nguyên",2,arr=>{arr.forEach(r=>give(p,r,1));log(`${p.name} nhận ${arr.map(r=>RN[r]).join(", ")}`);render()});render();return true}
+ if(t==="mono"){const doMono=r=>{let n=0;G.players.forEach((q,j)=>{if(j!==i){n+=q.res[r];p.res[r]+=q.res[r];q.res[r]=0}});log(`${p.name} độc quyền ${RN[r]}: nhận ${n} lá`);render()};
+  if(p.bot){const r=RES.slice().sort((a,b)=>G.players.reduce((s,q,j)=>s+(j!==i?q.res[b]:0),0)-G.players.reduce((s,q,j)=>s+(j!==i?q.res[a]:0),0))[0];doMono(r)}
+  else chooseRes("Độc quyền: chọn 1 loại",1,arr=>doMono(arr[0]));render();return true}}
+function endTurn(){if(G.phase!=="main")return;G.mode=null;
+ if(G.special){G.specialQ=G.players.map((_,k)=>(G.turn+1+k)%G.players.length).filter(j=>j!==G.turn);G.phase="special";nextSpecial();return}
+ advance()}
+function nextSpecial(){const my=token;G.mode=null;if(!G.specialQ||!G.specialQ.length){G.actor=null;advance();return}
+ G.actor=G.specialQ.shift();render();if(G.players[G.actor].bot)botSpecial(my)}
+function advance(){G.turn=(G.turn+1)%G.players.length;G.turnNo++;G.actor=null;beginTurn()}
+function checkWin(){if(G.over)return true;if(G.phase==="setup"||G.phase==="special")return false;const i=G.turn;
+ if(vp(i,true)>=G.winVP){G.over={w:i};token++;setTimeout(showOver,600);render();return true}return false}
+function showOver(){const w=G.over.w,P=G.players[w];closeModal();store.del("dkh-game");
+ const rank=G.players.map((p,i)=>i).sort((a,b)=>vp(b,true)-vp(a,true));
+ $("#winBox").style.setProperty("--wc",P.color==="#f2f2f2"?"#5b6f79":P.color);
+ $("#winBox").innerHTML=`<span class="eyebrow" style="color:#fff;opacity:.85">Sau ${G.turnNo+1} lượt</span><h2>${esc(P.name)} làm chủ hòn đảo!</h2><p style="margin:6px 0 0;opacity:.92">${vp(w,true)} điểm · ${P.setts} làng · ${P.cities} thành phố${G.lr===w?" · Đường dài nhất":""}${G.la===w?" · Đội quân mạnh nhất":""}${P.dev.filter(d=>d.t==="vp").length?` · ${P.dev.filter(d=>d.t==="vp").length} thẻ điểm`:""}</p>
+  <ol class="rank">${rank.map((i,k)=>{const p=G.players[i];return `<li style="color:var(--ink)"><span class="r num">${k+1}</span><i style="background:${p.color}"></i><span>${esc(p.name)}</span><b class="num">${vp(i,true)} điểm</b></li>`}).join("")}</ol>`;
+ sfx.badge();show("over")}
+
+/* ===================== BOTS ===================== */
+const bwait=()=>sleep(G.fast?160:650);
+function vscore(i,v){const bd=B(),V=bd.verts[v],have=new Set();bd.verts.forEach(W=>{if(W.b&&W.b.p===i)W.t.forEach(t=>{const r=TER[bd.tiles[t].t].r;if(r)have.add(r)})});
+ let s=0;V.t.forEach(t=>{const T=bd.tiles[t];if(t===bd.robber)return;const r=TER[T.t].r;if(!r)return;s+=PIPS[T.n]||0;if(!have.has(r))s+=1.5;if(r==="brick"||r==="wood")s+=.3});
+ if(V.port)s+=V.port==="any"?1:1.2;return s}
+async function botSetup(my){await bwait();if(my!==token)return;const i=G.turn;
+ const vs=legalSetts(i,true).sort((a,b)=>vscore(i,b)-vscore(i,a)),v=vs[0];onVertex(v);await bwait();if(my!==token)return;
+ const es=legalRoads(i,v).sort((a,b)=>reach(i,b,v)-reach(i,a,v));onEdge(es[0])}
+function reach(i,e,from){const E=B().edges[e],o=E.a===from?E.b:E.a;let best=0;B().verts[o].n.forEach(u=>{if(u!==from&&freeSpot(u))best=Math.max(best,vscore(i,u))});return best+(freeSpot(o)?vscore(i,o)*.3:0)}
+function goal(i){const p=G.players[i],cityOK=legalCities(i).length&&p.cities<LIMIT.city;
+ if(cityOK&&canPay(p,COST.city))return"city";
+ if(p.setts<LIMIT.sett&&legalSetts(i).length)return"sett";
+ if(p.setts<LIMIT.sett&&p.roads<LIMIT.road&&legalRoads(i).length&&(!cityOK||p.res.wood+p.res.brick>=p.res.ore+p.res.grain))return"road";
+ if(cityOK)return"city";return G.deck.length?"dev":null}
+function botBankTrade(i,g){const p=G.players[i],c=COST[g];if(!c)return false;const need=RES.filter(r=>p.res[r]<(c[r]||0));if(!need.length)return false;
+ const r=need[0];const src=RES.filter(x=>x!==r&&p.res[x]-(c[x]||0)>=ratio(i,x)&&G.bank[r]>0).sort((a,b)=>(p.res[b]-(c[b]||0))-(p.res[a]-(c[a]||0)))[0];
+ if(!src)return false;const k=ratio(i,src);p.res[src]-=k;G.bank[src]+=k;give(p,r,1);log(`${p.name} đổi ${k} ${RN[src]} lấy 1 ${RN[r]}`);return true}
+async function botBuildLoop(i,my,allowTrade){const p=G.players[i];
+ for(let it=0;it<14;it++){if(my!==token||G.over)return;const g=goal(i);
+  if(g==="city"&&canPay(p,COST.city)){const v=legalCities(i).sort((a,b)=>vscore(i,b)-vscore(i,a))[0];buildCity(i,v);sfx.build();log(`${p.name} lên thành phố`);render();if(checkWin())return;await bwait();continue}
+  if(canPay(p,COST.sett)&&p.setts<LIMIT.sett&&legalSetts(i).length){const v=legalSetts(i).sort((a,b)=>vscore(i,b)-vscore(i,a))[0];buildSett(i,v);sfx.build();log(`${p.name} xây làng`);render();if(checkWin())return;await bwait();continue}
+  if(canPay(p,COST.road)&&p.roads<LIMIT.road&&p.setts<LIMIT.sett&&!legalSetts(i).length&&legalRoads(i).length&&(g==="road"||p.res.wood>1&&p.res.brick>1)){const e=legalRoads(i).sort((a,b)=>roadValue(i,b)-roadValue(i,a))[0];buildRoad(i,e);sfx.build();log(`${p.name} xây đường`);render();if(checkWin())return;await bwait();continue}
+  if((g==="dev"||(g==="city"&&total(p)>=8))&&canPay(p,COST.dev)&&G.deck.length&&!canPay(p,COST.city)){buyDev(i);render();if(G.over)return;await bwait();continue}
+  if(allowTrade&&botBankTrade(i,g)){render();await bwait();continue}
+  if(allowTrade&&g!=="dev"&&g&&total(p)>7&&botBankTrade(i,g==="city"?"sett":"road")){render();await bwait();continue}
+  break}}
+function roadValue(i,e){const E=B().edges[e];let s=0;[E.a,E.b].forEach(v=>{if(freeSpot(v)&&!B().verts[v].b)s=Math.max(s,vscore(i,v));B().verts[v].n.forEach(u=>{if(freeSpot(u))s=Math.max(s,vscore(i,u)*.6)})});return s+Math.random()*.2}
+async function botTurn(my){await bwait();if(my!==token)return;const i=G.turn,p=cur();
+ const onMine=B().tiles[B().robber].v.some(v=>B().verts[v].b&&B().verts[v].b.p===i);
+ if(onMine&&p.dev.some(d=>d.t==="knight"&&d.turn<G.turnNo)&&!G.devUsed){playDev(i,"knight");await waitPhase(my,"roll");if(my!==token)return}
+ await doRoll();if(my!==token)return;await waitPhase(my,"main");if(my!==token)return;await bwait();
+ // dev cards
+ if(!G.devUsed){const ready=t=>p.dev.some(d=>d.t===t&&d.turn<G.turnNo);
+  if(ready("road")&&legalRoads(i).length&&p.roads<LIMIT.road){playDev(i,"road");while(G.mode==="free"&&my===token){const e=legalRoads(i).sort((a,b)=>roadValue(i,b)-roadValue(i,a))[0];if(e==null){G.mode=null;break}onEdge(e);await bwait()}}
+  else if(ready("plenty"))playDev(i,"plenty");
+  else if(ready("mono")&&G.players.reduce((s,q,j)=>s+(j!==i?Math.max(...RES.map(r=>q.res[r])):0),0)>=4)playDev(i,"mono");
+  else if(ready("knight")&&(p.knights+1>=3&&G.la!==i)){playDev(i,"knight");await waitPhase(my,"main")}}
+ if(my!==token||G.over)return;
+ await botBuildLoop(i,my,true);if(my!==token||G.over)return;await bwait();if(my!==token)return;endTurn()}
+async function waitPhase(my,ph){for(let k=0;k<1e6;k++){if(my!==token||G.over)return;if(G.phase===ph&&G.mode!=="robber"&&$("#modal").hidden)return;await sleep(60)}}
+async function botRobber(my){await bwait();if(my!==token)return;const i=G.turn,bd=B();let best=null,bs=-1e9;
+ bd.tiles.forEach((t,ti)=>{if(ti===bd.robber)return;let s=0;t.v.forEach(v=>{const b=bd.verts[v].b;if(!b)return;const w=(PIPS[t.n]||0)*(b.k==="c"?2:1);s+=b.p===i?-w*3:w*(1+vp(b.p)/5)});s+=Math.random()*.1;if(s>bs){bs=s;best=ti}});
+ moveRobber(i,best)}
+function botDiscard(j,n){const p=G.players[j];for(let k=0;k<n;k++){const r=RES.slice().sort((a,b)=>p.res[b]-p.res[a])[0];p.res[r]--;G.bank[r]++}}
+function botPlenty(i){const p=G.players[i],g=goal(i)||"sett",c=COST[g]||COST.sett;const need=[];RES.forEach(r=>{for(let k=p.res[r];k<(c[r]||0);k++)need.push(r)});
+ while(need.length<2)need.push(RES.slice().sort((a,b)=>p.res[a]-p.res[b])[0]);need.slice(0,2).forEach(r=>give(p,r,1));log(`${p.name} nhận ${need.slice(0,2).map(r=>RN[r]).join(", ")}`)}
+function botAccept(j,giveAway,receive){const p=G.players[j];if(vp(G.turn,false)>=G.winVP-2)return false;const g=goal(j),c=COST[g]||COST.sett;
+ const lacks=r=>p.res[r]<(c[r]||0);const good=RES.some(r=>receive[r]&&lacks(r));const hurts=RES.some(r=>giveAway[r]&&p.res[r]-giveAway[r]<(c[r]||0));
+ return good&&!hurts&&sum(giveAway)<=sum(receive)+1}
+async function botSpecial(my){await bwait();if(my!==token)return;await botBuildLoop(G.actor,my,false);if(my!==token)return;await bwait();if(my!==token)return;nextSpecial()}
+
+/* ===================== SAVE / RESUME ===================== */
+function save(){if(!G||G.over)return;try{store.set("dkh-game",JSON.stringify(G))}catch(e){}}
+function resume(){let s=null;try{s=JSON.parse(store.get("dkh-game")||"null")}catch(e){}if(!s)return;G=s;token++;closeModal();show("play");
+ if(G.phase==="setup"){if(G.mode==="setupRoad"){render();if(cur().bot){const i=G.turn,my=token;bwait().then(()=>{if(my!==token)return;onEdge(legalRoads(i,G.setupV).sort((a,b)=>reach(i,b,G.setupV)-reach(i,a,G.setupV))[0])})}}else setupStep();return}
+ if(G.mode==="robber"){startRobber();return}
+ if(G.phase==="special"){G.specialQ=G.specialQ||[];if(G.actor!=null)G.specialQ.unshift(G.actor);nextSpecial();return}
+ if(G.phase==="roll"){beginTurn();return}
+ render();if(cur().bot){const my=token;botBuildLoop(G.turn,my,true).then(()=>{if(my===token&&!G.over)endTurn()})}}
+
+/* ===================== NAV ===================== */
+function show(id){["setup","play","over"].forEach(s=>$("#"+s).hidden=s!==id);$("#wrap").classList.toggle("wide",id==="play");$("#foot").hidden=id==="play";window.scrollTo(0,0)}
+$("#start").addEventListener("click",newGame);$("#resume").addEventListener("click",resume);
+$("#again").addEventListener("click",()=>{G=null;renderSetup();show("setup")});
+$("#viewBoard").addEventListener("click",()=>{show("play");$("#actBox").innerHTML=`<button class="btn primary" type="button" id="backOver">Về kết quả</button>`;$("#backOver").onclick=showOver});
+$("#quit").addEventListener("click",()=>{const b=$("#quit");if(b.dataset.arm){delete b.dataset.arm;b.textContent="Thoát ván";token++;closeModal();renderSetup();show("setup");return}
+ b.dataset.arm="1";b.textContent="Bấm lần nữa (ván được lưu)";setTimeout(()=>{delete b.dataset.arm;b.textContent="Thoát ván"},3000)});
+window.__kh={get G(){return G},cfg};
+renderSetup();
+})();
+</script>
+</body>
+</html>
