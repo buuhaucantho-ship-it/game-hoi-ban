@@ -254,6 +254,52 @@ h1{letter-spacing:.01em}
 .win{border:2.5px solid var(--pen);border-radius:24px 28px 22px 30px;box-shadow:var(--shadow);background-image:var(--grain),linear-gradient(135deg,var(--wc1),var(--wc2));text-shadow:2px 2px 0 rgba(74,52,36,.3);animation:popin .5s cubic-bezier(.3,1.5,.5,1)}
 .win h2{font-size:clamp(36px,7vw,56px)}
 .foot{font-family:var(--f-body);font-style:italic}
+
+/* ---- living illustrations ---- */
+.petals{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.petals i{position:absolute;top:-16px;left:var(--x);width:calc(12px*var(--s));height:calc(9px*var(--s));background:#f7b6cc;border:1.4px solid #4a3424;border-radius:80% 0 80% 0;animation:petal var(--t) linear infinite;animation-delay:var(--d)}
+@keyframes petal{0%{transform:translate(0,0) rotate(0);opacity:0}8%{opacity:1}50%{transform:translate(40px,150px) rotate(200deg)}100%{transform:translate(-20px,330px) rotate(420deg);opacity:.2}}
+.sky .petals{z-index:0}.sky:not(.day) .sky-p{opacity:0}.sky-p{transition:opacity .8s}
+.peek{animation:peek 6s ease-in-out infinite}
+@keyframes peek{0%,30%,100%{transform:translateY(14px)}45%,80%{transform:translateY(0)}60%{transform:translateY(0) rotate(0)}}
+.smoke circle{animation:smoke 3.6s ease-out infinite;transform-box:fill-box;transform-origin:center;opacity:0}
+.smoke circle:nth-child(2){animation-delay:1.2s}.smoke circle:nth-child(3){animation-delay:2.4s}
+@keyframes smoke{0%{transform:translate(0,0) scale(.5);opacity:0}20%{opacity:.9}100%{transform:translate(14px,-60px) scale(1.6);opacity:0}}
+.shim{stroke-dasharray:14 10;animation:shim 3s linear infinite}
+@keyframes shim{to{stroke-dashoffset:-48}}
+.wg{transform-box:fill-box;animation:flap .5s ease-in-out infinite}
+.wg.wl{transform-origin:right center}.wg.wr{transform-origin:left center}
+@keyframes flap{50%{transform:scaleX(.55)}}
+.birds{animation:birds 22s linear infinite}
+@keyframes birds{from{transform:translate(-60px,40px)}to{transform:translate(860px,10px)}}
+.birds path{animation:bflap .6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes bflap{50%{transform:scaleY(.5)}}
+.sbirds{position:absolute;width:60px;top:30%;left:-70px;animation:sbirds 18s linear infinite;opacity:0;transition:opacity .8s}
+.sky.day .sbirds{opacity:1}
+@keyframes sbirds{to{transform:translate(calc(100vw + 80px),-30px)}}
+.shoot{position:absolute;top:18%;left:30%;width:70px;height:2px;background:linear-gradient(90deg,transparent,#fff8d0);border-radius:2px;opacity:0;transform:rotate(-20deg);animation:shoot 9s ease-in infinite}
+.sky.day .shoot{display:none}
+@keyframes shoot{0%,88%{opacity:0;translate:0 0}90%{opacity:1}100%{opacity:0;translate:160px 60px}}
+.sky .vill .wn{animation:flick 4s ease-in-out infinite}
+.sky .vill g:nth-of-type(3) .wn{animation-delay:-1.5s}.sky .vill g:nth-of-type(4) .wn{animation-delay:-2.7s}
+@keyframes flick{50%{opacity:.75}}
+/* narrator talking */
+.wave{display:inline-flex;gap:2px;align-items:center;height:14px;margin-left:4px;opacity:0;transition:opacity .3s}
+.wave i{width:3px;height:4px;border-radius:2px;background:currentColor;animation:wv .8s ease-in-out infinite}
+.wave i:nth-child(2){animation-delay:.1s}.wave i:nth-child(3){animation-delay:.2s}.wave i:nth-child(4){animation-delay:.3s}
+@keyframes wv{50%{height:14px}}
+.sky.talking .wave{opacity:1}
+.sky.talking .orb svg{animation:talk .45s ease-in-out infinite;transform-origin:50% 60%}
+@keyframes talk{50%{transform:scale(1.06,.95)}}
+.sky .script.in{animation:scriptin .45s cubic-bezier(.3,1.4,.5,1)}
+@keyframes scriptin{from{opacity:0;transform:translateY(8px) rotate(-.6deg)}}
+.reveal.show .front .art{animation:artbob 1.4s ease-in-out infinite}
+@keyframes artbob{50%{transform:translateY(-6px) rotate(-3deg)}}
+.reveal.show .front .big{animation:popin .4s cubic-bezier(.3,1.6,.5,1)}
+@media (hover:hover){.roles-ed li:hover .ri{animation:wig .5s ease}}
+.ri svg{transition:transform .2s}
+.sky h2 .ri{animation:artbob 2.4s ease-in-out infinite}
+.wait .moon{animation:float 3s ease-in-out infinite}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
@@ -283,12 +329,13 @@ h1{letter-spacing:.01em}
  <g class="cl c2" fill="#fff" stroke="#4a3424" stroke-width="2.2"><path d="M400 56q-2-14 14-14 6-12 20-8 12-6 20 4 14 0 14 12 0 8-10 8h-48q-10 0-10-2z"/></g>
  <path d="M0 168q120-62 250-14t240-22 310 14v134H0z" fill="#cbe4a8" stroke="#4a3424" stroke-width="2.2"/>
  <path d="M560 180q60-70 120-40t120 10v130H560z" fill="#b6d892" stroke="#4a3424" stroke-width="2.2"/>
- <g transform="translate(330 200)"><path d="M-16 4l3-16 8 9h10l8-9 3 16q0 9-16 11-16-2-16-11z" fill="#a9aec4" stroke="#4a3424" stroke-width="2"/><circle cx="-6" cy="3" r="2.2" fill="#4a3424"/><circle cx="6" cy="3" r="2.2" fill="#4a3424"/><path d="M-2 8q2 2 4 0" stroke="#4a3424" stroke-width="1.6" fill="none"/></g>
+ <g class="peek"><g transform="translate(330 200)"><path d="M-16 4l3-16 8 9h10l8-9 3 16q0 9-16 11-16-2-16-11z" fill="#a9aec4" stroke="#4a3424" stroke-width="2"/><circle cx="-6" cy="3" r="2.2" fill="#4a3424"/><circle cx="6" cy="3" r="2.2" fill="#4a3424"/><path d="M-2 8q2 2 4 0" stroke="#4a3424" stroke-width="1.6" fill="none"/></g></g>
  <path d="M0 212q170-42 340 0t300-12 160 0v80H0z" fill="#a6d07f" stroke="#4a3424" stroke-width="2.2"/>
  <path d="M500 280q-30-36 40-52t120-30 140-10v92z" fill="#a9daea" stroke="#4a3424" stroke-width="2.2"/>
- <path d="M560 252q30-8 60-4M640 236q30-6 60-2" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".8"/>
+ <path class="shim" d="M560 252q30-8 60-4M640 236q30-6 60-2M590 266q30-6 60-2" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".8"/>
  <g stroke="#6aa84a" stroke-width="4" stroke-linecap="round"><path d="M40 230V140M56 232V128M70 230V150"/></g>
  <g fill="#8cc46a" stroke="#4a3424" stroke-width="1.4"><path d="M40 150q-16-6-22 2 12 2 22-2zM56 136q16-8 24 0-12 3-24 0zM56 170q-18-4-24 4 12 2 24-4zM70 160q16-4 22 4-12 1-22-4zM40 190q16-6 22 2-12 2-22-2z"/></g>
+ <g class="smoke" fill="#fff" stroke="#4a3424" stroke-width="1.4"><circle cx="196" cy="168" r="6"/><circle cx="200" cy="168" r="8"/><circle cx="194" cy="168" r="5"/></g><rect x="186" y="172" width="12" height="20" fill="#c9a07a" stroke="#4a3424" stroke-width="2"/>
  <g transform="translate(150 214)"><path d="M-58 0l58-44 58 44z" fill="#e2b25a" stroke="#4a3424" stroke-width="2.2"/><path d="M-34 -16l9-9M-12 -30l7-7M12 -28l7 7M34 -14l9 9" stroke="#a8782a" stroke-width="1.8"/>
   <rect x="-42" y="0" width="84" height="44" fill="#f3dcb4" stroke="#4a3424" stroke-width="2.2"/><rect x="-9" y="16" width="18" height="28" fill="#a8754a" stroke="#4a3424" stroke-width="2"/><rect x="20" y="10" width="14" height="12" fill="#fff6c8" stroke="#4a3424" stroke-width="1.8"/><rect x="-34" y="10" width="14" height="12" fill="#fff6c8" stroke="#4a3424" stroke-width="1.8"/></g>
  <g transform="translate(450 226) scale(.8)"><path d="M-58 0l58-44 58 44z" fill="#d9a14a" stroke="#4a3424" stroke-width="2.4"/><path d="M-34 -16l9-9M-12 -30l7-7M12 -28l7 7M34 -14l9 9" stroke="#a8782a" stroke-width="2"/>
@@ -296,13 +343,15 @@ h1{letter-spacing:.01em}
  <g><path d="M262 226q6-44-6-74M258 166q-22-22-44-24M260 156q22-20 48-18M256 190q-26 0-40 12" stroke="#7a4a2a" stroke-width="7" fill="none" stroke-linecap="round"/>
   <g fill="#f4a3bf" stroke="#4a3424" stroke-width="1.2"><circle cx="214" cy="140" r="6"/><circle cx="226" cy="132" r="5"/><circle cx="240" cy="146" r="5.5"/><circle cx="252" cy="126" r="6"/><circle cx="266" cy="138" r="5"/><circle cx="282" cy="130" r="6"/><circle cx="300" cy="138" r="5.5"/><circle cx="310" cy="128" r="4.5"/><circle cx="218" cy="200" r="5"/><circle cx="232" cy="196" r="4.5"/><circle cx="246" cy="118" r="4.5"/><circle cx="274" cy="118" r="5"/><circle cx="292" cy="150" r="4.5"/></g>
   <g fill="#fff" opacity=".9"><circle cx="252" cy="126" r="1.6"/><circle cx="282" cy="130" r="1.6"/><circle cx="214" cy="140" r="1.6"/></g></g>
- <g class="fairy f1" transform="translate(560 118)"><ellipse cx="-11" cy="-2" rx="13" ry="7" fill="#e6f6ff" stroke="#4a3424" stroke-width="1.5" transform="rotate(-28)"/><ellipse cx="11" cy="-2" rx="13" ry="7" fill="#e6f6ff" stroke="#4a3424" stroke-width="1.5" transform="rotate(28)"/>
+ <g class="fairy f1" transform="translate(560 118)"><ellipse class="wg wl" cx="-11" cy="-2" rx="13" ry="7" fill="#e6f6ff" stroke="#4a3424" stroke-width="1.5" transform="rotate(-28)"/><ellipse class="wg wr" cx="11" cy="-2" rx="13" ry="7" fill="#e6f6ff" stroke="#4a3424" stroke-width="1.5" transform="rotate(28)"/>
   <path d="M0 -3l-10 22h20z" fill="#f4a3bf" stroke="#4a3424" stroke-width="1.6"/><circle cx="0" cy="-11" r="7" fill="#f7d6b4" stroke="#4a3424" stroke-width="1.6"/><path d="M-7 -13q7-9 14 0q-7-3-14 0z" fill="#3a2214"/><circle cx="-2.4" cy="-10" r=".9" fill="#4a3424"/><circle cx="2.4" cy="-10" r=".9" fill="#4a3424"/>
   <path d="M9 0l12-9" stroke="#c9952a" stroke-width="2" stroke-linecap="round"/><path d="M23 -15l1.6 3.4 3.6.4-2.7 2.4.8 3.6-3.3-1.9-3.3 1.9.8-3.6-2.7-2.4 3.6-.4z" fill="#ffe08a" stroke="#4a3424" stroke-width="1"/></g>
- <g class="fairy f2" transform="translate(370 96) scale(.8)"><ellipse cx="-11" cy="-2" rx="13" ry="7" fill="#f3e8ff" stroke="#4a3424" stroke-width="1.6" transform="rotate(-28)"/><ellipse cx="11" cy="-2" rx="13" ry="7" fill="#f3e8ff" stroke="#4a3424" stroke-width="1.6" transform="rotate(28)"/>
+ <g class="fairy f2" transform="translate(370 96) scale(.8)"><ellipse class="wg wl" cx="-11" cy="-2" rx="13" ry="7" fill="#f3e8ff" stroke="#4a3424" stroke-width="1.6" transform="rotate(-28)"/><ellipse class="wg wr" cx="11" cy="-2" rx="13" ry="7" fill="#f3e8ff" stroke="#4a3424" stroke-width="1.6" transform="rotate(28)"/>
   <path d="M0 -3l-10 22h20z" fill="#a8d8f0" stroke="#4a3424" stroke-width="1.8"/><circle cx="0" cy="-11" r="7" fill="#f7d6b4" stroke="#4a3424" stroke-width="1.8"/><path d="M-8 -12q8-11 16 0q-3-6-8-6t-8 6z" fill="#5a2a14"/><circle cx="-2.4" cy="-10" r=".9" fill="#4a3424"/><circle cx="2.4" cy="-10" r=".9" fill="#4a3424"/></g>
+ <g class="birds" fill="none" stroke="#4a3424" stroke-width="2" stroke-linecap="round"><path d="M0 0q5-5 10 0q5-5 10 0"/><path d="M26 10q4-4 8 0q4-4 8 0"/></g>
  <g class="twk" fill="#fff6b0" stroke="#4a3424" stroke-width="1"><path d="M520 70l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/><path d="M610 150l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/><path d="M330 120l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/><path d="M760 140l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></g>
 </svg>
+      <div class="petals" aria-hidden="true"><i style="--x:8%;--d:0s;--t:9s;--s:1"></i><i style="--x:18%;--d:-3s;--t:11s;--s:0.8"></i><i style="--x:30%;--d:-6s;--t:10s;--s:1.1"></i><i style="--x:44%;--d:-1.5s;--t:12s;--s:0.9"></i><i style="--x:57%;--d:-7s;--t:9.5s;--s:1"></i><i style="--x:68%;--d:-4s;--t:11.5s;--s:0.75"></i><i style="--x:80%;--d:-2s;--t:10.5s;--s:1.05"></i><i style="--x:92%;--d:-5s;--t:12.5s;--s:0.85"></i></div>
       <div class="bt"><span class="eyebrow">Làng thần tiên · tự dẫn · 5–24 người</span><h1>Ma Sói</h1><p>Ngày xửa ngày xưa, ở một ngôi làng thần tiên, có những con sói đội lốt dân làng…</p></div>
       <button class="btn primary big" id="start" type="button">Chia vai</button></div>
     <div class="note" style="margin-bottom:16px">Đặt máy giữa vòng và <b>bật âm lượng</b> để nghe nhạc và lời dẫn. Ban đêm giọng đọc gọi từng vai thức dậy; ai được gọi thì cầm máy chọn, bấm xong máy tự gọi vai tiếp theo. Vai đã chết vẫn được gọi và chờ một lúc như thường, để không ai đoán được. Ban ngày mọi người chuyền máy bỏ phiếu kín.</div>
@@ -321,6 +370,9 @@ h1{letter-spacing:.01em}
           <div class="opt"><div><b>Thời gian thảo luận</b></div><select class="inp" id="optTime" aria-label="Thời gian thảo luận"><option value="60">1 phút</option><option value="120">2 phút</option><option value="180" selected>3 phút</option><option value="300">5 phút</option><option value="0">Không giới hạn</option></select></div>
           <div class="opt"><div><b>Nhạc nền</b><small>Nhạc dân gian êm, tự nhỏ lại khi giọng đọc dẫn truyện.</small></div><button class="switch" id="optMusic" type="button" role="switch" aria-checked="true" aria-label="Nhạc nền"></button></div>
           <div class="opt"><div><b>Hiệu ứng âm thanh</b><small>Tiếng nút bấm, chuông gọi vai, chim hót khi trời sáng.</small></div><button class="switch" id="optSfx" type="button" role="switch" aria-checked="true" aria-label="Hiệu ứng âm thanh"></button></div>
+          <div class="opt"><div><b>Giọng đọc</b><small>Chọn giọng nữ tiếng Việt có trên máy. Máy tính dùng Edge có giọng HoaiMy rất tự nhiên.</small></div><select class="inp" id="optVoice" aria-label="Chọn giọng đọc"><option value="">Tự chọn giọng nữ</option></select></div>
+          <div class="opt"><div><b>Lời dẫn kiểu miền Nam</b><small>Nói “nha”, “nghen”, “hen” cho gần gũi.</small></div><button class="switch" id="optSouth" type="button" role="switch" aria-checked="true" aria-label="Lời dẫn kiểu miền Nam"></button></div>
+          <div class="opt"><div><b>Ngắt nghỉ và hơi thở</b><small>Đọc từng cụm, nghỉ ở dấu phẩy, dấu chấm, lấy hơi nhẹ trước câu mới.</small></div><button class="switch" id="optBreath" type="button" role="switch" aria-checked="true" aria-label="Ngắt nghỉ và hơi thở"></button></div>
           <div class="opt"><div><b>Tốc độ giọng đọc</b></div><select class="inp" id="optRate" aria-label="Tốc độ giọng đọc"><option value="0.85">Chậm</option><option value="1" selected>Vừa</option><option value="1.15">Nhanh</option></select></div>
           <div class="row" style="margin-top:6px"><button class="btn sm" id="testVoice" type="button">Nghe thử giọng đọc</button><span class="sub" id="voiceNote" style="margin:0"></span></div>
         </div>
@@ -347,13 +399,13 @@ h1{letter-spacing:.01em}
     <div class="gm">
       <div class="stack">
         <div class="sky" id="sky"><div class="stars"></div><div class="orb"><svg viewBox="0 0 80 80" aria-hidden="true"><g class="moon"><circle cx="40" cy="40" r="26" fill="#fff1b8" stroke="#4a3424" stroke-width="2.4"/><path d="M52 22a26 26 0 0 1 0 36 22 22 0 0 0 0-36z" fill="#f2dc8a"/><path d="M28 40q4 3 8 0M44 40q4 3 8 0" stroke="#4a3424" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M36 49q4 2 8 0" stroke="#4a3424" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="27" cy="46" r="3" fill="#f4a3a3" opacity=".7"/><circle cx="53" cy="46" r="3" fill="#f4a3a3" opacity=".7"/></g>
-<g class="sunf"><g stroke="#e8b04a" stroke-width="3" stroke-linecap="round"><path d="M40 4v8M40 68v8M4 40h8M68 40h8M14 14l6 6M60 60l6 6M66 14l-6 6M20 60l-6 6"/></g><circle cx="40" cy="40" r="22" fill="#ffe08a" stroke="#4a3424" stroke-width="2.4"/><path d="M31 37q3-3 6 0M43 37q3-3 6 0" stroke="#4a3424" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M33 45q7 6 14 0" stroke="#4a3424" stroke-width="2.2" fill="none" stroke-linecap="round"/></g></svg></div><div class="ffs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><svg class="vill" viewBox="0 0 600 80" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path class="h1" d="M0 46q100-30 200-6t200-10 200 6v44H0z"/>
+<g class="sunf"><g stroke="#e8b04a" stroke-width="3" stroke-linecap="round"><path d="M40 4v8M40 68v8M4 40h8M68 40h8M14 14l6 6M60 60l6 6M66 14l-6 6M20 60l-6 6"/></g><circle cx="40" cy="40" r="22" fill="#ffe08a" stroke="#4a3424" stroke-width="2.4"/><path d="M31 37q3-3 6 0M43 37q3-3 6 0" stroke="#4a3424" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M33 45q7 6 14 0" stroke="#4a3424" stroke-width="2.2" fill="none" stroke-linecap="round"/></g></svg></div><div class="petals sky-p" aria-hidden="true"><i style="--x:15%;--d:0s;--t:10s;--s:.8"></i><i style="--x:45%;--d:-4s;--t:12s;--s:.7"></i><i style="--x:75%;--d:-7s;--t:11s;--s:.9"></i></div><svg class="sbirds" viewBox="0 0 60 20" aria-hidden="true"><path d="M2 10q5-6 10 0q5-6 10 0M30 4q4-5 8 0q4-5 8 0" fill="none" stroke="#4a3424" stroke-width="2" stroke-linecap="round"/></svg><i class="shoot" aria-hidden="true"></i><div class="ffs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><svg class="vill" viewBox="0 0 600 80" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path class="h1" d="M0 46q100-30 200-6t200-10 200 6v44H0z"/>
 <g transform="translate(110 50)"><path class="rf" d="M-30 0l30-22 30 22z"/><rect class="wl" x="-22" y="0" width="44" height="22"/><rect class="wn" x="-16" y="6" width="9" height="8"/><rect class="dr" x="3" y="8" width="9" height="14"/></g>
 <g transform="translate(218 54)"><path class="tr" d="M0 26V0M0 6q-10-8-18-6M0 4q10-8 20-6"/><circle class="bl" cx="-14" cy="-4" r="7"/><circle class="bl" cx="0" cy="-10" r="8"/><circle class="bl" cx="14" cy="-6" r="7"/></g>
 <g transform="translate(320 56) scale(.8)"><path class="rf" d="M-30 0l30-22 30 22z"/><rect class="wl" x="-22" y="0" width="44" height="24"/><rect class="wn" x="6" y="6" width="9" height="8"/></g>
 <g transform="translate(480 48)"><path class="rf" d="M-34 0l34-24 34 24z"/><rect class="wl" x="-25" y="0" width="50" height="26"/><rect class="wn" x="-18" y="6" width="10" height="9"/><rect class="wn" x="8" y="6" width="10" height="9"/></g>
 <path class="h2" d="M0 62q150-20 300 0t300-6v24H0z"/></svg>
-          <div class="phase"><span class="live"></span><span id="phase">Đêm 1</span></div><h2 id="stepTitle"></h2><div class="script" id="script"></div>
+          <div class="phase"><span class="live"></span><span id="phase">Đêm 1</span><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div><h2 id="stepTitle"></h2><div class="script" id="script"></div>
           <div class="skybtns"><button class="btn sm" id="replay" type="button">Đọc lại</button><button class="btn sm" id="pause" type="button">Tạm dừng</button><button class="btn sm" id="musBtn" type="button"></button></div></div>
         <div class="card act" id="act"></div>
       </div>
@@ -445,7 +497,7 @@ const KILLERS=["soi","soitientri","soicon"];
 /* ======================= SETUP ======================= */
 const DEF=["An","Bình","Chi","Dũng","Giang","Hạnh","Khoa","Linh","Minh","Nga"];
 let names=(()=>{try{const v=JSON.parse(store.get("ms2-names")||"null");return Array.isArray(v)&&v.length>=5?v:DEF.slice()}catch(e){return DEF.slice()}})();
-let opt=(()=>{const d={speak:true,secret:true,reveal:true,time:180,rate:1,counts:null,music:true,sfx:true};try{return Object.assign(d,JSON.parse(store.get("ms2-opt")||"{}"))}catch(e){return d}})();
+let opt=(()=>{const d={speak:true,secret:true,reveal:true,time:180,rate:1,counts:null,music:true,sfx:true,voice:"",south:true,breath:true};try{return Object.assign(d,JSON.parse(store.get("ms2-opt")||"{}"))}catch(e){return d}})();
 const save=()=>{store.set("ms2-names",JSON.stringify(names));store.set("ms2-opt",JSON.stringify(opt))};
 function suggest(n){const pri=[["tientri",5],["baove",6],["phuthuy",7],["thosan",8],["cupid",9],["satnhan",10],["thanghe",11],["soicon",12],["gialang",12],["thamtu",13],["taysai",14],["badong",15],["thoisao",16],["soitientri",17],["hiepsi",17],["phongan",18],["thangngoc",19],["tre",20]];
  const c={},W=Math.max(1,Math.round(n/4.5));let keys=pri.filter(([k,m])=>n>=m).map(([k])=>k);
@@ -477,18 +529,26 @@ function renderSetup(){
  const pr=problem(),t=$("#total");t.classList.toggle("bad",!!pr);
  t.innerHTML=pr?`<span>${pr}</span>`:`<span>${names.length} người · ${Object.keys(ROLES).filter(k=>cnt(k)>0).length} loại vai</span><span class="num">Sói ${wolvesSet()} · thứ ba ${["satnhan","thanghe","thoisao"].reduce((a,k)=>a+cnt(k),0)}</span>`;
  $("#start").disabled=!!pr;
- $("#optSpeak").setAttribute("aria-checked",opt.speak);$("#optMusic").setAttribute("aria-checked",opt.music);$("#optSfx").setAttribute("aria-checked",opt.sfx);$("#optSecret").setAttribute("aria-checked",opt.secret);$("#optReveal").setAttribute("aria-checked",opt.reveal);
+ $("#optSpeak").setAttribute("aria-checked",opt.speak);$("#optMusic").setAttribute("aria-checked",opt.music);$("#optSouth").setAttribute("aria-checked",opt.south);$("#optBreath").setAttribute("aria-checked",opt.breath);$("#optSfx").setAttribute("aria-checked",opt.sfx);$("#optSecret").setAttribute("aria-checked",opt.secret);$("#optReveal").setAttribute("aria-checked",opt.reveal);
  $("#optTime").value=String(opt.time);$("#optRate").value=String(opt.rate)}
 $("#addP").addEventListener("click",()=>{if(names.length<24){names.push("Người "+(names.length+1));save();renderSetup();const ins=$("#names").querySelectorAll("input");ins[ins.length-1].select()}});
 $("#suggest").addEventListener("click",()=>{opt.counts=suggest(names.length);save();renderSetup()});
-[["#optSpeak","speak"],["#optSecret","secret"],["#optReveal","reveal"],["#optMusic","music"],["#optSfx","sfx"]].forEach(([id,k])=>$(id).addEventListener("click",()=>{opt[k]=!opt[k];save();if(k==="music"){if(opt.music)startMusic();else stopMusic()}renderSetup()}));
+[["#optSpeak","speak"],["#optSecret","secret"],["#optReveal","reveal"],["#optMusic","music"],["#optSfx","sfx"],["#optSouth","south"],["#optBreath","breath"]].forEach(([id,k])=>$(id).addEventListener("click",()=>{opt[k]=!opt[k];save();if(k==="music"){if(opt.music)startMusic();else stopMusic()}renderSetup()}));
 $("#optTime").addEventListener("change",e=>{opt.time=+e.target.value;save()});
 $("#optRate").addEventListener("change",e=>{opt.rate=+e.target.value;save()});
+$("#optVoice").addEventListener("change",e=>{opt.voice=e.target.value;save();pickVoice();speak("Chào cả làng. Tui là người dẫn truyện của làng thần tiên nè.")});
 
 /* ======================= VOICE & SOUND ======================= */
-let viVoice=null;
-function pickVoice(){try{const v=speechSynthesis.getVoices();viVoice=v.find(x=>/^vi/i.test(x.lang))||null;
- $("#voiceNote").textContent=!("speechSynthesis" in window)?"Trình duyệt này không có giọng đọc.":viVoice?`Giọng: ${viVoice.name}`:"Chưa thấy giọng tiếng Việt, máy sẽ đọc bằng giọng mặc định."}catch(e){}}
+let viVoice=null,VI=[];
+function vScore(v){const n=(v.name+" "+v.voiceURI).toLowerCase();let sc=0;
+ if(/natural|neural|online|premium|enhanced|wavenet/.test(n))sc+=4;
+ if(/hoaimy|hoài my|hoai my|linh|female|\bnữ\b|x-gft|x-vic|x-vie/.test(n))sc+=3;
+ if(/namminh|nam minh|male|x-vid|x-vif/.test(n))sc-=3;
+ if(v.localService===false)sc+=1;return sc}
+function pickVoice(){try{const all=speechSynthesis.getVoices();VI=all.filter(x=>/^vi/i.test(x.lang)).sort((a,b)=>vScore(b)-vScore(a));
+ viVoice=(opt.voice&&VI.find(v=>v.name===opt.voice))||VI[0]||null;
+ const sel=$("#optVoice");if(sel){sel.innerHTML='<option value="">Tự chọn giọng nữ</option>'+VI.map(v=>`<option value="${esc(v.name)}"${v.name===opt.voice?" selected":""}>${esc(v.name.replace(/Microsoft |Google |\(Vietnam\)|- Vietnamese/g,"").trim())}</option>`).join("")}
+ $("#voiceNote").textContent=!("speechSynthesis" in window)?"Trình duyệt này không có giọng đọc.":viVoice?`Đang dùng: ${viVoice.name}`:"Máy chưa có giọng tiếng Việt. Hãy cài thêm giọng tiếng Việt trong cài đặt máy, hoặc dùng Edge / Chrome."}catch(e){}}
 if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}else pickVoice();
 let ac=null,mus=null,NB=null,curMood="day";
 const mtof=n=>440*Math.pow(2,(n-69)/12);
@@ -557,13 +617,30 @@ document.addEventListener("click",e=>{const el=e.target.closest("button,.gtab");
  if(el.matches(".btn,.pbtn,.potion")){el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop");dust(e.clientX||el.getBoundingClientRect().left+el.offsetWidth/2,e.clientY||el.getBoundingClientRect().top+10)}},true);
 function paintMus(){const b=$("#musBtn");if(b)b.textContent=opt.music?"Nhạc: bật":"Nhạc: tắt"}
 
-function speak(text){return new Promise(res=>{const plain=text.replace(/<[^>]+>/g,"");const est=900+plain.length*75/opt.rate;
+/* Southern-style wording for the narrator */
+const SOUTH=[[/nhắm mắt lại\./g,"nhắm mắt lại nha."],[/mở mắt ra\./g,"mở mắt ra nghen."],[/đi ngủ\./g,"đi ngủ nha."],[/thức dậy\./g,"thức dậy nghen."],
+ [/Mọi người/g,"Cả nhà"],[/không ai chết\./g,"hổng có ai chết hết."],[/Không ai bị treo cổ hôm nay\./g,"Hôm nay hổng ai bị treo cổ hết."],[/không được nói/g,"hổng được nói"],
+ [/Hết giờ thảo luận\./g,"Hết giờ thảo luận rồi nha."],[/để tìm ra kẻ đáng ngờ\./g,"để tìm ra kẻ đáng nghi nghen."],[/Chuyền máy lần lượt cho từng người\./g,"Chuyền máy lần lượt cho từng người nha."],
+ [/Thợ săn không bắn ai\./g,"Thợ săn hổng bắn ai hết."],[/được tha\./g,"được tha nghen."]];
+const southern=t=>opt.south?SOUTH.reduce((a,[r,b])=>a.replace(r,b),t):t;
+/* natural delivery: speak phrase by phrase with pauses and a soft breath before each sentence */
+function phrases(t){const out=[];t.replace(/\s+/g," ").trim().split(/(?<=[.!?…])\s+/).forEach(sen=>{const parts=sen.split(/(?<=[,;:])\s+/);parts.forEach((ph,k)=>{if(ph.trim())out.push({t:ph.trim(),end:k===parts.length-1,first:k===0})})});return out}
+function breath(){if(!opt.breath||!opt.sfx)return;try{const A=getAC(),n=A.createBufferSource(),f=A.createBiquadFilter(),g=A.createGain(),t=A.currentTime+.01;n.buffer=nbuf(A);f.type="bandpass";f.frequency.setValueAtTime(700,t);f.frequency.linearRampToValueAtTime(1300,t+.32);f.Q.value=.8;
+ g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.018,t+.16);g.gain.linearRampToValueAtTime(.0001,t+.36);n.connect(f);f.connect(g);g.connect(A.destination);n.start(t);n.stop(t+.4)}catch(e){}}
+function utter(text,rate,pitch){return new Promise(res=>{let done=false;const fin=()=>{if(!done){done=true;res()}};
+ try{const u=new SpeechSynthesisUtterance(text);u.lang=viVoice?viVoice.lang:"vi-VN";if(viVoice)u.voice=viVoice;u.rate=rate;u.pitch=pitch;u.volume=1;u.onend=fin;u.onerror=fin;speechSynthesis.speak(u)}catch(e){fin()}
+ setTimeout(fin,(700+text.length*85/rate+1500)*SP())})}
+let spkId=0;
+function speak(text){return new Promise(async res=>{const plain=southern(text.replace(/<[^>]+>/g,""));
  if(!opt.speak||!("speechSynthesis" in window)){res();return}
- let done=false;const fin=()=>{if(!done){done=true;res()}};
- const fin2=fin;duck(true);const fin3=()=>{duck(false);fin2()};
- try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(plain);u.lang="vi-VN";if(viVoice)u.voice=viVoice;u.rate=opt.rate;u.onend=fin3;u.onerror=fin3;speechSynthesis.speak(u)}catch(e){fin3()}
- setTimeout(()=>{duck(false);fin()},(est+2500)*SP())})}
-$("#testVoice").addEventListener("click",()=>{chimeUp();speak("Màn đêm buông xuống. Mọi người nhắm mắt lại.")});
+ const my=++spkId;try{speechSynthesis.cancel()}catch(e){}duck(true);$("#sky")?.classList.add("talking");
+ const base=opt.rate*.96,pitch=1.08;
+ if(!opt.breath){await utter(plain,base,pitch)}
+ else for(const ph of phrases(plain)){if(my!==spkId)break;if(ph.first){breath();await sleep(230)}
+  await utter(ph.t,base*(ph.end?.94:1)*(0.98+Math.random()*.05),pitch*(ph.end?.98:1.02));if(my!==spkId)break;
+  await sleep(ph.end?420:190)}
+ if(my===spkId){duck(false);$("#sky")?.classList.remove("talking")}res()})}
+$("#testVoice").addEventListener("click",()=>{chimeUp();speak("Màn đêm buông xuống làng thần tiên, gió thổi nhè nhẹ. Mọi người nhắm mắt lại.")});
 
 /* ======================= GAME STATE ======================= */
 let G=null,token=0;
@@ -610,7 +687,7 @@ async function gate(my){while(paused){await new Promise(r=>resume=r)}chk(my)}
 function sky(phase,title,role){const d=phase==="day";$("#sky").classList.toggle("day",d);setMood(d?"day":"night");
  $("#phase").textContent=d?`Ngày ${G.day}`:`Đêm ${G.night}`;
  $("#stepTitle").innerHTML=(role?`<span class="ri" style="--rc:${ROLES[role].c}">${ROLES[role].i}</span>`:"")+esc(title)}
-async function say(my,text){lastLine=text;$("#script").textContent=text;chk(my);
+async function say(my,text){lastLine=text;$("#script").textContent=southern(text);const sc=$("#script");sc.classList.remove("in");void sc.offsetWidth;sc.classList.add("in");chk(my);
  if(opt.speak){await speak(text);chk(my)}
  else{await new Promise(r=>{act(`<div class="row"><button class="btn primary big" id="nx" type="button">Đã đọc xong, tiếp</button></div>`);$("#nx").addEventListener("click",r)});chk(my)}}
 function act(html){$("#act").innerHTML=html}
@@ -799,7 +876,7 @@ $("#musBtn").addEventListener("click",()=>{opt.music=!opt.music;save();if(opt.mu
 $("#pause").addEventListener("click",()=>{paused=!paused;$("#pause").textContent=paused?"Tiếp tục":"Tạm dừng";if(!paused&&resume){resume();resume=null}});
 $("#quit").addEventListener("click",()=>{const b=$("#quit");if(b.dataset.arm){delete b.dataset.arm;b.textContent="Kết thúc ván";over("quit");return}b.dataset.arm="1";b.textContent="Bấm lần nữa để kết thúc";setTimeout(()=>{delete b.dataset.arm;b.textContent="Kết thúc ván"},3000)});
 
-function over(w){if(!G||G.over)return;G.over=w;token++;paused=false;try{speechSynthesis.cancel()}catch(e){}
+function over(w){if(!G||G.over)return;G.over=w;token++;paused=false;spkId++;try{speechSynthesis.cancel()}catch(e){}
  const th={dan:["#7cbf5a","#4a8a3a","Dân làng chiến thắng!","Mọi mối nguy đã bị loại bỏ. Làng thần tiên lại bình yên, hoa đào lại nở."],
   soi:["#c8706a","#7a3a4a","Bầy Sói chiến thắng!","Phe Sói đã đông ngang dân làng. Ngôi làng chìm trong bóng tối."],
   love:["#f08ab0","#b85a8a","Cặp đôi chiến thắng!","Hai người yêu nhau khác phe đã sống sót đến cuối cùng."],
