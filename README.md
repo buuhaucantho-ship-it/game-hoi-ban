@@ -17,7 +17,10 @@ Trang board game cho hội bạn, chơi ngay trên trình duyệt (điện tho�
 - Ô đặc biệt: Bến Ninh Kiều (xuất phát), Kẹt xe, Đêm nhạc (thuê ×2), Đi phượt (đi đâu cũng được), thẻ Kèo và Drama, Triều cường, Đèn xanh, Bill cuối tháng.
 - 10 nhân vật hoạt hình dân gian ba miền: Cô Ba Nam Bộ, Anh Hai khăn rằn, Cô gái Huế, Anh Cả Bắc Bộ, Liền chị Quan họ, Cô gái H'Mông, Chàng Ê Đê, Cô gái Chăm, Cô gái Khmer, Ông Tư miệt vườn.
 - Mỗi ô có hoạ tiết và màu riêng theo nơi đó (mẹt tre bún đậu, gạch bông nhà cổ, sóng chợ nổi, lưới kính Vincom…).
-- Nhạc nền tự soạn bằng Web Audio: ngũ cung Nam Bộ (đàn tranh, đàn bầu, mõ) trên nền beat hiện đại; bật tắt riêng nhạc nền và hiệu ứng.
+- Nhạc nền tự soạn (giai điệu mới, lấy tinh thần nhạc đất phương Nam và nhạc Tết): đàn tranh, đàn bầu, sáo, mõ, song lang trên nền beat hiện đại. Nhạc tự đổi theo ván: êm ở màn hình chờ, rộn ràng khi chơi, trầm khi kẹt xe hay cạn tiền, cao trào khi xây khách sạn, mở đêm nhạc, những vòng cuối và lúc thắng.
+- Hiệu ứng âm thanh riêng cho bấm nút, đổ xúc xắc, bước đi, mua đất, xây nhà, khách sạn (cồng), trả tiền, kẹt xe, rút thẻ, đi phượt, triều cường, phá sản, chiến thắng (pháo).
+- Nhân vật nói câu thoại kiểu miền Tây trong bong bóng chat (và đọc thành tiếng nếu máy có giọng tiếng Việt). Bật tắt riêng nhạc nền, hiệu ứng, giọng nói.
+- Kèo là ô Cơ hội, Drama là ô Khí vận, tình huống theo đời sinh viên.
 - Chơi offline chung một máy: mở trang một lần khi có mạng, sau đó mở được khi không có mạng (có thể Thêm vào màn hình chính). Màn hình nhắc chuyền máy giữa các lượt.
 - Nút chọn giao diện: Tự động, Điện thoại (bàn cờ dọc), iPad, Máy tính (có cột người chơi và nhật ký).
 - Lần đầu dừng ở đất trống chỉ được mua đất; dừng lại lần sau mới mua nhà; đủ 4 nhà mới xây khách sạn. Trọn tuyến cùng màu thu tiền ×2.

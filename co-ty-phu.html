@@ -649,6 +649,20 @@ body.dev-phone .pill{padding:7px 10px}
 .handoff p{margin:0 auto 16px;opacity:.92;max-width:34ch}
 body.dev-phone .handoff h2{font-size:20px}
 body.dev-phone .handoff .btn{font-size:14px;padding:10px 14px}
+
+/* ---- speech bubbles ---- */
+.say{position:absolute;z-index:12;max-width:min(240px,70%);background:#fff;color:var(--tile-ink);border-radius:14px;padding:6px 10px 7px;font-size:13px;font-weight:700;line-height:1.25;
+ box-shadow:0 3px 0 var(--pc),0 8px 18px rgba(0,0,0,.25);animation:sayin .32s cubic-bezier(.2,1.4,.4,1) both;pointer-events:none}
+.say b{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--pc);font-weight:900}
+.say::after{content:"";position:absolute;left:calc(var(--ax,50%) - 7px);bottom:-7px;border:7px solid transparent;border-bottom:0;border-top-color:#fff}
+.say.below::after{bottom:auto;top:-7px;border-top:0;border-bottom:7px solid #fff}
+.say.out{animation:sayout .35s ease-in forwards}
+@keyframes sayin{from{opacity:0;transform:translateY(8px) scale(.7)}}
+@keyframes sayout{to{opacity:0;transform:translateY(-6px) scale(.9)}}
+body.dev-phone .say{font-size:11.5px;padding:5px 8px;max-width:62%}
+.sq.fill .pr.sub2{color:rgba(255,255,255,.92);font-size:calc(clamp(7px,1.15cqi,9.5px) * var(--k));font-weight:800;margin-top:1px;letter-spacing:.06em;text-transform:uppercase}
+.sq.fill.dark .pr.sub2{color:rgba(22,24,63,.7)}
+body.dev-phone .sq.fill .pr.sub2{font-size:6.5px;margin-top:0}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -673,6 +687,7 @@ body.dev-phone .handoff .btn{font-size:14px;padding:10px 14px}
       </div>
       <button class="pill" id="musicBtn" type="button"></button>
       <button class="pill" id="soundBtn" type="button"></button>
+      <button class="pill" id="voiceBtn" type="button"></button>
       <button class="pill" id="menuBtn" type="button" hidden>Ván mới</button>
     </div>
   </header>
@@ -737,7 +752,7 @@ body.dev-phone .handoff .btn{font-size:14px;padding:10px 14px}
       </div>
       <div class="card">
         <h3>Ô đặc biệt trên bàn cờ</h3>
-        <p class="sub">Bàn lớn 40 ô có 3 ô Kèo, 3 ô Drama, thêm 6 điểm vui chơi và khu Thiền viện Trúc Lâm.</p>
+        <p class="sub">Kèo là ô Cơ hội, Drama là ô Khí vận, viết lại theo đời sinh viên. Bàn lớn 40 ô có 3 ô Kèo, 3 ô Drama, thêm 6 điểm vui chơi và khu Thiền viện Trúc Lâm.</p>
         <ul class="legend" id="legend"></ul>
       </div>
       </div>
@@ -957,8 +972,8 @@ const LEGEND=[
  ["fly","Đi phượt","Full bình xăng: chọn bất kỳ ô nào trên bàn cờ để phóng xe tới."],
  ["fest","Đêm nhạc","Mở đêm nhạc ở một chỗ của bạn, tiền thuê ở đó tăng gấp đôi."],
  ["jail","Kẹt xe","Kẹt xe giờ tan tầm: phải đổ đôi mới ra, hoặc chờ đủ 3 lượt. Đang kẹt xe thì không thu được tiền thuê."],
- ["chance","Kèo","Thẻ rủ rê: kèo bún đậu, kèo music box, đi phượt… thường kéo bạn tới chỗ khác."],
- ["bag","Drama","Thẻ tiền: trúng giải livestream, rơi điện thoại, sinh nhật, lỡ hứa bao trà sữa…"],
+ ["chance","Kèo · Cơ hội","Ô Cơ hội của bản Cần Thơ. Thẻ rủ rê đời sinh viên: kèo bún đậu, crush rủ xem phim, ôn thi thư viện… thường kéo bạn tới chỗ khác."],
+ ["bag","Drama · Khí vận","Ô Khí vận của bản Cần Thơ. Thẻ tiền đời sinh viên: học bổng, cấm thi, gánh team đồ án, phòng trọ dột, clip viral…"],
  ["island","Khu du lịch","Chợ nổi, vườn cò, cồn… Thu tiền theo số khu cùng chủ: 25K → 50K → 100K → 200K → 300K. Gom đủ tất cả khu là thắng ngay."],
  ["storm","Triều cường","Nước ngập đường: một công trình của bạn giảm một cấp, hoặc mất 40K sửa xe."],
  ["highway","Đèn xanh","Đèn xanh một mạch: được đổ thêm một lượt."],
@@ -966,99 +981,193 @@ const LEGEND=[
 
 /* ---------- cards ---------- */
 const CHANCE=[
- {t:"Kèo đi thuyền ngắm bình minh: chạy về Bến Ninh Kiều.",f:async()=>{await walkTo(0,true);await land()}},
- {t:"Hội rủ đi Music box hát xuyên đêm: chạy tới Music box.",f:async()=>{await walkTo(idxOf("Music box"),true);await land()}},
- {t:"Quên ví ở quán, quay lại lấy: lùi 3 ô.",f:async()=>{await walk(3,-1);await land()}},
- {t:"Kèo đi chơi cuối tuần: chạy tới khu du lịch gần nhất phía trước.",f:async()=>{let j=cur().pos;do{j=(j+1)%N}while(SQ[j].t!=="island");await walkTo(j,true);await land()}},
- {t:"Quên đội mũ bảo hiểm, bị giữ xe! Vào ô Kẹt xe ngay, không đi qua Bến Ninh Kiều.",f:async()=>{sendJail();finish()}},
- {t:"Bạn thân tới chở: nhận Thẻ cứu hộ. Giữ lại để thoát Kẹt xe miễn phí.",f:async()=>{cur().free++;finish()}},
- {t:"Bạn mở đêm nhạc bất ngờ: chọn một chỗ của bạn để tiền thuê tăng gấp đôi.",f:async()=>startFest()},
- {t:"Full bình xăng, đi phượt: chọn bất kỳ ô nào để phóng tới.",f:async()=>startFly()},
- {t:"Kèo bún đậu mắm tôm: chạy tới Bún đậu Xưa.",f:async()=>{await walkTo(idxOf("Bún đậu Xưa"),true);await land()}},
- {t:"Kèo xem phim cuối tuần: chạy tới Vincom Xuân Khánh.",f:async()=>{await walkTo(idxOf("Vincom Xuân Khánh"),true);await land()}},
- {t:"Thử thách mỳ cay cấp 7: chạy tới Mỳ cay Omega.",f:async()=>{await walkTo(idxOf("Mỳ cay Omega"),true);await land()}},
- {t:"Kèo săn hoàng hôn: chạy tới Cầu đi bộ Ninh Kiều.",f:async()=>{await walkTo(idxOf("Cầu đi bộ Ninh Kiều"),true);await land()}},
- {t:"Ngân hàng xóa nợ: chuộc miễn phí một chỗ đang cầm cố của bạn.",f:async()=>{const g=owned(S.turn).filter(i=>S.props[i].mg);if(g.length){S.props[g[0]].mg=false;log(`${cur().name} được chuộc miễn phí ${SQ[g[0]].n}`);fx(g[0],"Chuộc lại","good")}else gain(S.turn,50);finish()}}];
+ {t:"Dậy sớm đi học, tiện ghé ngắm bình minh: chạy về Bến Ninh Kiều.",f:async()=>{await walkTo(0,true);await land()}},
+ {t:"Nhóm chat rủ đi Music box hát xả stress sau thi: chạy tới Music box.",f:async()=>{await walkTo(idxOf("Music box"),true);await land()}},
+ {t:"Quên thẻ sinh viên ở quán, quay lại lấy: lùi 3 ô.",f:async()=>{await walk(3,-1);await land()}},
+ {t:"Lớp tổ chức dã ngoại cuối kỳ: chạy tới khu du lịch gần nhất phía trước.",f:async()=>{let j=cur().pos;do{j=(j+1)%N}while(SQ[j].t!=="island");await walkTo(j,true);await land()}},
+ {t:"Chạy xe quên đội mũ bảo hiểm, bị giữ xe! Vào ô Kẹt xe, không đi qua Bến Ninh Kiều.",f:async()=>{sendJail();finish()}},
+ {t:"Bạn thân tình nguyện chở đi học cả tuần: nhận Thẻ cứu hộ, thoát Kẹt xe miễn phí.",f:async()=>{cur().free++;finish()}},
+ {t:"CLB nhờ bạn tổ chức đêm nhạc gây quỹ: chọn một chỗ của bạn để tiền thuê tăng gấp đôi.",f:async()=>startFest()},
+ {t:"Vừa lãnh học bổng, đổ đầy bình xăng đi phượt: chọn bất kỳ ô nào để phóng tới.",f:async()=>startFly()},
+ {t:"Tan học, cả nhóm kéo đi bún đậu mắm tôm: chạy tới Bún đậu Xưa.",f:async()=>{await walkTo(idxOf("Bún đậu Xưa"),true);await land()}},
+ {t:"Hội bạn thách ăn mỳ cay cấp 7: chạy tới Mỳ cay Omega.",f:async()=>{await walkTo(idxOf("Mỳ cay Omega"),true);await land()}},
+ {t:"Crush nhắn rủ đi xem phim: chạy tới Vincom Xuân Khánh.",f:async()=>{await walkTo(idxOf("Vincom Xuân Khánh"),true);await land()}},
+ {t:"Mai thi cuối kỳ mà chưa học chữ nào: chạy tới Đại học Cần Thơ ôn ở thư viện.",f:async()=>{await walkTo(idxOf("Đại học Cần Thơ"),true);await land()}},
+ {t:"Săn hoàng hôn chụp ảnh sống ảo: chạy tới Cầu đi bộ Ninh Kiều.",f:async()=>{await walkTo(idxOf("Cầu đi bộ Ninh Kiều"),true);await land()}},
+ {t:"Bắt kịp chuyến xe buýt cuối: tiến lên 5 ô.",f:async()=>{await walk(5);await land()}},
+ {t:"Ngân hàng có gói hỗ trợ sinh viên: chuộc miễn phí một chỗ đang cầm cố của bạn.",f:async()=>{const g=owned(S.turn).filter(i=>S.props[i].mg);if(g.length){S.props[g[0]].mg=false;log(`${cur().name} được chuộc miễn phí ${SQ[g[0]].n}`);fx(g[0],"Chuộc lại","good")}else gain(S.turn,50);finish()}},
+ {t:"Qua môn khó nhất kỳ, ba mẹ thưởng nóng: nhận 100K.",f:async()=>{gain(S.turn,100);finish()}}];
 const BAG=[
- {t:"Trúng giải minigame livestream: nhận 150K.",f:async()=>{gain(S.turn,150);finish()}},
- {t:"Làm rơi điện thoại xuống sông: mất 100K.",f:async()=>{charge(S.turn,100);finish()}},
- {t:"Được hoàn tiền đơn săn sale: nhận 50K.",f:async()=>{gain(S.turn,50);finish()}},
+ {t:"Đạt học bổng khuyến khích học tập: nhận 150K.",f:async()=>{gain(S.turn,150);finish()}},
+ {t:"Làm rơi điện thoại xuống sông Hậu lúc sống ảo: mất 100K.",f:async()=>{charge(S.turn,100);finish()}},
+ {t:"Bị cấm thi vì vắng quá buổi, phải đóng tiền học lại: trả 60K.",f:async()=>{charge(S.turn,60);finish()}},
  {t:"Sinh nhật của bạn! Mỗi người chơi lì xì bạn 20K.",f:async()=>{alive().forEach(i=>{if(i!==S.turn)charge(i,20,S.turn)});finish()}},
- {t:"Lỡ hứa bao hồng trà cả nhóm: trả mỗi người 20K.",f:async()=>{for(const i of alive()){if(i!==S.turn&&!charge(S.turn,20,i))break}finish()}},
- {t:"Bảo hiểm xe chi trả vụ quẹt xe: nhận 100K.",f:async()=>{gain(S.turn,100);finish()}},
- {t:"Sửa nhà sau mùa mưa: trả 25K mỗi nhà và 100K mỗi khách sạn bạn sở hữu.",f:async()=>{const c=owned(S.turn).reduce((a,i)=>{const l=S.props[i].l;return a+(l===5?100:25*l)},0);if(c)charge(S.turn,c);finish()}},
- {t:"Clip review bún đậu của bạn viral: nhận 200K.",f:async()=>{gain(S.turn,200);finish()}},
- {t:"Xe bể bánh giữa đường: trả 50K vá xe.",f:async()=>{charge(S.turn,50);finish()}},
- {t:"Pass lại đồ cũ trên chợ online: nhận 80K.",f:async()=>{gain(S.turn,80);finish()}},
- {t:"Quên tắt máy lạnh cả tháng: trả 80K tiền điện.",f:async()=>{charge(S.turn,80);finish()}},
- {t:"Ăn hết tô mỳ cay cấp 7 ở Itada, được thưởng 120K.",f:async()=>{gain(S.turn,120);finish()}},
- {t:"Clip quay ở cầu Cần Thơ lên xu hướng: nhận 100K.",f:async()=>{gain(S.turn,100);finish()}}];
+ {t:"Lỡ hứa bao hồng trà cả nhóm làm đồ án: trả mỗi người 20K.",f:async()=>{for(const i of alive()){if(i!==S.turn&&!charge(S.turn,20,i))break}finish()}},
+ {t:"Đi làm thêm phục vụ quán cuối tuần: nhận 100K.",f:async()=>{gain(S.turn,100);finish()}},
+ {t:"Phòng trọ dột sau mùa mưa: trả 25K mỗi nhà và 100K mỗi khách sạn bạn sở hữu.",f:async()=>{const c=owned(S.turn).reduce((a,i)=>{const l=S.props[i].l;return a+(l===5?100:25*l)},0);if(c)charge(S.turn,c);finish()}},
+ {t:"Clip review mỳ cay của bạn lên xu hướng TikTok: nhận 200K.",f:async()=>{gain(S.turn,200);finish()}},
+ {t:"Xe bể bánh trên đường 3/2 đúng giờ thi: trả 50K vá xe.",f:async()=>{charge(S.turn,50);finish()}},
+ {t:"Pass lại giáo trình cũ cho khóa dưới: nhận 80K.",f:async()=>{gain(S.turn,80);finish()}},
+ {t:"Bạn cùng phòng quên tắt máy lạnh cả tháng: trả 80K tiền điện.",f:async()=>{charge(S.turn,80);finish()}},
+ {t:"Ăn hết tô mỳ cay cấp 7 ở Itada, được quán thưởng: nhận 120K.",f:async()=>{gain(S.turn,120);finish()}},
+ {t:"Nhóm đồ án có đứa \"mất tích\", bạn gánh team, được thầy khen thưởng: nhận 60K.",f:async()=>{gain(S.turn,60);finish()}},
+ {t:"Nộp bài trễ deadline 1 phút, phải in gấp bản cứng ở tiệm: trả 30K.",f:async()=>{charge(S.turn,30);finish()}},
+ {t:"Trúng giải minigame của CLB tiếng Anh: nhận 70K.",f:async()=>{gain(S.turn,70);finish()}},
+ {t:"Cuối tháng cháy túi, mượn tiền bạn rồi trả kèm ly trà sữa: trả 40K.",f:async()=>{charge(S.turn,40);finish()}}];
 
-/* ---------- sound ---------- */
-let soundOn=store.get("ctp-sound")!=="0",ac=null;
-function tone(f,d,type="triangle",t0=0,vol=.08){if(!soundOn)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state==="suspended")ac.resume().catch(()=>{});
- const o=ac.createOscillator(),g=ac.createGain(),n=ac.currentTime+t0;o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,n);
- g.gain.exponentialRampToValueAtTime(.0008,n+d);o.connect(g).connect(ac.destination);o.start(n);o.stop(n+d+.05)}catch(e){}}
-const sfx={step(k=0,last){tone(520+k*45,.06,"triangle",0,.05);if(last){tone(130,.28,"sine",0,.16);tone(98,.32,"triangle",.02,.08)}},coin(){tone(988,.1);tone(1319,.25,"triangle",.08)},pay(){tone(330,.18,"sawtooth",0,.04);tone(247,.28,"sawtooth",.1,.04)},
- card(){[523,659,784].forEach((f,i)=>tone(f,.18,"triangle",i*.07))},dice(){for(let i=0;i<9;i++)tone(150+Math.random()*350,.04,"square",i*.08,.03)},
- build(){[392,523,659].forEach((f,i)=>tone(f,.15,"triangle",i*.06,.07))},win(){[523,659,784,1047,1319,1568].forEach((f,i)=>tone(f,.45,"triangle",i*.12,.1))}};
-
-
-/* ---------- background music: ngũ cung Nam Bộ (đàn tranh, đàn bầu, mõ) over a light modern beat ---------- */
-let musicOn=store.get("ctp-music")!=="0",mus=null;
+/* ---------- audio: one synth kit for music, game SFX and character "voices" ---------- */
+let soundOn=store.get("ctp-sound")!=="0",musicOn=store.get("ctp-music")!=="0",voiceOn=store.get("ctp-voice")!=="0",ac=null,mus=null,NB=null,boostUntil=0;
 const mtof=n=>440*Math.pow(2,(n-69)/12);
-const SCL=[60,63,65,67,70,72,75,77,79,82,84,87];
+function getAC(){ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state==="suspended")ac.resume().catch(()=>{});return ac}
+function noiseBuf(A){if(!NB){NB=A.createBuffer(1,A.sampleRate*.6,A.sampleRate);const d=NB.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1}return NB}
+function mkBus(A,vol,echo){const out=A.createGain();out.gain.value=vol;const comp=A.createDynamicsCompressor();comp.threshold.value=-18;comp.ratio.value=4;out.connect(comp);comp.connect(A.destination);
+ const dly=A.createDelay(1),fb=A.createGain(),lp=A.createBiquadFilter(),wet=A.createGain();dly.delayTime.value=echo;fb.gain.value=.3;lp.type="lowpass";lp.frequency.value=2300;wet.gain.value=.34;
+ dly.connect(lp);lp.connect(fb);fb.connect(dly);lp.connect(wet);wet.connect(out);return{A,out,dly,nb:noiseBuf(A)}}
+let SB=null;const sbus=()=>{const A=getAC();if(!SB)SB=mkBus(A,.85,.16);return SB};
+/* instruments */
+function eg(g,t,a,pk,d){g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(pk,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+d)}
+function iPluck(o,t,f,dur,bend,vol=.2){const A=o.A,a=A.createOscillator(),b=A.createOscillator(),g=A.createGain(),g2=A.createGain(),lp=A.createBiquadFilter(),end=t+dur*1.6+.45;
+ a.type="triangle";b.type="sawtooth";b.detune.value=5;g2.gain.value=.22;lp.type="lowpass";lp.frequency.setValueAtTime(Math.min(12000,f*7),t);lp.frequency.exponentialRampToValueAtTime(f*1.6,t+.3);
+ [a,b].forEach(x=>{x.frequency.setValueAtTime(bend?f*.944:f,t);if(bend)x.frequency.exponentialRampToValueAtTime(f,t+.1)});
+ if(dur>.45){const l=A.createOscillator(),lg=A.createGain();l.frequency.value=5.6;lg.gain.setValueAtTime(0,t);lg.gain.linearRampToValueAtTime(f*.013,t+dur*.7);l.connect(lg);lg.connect(a.frequency);lg.connect(b.frequency);l.start(t);l.stop(end)}
+ a.connect(g);b.connect(g2);g2.connect(g);g.connect(lp);lp.connect(o.out);lp.connect(o.dly);eg(g,t,.006,vol,Math.max(.3,dur*1.6));a.start(t);b.start(t);a.stop(end);b.stop(end)}
+function iSao(o,t,f,dur,vol=.06){const A=o.A,a=A.createOscillator(),g=A.createGain(),l=A.createOscillator(),lg=A.createGain();a.type="sine";a.frequency.value=f;
+ l.frequency.value=5.2;lg.gain.setValueAtTime(0,t);lg.gain.linearRampToValueAtTime(f*.01,t+Math.max(.1,dur*.6));l.connect(lg);lg.connect(a.frequency);
+ g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(vol,t+.05);g.gain.setValueAtTime(vol,t+dur*.8);g.gain.linearRampToValueAtTime(.0001,t+dur+.08);
+ a.connect(g);g.connect(o.out);g.connect(o.dly);a.start(t);l.start(t);a.stop(t+dur+.15);l.stop(t+dur+.15);iNoise(o,t,"bandpass",f*2,vol*.25,.06)}
+function iBau(o,t,f,dur,to=1.122,vol=.085){const A=o.A,a=A.createOscillator(),g=A.createGain(),l=A.createOscillator(),lg=A.createGain();a.type="sine";
+ a.frequency.setValueAtTime(f,t);a.frequency.linearRampToValueAtTime(f*to,t+dur*.25);a.frequency.setValueAtTime(f*to,t+dur*.45);a.frequency.linearRampToValueAtTime(to<1?f*to:f,t+dur*.7);
+ l.frequency.value=5;lg.gain.value=f*.016;l.connect(lg);lg.connect(a.frequency);
+ g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(vol,t+.12);g.gain.setValueAtTime(vol,t+dur*.8);g.gain.linearRampToValueAtTime(.0001,t+dur);
+ a.connect(g);g.connect(o.out);g.connect(o.dly);a.start(t);l.start(t);a.stop(t+dur+.1);l.stop(t+dur+.1)}
+function iPad(o,t,n,dur,cut=620,vol=.045){const A=o.A,g=A.createGain(),lp=A.createBiquadFilter();lp.type="lowpass";lp.frequency.value=cut;g.connect(lp);lp.connect(o.out);
+ g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(vol,t+.5);g.gain.setValueAtTime(vol,t+Math.max(.6,dur-.35));g.gain.linearRampToValueAtTime(.0001,t+dur+.3);
+ [0,7,12].forEach((iv,k)=>{const a=A.createOscillator();a.type="sawtooth";a.frequency.value=mtof(n+iv);a.detune.value=k%2?8:-8;a.connect(g);a.start(t);a.stop(t+dur+.4)})}
+function iWood(o,t,f,vol=.16){const A=o.A,a=A.createOscillator(),g=A.createGain();a.type="sine";a.frequency.setValueAtTime(f,t);a.frequency.exponentialRampToValueAtTime(f*.8,t+.05);a.connect(g);g.connect(o.out);eg(g,t,.002,vol,.07);a.start(t);a.stop(t+.13)}
+function iKick(o,t,vol=.55){const A=o.A,a=A.createOscillator(),g=A.createGain();a.type="sine";a.frequency.setValueAtTime(140,t);a.frequency.exponentialRampToValueAtTime(44,t+.13);a.connect(g);g.connect(o.out);eg(g,t,.003,vol,.26);a.start(t);a.stop(t+.32)}
+function iNoise(o,t,type,fq,v,d,f2){const A=o.A,n=A.createBufferSource(),f=A.createBiquadFilter(),g=A.createGain();n.buffer=o.nb;f.type=type;f.frequency.setValueAtTime(fq,t);if(f2)f.frequency.exponentialRampToValueAtTime(f2,t+d);
+ n.connect(f);f.connect(g);g.connect(o.out);eg(g,t,.002,v,d);n.start(t,Math.random()*.2);n.stop(t+d+.05)}
+function iSnare(o,t,v=.2){iNoise(o,t,"bandpass",1900,v,.15);iWood(o,t,330,v*.6)}
+function iHat(o,t,v){iNoise(o,t,"highpass",7600,v,.04)}
+function iCrash(o,t,v=.1){iNoise(o,t,"highpass",4200,v,.9)}
+function iBass(o,t,f,dur,vol=.3){const A=o.A,a=A.createOscillator(),b=A.createOscillator(),g=A.createGain(),g2=A.createGain(),lp=A.createBiquadFilter();a.type="sine";b.type="triangle";a.frequency.value=f;b.frequency.value=f;
+ g2.gain.value=.35;lp.type="lowpass";lp.frequency.value=520;a.connect(g);b.connect(g2);g2.connect(g);g.connect(lp);lp.connect(o.out);eg(g,t,.008,vol,dur);a.start(t);b.start(t);a.stop(t+dur+.1);b.stop(t+dur+.1)}
+function iGong(o,t,f=98,vol=.22){[1,2.32,3.87,5.4].forEach((m,k)=>{const A=o.A,a=A.createOscillator(),g=A.createGain();a.type="sine";a.frequency.value=f*m;a.connect(g);g.connect(o.out);eg(g,t,.004,vol/(k+1),2.6-k*.4);a.start(t);a.stop(t+3)})}
+function iWah(o,t,f,dur,vol=.12){const A=o.A,a=A.createOscillator(),g=A.createGain(),lp=A.createBiquadFilter();a.type="sawtooth";a.frequency.setValueAtTime(f,t);a.frequency.linearRampToValueAtTime(f*.95,t+dur);
+ lp.type="lowpass";lp.Q.value=6;lp.frequency.setValueAtTime(300,t);lp.frequency.linearRampToValueAtTime(1500,t+dur*.4);lp.frequency.linearRampToValueAtTime(400,t+dur);a.connect(lp);lp.connect(g);g.connect(o.out);eg(g,t,.03,vol,dur);a.start(t);a.stop(t+dur+.1)}
+function firecrackers(o,t,n=12){for(let k=0;k<n;k++){const tt=t+Math.random()*.9;iNoise(o,tt,"bandpass",900+Math.random()*2500,.2+Math.random()*.15,.05)}}
+
+/* ---------- adaptive music: original tunes in the spirit of Southern folk (đờn ca, hơi oán) and Tết pop ---------- */
+const SCL=[60,63,65,67,70,72,75,77,79,82,84,87];       /* lyrical: hơi oán colour */
+const SCF=[60,62,64,67,69,72,74,76,79,81,84,86,88];    /* festive: hơi Bắc / major pentatonic */
 const MA=[[[0,7,2],[2,6,2],[4,5,3,1],[8,4,2],[10,5,2],[12,7,4]],[[0,8,3,1],[4,7,2],[6,6,2],[8,5,6,1]],[[0,4,2],[2,5,2],[4,7,2],[6,8,2],[8,9,3,1],[12,8,2],[14,7,2]],[[0,6,2],[2,5,2],[4,4,4,1],[10,3,2],[12,5,4]]];
 const MB=[[[0,9,2],[2,9,1],[3,8,1],[4,7,2],[6,8,2],[8,9,4,1],[12,10,4]],[[0,9,2],[2,7,2],[4,8,4,1],[8,7,2],[10,6,2],[12,5,4]],[[0,5,1],[1,6,1],[2,7,2],[4,6,2],[6,5,2],[8,4,2],[10,5,2],[12,6,4,1]],[[0,5,6,1],[8,4,2],[10,3,2],[12,5,4]]];
-const RTA=[48,46,41,48],RTB=[46,48,41,48],BPM=94;
-function getAC(){ac=ac||new(window.AudioContext||window.webkitAudioContext)();return ac}
+const MC=[[[0,5,2],[2,6,2],[4,7,2],[6,8,1],[7,7,1],[8,6,2],[10,7,2],[12,5,4]],[[0,4,2],[2,5,2],[4,6,4],[8,5,2],[10,4,2],[12,3,4]],[[0,5,2],[2,6,2],[4,7,2],[6,8,2],[8,9,2],[10,8,2],[12,7,2],[14,8,2]],[[0,9,4,1],[4,8,2],[6,7,2],[8,5,6,1],[14,4,2]]];
+const MT=[[[0,3,6,1],[8,2,4],[12,1,4]],[[0,0,8,1],[8,2,8,1]],[[0,3,4],[4,4,4,1],[8,3,8]],[[0,1,6,1],[8,0,8,1]]];
+const RTA=[48,46,41,48],RTB=[46,48,41,48],RTC=[48,45,41,43],RTT=[48,48,46,44];
+const MOODS={calm:84,play:94,hype:106,win:112,tense:80};
+function computeMood(){if(!S||$("#game").hidden)return "calm";if(S.over)return "win";if(performance.now()<boostUntil)return "hype";
+ const p=cur(),al=alive();if(p&&(p.jail||(!p.out&&!p.bot&&p.cash<120)))return "tense";
+ if(S.maxRound&&S.round>=S.maxRound-1)return "hype";if(al.length<=2&&S.players.length>2)return "hype";
+ const as=al.map(assets),avg=as.reduce((a,b)=>a+b,0)/Math.max(1,as.length);if(S.round>2&&Math.max(...as)>avg*1.6)return "hype";
+ if(al.some(i=>S.players[i].cash<60))return "tense";return "play"}
+function boost(sec=12){boostUntil=performance.now()+sec*1000;if(mus)mus.want=computeMood()}
+function setMood(){if(mus)mus.want=computeMood()}
 function startMusic(){if(mus||!musicOn||document.hidden)return;let A;try{A=getAC()}catch(e){return}
- if(A.state==="suspended")A.resume().catch(()=>{});
- const out=A.createGain();out.gain.setValueAtTime(0,A.currentTime);out.gain.linearRampToValueAtTime(.17,A.currentTime+2.5);
- const comp=A.createDynamicsCompressor();comp.threshold.value=-20;comp.ratio.value=4;out.connect(comp).connect(A.destination);
- const dly=A.createDelay(1),fb=A.createGain(),dlf=A.createBiquadFilter(),wet=A.createGain();dly.delayTime.value=60/BPM*.75;fb.gain.value=.32;dlf.type="lowpass";dlf.frequency.value=2200;wet.gain.value=.38;
- dly.connect(dlf);dlf.connect(fb);fb.connect(dly);dlf.connect(wet);wet.connect(out);
- const nb=A.createBuffer(1,A.sampleRate*.5,A.sampleRate),d=nb.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
- mus={A,out,dly,nb,step:0,next:A.currentTime+.15};mus.timer=setInterval(schedMusic,40)}
+ const o=mkBus(A,0,60/94*.75);o.out.gain.setValueAtTime(0,A.currentTime);o.out.gain.linearRampToValueAtTime(.17,A.currentTime+2.5);
+ mus=Object.assign(o,{s:0,mb:0,mood:"calm",want:computeMood(),next:A.currentTime+.15});mus.mood=mus.want;mus.timer=setInterval(schedMusic,40)}
 function stopMusic(){if(!mus)return;const m0=mus;mus=null;clearInterval(m0.timer);const t=m0.A.currentTime;
  m0.out.gain.cancelScheduledValues(t);m0.out.gain.setValueAtTime(m0.out.gain.value,t);m0.out.gain.linearRampToValueAtTime(0,t+.5);setTimeout(()=>{try{m0.out.disconnect()}catch(e){}},800)}
-function schedMusic(){const m0=mus;if(!m0)return;const A=m0.A,sp=60/BPM/4;if(m0.next<A.currentTime-.05)m0.next=A.currentTime+.05;
- while(m0.next<A.currentTime+.25){try{mStep(m0,m0.step,m0.next,sp)}catch(e){}m0.next+=sp;m0.step++}}
-function mStep(m0,st,t,sp){const bar=Math.floor(st/16),s=st%16,form=Math.floor((bar%16)/4),intro=bar<2,brk=bar>=8&&bar%32>=28;
- const mot=[MA,MA,MB,MA][form][bar%4],root=[RTA,RTA,RTB,RTA][form][bar%4];
- if(s===0)mPad(m0,t,root+12,16*sp);
- if((s===3||s===10||s===14||(s===7&&bar%2))&&!(intro&&s===10))mWood(m0,t,s===14?1320:940);
- if(!intro)for(const n of mot)if(n[0]===s)mPluck(m0,t,mtof(SCL[n[1]]+12),n[2]*sp,n[3]);
- if(form===3&&bar%4===1&&s===0)mBau(m0,t,mtof(SCL[7]+12),sp*14);
- if(intro||brk){if(s===0)mBass(m0,t,mtof(root-12),sp*10);return}
- if(s===0||s===6||s===8||s===11)mKick(m0,t);
- if(s===4||s===12)mSnare(m0,t);
- if(s%2===0)mHat(m0,t,s%4===2?.07:.035);
- const bp={0:0,3:12,8:0,10:7,14:12};if(s in bp)mBass(m0,t,mtof(root-12+bp[s]),sp*(s%8===0?2.6:1.4))}
-function eg(g,t,a,pk,d){g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(pk,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+d)}
-function mPluck(m0,t,f,dur,bend){const A=m0.A,o=A.createOscillator(),o2=A.createOscillator(),g=A.createGain(),g2=A.createGain(),lp=A.createBiquadFilter(),end=t+dur*1.6+.45;
- o.type="triangle";o2.type="sawtooth";o2.detune.value=5;g2.gain.value=.22;lp.type="lowpass";lp.frequency.setValueAtTime(Math.min(12000,f*7),t);lp.frequency.exponentialRampToValueAtTime(f*1.6,t+.3);
- [o,o2].forEach(x=>{x.frequency.setValueAtTime(bend?f*.944:f,t);if(bend)x.frequency.exponentialRampToValueAtTime(f,t+.1)});
- if(dur>.45){const l=A.createOscillator(),lg=A.createGain();l.frequency.value=5.6;lg.gain.setValueAtTime(0,t);lg.gain.linearRampToValueAtTime(f*.013,t+dur*.7);l.connect(lg);lg.connect(o.frequency);lg.connect(o2.frequency);l.start(t);l.stop(end)}
- o.connect(g);o2.connect(g2);g2.connect(g);g.connect(lp);lp.connect(m0.out);lp.connect(m0.dly);eg(g,t,.006,.2,Math.max(.35,dur*1.6));o.start(t);o2.start(t);o.stop(end);o2.stop(end)}
-function mBau(m0,t,f,dur){const A=m0.A,o=A.createOscillator(),g=A.createGain(),l=A.createOscillator(),lg=A.createGain();o.type="sine";
- o.frequency.setValueAtTime(f,t);o.frequency.linearRampToValueAtTime(f*1.122,t+dur*.25);o.frequency.setValueAtTime(f*1.122,t+dur*.45);o.frequency.linearRampToValueAtTime(f,t+dur*.7);
- l.frequency.value=5;lg.gain.value=f*.016;l.connect(lg);lg.connect(o.frequency);
- g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.085,t+.18);g.gain.setValueAtTime(.085,t+dur*.8);g.gain.linearRampToValueAtTime(.0001,t+dur);
- o.connect(g);g.connect(m0.out);g.connect(m0.dly);o.start(t);l.start(t);o.stop(t+dur+.1);l.stop(t+dur+.1)}
-function mPad(m0,t,n,dur){const A=m0.A,g=A.createGain(),lp=A.createBiquadFilter();lp.type="lowpass";lp.frequency.value=620;g.connect(lp);lp.connect(m0.out);
- g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.045,t+.6);g.gain.setValueAtTime(.045,t+dur-.35);g.gain.linearRampToValueAtTime(.0001,t+dur+.3);
- [0,7,12].forEach((iv,k)=>{const o=A.createOscillator();o.type="sawtooth";o.frequency.value=mtof(n+iv);o.detune.value=k%2?8:-8;o.connect(g);o.start(t);o.stop(t+dur+.4)})}
-function mWood(m0,t,f){const A=m0.A,o=A.createOscillator(),g=A.createGain();o.type="sine";o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*.8,t+.05);o.connect(g);g.connect(m0.out);eg(g,t,.002,.16,.07);o.start(t);o.stop(t+.12)}
-function mKick(m0,t){const A=m0.A,o=A.createOscillator(),g=A.createGain();o.type="sine";o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(44,t+.13);o.connect(g);g.connect(m0.out);eg(g,t,.003,.55,.26);o.start(t);o.stop(t+.32)}
-function mNoise(m0,t,type,fq,v,d){const A=m0.A,n=A.createBufferSource(),f=A.createBiquadFilter(),g=A.createGain();n.buffer=m0.nb;f.type=type;f.frequency.value=fq;n.connect(f);f.connect(g);g.connect(m0.out);eg(g,t,.002,v,d);n.start(t);n.stop(t+d+.05)}
-function mSnare(m0,t){mNoise(m0,t,"bandpass",1900,.2,.15);mWood(m0,t,330)}
-function mHat(m0,t,v){mNoise(m0,t,"highpass",7600,v,.04)}
-function mBass(m0,t,f,dur){const A=m0.A,o=A.createOscillator(),o2=A.createOscillator(),g=A.createGain(),lp=A.createBiquadFilter();o.type="sine";o2.type="triangle";o.frequency.value=f;o2.frequency.value=f;
- const g2=A.createGain();g2.gain.value=.35;lp.type="lowpass";lp.frequency.value=520;o.connect(g);o2.connect(g2);g2.connect(g);g.connect(lp);lp.connect(m0.out);eg(g,t,.008,.3,dur);o.start(t);o2.start(t);o.stop(t+dur+.1);o2.stop(t+dur+.1)}
-window.__musState=()=>mus?{step:mus.step,state:mus.A.state}:null;
-document.addEventListener("visibilitychange",()=>{if(document.hidden)stopMusic();else if(musicOn&&ac)startMusic()});
+function duck(on){if(!mus)return;const g=mus.out.gain,t=mus.A.currentTime;g.cancelScheduledValues(t);g.setTargetAtTime(on?.06:.17,t,.12)}
+function schedMusic(){const m0=mus;if(!m0)return;const A=m0.A;if(m0.next<A.currentTime-.05)m0.next=A.currentTime+.05;
+ while(m0.next<A.currentTime+.25){const sp=60/MOODS[m0.mood]/4;try{mStep(m0,m0.next,sp)}catch(e){}m0.next+=sp;m0.s=(m0.s+1)%16;
+  if(m0.s===0){if(m0.want!==m0.mood){m0.mood=m0.want;m0.mb=0}else m0.mb++}}}
+function mStep(o,t,sp){const s=o.s,mb=o.mb,M=o.mood,b4=mb%4,goingUp=(o.want==="hype"||o.want==="win")&&M!=="hype"&&M!=="win";
+ if(M==="calm"){
+  if(s===0){iPad(o,t,RTA[b4]+12,16*sp,560,.05);iBass(o,t,mtof(RTA[b4]-12),sp*12,.16)}
+  if(s===0&&mb%2===0)iWood(o,t,180,.12);
+  for(const n of MA[b4])if(n[0]===s&&n[0]%4===0)iPluck(o,t,mtof(SCL[n[1]]+12),n[2]*sp*1.5,n[3],.16);
+  if(b4===1&&s===0)iBau(o,t,mtof(SCL[7]+12),sp*14)}
+ else if(M==="tense"){const r=RTT[b4];
+  if(s===0)iPad(o,t,r,16*sp,380,.05);
+  if(s===0||s===3)iKick(o,t,s?.22:.38);
+  for(const n of MT[b4])if(n[0]===s)iPluck(o,t,mtof(SCL[n[1]]+12),n[2]*sp,n[3],.17);
+  if(b4%2===1&&s===4)iBau(o,t,mtof(SCL[5]+12),sp*10,.89,.08);
+  if(s===8)iWood(o,t,700,.08)}
+ else if(M==="play"){const form=Math.floor((mb%16)/4),mot=[MA,MA,MB,MA][form][b4],root=[RTA,RTA,RTB,RTA][form][b4];
+  if(s===0){iPad(o,t,root+12,16*sp);iWood(o,t,180,.14)}
+  if(s===3||s===10||s===14||(s===7&&mb%2))iWood(o,t,s===14?1320:940);
+  for(const n of mot)if(n[0]===s)iPluck(o,t,mtof(SCL[n[1]]+12),n[2]*sp,n[3]);
+  if(form===3&&b4===1&&s===0)iBau(o,t,mtof(SCL[7]+12),sp*14);
+  if(s===0||s===8)iKick(o,t,.42);if(s===4||s===12)iSnare(o,t,.11);if(s%4===2)iHat(o,t,.05);
+  const bp={0:0,3:12,8:0,10:7,14:12};if(s in bp)iBass(o,t,mtof(root-12+bp[s]),sp*(s%8===0?2.6:1.4))}
+ else{const W=M==="win",root=RTC[b4];
+  if(s===0)iPad(o,t,root+12,16*sp,1300,.05);if(s===0&&(b4===0||W))iCrash(o,t,.09);
+  for(const n of MC[b4])if(n[0]===s){const f=mtof(SCF[n[1]]+12);iPluck(o,t,f,n[2]*sp,n[3],.19);if(mb%8>=4||W)iSao(o,t,f*2,n[2]*sp,.045)}
+  if(s===0||s===6||s===8||s===11||(b4===3&&s===14))iKick(o,t,.55);if(s===4||s===12)iSnare(o,t,.2);iHat(o,t,s%2?.03:.06);
+  if(s===3||s===7||s===11||s===15)iWood(o,t,1200,.08);
+  const bp={0:0,2:12,4:7,6:12,8:0,10:12,12:7,14:12};if(s in bp)iBass(o,t,mtof(root-12+bp[s]),sp*1.6,.28);
+  if(W&&s===0&&b4===0)firecrackers(o,t,8)}
+ if(goingUp&&s>=12)iSnare(o,t,.07+(s-12)*.04)}
+window.__musState=()=>mus?{step:mus.s,bar:mus.mb,mood:mus.mood,want:mus.want,state:mus.A.state}:null;
+document.addEventListener("visibilitychange",()=>{if(document.hidden){stopMusic();try{speechSynthesis.cancel()}catch(e){}}else if(musicOn&&ac)startMusic()});
 ["pointerdown","keydown"].forEach(ev=>document.addEventListener(ev,()=>{if(musicOn&&!mus)startMusic()},{passive:true}));
+
+/* ---------- game SFX (folk instruments, short and playful) ---------- */
+const PF=[60,62,64,67,69,72,74,76,79,81,84,86,88,91];
+const play=f=>{if(!soundOn)return;try{const o=sbus();f(o,o.A.currentTime+.01)}catch(e){}};
+const sfx={
+ click(){play((o,t)=>iWood(o,t,1500,.05))},
+ step(k=0,last){play((o,t)=>{iWood(o,t,mtof(PF[k%9]+12),.07);if(last){iKick(o,t,.45);iWood(o,t,220,.1)}})},
+ coin(){play((o,t)=>{iPluck(o,t,mtof(88),.12,0,.15);iPluck(o,t+.08,mtof(93),.3,0,.15)})},
+ buy(){play((o,t)=>{[72,76,79,84].forEach((n,k)=>iPluck(o,t+k*.07,mtof(n),.22,0,.17));iCrash(o,t+.28,.035)})},
+ build(){play((o,t)=>[67,72,76,79].forEach((n,k)=>iPluck(o,t+k*.06,mtof(n),.2,0,.16)))},
+ hotel(){play((o,t)=>{iGong(o,t,98,.2);[72,76,79,84,88].forEach((n,k)=>iPluck(o,t+.1+k*.07,mtof(n),.25,0,.17))});boost(14)},
+ pay(){play((o,t)=>{iBau(o,t,mtof(67),.42,.84,.1);iBau(o,t+.4,mtof(60),.7,.94,.1)})},
+ card(){play((o,t)=>{[0,1,2,3,4,5,6,7].forEach(k=>iPluck(o,t+k*.035,mtof(PF[k+3]),.12,0,.12));iWood(o,t+.32,1300,.1)})},
+ dice(){play((o,t)=>{for(let k=0;k<8;k++)iNoise(o,t+k*.07+Math.random()*.03,"bandpass",1400+Math.random()*1800,.18,.04);iWood(o,t+.62,900,.1)})},
+ jail(){play((o,t)=>{iWah(o,t,mtof(62),.25);iWah(o,t+.27,mtof(61),.25);iWah(o,t+.54,mtof(59),.7)})},
+ start(){play((o,t)=>{[0,.09,.18].forEach(d=>iWood(o,t+d,1100,.12));iPluck(o,t+.28,mtof(88),.12,0,.15);iPluck(o,t+.36,mtof(93),.35,0,.15)})},
+ fly(){play((o,t)=>{iNoise(o,t,"bandpass",400,.22,.6,3500);iPluck(o,t+.45,mtof(84),.3,1,.14)})},
+ fest(){play((o,t)=>{iCrash(o,t,.08);[79,81,84,88].forEach((n,k)=>iPluck(o,t+k*.11,mtof(n),.25,k===3,.17))});boost(16)},
+ storm(){play((o,t)=>{iNoise(o,t,"lowpass",320,.35,1.1);iBau(o,t+.2,mtof(55),.8,.84,.07)})},
+ broke(){play((o,t)=>iBau(o,t,mtof(64),1.4,.5,.12))},
+ win(){play((o,t)=>{iGong(o,t,98,.24);[72,74,76,79,81,84,88,91].forEach((n,k)=>iPluck(o,t+k*.08,mtof(n),.3,0,.18));firecrackers(o,t+.6,16)});boost(30)}};
+document.addEventListener("click",e=>{if(e.target.closest("button,.gtab")&&!e.target.closest("#tray"))sfx.click()},true);
+
+/* ---------- character voices (miền Tây expressions) + speech bubbles ---------- */
+const LINES={
+ roll:["Đổ nè bà con!","Hên xui nha!","Lạy trời ra số đẹp!","Quất luôn!","Chơi tới bến nghen!","Ráng lên, qua môn là được!"],
+ buy:["Chốt đơn! Chỗ này của tui rồi nghen.","Mua liền, hổng suy nghĩ!","Đẹp quá trời, lấy luôn!","Tiền học bổng để dành là đây!"],
+ build:["Cất thêm cái nhà cho oách!","Xây nhà rồi nha, ghé chơi nghen!"],
+ hotel:["Khách sạn năm sao luôn bà con ơi!","Giàu rồi, giàu rồi! Hết xẩy!"],
+ pay:["Trời đất ơi, mất tiền nữa rồi!","Hổng chịu đâu, mắc quá trời!","Thôi xong, tháng này ăn mì gói.","Mèn đét ơi, xót ruột ghê!"],
+ get:["Cảm ơn nghen, ghé hoài nha!","Tiền vô như nước sông Hậu!","Dzui quá xá dzui!"],
+ jail:["Kẹt xe nữa rồi, trễ học là cái chắc!","Ủa alo, ai cứu tui dzới!","Kẹt cứng ngắc luôn trời!"],
+ out:["Thoát rồi, chạy lẹ!","Đường thông rồi bà con ơi!"],
+ chance:["Có kèo! Đi liền!","Kèo thơm vậy ai mà từ chối!"],
+ bag:["Drama tới rồi kìa!","Ủa gì kỳ vậy trời?","Hóng chút nha!"],
+ start:["Về bến Ninh Kiều, lãnh tiền thôi!","Có tiền rồi, đi ăn bún đậu!"],
+ fest:["Mở đêm nhạc, quẩy lên!"],fly:["Lên xe, đi phượt nè!"],storm:["Nước ngập tới đầu gối rồi nè!"],
+ win:["Tỷ phú Cần Thơ là tui đây!","Hết xẩy con cào cào!"],broke:["Cháy túi rồi, về quê nuôi cá thôi!"]};
+const CATCH={ongtu:["Ờ con nè, ","Trời đất, "],coba:["Ui cha, ","Trời ơi, "],anhhai:["Ê bây, ",""],cohue:["Ôi chao, ",""],anhca:["",""],lienchi:["Người ơi, ",""],hmong:["",""],ede:["",""],cham:["",""],khmer:["",""]};
+const VOX={coba:[1.35,1.08],anhhai:[.95,1.05],cohue:[1.3,.98],anhca:[.85,1],lienchi:[1.25,1],hmong:[1.4,1.05],ede:[.9,1.02],cham:[1.3,1.02],khmer:[1.35,1.05],ongtu:[.7,.92]};
+let VI=null,lastSay=0;
+function pickVoice(){try{const vs=speechSynthesis.getVoices().filter(v=>/^vi/i.test(v.lang));VI=vs.find(v=>/nam|south|sài gòn|saigon|hcm/i.test(v.name))||vs[0]||null}catch(e){VI=null}}
+if(window.speechSynthesis){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
+function babble(o,t,n,pi){for(let k=0;k<Math.min(9,n);k++){const A=o.A,a=A.createOscillator(),g=A.createGain();a.type="triangle";const f=260*pi*(1+((k*7)%5)*.09);
+ a.frequency.setValueAtTime(f,t+k*.085);a.frequency.linearRampToValueAtTime(f*(k%2?1.12:.92),t+k*.085+.07);a.connect(g);g.connect(o.out);eg(g,t+k*.085,.01,.08,.06);a.start(t+k*.085);a.stop(t+k*.085+.1)}}
+function say(i,ev,force){if(!voiceOn||!S||!S.players[i]||$("#game").hidden)return;const now=performance.now();if(!force&&now-lastSay<1500)return;
+ const L=LINES[ev];if(!L)return;lastSay=now;const p=S.players[i],k=normKind(p.kind),c=(CATCH[k]||[""])[Math.floor(Math.random()*2)]||"";
+ const l0=L[Math.floor(Math.random()*L.length)],t=c?c+l0[0].toLowerCase()+l0.slice(1):l0;bubble(i,t);const [pi,ra]=VOX[k]||[1,1];
+ if(S.fast&&p.bot&&!force)return;
+ if(window.speechSynthesis&&VI){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.voice=VI;u.lang=VI.lang;u.pitch=pi;u.rate=ra*1.06;duck(true);u.onend=u.onerror=()=>duck(false);speechSynthesis.speak(u)}catch(e){}}
+ else if(soundOn){try{const o=sbus();babble(o,o.A.currentTime+.02,t.split(" ").length,pi)}catch(e){}}}
+function bubble(i,t){const p=S.players[i];if(!p||p.out)return;const [x,y]=pawnPos(i),b=document.createElement("div");b.className="say";
+ b.style.setProperty("--pc",p.color);b.innerHTML=`<b>${esc(p.name)}</b>${esc(t)}`;$("#fx").querySelectorAll(".say").forEach(e=>e.remove());$("#fx").appendChild(b);
+ const W=$("#board").clientWidth,w=b.offsetWidth,h=b.offsetHeight;let l=Math.max(6,Math.min(W-w-6,x-w/2)),top=y-h-22;
+ if(top<4){top=y+22;b.classList.add("below")}b.style.left=l+"px";b.style.top=top+"px";b.style.setProperty("--ax",Math.max(12,Math.min(w-12,x-l))+"px");
+ setTimeout(()=>b.classList.add("out"),2400);setTimeout(()=>b.remove(),2800)}
 
 /* ---------- state helpers ---------- */
 let S=null,busy=false,botTimer=null;
@@ -1099,9 +1208,9 @@ function charge(pi,amt,to=null){const p=S.players[pi];if(amt<=0)return true;
  fx(p.pos,"−"+m(paid),"bad");
  log(`${p.name} trả ${m(paid)}${to!=null?" cho "+S.players[to].name:""}`);sfx.pay();
  if(paid<amt){p.out=true;p.cash=0;owned(pi).forEach(i=>{delete S.props[i];if(S.festival===i)S.festival=null});
-  log(`${p.name} phá sản, đất trả về ngân hàng`);if(pi===S.turn)S.extra=false;renderPawns();return false}
+  log(`${p.name} phá sản, đất trả về ngân hàng`);sfx.broke();setTimeout(()=>{lastSay=0;say(pi,"broke",1)},300);if(pi===S.turn)S.extra=false;renderPawns();return false}
  return true}
-function sendJail(){const p=cur();p.pos=JAIL;p.jail=true;p.tries=0;S.extra=false;log(`${p.name} bị Kẹt xe`);renderPawns(true);renderTiles()}
+function sendJail(){const p=cur();sfx.jail();p.pos=JAIL;p.jail=true;p.tries=0;S.extra=false;log(`${p.name} bị Kẹt xe`);renderPawns(true);renderTiles()}
 
 /* asset actions */
 function sellLevel(i){const pr=S.props[i];if(!pr||pr.l<1)return;const v=refund(i),hot=pr.l===5;pr.l--;S.players[pr.o].cash+=v;log(`${S.players[pr.o].name} bán ${hot?"khách sạn":"một nhà"} ở ${SQ[i].n} (+${m(v)})`);fx(i,"+"+m(v),"good");sfx.coin()}
@@ -1143,10 +1252,10 @@ async function throwDice(){S.showSum=false;paintSum();
 /* ---------- turn flow ---------- */
 async function roll(){
  if(busy||!S||S.handoff||!["roll","jail"].includes(S.phase)||!canAct())return;mark();busy=true;S.phase="busy";S.info=null;S.landed=null;render();
- await throwDice();
+ say(S.turn,"roll");await throwDice();
  const [a,b]=S.dice,dbl=a===b,p=cur();log(`${p.name} đổ được ${a} + ${b}${dbl?" (đôi)":""}`);
  if(p.jail){
-  if(dbl){p.jail=false;S.extra=false;ev("Thoát Kẹt xe!",`Đổ đôi ${a}–${b}, đường đã thông.`,"good","Kẹt xe");renderCenter();await walk(a+b);await land()}
+  if(dbl){p.jail=false;S.extra=false;say(S.turn,"out",1);ev("Thoát Kẹt xe!",`Đổ đôi ${a}–${b}, đường đã thông.`,"good","Kẹt xe");renderCenter();await walk(a+b);await land()}
   else{p.tries++;
    if(p.tries>=3){ev("Hết kẹt xe","Đã chờ đủ 3 lượt, đường thông, được đi tiếp theo số vừa đổ.","good","Kẹt xe");p.jail=false;log(`${p.name} ra khỏi Kẹt xe sau 3 lượt`);renderCenter();await walk(a+b);await land()}
    else{ev("Vẫn còn kẹt xe",`Chưa đổ được đôi (lần ${p.tries}/3). ${3-p.tries===1?"Lượt sau chắc chắn được ra.":"Còn "+(3-p.tries)+" lượt nữa là được ra."} Trong lúc kẹt xe, đất của bạn không thu được tiền thuê.`,"bad","Kẹt xe");finish()}}
@@ -1185,7 +1294,7 @@ function coinRain(i){if(reduced())return;const [x,y]=sqCenter(i);for(let k=0;k<1
 async function walk(steps,dir=1,fast=false){const i=S.turn,p=cur();
  for(let k=0;k<steps;k++){
   await hopTo(i,k,steps,fast,dir);
-  if(dir>0&&p.pos===0){p.cash+=SALARY;log(`${p.name} đi qua Bến Ninh Kiều, nhận ${m(SALARY)}`);fx(0,"+"+m(SALARY),"good");coinRain(0);sfx.coin()}
+  if(dir>0&&p.pos===0){p.cash+=SALARY;log(`${p.name} đi qua Bến Ninh Kiều, nhận ${m(SALARY)}`);fx(0,"+"+m(SALARY),"good");coinRain(0);sfx.start();say(S.turn,"start")}
   renderPlayers()}
  S.moving=null;renderPawns()}
 async function walkTo(t,fast=false){await walk((t-cur().pos+N)%N,1,fast)}
@@ -1199,7 +1308,7 @@ async function land(){
     if(pr.mg)ev(s.n,`Đất của ${ow.name} đang cầm cố ở ngân hàng nên không thu tiền thuê. Bạn có thể mua lại với giá gốc ${m(s.p)}.`,"good","Đất cầm cố");
     else if(ow.jail){ev(s.n,`Đất của ${ow.name}, nhưng ${ow.name} đang kẹt xe nên không thu được tiền thuê. Bạn đi qua miễn phí!`,"good","Miễn phí");log(`${ow.name} đang kẹt xe, ${p.name} không phải trả tiền thuê ${s.n}`)}
     else{const r=rent(i);ev(s.n,`Đất của ${ow.name}${s.t==="city"&&pr.l?" · "+LV[pr.l]:""}. Trả tiền thuê ${m(r)}${S.festival===i?" (đang có lễ hội, tính gấp đôi)":""}.`,"bad","Trả tiền thuê");
-     if(!charge(S.turn,r,pr.o)){finish();return}}}
+     const oi=pr.o;if(!charge(S.turn,r,pr.o)){finish();return}say(S.turn,"pay",1);if(r>=150)boost(10);setTimeout(()=>{lastSay=0;say(oi,"get")},1700)}}
    else if(!pr)ev(s.n,`Chưa có chủ. Giá ${m(s.p)}.`,"",s.t==="island"?"Khu du lịch":"Đất trống");
    else ev(s.n,pr.mg?`Đất của bạn đang cầm cố. Chuộc lại với giá ${m(redeemCost(i))}.`:s.t==="city"?`Đất của bạn, hiện là ${LV[pr.l]}.`:"Khu du lịch của bạn.","good","Về nhà");
    propertyOffer();return}
@@ -1207,17 +1316,17 @@ async function land(){
   case "tax":{const a=Math.max(20,r10(assets(S.turn)*.1));ev("Bill cuối tháng",`Tiền trọ, điện nước, 4G: nộp 10% tổng tài sản, ${m(a)}.`,"bad","Chi tiêu");charge(S.turn,a);finish();return}
   case "lux":ev("Săn sale","Lỡ tay chốt đơn: nộp 100K.","bad","Chi tiêu");charge(S.turn,100);finish();return;
   case "chance":case "bag":{const deck=s.t==="chance"?CHANCE:BAG,c=deck[Math.floor(Math.random()*deck.length)];
-   ev(s.t==="chance"?"Có kèo!":"Drama!",c.t,s.t,s.t==="chance"?"Thẻ Kèo":"Thẻ Drama");log(`${p.name} rút thẻ: ${c.t}`);sfx.card();renderCenter();
+   ev(s.t==="chance"?"Có kèo!":"Drama sinh viên!",c.t,s.t,s.t==="chance"?"Thẻ Kèo · Cơ hội":"Thẻ Drama · Khí vận");log(`${p.name} rút thẻ: ${c.t}`);sfx.card();say(S.turn,s.t,1);renderCenter();
    await sleep(S.fast&&p.bot?500:1100);await c.f();return}
-  case "storm":{const built=owned(S.turn).filter(j=>S.props[j].l>0);
+  case "storm":{sfx.storm();say(S.turn,"storm",1);const built=owned(S.turn).filter(j=>S.props[j].l>0);
    if(built.length){const j=built[Math.floor(Math.random()*built.length)];S.props[j].l--;
     ev("Triều cường",`Nước ngập làm hư một công trình ở ${SQ[j].n}, còn lại: ${LV[S.props[j].l]}.`,"bad","Ngập đường");log(`Triều cường làm giảm cấp công trình ở ${SQ[j].n}`);fx(j,"−1 cấp","bad")}
    else{ev("Triều cường","Xe chết máy giữa đường ngập, mất 40K sửa xe.","bad","Ngập đường");charge(S.turn,40)}
    finish();return}
-  case "highway":ev("Đèn xanh một mạch","Đường thông, bạn được đổ thêm một lượt.","good","Đèn xanh");S.extra=true;log(`${p.name} được đổ thêm lượt`);finish();return;
-  case "jail":ev("Kẹt xe giờ tan tầm!","Phải đổ được đôi mới ra, hoặc chờ đủ 3 lượt. Trong lúc kẹt xe, đất của bạn không thu được tiền thuê.","bad","Ùn tắc");sendJail();finish();return;
-  case "fest":startFest();return;
-  case "fly":startFly();return;
+  case "highway":sfx.build();ev("Đèn xanh một mạch","Đường thông, bạn được đổ thêm một lượt.","good","Đèn xanh");S.extra=true;log(`${p.name} được đổ thêm lượt`);finish();return;
+  case "jail":sfx.jail();say(S.turn,"jail",1);ev("Kẹt xe giờ tan học!","Phải đổ được đôi mới ra, hoặc chờ đủ 3 lượt. Trong lúc kẹt xe, đất của bạn không thu được tiền thuê.","bad","Ùn tắc");sendJail();finish();return;
+  case "fest":say(S.turn,"fest",1);startFest();return;
+  case "fly":sfx.fly();say(S.turn,"fly",1);startFly();return;
  }}
 function startFest(){const mine=owned(S.turn).filter(i=>!S.props[i].mg);
  if(!mine.length){ev("Đêm nhạc","Bạn chưa có chỗ nào (không cầm cố) để mở đêm nhạc.","","Đêm nhạc");finish();return}
@@ -1226,7 +1335,7 @@ function startFest(){const mine=owned(S.turn).filter(i=>!S.props[i].mg);
 function startFly(){S.pick={k:"fly",allowed:SQ.map((_,i)=>i).filter(i=>i!==FLY&&i!==cur().pos)};S.phase="pick";
  ev("Đi phượt","Chọn bất kỳ ô nào để phóng xe tới. Chạy qua Bến Ninh Kiều vẫn được nhận 200K.","good","Đi phượt");render()}
 async function onPick(i){if(busy||S.phase!=="pick"||!S.pick.allowed.includes(i)||!canAct())return;mark();const k=S.pick.k;S.pick=null;
- if(k==="fest"){S.festival=i;log(`${cur().name} mở đêm nhạc tại ${SQ[i].n}`);fx(i,"Đêm nhạc ×2","good");
+ if(k==="fest"){S.festival=i;log(`${cur().name} mở đêm nhạc tại ${SQ[i].n}`);fx(i,"Đêm nhạc ×2","good");sfx.fest();
   ev("Đêm nhạc cháy vé!",`Tiền thuê tại ${SQ[i].n} tăng gấp đôi.`,"good","Đêm nhạc");sfx.card();finish()}
  else{busy=true;S.phase="busy";log(`${cur().name} phượt tới ${SQ[i].n}`);render();await walkTo(i,true);await land();busy=false;scheduleBot()}}
 
@@ -1240,14 +1349,14 @@ function propertyOffer(){const p=cur(),i=p.pos,s=SQ[i],pr=S.props[i],o=[];
  }
  if(o.length){S.offer=o;S.phase="decide";render()}else finish()}
 function doOffer(k){if(S.phase!=="decide"||!canAct())return;mark();const p=cur(),i=p.pos,s=SQ[i];
- if(k==="buy"){p.cash-=s.p;S.props[i]={o:S.turn,l:0,mg:false};S.boughtNow=true;log(`${p.name} mua ${s.n}`);sfx.coin();fx(i,"Đã mua","good");
+ if(k==="buy"){p.cash-=s.p;S.props[i]={o:S.turn,l:0,mg:false};S.boughtNow=true;log(`${p.name} mua ${s.n}`);sfx.buy();say(S.turn,"buy",1);fx(i,"Đã mua","good");
   ev(s.n,completes(S.turn,i)&&s.t==="city"?`Đã mua và hoàn thành tuyến ${routeName(s.g)}! Tiền thuê tuyến này ×2.`:`Bạn đã sở hữu ${s.n}.${s.t==="city"?" Lần sau dừng lại đây mới được mua nhà.":""}`,"good","Sở hữu mới")}
- if(k==="up"){p.cash-=bc(i);S.props[i].l++;const L=S.props[i].l;log(`${p.name} ${L===5?"xây khách sạn":"mua nhà thứ "+L} ở ${s.n}`);sfx.build();fx(i,L===5?"Khách sạn!":"+1 nhà","good");
+ if(k==="up"){p.cash-=bc(i);S.props[i].l++;const L=S.props[i].l;log(`${p.name} ${L===5?"xây khách sạn":"mua nhà thứ "+L} ở ${s.n}`);if(L===5){sfx.hotel();say(S.turn,"hotel",1)}else{sfx.build();say(S.turn,"build",1)}fx(i,L===5?"Khách sạn!":"+1 nhà","good");
   ev(s.n,`${L===5?"Đã xây khách sạn":"Hiện có "+L+" nhà"}. Tiền thuê mới: ${m(rent(i))}.${L<4?" Có thể mua tiếp nhà.":L===4?" Đủ 4 nhà, có thể xây khách sạn.":""}`,"good","Xây dựng")}
  if(k==="redeem"){redeem(i);ev(s.n,"Đã chuộc lại, đất bắt đầu thu tiền thuê trở lại.","good","Chuộc đất")}
  if(k==="take"){const pr=S.props[i],ow=S.players[pr.o],back=s.p-redeemCost(i);p.cash-=s.p;ow.cash+=back;
   log(`${p.name} mua lại ${s.n} đang cầm cố của ${ow.name} (${ow.name} nhận ${m(back)})`);fx(ow.pos,"+"+m(back),"good",1);
-  S.props[i]={o:S.turn,l:0,mg:false};sfx.coin();fx(i,"Mua lại!","good");ev(s.n,`Đã mua lại từ ngân hàng. ${ow.name} nhận phần còn lại ${m(back)}.`,"good","Mua lại")}
+  S.props[i]={o:S.turn,l:0,mg:false};sfx.buy();fx(i,"Mua lại!","good");ev(s.n,`Đã mua lại từ ngân hàng. ${ow.name} nhận phần còn lại ${m(back)}.`,"good","Mua lại")}
  if(k==="skip"){finish();return}
  if(checkWin())return;propertyOffer()}
 
@@ -1257,7 +1366,7 @@ function checkWin(){const al=alive();
  for(const i of al){if(ISL.every(j=>S.props[j]&&S.props[j].o===i))return gameOver(i,"sở hữu tất cả khu du lịch trên bản đồ");
   if([1,2,3,4,5,6,7,8].filter(g=>ownsGroup(i,g)).length>=3)return gameOver(i,"sở hữu trọn 3 tuyến cùng màu")}
  return false}
-function gameOver(i,reason){S.over={w:i,reason};S.phase="over";S.offer=null;S.pick=null;sfx.win();render();return true}
+function gameOver(i,reason){S.over={w:i,reason};S.phase="over";S.offer=null;S.pick=null;sfx.win();render();setMood();setTimeout(()=>{lastSay=0;say(i,"win",1)},500);return true}
 
 function endTurn(){if(busy||S.phase!=="end"||!canAct())return;mark();const p=cur();S.info=null;S.boughtNow=false;S.landed=null;
  if(S.extra&&!p.out&&!p.jail){S.extra=false;S.phase="roll";ev(`${p.name} đi tiếp`,"Đổ xúc xắc thêm một lượt.","","Thêm lượt");render();return}
@@ -1329,7 +1438,7 @@ function botStep(){if(!S||S.over||busy||!cur().bot||(S.online&&!isHost))return;c
  else if(S.phase==="end")endTurn()}
 
 /* ---------- board rendering ---------- */
-function show(id){document.body.classList.toggle("ingame",id==="game");requestAnimationFrame(setTopH);$("#setup").hidden=id!=="setup";$("#lobby").hidden=id!=="lobby";$("#game").hidden=id!=="game";$("#menuBtn").hidden=id!=="game";if(id!=="game"){$("#over").hidden=true;$("#assetModal").hidden=true}}
+function show(id){document.body.classList.toggle("ingame",id==="game");setTimeout(setMood,0);requestAnimationFrame(setTopH);$("#setup").hidden=id!=="setup";$("#lobby").hidden=id!=="lobby";$("#game").hidden=id!=="game";$("#menuBtn").hidden=id!=="game";if(id!=="game"){$("#over").hidden=true;$("#assetModal").hidden=true}}
 function gridPos(i){const C=COLS,R=ROWS;if(i<C)return[R,C-i];i-=C;if(i<R-1)return[R-1-i,1];i-=R-1;if(i<C-1)return[1,2+i];i-=C-1;return[2+i,C]}
 function placePlist(){const pl=$("#plist");if(!pl)return;if(DEV==="desktop"){if(pl.parentNode!==$("#railPl"))$("#railPl").appendChild(pl)}else if(pl.parentNode!==document.querySelector(".cin"))document.querySelector(".cin").insertBefore(pl,$("#tray"))}
 function buildBoard(){const b=$("#board");b.querySelectorAll(".sq").forEach(e=>e.remove());
@@ -1376,6 +1485,8 @@ function tileHTML(i,f){const s=SQ[i],pr=S.props[i];let h="";
  else if(s.t==="fest")h+=`<span class="pr">Thuê ×2</span>`;
  else if(s.t==="fly")h+=`<span class="pr">Đi đâu cũng được</span>`;
  else if(s.t==="lux")h+=`<span class="pr">Nộp 100K</span>`;
+ else if(s.t==="chance")h+=`<span class="pr sub2">Cơ hội</span>`;
+ else if(s.t==="bag")h+=`<span class="pr sub2">Khí vận</span>`;
  if(pr)h+=`<span class="own" style="--own:${S.players[pr.o].color}">${esc(S.players[pr.o].name.slice(0,10))}</span>`;
  if(pr&&pr.mg)h+=`<span class="mg"><span>CẦM CỐ</span></span>`;
  if(S.festival===i)h+=`<span class="fest">ĐÊM NHẠC ×2</span>`;
@@ -1488,7 +1599,7 @@ function confetti(){if(reduced())return;const c=$("#confetti"),x=c.getContext("2
  let t=0;cancelAnimationFrame(confettiId);(function f(){x.clearRect(0,0,c.width,c.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.a+=.1;x.save();x.translate(p.x,p.y);x.rotate(p.a);x.fillStyle=p.c;x.fillRect(-4,-2,8+p.r,4);x.restore()});
   if(++t<260)confettiId=requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})()}
 function save(){if(S&&S.online)return;if(S&&!S.over)store.set("ctp-game",JSON.stringify(S));else store.del("ctp-game")}
-function render(){if(!S)return;renderTiles();renderPawns();renderCenter();renderPlayers();renderOver();
+function render(){if(!S)return;setMood();renderTiles();renderPawns();renderCenter();renderPlayers();renderOver();
  $("#gForecast").checked=S.forecast;$("#gFast").checked=S.fast;save();
  if(S.online&&dirty&&S.phase!=="busy"){dirty=false;pushState()}
  scheduleBot()}
@@ -1537,8 +1648,10 @@ let menuArm=false;
 $("#menuBtn").addEventListener("click",()=>{if(!menuArm&&S&&!S.over){menuArm=true;$("#menuBtn").textContent=S.online?"Bấm lần nữa để rời phòng":"Bấm lần nữa để bỏ ván này";setTimeout(()=>{menuArm=false;$("#menuBtn").textContent="Ván mới"},3000);return}
  menuArm=false;$("#menuBtn").textContent="Ván mới";clearTimeout(botTimer);if(S&&S.online){leaveRoom();return}store.del("ctp-game");S=null;$("#resumeBtn").hidden=true;show("setup")});
 const IC_MUS='<svg class="i" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>',IC_SFX='<svg class="i" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>';
-function paintSound(){const a=$("#soundBtn"),b=$("#musicBtn");a.innerHTML=`${IC_SFX}<span>Hiệu ứng: ${soundOn?"bật":"tắt"}</span>`;b.innerHTML=`${IC_MUS}<span>Nhạc nền: ${musicOn?"bật":"tắt"}</span>`;
+const IC_VO='<svg class="i" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h.01M12 10h.01M16 10h.01" stroke-width="3"/></svg>';
+function paintSound(){const a=$("#soundBtn"),b=$("#musicBtn"),v=$("#voiceBtn");v.innerHTML=`${IC_VO}<span>Giọng nói: ${voiceOn?"bật":"tắt"}</span>`;v.classList.toggle("off",!voiceOn);v.setAttribute("aria-label","Giọng nhân vật: "+(voiceOn?"bật":"tắt"));a.innerHTML=`${IC_SFX}<span>Hiệu ứng: ${soundOn?"bật":"tắt"}</span>`;b.innerHTML=`${IC_MUS}<span>Nhạc nền: ${musicOn?"bật":"tắt"}</span>`;
  a.classList.toggle("off",!soundOn);b.classList.toggle("off",!musicOn);a.setAttribute("aria-label","Hiệu ứng âm thanh: "+(soundOn?"bật":"tắt"));b.setAttribute("aria-label","Nhạc nền: "+(musicOn?"bật":"tắt"))}
+$("#voiceBtn").addEventListener("click",()=>{voiceOn=!voiceOn;store.set("ctp-voice",voiceOn?"1":"0");if(!voiceOn)try{speechSynthesis.cancel()}catch(e){}paintSound()});
 $("#soundBtn").addEventListener("click",()=>{soundOn=!soundOn;store.set("ctp-sound",soundOn?"1":"0");paintSound()});
 $("#musicBtn").addEventListener("click",()=>{musicOn=!musicOn;store.set("ctp-music",musicOn?"1":"0");if(musicOn)startMusic();else stopMusic();paintSound()});paintSound();
 document.addEventListener("keydown",e=>{if(!S||$("#game").hidden||!$("#assetModal").hidden||cur().bot||!canAct()||e.target.matches("input,select,textarea,button"))return;
