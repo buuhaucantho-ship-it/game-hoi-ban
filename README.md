@@ -6,16 +6,17 @@ Trang board game cho hội bạn, chơi ngay trên trình duyệt (điện tho�
 
 | Trò chơi | Người chơi | Cách chơi |
 |---|---|---|
-| [Cờ Tỷ Phú (Cần Thơ / Tây Du Ký)](https://buuhaucantho-ship-it.github.io/game-hoi-ban/co-ty-phu.html) | 2–10 | Chung một máy, hoặc online mỗi người một máy theo mã phòng |
+| [Cờ Tỷ Phú (Cần Thơ / Tây Du Ký / Showbiz)](https://buuhaucantho-ship-it.github.io/game-hoi-ban/co-ty-phu.html) | 2–10 | Chung một máy, hoặc online mỗi người một máy theo mã phòng |
 | [Ma Sói](https://buuhaucantho-ship-it.github.io/game-hoi-ban/ma-soi.html) | 5–24 | Tự dẫn bằng giọng đọc, không cần quản trò; 20 vai, 3 phe |
 | [Ai Là Gián Điệp](https://buuhaucantho-ship-it.github.io/game-hoi-ban/gian-diep.html) | 3–12 | Chuyền máy nhận từ khóa, mô tả và bỏ phiếu |
 | [Đảo Khai Hoang](https://buuhaucantho-ship-it.github.io/game-hoi-ban/khai-hoang.html) | 3–4, mở rộng 5–6 | Chung một máy, mỗi ghế chọn người hoặc máy |
 
-## Cờ Tỷ Phú (2 chủ đề)
+## Cờ Tỷ Phú (3 chủ đề)
 
 Nút chọn chủ đề ở trang cài đặt và trên thanh trên cùng (đổi được cả giữa ván, luật giữ nguyên):
 - **Cần Thơ:** đời sinh viên Tây Đô (chi tiết bên dưới).
 - **Tây Du Ký:** đường thỉnh kinh từ Trường An tới Đại Lôi Âm Tự. Núi Ngũ Hành (bị giam), Cân Đẩu Vân (bay tới ô bất kỳ), Hội Bàn Đào (thuê ×2), Hỏa Diệm Sơn, Bạch Long Mã (thêm lượt), Thông quan văn điệp; thẻ Thiên Cơ (Cơ hội) và Kiếp Nạn (Khí vận); tiên cảnh Hoa Quả Sơn, Long Cung, Phổ Đà Sơn, Quảng Hàn Cung, Ngũ Trang Quán. 10 nhân vật tự vẽ theo truyện: Đường Tăng, Tôn Ngộ Không, Trư Bát Giới, Sa Tăng, Bạch Long Mã, Thổ Địa, Na Tra, Ngưu Ma Vương, Hồng Hài Nhi, Ngọc Hoàng. Màu đỏ son, vàng kim, nhạc ngũ cung có tiếng cồng.
+- **Showbiz Việt:** 10 ngôi sao hư cấu (Diva Kim Cương, Chủ tịch Phát Tài, Hoa hậu Bông Sen, TikToker Bé Xu, Danh hài Cười Xỉu, Idol Bảo Bối, Thánh Chốt Đơn, Rapper Lốc Xoáy, Chị Review Có Tâm, Nam thần Cơ Bắp) trên bàn cờ địa điểm viral thật: trà chanh Nhà Thờ, cà phê đường tàu, Cầu Vàng, phố Nguyễn Huệ, Tạ Hiện, Bùi Viện, chợ Bến Thành, Hồ Gươm, Landmark 81, Mỹ Đình. Ô đặc biệt: Hậu trường, Ở ẩn, Đêm concert, Đi tour, Bão phốt, Giờ vàng, Phí PR; thẻ Lên Xu Hướng (Cơ hội) và Phốt (Khí vận). Nhân vật đều là hư cấu, không dựa trên người thật.
 
 ### Chủ đề Cần Thơ
 

@@ -700,6 +700,28 @@ body.dev-phone.ingame .seal{width:30px;height:30px}
 .th-tdk .face.red i{background:#c8102e}
 .th-tdk .btn.primary{box-shadow:0 4px 0 #b8860b}
 .th-tdk .seg button.on{background:#8c1424}
+
+.thpick{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:1320px){.thsw button:not(.on) span{display:none}}
+@media (max-width:900px){.thpick{grid-template-columns:minmax(0,1fr)}}
+.thart.sb{--g:linear-gradient(160deg,#ff3d9a,#3a1470)}.thart.sb::after{content:"";position:absolute;inset:auto 0 0 0;height:30px;background:var(--rainbow-sb);background-size:34px 17px;background-repeat:repeat-x;background-position:0 100%}
+:root{--rainbow-sb:radial-gradient(circle at 50% 100%,#fff 0 3px,#ff3d9a 3px 6px,#ffd23d 6px 9px,#3ee0ff 9px 12px,#8a4fff 12px 15px,transparent 15.5px)}
+/* ---- Showbiz palette: neon stage ---- */
+:root.th-showbiz{--bg:#2a0f52;--frame:#1a0838;--sea-1:#6a1fb0;--sea-2:#1c0a40;--sun:#ffd23d;--accent:#ffd23d;--pink:#ff3d9a;--surface:#fff8f0;--tile:#fffaf6;--tile-2:#f4eaf6;--line:#ead8ee;--ink:#1c1030;--muted:#6a5a7a;
+ --drop:rgba(10,0,30,.55);--rainbow:radial-gradient(circle at 50% 100%,#fff 0 4px,#ff3d9a 4px 9px,#ffd23d 9px 14px,#3ee0ff 14px 19px,#fff 19px 21px,#8a4fff 21px 27px,#ff8ad0 27px 34px,transparent 34.5px)}
+@media (prefers-color-scheme:dark){:root.th-showbiz:not([data-theme="light"]){--bg:#160730;--frame:#0e0424;--surface:#221338;--tile-2:#2e1a48;--ink:#f8eeff;--muted:#c2aedc;--line:#3e2a5a}}
+:root.th-showbiz[data-theme="dark"]{--bg:#160730;--frame:#0e0424;--surface:#221338;--tile-2:#2e1a48;--ink:#f8eeff;--muted:#c2aedc;--line:#3e2a5a}
+.th-showbiz body{background-image:radial-gradient(circle at 15% -5%,rgba(255,61,154,.3),transparent 40%),radial-gradient(circle at 90% 105%,rgba(62,224,255,.22),transparent 42%)}
+.th-showbiz .hero{background:radial-gradient(circle at 80% 0%,rgba(255,210,61,.35),transparent 35%),linear-gradient(160deg,#ff3d9a,#3a1470 70%)}
+.th-showbiz .hero h2 em{color:#ffd23d}.th-showbiz .hero h2 span{color:#3ee0ff}
+.th-showbiz .sticker{background:#ffd23d;color:#3a1470}
+.th-showbiz .seal{background:#ff3d9a;color:#fff}
+.th-showbiz .board{box-shadow:0 6px 0 #0a0220,0 0 40px rgba(255,61,154,.35)}
+.th-showbiz .center{background:radial-gradient(circle at 50% -10%,rgba(255,210,61,.3),transparent 45%),radial-gradient(circle at 10% 110%,rgba(62,224,255,.25),transparent 40%),linear-gradient(168deg,var(--sea-1),var(--sea-2))}
+.th-showbiz .cloud{color:#ff9ad6}
+.th-showbiz .wm .w2 .l:nth-child(odd){color:#ff7ac4}.th-showbiz .wm .w2 .l:nth-child(even){color:#3ee0ff}
+.th-showbiz .devsw button.on,.th-showbiz .seg button.on{background:#ff3d9a}
+.th-showbiz .handoff{background:var(--grain),linear-gradient(168deg,rgba(255,61,154,.96),rgba(58,20,112,.98))}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -719,6 +741,7 @@ body.dev-phone.ingame .seal{width:30px;height:30px}
       <div class="thsw devsw" role="group" aria-label="Chủ đề bàn cờ">
         <button type="button" data-th="cantho" title="Chủ đề Cần Thơ"><svg class="i" viewBox="0 0 24 24"><path d="M2 15h20l-4 5H6z"/><path d="M12 14V4l6 10z"/></svg><span>Cần Thơ</span></button>
         <button type="button" data-th="tdk" title="Chủ đề Tây Du Ký"><svg class="i" viewBox="0 0 24 24"><path d="M3 16q0-4 4-4 1-4 5-4t5 4q4 0 4 4z"/><path d="M8 20q2-2 4 0t4 0"/></svg><span>Tây Du Ký</span></button>
+        <button type="button" data-th="showbiz" title="Chủ đề Showbiz Việt"><svg class="i" viewBox="0 0 24 24"><path d="M12 2l2.9 6.2 6.6.8-4.9 4.6 1.3 6.6L12 17l-5.9 3.2 1.3-6.6L2.5 9l6.6-.8z"/></svg><span>Showbiz</span></button>
       </div>
       <div class="devsw" role="group" aria-label="Giao diện theo thiết bị">
         <button type="button" data-dev="auto" title="Tự chọn theo màn hình"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg><span>Tự động</span></button>
@@ -746,6 +769,7 @@ body.dev-phone.ingame .seal{width:30px;height:30px}
     <div class="thpick" role="group" aria-label="Chọn chủ đề bàn cờ">
       <button type="button" data-th="cantho"><span class="thart ct"></span><span><b>Cần Thơ</b><small>Đời sinh viên Tây Đô: mỳ cay, bún đậu, music box, chợ nổi, cầu Cần Thơ.</small></span></button>
       <button type="button" data-th="tdk"><span class="thart tdk"></span><span><b>Tây Du Ký</b><small>Đường thỉnh kinh: Hoa Quả Sơn, Nữ Nhi Quốc, Hỏa Diệm Sơn, Cân Đẩu Vân.</small></span></button>
+      <button type="button" data-th="showbiz"><span class="thart sb"></span><span><b>Showbiz Việt</b><small>Ngôi sao hư cấu, địa điểm viral thật: livestream, thảm đỏ, concert, phốt.</small></span></button>
     </div>
     <div class="setup">
       <div class="card">
@@ -1835,9 +1859,161 @@ const THEMES={
    B:[[[0,8,2],[2,9,2],[4,10,4,1],[8,9,2],[10,8,2],[12,7,4]],[[0,6,2],[2,7,2],[4,8,4],[8,7,2],[10,6,2],[12,5,4,1]],[[0,5,1],[1,6,1],[2,7,2],[4,8,2],[6,7,2],[8,9,2],[10,8,2],[12,7,4]],[[0,6,4,1],[4,5,2],[6,4,2],[8,5,8,1]]],RA:[48,45,43,48],RB:[41,43,45,48],gong:true}}};
 let TM=THEMES.cantho.TM;
 var ALLCH=[ANIMALS.map(a=>a[0]),TDK_CH.map(a=>a[0]),OLDK];
+/* ===================== Showbiz Việt (fictional stars, real viral places) ===================== */
+const TX_SB={charNote:"(10 ngôi sao hư cấu: diva, chủ tịch, hoa hậu, TikToker, danh hài…)",islN:"Điểm check-in",isl:"điểm check-in",islHd:"CHECK-IN",
+ jailN:"Ở ẩn",jailed:"đang ở ẩn",outT:"Tái xuất!",outTx:(a,b)=>`Đổ đôi ${a}–${b}, dư luận đã quên, bạn tái xuất giang hồ!`,out3T:"Hết ở ẩn",out3Tx:"Ở ẩn đủ 3 lượt, drama đã nguội, được đi tiếp theo số vừa đổ.",out3Log:"tái xuất sau 3 lượt ở ẩn",
+ stillT:"Vẫn đang ở ẩn",noRent:"Trong lúc ở ẩn, đất của bạn không thu được tiền thuê.",speed3:"Lên sóng liên tục quá đà, bị khán giả ngán, phải đi ở ẩn.",jailLog:"đi ở ẩn",
+ startN:"Hậu trường",startT:"Về hậu trường!",startTx:"Nhà tài trợ thưởng nóng thêm 100K.",
+ taxN:"Phí PR",taxTx:"Thuê ekip PR, stylist, quản lý: nộp 10% tổng tài sản",taxTag:"Chi phí",
+ chanceT:"Lên xu hướng!",chanceTag:"Thẻ Lên Xu Hướng · Cơ hội",bagT:"Dính phốt!",bagTag:"Thẻ Phốt · Khí vận",
+ stormN:"Bão phốt",stormHit:(n,l)=>`Bão phốt quét qua, công trình ở ${n} bị tẩy chay, còn lại: ${l}.`,stormNo:"Chưa có gì để mất, chỉ tốn 40K thuê người viết tâm thư.",stormTag:"Khủng hoảng",
+ hwT:"Lên sóng giờ vàng",hwTx:"Rating tăng vọt, bạn được đổ thêm một lượt.",hwTag:"Giờ vàng",
+ jailT:"Đi ở ẩn!",jailTag:"Ở ẩn",
+ festN:"Đêm concert",festNone:"Bạn chưa có chỗ nào (không cầm cố) để tổ chức concert.",festOpen:"Tổ chức concert",festDone:"Concert cháy vé!",festLog:"tổ chức concert tại",festFx:"Concert ×2",festBadge:"CONCERT ×2",festSkip:"Bỏ qua concert",
+ flyN:"Đi tour",flyTx:"Lịch lưu diễn kín mít: chọn bất kỳ ô nào để bay tới. Đi qua Hậu trường vẫn được nhận 200K.",flyVerb:"bay show tới",flyPr:"Diễn khắp nơi",jailPr:"Đổ đôi để tái xuất",
+ free:"thẻ PR",Free:"Thẻ PR",payJailT:"Đã thuê PR",freeTx:"Ekip PR dọn sạch drama, bạn tái xuất ngay, hãy đổ xúc xắc.",
+ last:"là ngôi sao cuối cùng chưa bị dư luận \"cancel\"",winTag:"Đỉnh lưu!",winT:n=>`${n} là Tỷ phú Showbiz!`,startLog:"Showbiz mở màn!",firstTx:"Đổ xúc xắc ở giữa bàn cờ để bắt đầu sự nghiệp.",
+ players:"Dàn sao",ready:"lên sóng!",go:"Lên sóng!",seatsT:"Dàn sao tham chiến",
+ ruleJail:"<b>Ở ẩn.</b> Phải đổ được đôi mới tái xuất; chờ đủ 3 lượt thì được ra miễn phí. Đang ở ẩn thì không thu được tiền thuê.",
+ legendSub:"Lên Xu Hướng là ô Cơ hội, Phốt là ô Khí vận. Tất cả nhân vật đều là hư cấu, địa điểm là chỗ viral có thật.",
+ w1:"Cờ Tỷ Phú",w2:"Showbiz",small:"Drama · Viral · Đỉnh lưu",title:"Cờ Tỷ Phú Showbiz Việt",sticker:"Toàn sao hư cấu · Drama thật",
+ h2:'Ai mới là <span>đỉnh lưu</span> của <em>Showbiz Việt</em>?',
+ hp:"Diva, chủ tịch, hoa hậu, TikToker, danh hài… cùng tranh nhau Landmark 81, Mỹ Đình, Cầu Vàng, phố đi bộ Nguyễn Huệ. Dính phốt thì đi ở ẩn, lên xu hướng thì tiền vô như nước. Mọi nhân vật đều là hư cấu.",
+ pick:"Ngôi sao hư cấu, địa điểm viral thật: livestream, thảm đỏ, concert, phốt."};
+const SB_CH=[["diva","Diva Kim Cương"],["chutich","Chủ tịch Phát Tài"],["hoahau","Hoa hậu Bông Sen"],["tiktoker","TikToker Bé Xu"],["danhhai","Danh hài Cười Xỉu"],["idol","Idol Bảo Bối"],["chotdon","Thánh Chốt Đơn"],["rapper","Rapper Lốc Xoáy"],["review","Chị Review Có Tâm"],["gym","Nam thần Cơ Bắp"]];
+const SB_FACES={
+ diva:`<path d="M10 44q-4-22 10-30 12-8 24 0 14 8 10 30l-4 10H14z" fill="#7a2a5a"/>`+BODY("#c21f7a",`<g fill="#fff" opacity=".85"><circle cx="20" cy="58" r="1"/><circle cx="27" cy="61" r="1"/><circle cx="35" cy="59" r="1"/><circle cx="42" cy="62" r="1"/><circle cx="31" cy="55" r="1"/></g>`)+FACE("#f7cfa8")+EY()+BL()+
+  `<path d="M29 44.5q3 2.2 6 0" stroke="#d6234a" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="18.5" cy="43" r="3" fill="none" stroke="#f2c14e" stroke-width="1.6"/><circle cx="45.5" cy="43" r="3" fill="none" stroke="#f2c14e" stroke-width="1.6"/><path d="M18 30q4-12 14-11 12 1 14 13-8-7-14-6-8 0-14 4z" fill="#7a2a5a"/><rect x="21" y="22" width="22" height="5" rx="2.5" fill="#1d1d23"/><circle cx="26" cy="24.5" r="3.4" fill="#1d1d23"/><circle cx="38" cy="24.5" r="3.4" fill="#1d1d23"/>`,
+ chutich:BODY("#1f2a4a",`<path d="M26 51l6 7 6-7" fill="#fff"/><path d="M31 54h2l1.5 12h-5z" fill="#d42a2a"/><path d="M20 52l8 14M44 52l-8 14" stroke="#141c33" stroke-width="2"/>`)+FACE("#ecb98f")+BROW()+EY()+BL()+MO()+
+  `<path d="M18 33q0-13 14-13 12 0 14 11-8-6-18-3-6 2-10 5z" fill="#1d130d"/><path d="M22.5 35h7v5h-7zM34.5 35h7v5h-7z" fill="none" stroke="#c9952a" stroke-width="1.3"/><path d="M29.5 37h5" stroke="#c9952a" stroke-width="1.2"/>`,
+ hoahau:`<path d="M17 37q0-16 15-16t15 16v24H17z" fill="#3a2214"/>`+BODY("#f6eef8",`<path d="M14 54l34 12h-6L12 58z" fill="#ff4f9a"/><path d="M18 57l3 1M28 60l3 1" stroke="#fff" stroke-width="1"/>`)+FACE("#f7cfa8")+EY()+BL()+`<path d="M29 44.5q3 2.4 6 0" stroke="#e0436a" stroke-width="2" fill="none" stroke-linecap="round"/>`+
+  `<path d="M19 34q2-11 13-11 11 0 13 11-5-6-13-6-8 0-13 6z" fill="#3a2214"/><path d="M22 23l3-6 3 4 4-7 4 7 3-4 3 6z" fill="#f2c14e"/><circle cx="32" cy="16" r="1.6" fill="#7ad8ff"/><circle cx="25" cy="18.5" r="1" fill="#ff4f9a"/><circle cx="39" cy="18.5" r="1" fill="#ff4f9a"/>`,
+ tiktoker:BODY("#2fb5a0",`<path d="M24 51q8 5 16 0v4q-8 4-16 0z" fill="#1f8a7a"/><rect x="40" y="52" width="9" height="13" rx="2" fill="#1d1d23"/><circle cx="44.5" cy="55" r="1" fill="#ff4f9a"/>`)+FACE("#f2c49a")+EY()+BL()+`<path d="M27.5 43.5q4.5 4.5 9 0z" fill="#8a3a22"/>`+
+  `<path d="M18 31q1-12 14-12t14 12z" fill="#ff4f9a"/><path d="M12 31q8 3 20 0" stroke="#ff4f9a" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="22" r="2" fill="#fff"/>`,
+ danhhai:BODY("#f2a100",`<path d="M26 52l6 3 6-3-6-2z" fill="#e8333f"/><circle cx="32" cy="53" r="1.4" fill="#a8201a"/>`)+FACE("#ecb98f")+`<circle cx="26.5" cy="37" r="4.2" fill="#fff" stroke="#1d1d23" stroke-width="1.6"/><circle cx="37.5" cy="37" r="4.2" fill="#fff" stroke="#1d1d23" stroke-width="1.6"/><circle cx="27.2" cy="37.5" r="1.7" fill="#1d1d23"/><circle cx="36.8" cy="37.5" r="1.7" fill="#1d1d23"/><path d="M30.7 37h2.6" stroke="#1d1d23" stroke-width="1.4"/>`+
+  `<path d="M25 43q7 8 14 0z" fill="#8a2a1a"/><path d="M27 45h10" stroke="#fff" stroke-width="1.4"/><path d="M18 30l2-8 3 5 3-8 3 7 3-8 3 7 3-6 2 6 3-4 1 9q-14-5-26 0z" fill="#3a2214"/>`,
+ idol:BODY("#e8e8f2",`<path d="M14 66l4-15h28l4 15z" fill="#8a7af0" opacity=".85"/>`)+FACE("#f7d6b4")+EY()+BL()+MO()+
+  `<path d="M16 37q-2-18 16-18t16 18q-4-8-8-9l-1 5-4-6-3 6-3-6-4 6-1-5q-4 1-8 9z" fill="#9ad0ff"/><circle cx="45.5" cy="42" r="1.4" fill="#f2c14e"/>`,
+ chotdon:`<circle cx="32" cy="30" r="22" fill="none" stroke="#fff" stroke-width="3" opacity=".55"/>`+BODY("#d4a21a",`<g fill="#fff6c0" opacity=".9"><circle cx="18" cy="58" r="1.2"/><circle cx="25" cy="62" r="1.2"/><circle cx="39" cy="61" r="1.2"/><circle cx="46" cy="58" r="1.2"/></g>`)+FACE("#ecb98f")+BROW()+EY()+BL()+`<path d="M27.5 43.5q4.5 4.5 9 0z" fill="#8a3a22"/>`+
+  `<path d="M18 33q0-13 14-13t14 13q-4-6-14-6t-14 6z" fill="#1d130d"/><path d="M17 36q-1-12 15-12t15 12" stroke="#2a2a3a" stroke-width="2.4" fill="none"/><rect x="14" y="33" width="5" height="8" rx="2" fill="#2a2a3a"/><path d="M17 41q2 6 9 5" stroke="#2a2a3a" stroke-width="1.6" fill="none"/><circle cx="26.5" cy="46" r="1.6" fill="#2a2a3a"/>`,
+ rapper:BODY("#1d1d23",`<path d="M20 52q12 10 24 0" stroke="#f2c14e" stroke-width="3" fill="none" stroke-dasharray="3 1.5"/><circle cx="32" cy="58" r="3" fill="#f2c14e"/>`)+FACE("#c99a72")+`<rect x="21" y="34" width="22" height="6" rx="3" fill="#1d1d23"/><path d="M22 36h7M35 36h7" stroke="#5a8aff" stroke-width="1.2"/>`+BL(43)+`<path d="M28.5 45q3.5 2 7 0" stroke="#5a2a1a" stroke-width="1.6" fill="none" stroke-linecap="round"/>`+
+  `<path d="M17.5 32q0-14 14.5-14t14.5 14z" fill="#e8333f"/><rect x="16" y="29" width="32" height="5" rx="2.5" fill="#b8202a"/><circle cx="32" cy="17" r="2.4" fill="#e8333f"/>`,
+ review:BODY("#8fd18a",`<path d="M24 51q8 6 16 0" stroke="#fff" stroke-width="2" fill="none"/>`)+FACE("#f7cfa8")+`<path d="M22 35h8v5h-8zM34 35h8v5h-8z" fill="#fff" fill-opacity=".25" stroke="#e8333f" stroke-width="1.5"/><path d="M30 37.5h4" stroke="#e8333f" stroke-width="1.3"/><circle cx="26" cy="37.5" r="1.4" fill="#2b1a12"/><circle cx="38" cy="37.5" r="1.4" fill="#2b1a12"/>`+BL()+MO()+
+  `<path d="M18 34q1-13 14-13t14 13q-6-5-14-5t-14 5z" fill="#4a2a14"/><circle cx="32" cy="16" r="6" fill="#4a2a14"/><path d="M27 16h10" stroke="#ff4f9a" stroke-width="2"/>`,
+ gym:`<path d="M4 66q2-20 28-18t28 18z" fill="#e8333f"/><path d="M18 52q14 6 28 0l2 14H16z" fill="#c9862e"/>`+FACE("#c9862e")+BROW()+EY()+`<path d="M28 44q4 3 8 0" stroke="#5a2a1a" stroke-width="1.7" fill="none" stroke-linecap="round"/>`+
+  `<path d="M19 31q1-10 13-10t13 10q-6-4-13-4t-13 4z" fill="#1d130d"/><rect x="18" y="28" width="28" height="4" rx="2" fill="#2f7bff"/>`};
+Object.assign(ART,{
+ trachanh:'<path d="M12 10h14l-2 18H14z" opacity=".85"/><circle cx="24" cy="10" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M30 30v-8h14v8M32 22v-3h10v3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M14 16h10" stroke="#fff" stroke-width="1.3" opacity=".6"/>',
+ railcafe:'<path d="M0 30h48M0 25h48" stroke="currentColor" stroke-width="1.6"/><path d="M6 25v5M14 25v5M22 25v5M30 25v5M38 25v5M46 25v5" stroke="currentColor" stroke-width="1.2"/><rect x="4" y="8" width="14" height="14" opacity=".7"/><rect x="30" y="6" width="14" height="16" opacity=".7"/><path d="M22 18h6v4h-6z"/><path d="M24 16q1-3 0-5" stroke="currentColor" stroke-width="1" fill="none"/>',
+ dalat:'<path d="M2 18q6-6 12-2 6-6 14-1 6-4 12 0 6-2 6 3H2z" opacity=".5"/><path d="M10 30l5-12 5 12zM28 30l6-15 6 15z"/><path d="M0 30h48" stroke="currentColor" stroke-width="1.5"/>',
+ goldbridge:'<path d="M2 14q22 8 44 0v3q-22 8-44 0z"/><path d="M8 30q-4-8 0-14l3 1q-2 6 1 13zM40 30q4-8 0-14l-3 1q2 6-1 13z" opacity=".75"/><path d="M6 30h8M34 30h8" stroke="currentColor" stroke-width="1.6"/>',
+ beer:'<rect x="8" y="10" width="10" height="16" rx="2"/><rect x="22" y="8" width="10" height="18" rx="2" opacity=".8"/><path d="M18 14h3v6h-3M32 13h3v6h-3" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M9 10q4-4 8 0M23 8q4-4 8 0" fill="#fff" opacity=".8"/><path d="M36 30v-6h10v6" stroke="currentColor" stroke-width="2" fill="none"/>',
+ neon:'<rect x="4" y="4" width="40" height="24" rx="4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 20l4-10 4 10M26 10v10h6M38 10l-3 10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>',
+ redcarpet:'<path d="M18 30l4-20h4l4 20z"/><path d="M6 30l2-6M42 30l-2-6" stroke="currentColor" stroke-width="2"/><path d="M36 4h8v4a4 4 0 0 1-8 0zM40 12v4M37 16h6" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M4 8l2 2 2-2-2-2zM10 14l1.4 1.4L12.8 14l-1.4-1.4z" opacity=".7"/>',
+ gameshow:'<path d="M12 30l2-12h20l2 12z"/><rect x="18" y="20" width="12" height="4" fill="#fff" opacity=".6"/><circle cx="24" cy="12" r="4"/><path d="M4 4l8 10M44 4l-8 10" stroke="currentColor" stroke-width="2" opacity=".6"/>',
+ livestream:'<circle cx="24" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="2.6" opacity=".7"/><rect x="19" y="7" width="10" height="18" rx="2"/><circle cx="24" cy="10" r="1" fill="#fff"/><path d="M24 29v3" stroke="currentColor" stroke-width="2"/><rect x="34" y="2" width="12" height="6" rx="2"/><text x="40" y="6.8" font-size="4.6" font-weight="900" text-anchor="middle" fill="#fff" font-family="Arial">LIVE</text>',
+ antifan:'<circle cx="24" cy="16" r="13"/><circle cx="19" cy="14" r="1.8" fill="#fff"/><circle cx="29" cy="14" r="1.8" fill="#fff"/><path d="M16 9l6 3M32 9l-6 3" stroke="#fff" stroke-width="1.8"/><path d="M18 24q6-5 12 0" stroke="#fff" stroke-width="2" fill="none"/>',
+ trending:'<path d="M4 26l12-10 8 6 14-14" stroke="currentColor" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 6h8v8z"/><path d="M8 30q-2-6 3-9 0 4 3 4 0-4 3-6 0 6 2 8z" opacity=".7"/>',
+ turtletower:'<path d="M0 26q12-4 24 0t24 0v6H0z" opacity=".55"/><rect x="18" y="12" width="12" height="12"/><path d="M16 12l8-6 8 6z"/><path d="M22 24v-6a2 2 0 0 1 4 0v6z" fill="#fff" opacity=".7"/>',
+ villa:'<path d="M4 16l14-9 14 9z"/><rect x="6" y="16" width="24" height="13" opacity=".8"/><rect x="32" y="20" width="12" height="9" opacity=".6"/><rect x="12" y="20" width="5" height="5" fill="#fff" opacity=".6"/><rect x="21" y="20" width="5" height="9" fill="#fff" opacity=".5"/><path d="M0 30h48" stroke="currentColor" stroke-width="1.6"/>',
+ yacht:'<path d="M4 22h40l-6 6H10z"/><path d="M12 22v-6h20l6 6" opacity=".8"/><rect x="16" y="12" width="12" height="4" opacity=".7"/><path d="M0 30q6-2 12 0t12 0 12 0 12 0" stroke="currentColor" stroke-width="1.4" fill="none" opacity=".5"/>',
+ tower81:'<path d="M20 30V10l4-9 4 9v20z"/><path d="M14 30V18h6M34 30V20h-6" opacity=".6"/><path d="M22 14h4M22 18h4M22 22h4M22 26h4" stroke="#fff" stroke-width="1" opacity=".7"/>',
+ stadium:'<path d="M2 28q22-24 44 0z" opacity=".75"/><path d="M6 28q18-14 36 0" fill="#fff" opacity=".35"/><path d="M8 6l6 6M40 6l-6 6M24 2v8" stroke="currentColor" stroke-width="2" opacity=".7"/><path d="M0 29h48" stroke="currentColor" stroke-width="2"/>',
+ terrace:'<path d="M0 12q24-8 48 0v4q-24-8-48 0zM0 19q24-8 48 0v4q-24-8-48 0zM0 26q24-8 48 0v4q-24-8-48 0z"/>',
+ dunes:'<path d="M0 30q10-18 22-10t26-6v16z"/><path d="M10 22q6-4 12-1" stroke="#fff" stroke-width="1.2" fill="none" opacity=".6"/><circle cx="38" cy="7" r="4" opacity=".6"/>',
+ karstboat:'<path d="M2 24q2-16 7-18 4 2 6 18zM14 24q3-22 9-22 5 3 7 22zM30 24q2-12 7-13 5 2 7 13z" opacity=".75"/><path d="M14 27h18l-3 3H17z"/><path d="M0 26h48" stroke="currentColor" stroke-width="1.4" opacity=".5"/>',
+ mtnroad:'<path d="M0 30l12-20 10 10 10-16 16 26z" opacity=".75"/><path d="M4 30q10-6 16-12t20-8" stroke="#fff" stroke-width="1.8" fill="none" stroke-dasharray="3 2"/>'});
+const SB_GLBL={1:"VỈA HÈ",2:"SỐNG ẢO",3:"PHỐ ĐÊM",4:"SÂN KHẤU",5:"MẠNG XÃ HỘI",6:"BIỂU TƯỢNG",7:"SANG CHẢNH",8:"ĐỈNH LƯU"};
+const SB_MAPS={
+ 32:[X("start","Hậu trường"),C("Trà chanh Nhà Thờ",1,60),X("bag","Phốt"),C("Cà phê đường tàu",1,60),X("tax","Phí PR"),I("Sa Pa mùa lúa"),C("Đà Lạt săn mây",2,100),C("Cầu Vàng Bà Nà",2,100),
+  X("jail","Ở ẩn"),C("Phố đi bộ Nguyễn Huệ",3,140),X("chance","Lên Xu Hướng"),C("Phố Tạ Hiện",3,140),X("storm","Bão phốt"),I("Biển Mỹ Khê"),C("Phòng thu MV",4,180),C("Thảm đỏ lễ trao giải",4,180),
+  X("fest","Đêm concert"),C("Phòng livestream",5,220),X("chance","Lên Xu Hướng"),C("Hội anti-fan",5,220),I("Đồi cát Mũi Né"),C("Chợ Bến Thành",6,260),X("bag","Phốt"),C("Hồ Gươm",6,260),
+  X("fly","Đi tour"),C("Biệt thự ven sông",7,300),C("Du thuyền Hạ Long",7,300),X("highway","Giờ vàng"),I("Tràng An"),C("Landmark 81",8,350),X("chance","Lên Xu Hướng"),C("Sân vận động Mỹ Đình",8,350)],
+ 40:[X("start","Hậu trường"),C("Trà chanh Nhà Thờ",1,60),X("bag","Phốt"),C("Cà phê đường tàu",1,60),X("tax","Phí PR"),I("Sa Pa mùa lúa"),C("Đà Lạt săn mây",2,100),X("chance","Lên Xu Hướng"),C("Cầu Vàng Bà Nà",2,100),C("Phố cổ Hội An",2,120),
+  X("jail","Ở ẩn"),C("Phố đi bộ Nguyễn Huệ",3,140),X("storm","Bão phốt"),C("Phố Tạ Hiện",3,140),C("Phố Bùi Viện",3,160),I("Biển Mỹ Khê"),C("Phòng thu MV",4,180),X("bag","Phốt"),C("Thảm đỏ lễ trao giải",4,180),C("Gameshow giờ vàng",4,200),
+  X("fest","Đêm concert"),C("Phòng livestream",5,220),X("chance","Lên Xu Hướng"),C("Hội anti-fan",5,220),C("Top trending",5,240),I("Đồi cát Mũi Né"),C("Chợ Bến Thành",6,260),C("Hồ Gươm",6,260),X("highway","Giờ vàng"),C("Nhà hát Lớn",6,280),
+  X("fly","Đi tour"),C("Biệt thự ven sông",7,300),C("Du thuyền Hạ Long",7,300),X("bag","Phốt"),C("Resort Phú Quốc",7,320),I("Tràng An"),X("chance","Lên Xu Hướng"),C("Landmark 81",8,350),I("Đèo Mã Pí Lèng"),C("Sân vận động Mỹ Đình",8,400)]};
+const SB_ARTMAP={"Trà chanh Nhà Thờ":"trachanh","Cà phê đường tàu":"railcafe","Đà Lạt săn mây":"dalat","Cầu Vàng Bà Nà":"goldbridge","Phố cổ Hội An":"lantern","Phố đi bộ Nguyễn Huệ":"blvd","Phố Tạ Hiện":"beer","Phố Bùi Viện":"neon",
+ "Phòng thu MV":"mic","Thảm đỏ lễ trao giải":"redcarpet","Gameshow giờ vàng":"gameshow","Phòng livestream":"livestream","Hội anti-fan":"antifan","Top trending":"trending","Chợ Bến Thành":"clock","Hồ Gươm":"turtletower","Nhà hát Lớn":"museum",
+ "Biệt thự ven sông":"villa","Du thuyền Hạ Long":"yacht","Resort Phú Quốc":"palm","Landmark 81":"tower81","Sân vận động Mỹ Đình":"stadium","Sa Pa mùa lúa":"terrace","Biển Mỹ Khê":"isle","Đồi cát Mũi Né":"dunes","Tràng An":"karstboat","Đèo Mã Pí Lèng":"mtnroad"};
+const SB_SHORT={"Thảm đỏ lễ trao giải":"Thảm đỏ","Phố đi bộ Nguyễn Huệ":"Phố Nguyễn Huệ","Sân vận động Mỹ Đình":"SVĐ Mỹ Đình","Gameshow giờ vàng":"Gameshow"};
+const SB_THEME={
+ "Trà chanh Nhà Thờ":["#fbf7dc",PD("rgba(160,200,40,.28)",11,2),"#7a9a12"],"Cà phê đường tàu":["#f2ede6",PS(90,"rgba(90,70,60,.12)",2,8),"#6a4a3a"],
+ "Đà Lạt săn mây":["#eef6f3",PCL("rgba(90,140,170,.2)"),"#2f7a5a"],"Cầu Vàng Bà Nà":["#fff6dc",PS(0,"rgba(212,162,26,.14)",2,7),"#c9940a"],"Phố cổ Hội An":["#fff2e0",PD("rgba(232,90,40,.24)",11,2.2),"#e05a1a"],
+ "Phố đi bộ Nguyễn Huệ":["#eef3ff",PG("rgba(47,123,255,.13)",9),"#2f7bff"],"Phố Tạ Hiện":["#fff4dc",PD("rgba(242,161,0,.28)",9,1.6),"#d48a00"],"Phố Bùi Viện":["#f8ecff",PS(90,"rgba(255,61,154,.14)",2,5)+","+PS(0,"rgba(80,200,255,.14)",2,7),"#c21fd6"],
+ "Phòng thu MV":["#f2ecff",PS(90,"rgba(138,79,255,.16)",2,5),"#7a3fe8"],"Thảm đỏ lễ trao giải":["#fff0f0",PS(0,"rgba(226,51,63,.14)",4,4),"#d42a2a"],"Gameshow giờ vàng":["#f3eaff","repeating-conic-gradient(from 0deg at 50% 120%,rgba(138,79,255,.16) 0 8deg,transparent 8deg 18deg)","#8a4fff"],
+ "Phòng livestream":["#ffeef8",PD("rgba(255,61,154,.22)",10,1.8)+","+PD("rgba(255,210,61,.3)",10,1.4,5),"#e8237a"],"Hội anti-fan":["#f0f0f4",PS(45,"rgba(60,60,80,.12)",2,6),"#3a3a5a"],"Top trending":["#fff1e6",PS(135,"rgba(255,106,26,.17)",3,7),"#f05a1a"],
+ "Chợ Bến Thành":["#fff5e6",PCK("rgba(212,138,26,.12)",12),"#c07a12"],"Hồ Gươm":["#e8f7f2",PW("rgba(31,163,138,.26)"),"#1f8a74"],"Nhà hát Lớn":["#f8f2ea",PS(90,"rgba(150,110,70,.1)",4,6),"#8a6a4a"],
+ "Biệt thự ven sông":["#fff9ea",PD("rgba(212,162,26,.25)",10,1.4),"#b8860b"],"Du thuyền Hạ Long":["#e6f4ff",PW("rgba(31,120,200,.26)"),"#1a6fc0"],"Resort Phú Quốc":["#e8fbf4",PL("rgba(31,163,138,.22)"),"#1f9a80"],
+ "Landmark 81":["#eef2ff",PG("rgba(58,95,208,.14)",8),"#2a3fb0"],"Sân vận động Mỹ Đình":["#fff6e0","repeating-conic-gradient(from 0deg at 50% 110%,rgba(255,61,154,.16) 0 7deg,rgba(255,210,61,.18) 7deg 14deg,transparent 14deg 22deg)","#e8237a"],
+ "Sa Pa mùa lúa":["#f4fbe2",PS(170,"rgba(150,180,30,.22)",3,5),"#7a9a12"],"Biển Mỹ Khê":["#e4f6ff",PW("rgba(18,176,214,.3)"),"#0e8fb0"],"Đồi cát Mũi Né":["#fff4e0",PW("rgba(220,150,60,.28)"),"#c0781a"],
+ "Tràng An":["#eaf7ee",PW("rgba(40,150,90,.24)"),"#2a8a55"],"Đèo Mã Pí Lèng":["#eef3f0",PS(160,"rgba(60,110,80,.15)",2,6),"#3a6a4a"]};
+const SB_LEGEND=[
+ ["start","Hậu trường","Nơi mọi ngôi sao bắt đầu. Đi qua nhận 200K, dừng đúng ô nhận thêm 100K."],
+ ["fly","Đi tour","Lịch lưu diễn kín mít: chọn bất kỳ ô nào trên bàn cờ để bay show tới."],
+ ["fest","Đêm concert","Tổ chức concert ở một chỗ của bạn, tiền thuê ở đó tăng gấp đôi."],
+ ["jail","Ở ẩn","Dính drama phải đi ở ẩn: đổ đôi mới tái xuất, hoặc chờ đủ 3 lượt. Đang ở ẩn thì không thu được tiền thuê."],
+ ["chance","Lên Xu Hướng · Cơ hội","Ô Cơ hội của bản Showbiz: được mời thảm đỏ, MV triệu view, livestream cả đêm… thường đưa bạn tới chỗ khác."],
+ ["bag","Phốt · Khí vận","Ô Khí vận của bản Showbiz: quên tắt filter, đụng hàng váy, câu nói hớ thành meme, hợp đồng quảng cáo…"],
+ ["island","Điểm check-in","Sa Pa, Mỹ Khê, đồi cát Mũi Né, Tràng An… Thu tiền theo số điểm cùng chủ: 25K → 300K. Gom đủ là thắng ngay."],
+ ["storm","Bão phốt","Dư luận dậy sóng: một công trình của bạn giảm một cấp, hoặc mất 40K."],
+ ["highway","Giờ vàng","Lên sóng giờ vàng, rating tăng vọt: được đổ thêm một lượt."],
+ ["tax","Phí PR","Ekip PR, stylist, quản lý: nộp 10% tổng tài sản."]];
+const SB_CHANCE=[
+ {t:"Được gọi gấp về hậu trường chương trình lớn: chạy về Hậu trường.",f:async()=>{await walkTo(0,true);await land()}},
+ {t:"Fan rủ đi sống ảo: chạy tới Cầu Vàng Bà Nà.",f:async()=>{await walkTo(idxOf("Cầu Vàng Bà Nà"),true);await land()}},
+ {t:"Quay lại vì quên kính râm hàng hiệu: lùi 3 ô.",f:async()=>{await walk(3,-1);await land()}},
+ {t:"Đi check-in điểm hot gần nhất phía trước.",f:async()=>{let j=cur().pos;do{j=(j+1)%N}while(SQ[j].t!=="island");await walkTo(j,true);await land()}},
+ {t:"Lỡ lời trên sóng trực tiếp, phải đi ở ẩn ngay! Không đi qua Hậu trường.",f:async()=>{sendJail();finish()}},
+ {t:"Quản lý xử lý khủng hoảng quá đỉnh: nhận Thẻ PR, thoát ở ẩn miễn phí.",f:async()=>{cur().free++;finish()}},
+ {t:"Bán sạch vé concert trong 5 phút: chọn một chỗ của bạn để tiền thuê tăng gấp đôi.",f:async()=>startFest()},
+ {t:"Lịch lưu diễn kín mít: chọn bất kỳ ô nào để bay show tới.",f:async()=>startFly()},
+ {t:"Bị hội bạn kéo đi trà chanh tám chuyện showbiz: chạy tới Trà chanh Nhà Thờ.",f:async()=>{await walkTo(idxOf("Trà chanh Nhà Thờ"),true);await land()}},
+ {t:"Được mời diễn đại nhạc hội: chạy tới Sân vận động Mỹ Đình.",f:async()=>{await walkTo(idxOf("Sân vận động Mỹ Đình"),true);await land()}},
+ {t:"Nhận lời chụp ảnh bìa tạp chí trên tầng thượng: chạy tới Landmark 81.",f:async()=>{await walkTo(idxOf("Landmark 81"),true);await land()}},
+ {t:"Bị réo tên đi thảm đỏ: chạy tới Thảm đỏ lễ trao giải.",f:async()=>{await walkTo(idxOf("Thảm đỏ lễ trao giải"),true);await land()}},
+ {t:"Lên sóng giờ vàng, rating tăng vọt: tiến lên 5 ô.",f:async()=>{await walk(5);await land()}},
+ {t:"Nhà tài trợ đặt hàng livestream cả đêm: chạy tới Phòng livestream.",f:async()=>{await walkTo(idxOf("Phòng livestream"),true);await land()}},
+ {t:"Ngân hàng muốn bạn làm gương mặt đại diện: chuộc miễn phí một chỗ đang cầm cố.",f:async()=>{const g=owned(S.turn).filter(i=>S.props[i].mg);if(g.length){S.props[g[0]].mg=false;log(`${cur().name} được chuộc miễn phí ${SQ[g[0]].n}`);fx(g[0],"Chuộc lại","good")}else gain(S.turn,50);finish()}},
+ {t:"MV mới 10 triệu view sau một đêm: nhận 100K.",f:async()=>{gain(S.turn,100);finish()}}];
+const SB_BAG=[
+ {t:"Ký hợp đồng quảng cáo nước mắm: nhận 150K.",f:async()=>{gain(S.turn,150);finish()}},
+ {t:"Livestream quên tắt filter tai mèo lúc đọc tâm thư, phải đền nhà tài trợ: mất 100K.",f:async()=>{charge(S.turn,100);finish()}},
+ {t:"Anti-fan đào lại ảnh thời \"trẻ trâu\", thuê PR dọn dẹp: trả 60K.",f:async()=>{charge(S.turn,60);finish()}},
+ {t:"Sinh nhật của bạn! Mỗi người chơi gửi quà mừng 20K.",f:async()=>{alive().forEach(i=>{if(i!==S.turn)charge(i,20,S.turn)});finish()}},
+ {t:"Bao cả ekip trà sữa sau buổi tập: trả mỗi người 20K.",f:async()=>{for(const i of alive()){if(i!==S.turn&&!charge(S.turn,20,i))break}finish()}},
+ {t:"Chốt 10.000 đơn trong một phiên live: nhận 100K.",f:async()=>{gain(S.turn,100);finish()}},
+ {t:"Sân khấu sập phông giữa show: trả 25K mỗi nhà và 100K mỗi khách sạn bạn sở hữu.",f:async()=>{const c=owned(S.turn).reduce((a,i)=>{const l=S.props[i].l;return a+(l===5?100:25*l)},0);if(c)charge(S.turn,c);finish()}},
+ {t:"Câu nói hớ trên gameshow thành meme toàn mạng, nhãn hàng xếp hàng mời: nhận 200K.",f:async()=>{gain(S.turn,200);finish()}},
+ {t:"Đụng hàng váy trên thảm đỏ, phải chạy đi mua váy mới: trả 50K.",f:async()=>{charge(S.turn,50);finish()}},
+ {t:"Pass lại đồ hiệu cho fan: nhận 80K.",f:async()=>{gain(S.turn,80);finish()}},
+ {t:"Phát ngôn gây tranh cãi, bị nhãn hàng phạt hợp đồng: trả 80K.",f:async()=>{charge(S.turn,80);finish()}},
+ {t:"Thắng giải Bài hát của năm: nhận 120K.",f:async()=>{gain(S.turn,120);finish()}},
+ {t:"Clip hậu trường lọt ra ngoài, ai cũng khen dễ thương: nhận 60K.",f:async()=>{gain(S.turn,60);finish()}},
+ {t:"MV bị chê na ná bài nước ngoài, phải làm lại đoạn điệp khúc: trả 30K.",f:async()=>{charge(S.turn,30);finish()}},
+ {t:"Fan club gửi quà tận nhà: nhận 70K.",f:async()=>{gain(S.turn,70);finish()}},
+ {t:"Lỡ tay bấm thích bình luận của anti-fan, mất fan: trả 40K.",f:async()=>{charge(S.turn,40);finish()}}];
+const SB_LINES={
+ roll:["gét gô!","xin vía giàu nha!","căng đét luôn!","quay số định mệnh nè!"],
+ buy:["chốt đơn! Chỗ này của tui.","mua liền, hết nước chấm!","đỉnh nóc kịch trần, lấy luôn!"],
+ build:["xây thêm cho sang chảnh!","đầu tư cho hình ảnh nha!"],hotel:["khách sạn năm sao, sang chảnh quá trời!","đỉnh lưu là đây chứ đâu!"],
+ pay:["ủa alo? Mắc vậy?","tới công chuyện luôn rồi!","chấn động, mất tiền nữa!","thôi xong, mai đi chạy show bù."],get:["cảm ơn fan đã ủng hộ!","tiền vô như nước, quá dữ!"],
+ jail:["drama quá, đi ở ẩn đây!","tạm biệt mạng xã hội một thời gian…","không phải tui, tui hông có biết!"],out:["tái xuất giang hồ!","tui đã trở lại và lợi hại hơn xưa!"],
+ chance:["lên xu hướng rồi bà con ơi!","hot search luôn!"],bag:["dính phốt rồi!","ủa ai tung clip vậy?","ăn hành rồi!"],
+ start:["về hậu trường lãnh cát-xê!"],fest:["concert cháy vé, quẩy lên!"],fly:["bay show nè!"],storm:["bão phốt tới rồi, nín thở!"],
+ win:["đỉnh lưu số một là tui!","out trình hết cả showbiz!"],broke:["phá sản rồi, livestream bán đồ cũ thôi!"]};
+const SB_CATCH={diva:["Cưng ơi, ","Trời đất, "],chutich:["Nói thiệt nha, ","Theo tầm nhìn của tôi, "],hoahau:["Em xin cảm ơn, ",""],tiktoker:["Hello cả nhà, ",""],danhhai:["Ha ha, ",""],idol:["",""],chotdon:["Chốt nha cả nhà, ",""],rapper:["Yo, ",""],review:["Nói có tâm nha, ",""],gym:["Gồng lên! ",""]};
+const SB_VOX={diva:[1.3,1],chutich:[.8,.95],hoahau:[1.35,1],tiktoker:[1.5,1.2],danhhai:[1.1,1.15],idol:[1.2,1.05],chotdon:[1,1.25],rapper:[.85,1.2],review:[1.3,1.05],gym:[.7,.95]};
+Object.assign(THEMES,{showbiz:{TX:TX_SB,GLBL:SB_GLBL,MAPS:SB_MAPS,ARTMAP:SB_ARTMAP,SHORT:SB_SHORT,THEME:SB_THEME,LEGEND:SB_LEGEND,CHANCE:SB_CHANCE,BAG:SB_BAG,ANIMALS:SB_CH,FACES:SB_FACES,LINES:SB_LINES,CATCH:SB_CATCH,VOX:SB_VOX,
+ GCOL:{1:"#c2702a",2:"#2fb5a0",3:"#ff4f9a",4:"#8a4fff",5:"#2f7bff",6:"#e23b3b",7:"#d4a21a",8:"#2a1f5a"},ISL_COL:"#12b0d6",
+ TCOL:{start:"#ff3d9a",jail:"#5a5a78",fest:"#8a4fff",fly:"#2f7bff",chance:"#ff7a1a",bag:"#e8333f",tax:"#6a5cd8",lux:"#6a5cd8",storm:"#3a3a5a",highway:"#d4a21a",island:"#12b0d6"},DARKT:new Set(),
+ TM:{S:SCF,A:[[[0,7,2],[2,7,1],[3,8,1],[4,9,2],[6,7,2],[8,5,4,1],[12,6,4]],[[0,7,2],[2,6,2],[4,5,2],[6,6,2],[8,4,6,1]],[[0,5,2],[2,6,2],[4,7,2],[6,9,2],[8,10,3,1],[12,9,2],[14,7,2]],[[0,8,2],[2,7,2],[4,6,4,1],[10,5,2],[12,7,4]]],
+  B:[[[0,9,1],[1,9,1],[2,10,2],[4,9,2],[6,7,2],[8,9,4,1],[12,11,4]],[[0,10,2],[2,9,2],[4,7,4],[8,9,2],[10,7,2],[12,6,4]],[[0,5,1],[1,7,1],[2,9,2],[4,10,2],[6,9,2],[8,7,2],[10,9,2],[12,10,4,1]],[[0,9,6,1],[8,7,2],[10,6,2],[12,7,4]]],RA:[48,45,41,43],RB:[41,43,48,48]}}});
+ALLCH.splice(2,0,SB_CH.map(a=>a[0]));
+
 function setTheme(id,quiet){const T=THEMES[id]||THEMES.cantho;THEME_ID=THEMES[id]?id:"cantho";
  ({TX,GLBL,MAPS,ARTMAP,SHORT,THEME,LEGEND,CHANCE,BAG,ANIMALS,FACES,LINES,CATCH,VOX,GCOL,ISL_COL,TCOL,DARKT,TM}=T);
- document.documentElement.classList.toggle("th-tdk",THEME_ID==="tdk");document.documentElement.classList.toggle("th-cantho",THEME_ID==="cantho");
+ document.documentElement.classList.toggle("th-tdk",THEME_ID==="tdk");document.documentElement.classList.toggle("th-cantho",THEME_ID==="cantho");document.documentElement.classList.toggle("th-showbiz",THEME_ID==="showbiz");
  document.title=TX.title+" · Game Hội Bạn";
  const wm=document.querySelector(".wm");wm.innerHTML=`<small>${TX.small}</small><span class="w w1">${TX.w1}</span> <span class="w w2">${TX.w2}</span>`;splitWM();
  $("#heroSticker").textContent=TX.sticker;$("#heroH2").innerHTML=TX.h2;$("#heroP").textContent=TX.hp;$("#seatsT").textContent=TX.seatsT;$("#startBtn").textContent=TX.go;
