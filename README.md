@@ -13,8 +13,12 @@ Trang board game cho hội bạn, chơi ngay trên trình duyệt (điện tho�
 
 ## Cờ Tỷ Phú Cần Thơ
 
-- Chủ đề Tây Đô, phong cách Gen Z: bún đậu hẻm, trà sữa, music box, karaoke, chợ đêm, các con đường lớn, nhà cổ Bình Thủy, Đại học Cần Thơ, cầu đi bộ Ninh Kiều, cầu Cần Thơ. Khu du lịch: chợ nổi Cái Răng, vườn cò Bằng Lăng, Mỹ Khánh, Cồn Sơn, Thiền viện Trúc Lâm.
+- Chủ đề Tây Đô, phong cách Gen Z: mỳ cay Omega, mỳ cay Itada, bún đậu Xưa, hồng trà Ngô Gia, music box, karaoke, chợ đêm, Vincom Xuân Khánh, các con đường lớn, nhà cổ Bình Thủy, Đại học Cần Thơ, cầu đi bộ Ninh Kiều, cầu Cần Thơ. Khu du lịch: chợ nổi Cái Răng, vườn cò Bằng Lăng, Mỹ Khánh, Cồn Sơn, Thiền viện Trúc Lâm.
 - Ô đặc biệt: Bến Ninh Kiều (xuất phát), Kẹt xe, Đêm nhạc (thuê ×2), Đi phượt (đi đâu cũng được), thẻ Kèo và Drama, Triều cường, Đèn xanh, Bill cuối tháng.
+- 10 nhân vật hoạt hình dân gian ba miền: Cô Ba Nam Bộ, Anh Hai khăn rằn, Cô gái Huế, Anh Cả Bắc Bộ, Liền chị Quan họ, Cô gái H'Mông, Chàng Ê Đê, Cô gái Chăm, Cô gái Khmer, Ông Tư miệt vườn.
+- Mỗi ô có hoạ tiết và màu riêng theo nơi đó (mẹt tre bún đậu, gạch bông nhà cổ, sóng chợ nổi, lưới kính Vincom…).
+- Nhạc nền tự soạn bằng Web Audio: ngũ cung Nam Bộ (đàn tranh, đàn bầu, mõ) trên nền beat hiện đại; bật tắt riêng nhạc nền và hiệu ứng.
+- Chơi offline chung một máy: mở trang một lần khi có mạng, sau đó mở được khi không có mạng (có thể Thêm vào màn hình chính). Màn hình nhắc chuyền máy giữa các lượt.
 - Nút chọn giao diện: Tự động, Điện thoại (bàn cờ dọc), iPad, Máy tính (có cột người chơi và nhật ký).
 - Lần đầu dừng ở đất trống chỉ được mua đất; dừng lại lần sau mới mua nhà; đủ 4 nhà mới xây khách sạn. Trọn tuyến cùng màu thu tiền ×2.
 - Khu du lịch thu tiền theo số khu sở hữu. Kẹt xe phải đổ đôi hoặc chờ 3 lượt; đang kẹt xe không thu tiền thuê. Cầm cố đất khi thiếu tiền; chỉ mua lại được đất đang cầm cố.

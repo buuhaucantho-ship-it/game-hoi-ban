@@ -34,6 +34,8 @@
 @media (max-width:860px){.how{grid-template-columns:minmax(0,1fr)}.hero .dice{opacity:.25}}
 @media (max-width:600px){.games{grid-template-columns:minmax(0,1fr)}}
 </style>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
 </head>
 <body>
 <nav class="gnav" aria-label="Chọn trò chơi"><div class="gnav-in">
@@ -83,5 +85,6 @@
   </div>
 </main>
 <footer class="foot">Game Hội Bạn · trò chơi giải trí, không thu thập dữ liệu cá nhân.</footer>
+<script>if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))navigator.serviceWorker.register("sw.js").catch(()=>{})</script>
 </body>
 </html>

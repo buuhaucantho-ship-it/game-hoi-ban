@@ -156,6 +156,8 @@
 @media (max-width:1020px){.kh{grid-template-columns:minmax(0,1fr)}.panel{position:static}.boardbox svg{max-height:none}}
 @media (max-width:760px){.grid2{grid-template-columns:minmax(0,1fr)}.seats{grid-template-columns:minmax(0,1fr)}}
 </style>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
 </head>
 <body>
 <nav class="gnav" aria-label="Chọn trò chơi"><div class="gnav-in">
@@ -661,5 +663,6 @@ window.__kh={get G(){return G},cfg};
 renderSetup();
 })();
 </script>
+<script>if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))navigator.serviceWorker.register("sw.js").catch(()=>{})</script>
 </body>
 </html>
