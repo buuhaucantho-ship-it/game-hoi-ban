@@ -6,14 +6,17 @@ Trang board game cho hội bạn, chơi ngay trên trình duyệt (điện tho�
 
 | Trò chơi | Người chơi | Cách chơi |
 |---|---|---|
-| [Cờ Tỷ Phú Du Lịch](https://buuhaucantho-ship-it.github.io/game-hoi-ban/co-ty-phu.html) | 2–10 | Chung một máy, hoặc online mỗi người một máy theo mã phòng |
+| [Cờ Tỷ Phú Cần Thơ](https://buuhaucantho-ship-it.github.io/game-hoi-ban/co-ty-phu.html) | 2–10 | Chung một máy, hoặc online mỗi người một máy theo mã phòng |
 | [Ma Sói](https://buuhaucantho-ship-it.github.io/game-hoi-ban/ma-soi.html) | 5–24 | Tự dẫn bằng giọng đọc, không cần quản trò; 20 vai, 3 phe |
 | [Ai Là Gián Điệp](https://buuhaucantho-ship-it.github.io/game-hoi-ban/gian-diep.html) | 3–12 | Chuyền máy nhận từ khóa, mô tả và bỏ phiếu |
 | [Đảo Khai Hoang](https://buuhaucantho-ship-it.github.io/game-hoi-ban/khai-hoang.html) | 3–4, mở rộng 5–6 | Chung một máy, mỗi ghế chọn người hoặc máy |
 
-## Cờ Tỷ Phú Du Lịch
+## Cờ Tỷ Phú Cần Thơ
 
-- Mua đất từ Cần Thơ đến New York. Lần đầu dừng ở đất trống chỉ được mua đất; dừng lại lần sau mới mua nhà; đủ 4 nhà mới xây khách sạn. Trọn tuyến cùng màu thu tiền ×2.
+- Chủ đề Tây Đô, phong cách Gen Z: bún đậu hẻm, trà sữa, music box, karaoke, chợ đêm, các con đường lớn, nhà cổ Bình Thủy, Đại học Cần Thơ, cầu đi bộ Ninh Kiều, cầu Cần Thơ. Khu du lịch: chợ nổi Cái Răng, vườn cò Bằng Lăng, Mỹ Khánh, Cồn Sơn, Thiền viện Trúc Lâm.
+- Ô đặc biệt: Bến Ninh Kiều (xuất phát), Kẹt xe, Đêm nhạc (thuê ×2), Đi phượt (đi đâu cũng được), thẻ Kèo và Drama, Triều cường, Đèn xanh, Bill cuối tháng.
+- Nút chọn giao diện: Tự động, Điện thoại (bàn cờ dọc), iPad, Máy tính (có cột người chơi và nhật ký).
+- Lần đầu dừng ở đất trống chỉ được mua đất; dừng lại lần sau mới mua nhà; đủ 4 nhà mới xây khách sạn. Trọn tuyến cùng màu thu tiền ×2.
 - Khu du lịch thu tiền theo số khu sở hữu. Kẹt xe phải đổ đôi hoặc chờ 3 lượt; đang kẹt xe không thu tiền thuê. Cầm cố đất khi thiếu tiền; chỉ mua lại được đất đang cầm cố.
 - Online: chủ phòng bấm *Tạo phòng mới*, gửi mã cho bạn bè. Chủ phòng giữ trang mở suốt ván.
 
