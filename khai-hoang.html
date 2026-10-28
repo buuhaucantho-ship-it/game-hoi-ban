@@ -54,16 +54,23 @@
 
 /* ---------- play ---------- */
 .kh{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:14px;align-items:start}
-.boardbox{position:relative;border-radius:22px;background:radial-gradient(circle at 50% 45%,var(--sea),var(--sea-2));box-shadow:var(--shadow);overflow:hidden;min-width:0}
+.boardbox{position:relative;border-radius:22px;background:#0b4a66;box-shadow:var(--shadow);overflow:hidden;min-width:0}
 .boardbox svg{display:block;width:100%;height:auto;max-height:calc(100dvh - 92px);touch-action:manipulation}
 .boardbox .hintbar{position:absolute;left:12px;right:12px;top:10px;display:flex;justify-content:center;pointer-events:none}
 .boardbox .hintbar span{background:rgba(0,0,0,.55);color:#fff;font-weight:800;font-size:14px;padding:7px 14px;border-radius:999px;backdrop-filter:blur(4px)}
-.tile .hexp{stroke:#f6efd9;stroke-width:3}
-.tile.hot .hexp{stroke:#fff36b;stroke-width:6}
+.tile .hexp{stroke:#f3e6c2;stroke-width:2.5;transition:stroke .3s,stroke-width .3s}
+.tile.hot .hexp{stroke:#fff36b;stroke-width:6;animation:hotglow 1.1s ease-in-out 2}
+@keyframes hotglow{50%{stroke:#fffbd1;stroke-width:9}}
 .tile.pick{cursor:pointer}
 .tile.pick .hexp{stroke:#fff;stroke-width:5;stroke-dasharray:10 6;animation:dash 1s linear infinite}
+.waves{animation:waves 9s linear infinite}
+@keyframes waves{to{transform:translateX(60px)}}
+.pop{animation:popin .45s cubic-bezier(.2,1.6,.4,1);transform-box:fill-box;transform-origin:50% 80%}
+@keyframes popin{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+.robber{transition:transform .6s cubic-bezier(.4,1.4,.5,1)}
+.flyres{animation:flyres 1.4s ease-out forwards}
+@keyframes flyres{0%{opacity:0;transform:translateY(8px) scale(.6)}20%{opacity:1;transform:translateY(0) scale(1.05)}100%{opacity:0;transform:translateY(-34px) scale(1)}}
 @keyframes dash{to{stroke-dashoffset:-32}}
-.tok circle{fill:#fbf3dc;stroke:#a88b52;stroke-width:1.5}
 .tok text{font-family:var(--f-display);font-weight:800;text-anchor:middle;dominant-baseline:central}
 .tok .hi{fill:#c0392b}
 .vx{cursor:pointer}
@@ -74,10 +81,10 @@
 .ex line.hit{stroke:transparent;stroke-width:22}
 .ex line.vis{stroke:#fff;stroke-width:6;stroke-dasharray:6 6;stroke-linecap:round;animation:dash 1s linear infinite}
 .road{stroke-linecap:round}
-.bld{stroke:#fff;stroke-width:2.2;stroke-linejoin:round}
-.bld.pick{cursor:pointer;stroke:#fff36b;stroke-width:4}
+.bld.pick{cursor:pointer;animation:bob 1s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes bob{50%{transform:translateY(-4px)}}
+.bld.pick path{stroke:#fff36b;stroke-width:2.6}
 .port text{font-family:var(--f-body);font-weight:900;font-size:11px;text-anchor:middle;dominant-baseline:central;fill:#10222b}
-.robber{transition:transform .35s ease}
 
 .panel{display:grid;gap:10px;position:sticky;top:66px}
 .box{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px}
@@ -90,7 +97,7 @@
 .die i{width:6px;height:6px;border-radius:50%;background:#1b2730;place-self:center;visibility:hidden}
 .die i.on{visibility:visible}
 .die.red i{background:#e2434b}
-.die.roll{animation:tumble .45s linear}
+.die.roll{animation:tumble .55s cubic-bezier(.3,.7,.4,1)}
 @keyframes tumble{30%{transform:rotate(120deg) scale(.85)}70%{transform:rotate(280deg) scale(1.05)}100%{transform:rotate(360deg)}}
 .dsum{font-family:var(--f-display);font-weight:800;font-size:24px;min-width:30px;text-align:center}
 .hand{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
@@ -358,22 +365,50 @@ $("#sound").addEventListener("click",()=>{soundOn=!soundOn;store.set("dkh-sound"
 /* ===================== DRAW ===================== */
 const S=58;
 function hexPath(t,sc=1){let d="";for(let c=0;c<6;c++){const a=(-90+60*c)*Math.PI/180;d+=(c?"L":"M")+((t.x+Math.cos(a)*sc)*S).toFixed(1)+","+((t.y+Math.sin(a)*sc)*S).toFixed(1)}return d+"Z"}
-function terrainArt(t){const x=t.x*S,y=t.y*S-10;
+function shade(hex,amt){const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const f=amt<0?0:255,t=Math.abs(amt);r=Math.round(r+(f-r)*t);g=Math.round(g+(f-g)*t);b=Math.round(b+(f-b)*t);return"#"+((1<<24)|(r<<16)|(g<<8)|b).toString(16).slice(1)}
+const TGRAD={forest:["#5fb85a","#2f7f3a"],hill:["#e08a5a","#a8512b"],field:["#f6d46a","#d3a11f"],pasture:["#b5e07e","#6fae45"],mountain:["#aab0bd","#6d7384"],desert:["#f3e3b8","#d6bd82"]};
+function defs(){return `<defs>
+ ${Object.entries(TGRAD).map(([k,[a,b]])=>`<radialGradient id="g-${k}" cx="45%" cy="35%" r="75%"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></radialGradient>`).join("")}
+ <radialGradient id="g-tok" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#eadbb5"/></radialGradient>
+ <radialGradient id="g-sea" cx="50%" cy="50%" r="60%"><stop offset="0" stop-color="#2a86ad"/><stop offset="1" stop-color="#0b4a66"/></radialGradient>
+ <linearGradient id="g-sand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4e4b4"/><stop offset="1" stop-color="#dcc283"/></linearGradient>
+ <filter id="f-shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-color="#000" flood-opacity=".35"/></filter>
+ <filter id="f-soft" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.2" flood-color="#000" flood-opacity=".45"/></filter>
+ <pattern id="p-wave" width="60" height="26" patternUnits="userSpaceOnUse"><path d="M0 13q15-8 30 0t30 0" fill="none" stroke="#ffffff" stroke-opacity=".13" stroke-width="2"/></pattern>
+</defs>`}
+function pine(x,y,s){return `<g transform="translate(${x} ${y}) scale(${s})"><rect x="-1.6" y="6" width="3.2" height="6" fill="#6b4423"/><path d="M0,-14L9,0H4L11,8H-11L-4,0H-9Z" fill="#1f6b32"/><path d="M0,-14L9,0H4L11,8H0Z" fill="#185827"/><path d="M-3,-6l3,-5" stroke="#4fa35a" stroke-width="1.4" stroke-linecap="round"/></g>`}
+function sheep(x,y,s,flip){return `<g transform="translate(${x} ${y}) scale(${flip?-s:s} ${s})"><ellipse cx="0" cy="9" rx="10" ry="2" fill="#000" opacity=".15"/>${[[-5,0],[0,-2.5],[5,0],[-2,2.5],[3,2.5]].map(([a,b])=>`<circle cx="${a}" cy="${b}" r="4.6" fill="#fff"/>`).join("")}<circle cx="0" cy="-1" r="3" fill="#f4f4f4"/><ellipse cx="10" cy="-1.5" rx="3.4" ry="2.8" fill="#4a3b30"/><rect x="-5" y="5" width="1.8" height="4" fill="#4a3b30"/><rect x="3" y="5" width="1.8" height="4" fill="#4a3b30"/></g>`}
+function terrainArt(t){const x=t.x*S,y=t.y*S-11;
  switch(t.t){
-  case "forest":return `<g fill="#2b7537">${[[-18,6],[0,-6],[18,6]].map(([dx,dy])=>`<path d="M${x+dx},${y+dy-14}l9,14h-5l7,10h-22l7-10h-5z"/>`).join("")}</g>`;
-  case "hill":return `<g fill="#a84e27">${[[-16,-2],[4,-2],[-6,8],[14,8]].map(([dx,dy])=>`<rect x="${x+dx-8}" y="${y+dy-4}" width="18" height="8" rx="1.5"/>`).join("")}</g>`;
-  case "field":return `<g stroke="#b88a12" stroke-width="2.4" stroke-linecap="round" fill="none">${[-16,-6,4,14].map(dx=>`<path d="M${x+dx},${y+12}v-20M${x+dx},${y-2}l-4,-4M${x+dx},${y-2}l4,-4M${x+dx},${y-8}l-4,-4M${x+dx},${y-8}l4,-4"/>`).join("")}</g>`;
-  case "pasture":return `<g fill="#fff">${[[-12,0],[12,4]].map(([dx,dy])=>`<ellipse cx="${x+dx}" cy="${y+dy}" rx="10" ry="7"/><circle cx="${x+dx+10}" cy="${y+dy-3}" r="4" fill="#5d4b3a"/>`).join("")}</g>`;
-  case "mountain":return `<path d="M${x-26},${y+12}L${x-8},${y-14}L${x+2},${y-2}L${x+12},${y-16}L${x+28},${y+12}Z" fill="#6c7282"/><path d="M${x-8},${y-14}l5,7l-5,-2l-5,2zM${x+12},${y-16}l5,7l-5,-2l-5,2z" fill="#fff"/>`;
-  case "desert":return `<path d="M${x-26},${y+8}q13,-12 26,0t26,0" stroke="#c9ad6a" stroke-width="3" fill="none"/><path d="M${x+6},${y+8}v-16m0,6h-6v-6m6,8h6v-8" stroke="#6f9a3d" stroke-width="3" fill="none" stroke-linecap="round"/>`}}
-function tokenSVG(t){if(!t.n)return"";const x=t.x*S,y=t.y*S+16,hi=t.n===6||t.n===8,p=PIPS[t.n];
- return `<g class="tok"><circle cx="${x}" cy="${y}" r="15"/><text x="${x}" y="${y-2}" font-size="15" class="${hi?"hi":""}" fill="${hi?"#c0392b":"#10222b"}">${t.n}</text>${Array.from({length:p},(_,k)=>`<circle cx="${x+(k-(p-1)/2)*3.6}" cy="${y+9}" r="1.3" fill="${hi?"#c0392b":"#10222b"}" stroke="none"/>`).join("")}</g>`}
-function houseSVG(x,y,col,city,cls,v){const stroke=col==="#f2f2f2"?"#444":"#fff";
- if(city)return `<path class="bld ${cls||""}" ${v!=null?`data-v="${v}"`:""} d="M${x-13},${y+10}V${y-4}l7-7l7,7v-1h12v15z" fill="${col}" stroke="${stroke}" style="stroke:${stroke}"/>`;
- return `<path class="bld ${cls||""}" ${v!=null?`data-v="${v}"`:""} d="M${x-9},${y+8}V${y-2}l9-8l9,8V${y+8}z" fill="${col}" stroke="${stroke}" style="stroke:${stroke}"/>`}
-function drawBoard(){const bd=B(),xs=bd.verts.map(v=>v.x*S),ys=bd.verts.map(v=>v.y*S);
- const pad=44,minX=Math.min(...xs)-pad,maxX=Math.max(...xs)+pad,minY=Math.min(...ys)-pad,maxY=Math.max(...ys)+pad;
- const svg=$("#board");svg.setAttribute("viewBox",`${minX} ${minY} ${maxX-minX} ${maxY-minY}`);
+  case "forest":return pine(x-17,y+2,.95)+pine(x+17,y+2,.95)+pine(x,y-5,1.15)+pine(x-8,y+12,.7)+pine(x+9,y+13,.65);
+  case "hill":return `<path d="M${x-30},${y+14}q14,-24 30,-14q14,-14 30,14z" fill="#b65d32" opacity=".55"/><g stroke="#7d3517" stroke-width=".8">${[[-12,4],[4,4],[-4,-3],[-20,11],[-4,11],[12,11]].map(([dx,dy])=>`<rect x="${x+dx-7}" y="${y+dy-3}" width="14" height="6.5" rx="1.2" fill="#d97a4a"/><rect x="${x+dx-7}" y="${y+dy-3}" width="14" height="2" rx="1" fill="#f0a272" stroke="none"/>`).join("")}</g>`;
+  case "field":return `<g>${[-18,-9,0,9,18].map((dx,k)=>{const h=k%2?17:21,bx=x+dx;return `<path d="M${bx},${y+14}v-${h}" stroke="#a37a0e" stroke-width="1.6"/>${[0,5,10].map(o=>`<ellipse cx="${bx-2.6}" cy="${y+14-h+o+3}" rx="1.8" ry="3.4" transform="rotate(-28 ${bx-2.6} ${y+14-h+o+3})" fill="#f3c537"/><ellipse cx="${bx+2.6}" cy="${y+14-h+o+3}" rx="1.8" ry="3.4" transform="rotate(28 ${bx+2.6} ${y+14-h+o+3})" fill="#e8b124"/>`).join("")}<ellipse cx="${bx}" cy="${y+14-h}" rx="1.8" ry="3.6" fill="#f7d54e"/>`}).join("")}</g>`;
+  case "pasture":return `<g fill="#5e9e36">${[[-24,10],[22,12],[-6,15],[14,-6],[-20,-6]].map(([dx,dy])=>`<path d="M${x+dx-4},${y+dy}q2,-7 4,0q2,-7 4,0" stroke="#5e9e36" stroke-width="1.6" fill="none"/>`).join("")}</g>`+sheep(x-11,y+1,1.05)+sheep(x+12,y+5,.85,true);
+  case "mountain":return `<path d="M${x-32},${y+15}L${x-11},${y-15}L${x+1},${y-1}L${x+14},${y-19}L${x+33},${y+15}Z" fill="#7b8192"/><path d="M${x-11},${y-15}L${x+1},${y-1}L${x-4},${y+15}H${x-32}Z" fill="#5e6474"/><path d="M${x+14},${y-19}L${x+33},${y+15}H${x+12}L${x+6},${y-6}Z" fill="#666c7c"/>
+   <path d="M${x-11},${y-15}l5,7l-3,-1l-2,3l-2,-3l-3,1z" fill="#fff"/><path d="M${x+14},${y-19}l6,8l-3,-1l-3,3l-3,-3l-3,1z" fill="#fff"/><circle cx="${x+20}" cy="${y+9}" r="2" fill="#c9d3e6"/><circle cx="${x-18}" cy="${y+10}" r="1.6" fill="#c9d3e6"/>`;
+  case "desert":return `<path d="M${x-34},${y+16}q17,-16 34,-4t34,4z" fill="#e2c98c"/><path d="M${x-20},${y+16}q12,-10 26,-2" stroke="#caa964" stroke-width="2" fill="none"/>
+   <g transform="translate(${x+8} ${y-2})"><rect x="-2.6" y="-14" width="5.2" height="22" rx="2.6" fill="#5f9a3a"/><path d="M-2.6,-2h-5v-7" stroke="#5f9a3a" stroke-width="4.2" fill="none" stroke-linecap="round"/><path d="M2.6,1h5v-6" stroke="#5f9a3a" stroke-width="4.2" fill="none" stroke-linecap="round"/></g>
+   <circle cx="${x-14}" cy="${y-8}" r="5" fill="#f7a83a" opacity=".85"/>`}}
+function tokenSVG(t){if(!t.n)return"";const x=t.x*S,y=t.y*S+17,hi=t.n===6||t.n===8,p=PIPS[t.n],c=hi?"#c0392b":"#2b2b2b";
+ return `<g class="tok" filter="url(#f-soft)"><circle cx="${x}" cy="${y}" r="15.5" fill="url(#g-tok)" stroke="#b39a62" stroke-width="1.2"/><text x="${x}" y="${y-2.2}" font-size="${hi?17:15}" fill="${c}">${t.n}</text>${Array.from({length:p},(_,k)=>`<circle cx="${x+(k-(p-1)/2)*3.6}" cy="${y+9}" r="1.35" fill="${c}"/>`).join("")}</g>`}
+function houseSVG(x,y,col,city,cls,v){const d=shade(col,-.32),l=shade(col,.22),ol=col==="#f2f2f2"?"#555":"#1b1b1b";
+ const data=v!=null?`data-v="${v}"`:"";
+ if(city)return `<g class="bld ${cls||""}" ${data} filter="url(#f-soft)"><path d="M${x-14},${y+10}V${y-2}H${x+15}V${y+10}Z" fill="${col}" stroke="${ol}" stroke-width="1.3"/><path d="M${x+1},${y+10}V${y-2}H${x+15}V${y+10}Z" fill="${d}"/><path d="M${x-14},${y-2}V${y-10}l6,-6l6,6V${y-2}Z" fill="${l}" stroke="${ol}" stroke-width="1.3"/><rect x="${x-10}" y="${y+2}" width="4" height="5" fill="${ol}" opacity=".55"/><rect x="${x+5}" y="${y+2}" width="4" height="5" fill="${ol}" opacity=".45"/><path d="M${x-14},${y-2}H${x+15}" stroke="${ol}" stroke-width="1.3"/></g>`;
+ return `<g class="bld ${cls||""}" ${data} filter="url(#f-soft)"><path d="M${x-9},${y+9}V${y-1}H${x+9}V${y+9}Z" fill="${col}" stroke="${ol}" stroke-width="1.3"/><path d="M${x},${y+9}V${y-1}H${x+9}V${y+9}Z" fill="${d}"/><path d="M${x-11},${y}L${x},${y-11}L${x+11},${y}Z" fill="${l}" stroke="${ol}" stroke-width="1.3" stroke-linejoin="round"/><rect x="${x-5}" y="${y+3}" width="3.6" height="6" fill="${ol}" opacity=".55"/></g>`}
+let staticKey=null,seenB=new Set(),robberPos=null;
+function boardBox(){const bd=B(),xs=bd.verts.map(v=>v.x*S),ys=bd.verts.map(v=>v.y*S),pad=48;return[Math.min(...xs)-pad,Math.min(...ys)-pad,Math.max(...xs)-Math.min(...xs)+2*pad,Math.max(...ys)-Math.min(...ys)+2*pad]}
+function drawStatic(){const bd=B(),[x0,y0,w,h]=boardBox(),svg=$("#board");svg.setAttribute("viewBox",`${x0} ${y0} ${w} ${h}`);
+ let o=defs()+`<rect x="${x0-40}" y="${y0-40}" width="${w+80}" height="${h+80}" fill="url(#g-sea)"/><g class="waves"><rect x="${x0-80}" y="${y0-40}" width="${w+160}" height="${h+80}" fill="url(#p-wave)"/></g>`;
+ o+=`<g opacity=".5">${bd.tiles.map(t=>`<path d="${hexPath(t,1.3)}" fill="#3a9cc4"/>`).join("")}</g><g class="shore">${bd.tiles.map(t=>`<path d="${hexPath(t,1.13)}" fill="url(#g-sand)"/>`).join("")}</g>`;
+ bd.ports.forEach(pt=>{const E=bd.edges[pt.e],a=bd.verts[E.a],b=bd.verts[E.b],t=bd.tiles[E.t[0]];
+  const mx=(a.x+b.x)/2,my=(a.y+b.y)/2,dx=mx-t.x,dy=my-t.y,L=Math.hypot(dx,dy),px=(mx+dx/L*.66)*S,py=(my+dy/L*.66)*S;const col=pt.t==="any"?"#fbf3dc":RCOL[pt.t];
+  o+=`<g class="port"><path d="M${a.x*S},${a.y*S}L${px},${py}L${b.x*S},${b.y*S}" fill="none" stroke="#8a6a3d" stroke-width="5" stroke-linecap="round"/><path d="M${a.x*S},${a.y*S}L${px},${py}L${b.x*S},${b.y*S}" fill="none" stroke="#d8b27a" stroke-width="2.5" stroke-dasharray="3 3"/>
+   <g filter="url(#f-soft)"><circle cx="${px}" cy="${py}" r="16.5" fill="${col}" stroke="#fff" stroke-width="2.2"/>${pt.t==="any"?`<text x="${px}" y="${py+.5}">3:1</text>`:`<g transform="translate(${px-8} ${py-14}) scale(.68)">${RICON[pt.t].replace(/<svg[^>]*>|<\/svg>/g,"")}</g><text x="${px}" y="${py+8}" style="fill:#fff;font-size:9px">2:1</text>`}</g></g>`});
+ o+=`<g filter="url(#f-shadow)">${bd.tiles.map((t,i)=>`<g class="tile" id="tile${i}" data-t="${i}"><path class="hexp" d="${hexPath(t,.985)}" fill="url(#g-${t.t})"/><path d="${hexPath(t,.86)}" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width="2"/>${terrainArt(t)}${tokenSVG(t)}</g>`).join("")}</g>`;
+ o+=`<g id="dyn"></g><g id="robber" class="robber" pointer-events="none"><ellipse cx="0" cy="15" rx="11" ry="3.4" fill="rgba(0,0,0,.4)"/><path d="M-9,14q-1.5,-13 4.5,-17a7.5,7.5 0 1 1 9,0q6,4 4.5,17z" fill="#2b2b33" stroke="#fff" stroke-width="1.8"/><circle cx="-2.5" cy="-9" r="1.2" fill="#ffd84a"/><circle cx="2.5" cy="-9" r="1.2" fill="#ffd84a"/></g><g id="fxl" pointer-events="none"></g>`;
+ svg.innerHTML=o;staticKey=bd;seenB=new Set();robberPos=null;
+ bd.verts.forEach((V,v)=>{if(V.b)seenB.add("v"+v+V.b.k)});bd.edges.forEach((E,e)=>{if(E.r!=null)seenB.add("e"+e)})}
+function drawBoard(){const bd=B();if(staticKey!==bd||!$("#dyn"))drawStatic();
  const m=G.mode,me=G.actor??G.turn;let legalV=[],legalE=[],legalT=[],legalC=[];
  if(m==="setupSett")legalV=legalSetts(me,true);
  if(m==="sett")legalV=legalSetts(me,false);
@@ -381,34 +416,24 @@ function drawBoard(){const bd=B(),xs=bd.verts.map(v=>v.x*S),ys=bd.verts.map(v=>v
  if(m==="road"||m==="free")legalE=legalRoads(me);
  if(m==="city")legalC=legalCities(me);
  if(m==="robber")legalT=bd.tiles.map((t,i)=>i).filter(i=>i!==bd.robber);
+ bd.tiles.forEach((t,i)=>{const el=$("#tile"+i);if(!el)return;el.classList.toggle("pick",legalT.includes(i));el.classList.toggle("hot",G.hot.includes(i))});
  let h="";
- // sea ring
- h+=`<g opacity=".25">${bd.tiles.map(t=>`<path d="${hexPath(t,1.32)}" fill="#0a3f57"/>`).join("")}</g>`;
- // ports
- bd.ports.forEach(pt=>{const E=bd.edges[pt.e],a=bd.verts[E.a],b=bd.verts[E.b],t=bd.tiles[E.t[0]];
-  const mx=(a.x+b.x)/2,my=(a.y+b.y)/2,dx=mx-t.x,dy=my-t.y,L=Math.hypot(dx,dy),px=(mx+dx/L*.62)*S,py=(my+dy/L*.62)*S;
-  const col=pt.t==="any"?"#fbf3dc":RCOL[pt.t];
-  h+=`<g class="port"><line x1="${a.x*S}" y1="${a.y*S}" x2="${px}" y2="${py}" stroke="#d9c79a" stroke-width="4"/><line x1="${b.x*S}" y1="${b.y*S}" x2="${px}" y2="${py}" stroke="#d9c79a" stroke-width="4"/>
-   <circle cx="${px}" cy="${py}" r="16" fill="${col}" stroke="#fff" stroke-width="2"/>${pt.t==="any"?`<text x="${px}" y="${py}">3:1</text>`:`<g transform="translate(${px-9} ${py-13}) scale(.75)">${RICON[pt.t].replace(/<svg[^>]*>|<\/svg>/g,"")}</g><text x="${px}" y="${py+9}" style="fill:#fff;font-size:9px">2:1</text>`}</g>`});
- // tiles
- bd.tiles.forEach((t,i)=>{const pick=legalT.includes(i),hot=G.hot.includes(i);
-  h+=`<g class="tile${pick?" pick":""}${hot?" hot":""}" ${pick?`data-t="${i}"`:""}><path class="hexp" d="${hexPath(t,.97)}" fill="${TER[t.t].c}"/>${terrainArt(t)}${tokenSVG(t)}</g>`});
- // robber
- {const t=bd.tiles[bd.robber],x=t.x*S+(t.n?-24:0),y=t.y*S+(t.n?10:4);
-  h+=`<g class="robber" pointer-events="none"><ellipse cx="${x}" cy="${y+14}" rx="10" ry="3" fill="rgba(0,0,0,.35)"/><path d="M${x-8},${y+13}q-1,-12 4,-16a7,7 0 1 1 8,0q5,4 4,16z" fill="#2b2b33" stroke="#fff" stroke-width="1.6"/></g>`}
- // roads
- bd.edges.forEach((E,e)=>{if(E.r==null)return;const a=bd.verts[E.a],b=bd.verts[E.b],col=G.players[E.r].color;
-  const x1=a.x*S+(b.x-a.x)*S*.14,y1=a.y*S+(b.y-a.y)*S*.14,x2=b.x*S-(b.x-a.x)*S*.14,y2=b.y*S-(b.y-a.y)*S*.14;
-  h+=`<line class="road" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#1b1b1b" stroke-width="10"/><line class="road" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="6.5"/>`});
- // legal edges
+ bd.edges.forEach((E,e)=>{if(E.r==null)return;const a=bd.verts[E.a],b=bd.verts[E.b],col=G.players[E.r].color,k="e"+e,nw=!seenB.has(k);seenB.add(k);
+  const x1=a.x*S+(b.x-a.x)*S*.16,y1=a.y*S+(b.y-a.y)*S*.16,x2=b.x*S-(b.x-a.x)*S*.16,y2=b.y*S-(b.y-a.y)*S*.16;
+  h+=`<g class="roadg${nw?" pop":""}" filter="url(#f-soft)"><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#1b1b1b" stroke-width="10.5" stroke-linecap="round"/><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="7" stroke-linecap="round"/><line x1="${x1}" y1="${y1-1.2}" x2="${x2}" y2="${y2-1.2}" stroke="#fff" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/></g>`});
  legalE.forEach(e=>{const E=bd.edges[e],a=bd.verts[E.a],b=bd.verts[E.b];h+=`<g class="ex" data-e="${e}"><line class="vis" x1="${a.x*S}" y1="${a.y*S}" x2="${b.x*S}" y2="${b.y*S}"/><line class="hit" x1="${a.x*S}" y1="${a.y*S}" x2="${b.x*S}" y2="${b.y*S}"/></g>`});
- // buildings
- bd.verts.forEach((V,v)=>{if(!V.b)return;h+=houseSVG(V.x*S,V.y*S,G.players[V.b.p].color,V.b.k==="c",legalC.includes(v)?"pick":"",legalC.includes(v)?v:null)});
- // legal vertices
+ bd.verts.forEach((V,v)=>{if(!V.b)return;const k="v"+v+V.b.k,nw=!seenB.has(k);seenB.add(k);const pick=legalC.includes(v);
+  h+=`<g class="${nw?"pop":""}">${houseSVG(V.x*S,V.y*S,G.players[V.b.p].color,V.b.k==="c",pick?"pick":"",pick?v:null)}</g>`});
  legalV.forEach(v=>{const V=bd.verts[v];h+=`<g class="vx" data-v="${v}"><circle class="hit" cx="${V.x*S}" cy="${V.y*S}" r="17"/><circle class="dot" cx="${V.x*S}" cy="${V.y*S}" r="7"/></g>`});
- svg.innerHTML=h;
+ $("#dyn").innerHTML=h;
+ const t=bd.tiles[bd.robber],rx=t.x*S+(t.n?-25:0),ry=t.y*S+(t.n?9:3),rob=$("#robber");
+ if(robberPos!==bd.robber){if(robberPos==null){rob.style.transition="none";rob.style.transform=`translate(${rx}px,${ry}px)`;void rob.getBoundingClientRect();rob.style.transition=""}else rob.style.transform=`translate(${rx}px,${ry}px)`;robberPos=bd.robber}
  const hint={setupSett:"Chạm chấm sáng để đặt làng",setupRoad:"Chạm đoạn sáng để đặt đường",sett:"Chạm chấm sáng để xây làng",road:"Chạm đoạn sáng để xây đường",free:`Chạm đoạn sáng để xây đường miễn phí (còn ${G.free})`,city:"Chạm vào làng để nâng lên thành phố",robber:"Chạm vào một ô để dời băng cướp"}[m];
  $("#hint").hidden=!hint||G.players[me].bot;if(hint)$("#hint").textContent=hint}
+function floatRes(ti,r,n){const g=$("#fxl");if(!g||matchMedia("(prefers-reduced-motion: reduce)").matches)return;const t=B().tiles[ti];
+ const el=document.createElementNS("http://www.w3.org/2000/svg","g");el.setAttribute("class","flyres");
+ el.innerHTML=`<g transform="translate(${t.x*S-13} ${t.y*S-30})"><rect width="26" height="26" rx="7" fill="${RCOL[r]}" stroke="#fff" stroke-width="2"/><g transform="translate(3 3) scale(.84)">${RICON[r].replace(/<svg[^>]*>|<\/svg>/g,"")}</g>${n>1?`<text x="30" y="18" font-family="Baloo 2,sans-serif" font-weight="800" font-size="15" fill="#fff" stroke="#10222b" stroke-width="3" paint-order="stroke">×${n}</text>`:""}</g>`;
+ g.appendChild(el);setTimeout(()=>el.remove(),1500)}
 $("#board").addEventListener("click",e=>{if(!G||G.over)return;const me=G.actor??G.turn;if(G.players[me].bot)return;
  const v=e.target.closest("[data-v]"),ed=e.target.closest("[data-e]"),t=e.target.closest("[data-t]");
  if(v)onVertex(+v.dataset.v);else if(ed)onEdge(+ed.dataset.e);else if(t)onTile(+t.dataset.t)});
@@ -520,7 +545,8 @@ function produce(s){const bd=B(),dem={};G.hot=bd.tiles.map((t,i)=>t.n===s&&i!==b
  Object.entries(dem).forEach(([r,by])=>{const need=Object.values(by).reduce((a,b)=>a+b,0),who=Object.keys(by);
   if(need>G.bank[r]&&who.length>1){log(`Ngân hàng hết ${RN[r]}, không ai nhận`);return}
   who.forEach(p=>{const g=give(G.players[p],r,by[p]);if(g)got[p][r]=g})});
- got.forEach((o,i)=>{if(sum(o))log(`${G.players[i].name} nhận ${listRes(o)}`)})}
+ got.forEach((o,i)=>{if(sum(o))log(`${G.players[i].name} nhận ${listRes(o)}`)});
+ setTimeout(()=>{if(!G)return;G.hot.forEach(ti=>{const t=bd.tiles[ti],r=TER[t.t].r;let n=0;t.v.forEach(v=>{const b=bd.verts[v].b;if(b)n+=b.k==="c"?2:1});if(n)floatRes(ti,r,n)})},60)}
 async function handleSeven(){const my=token;
  for(let k=0;k<G.players.length;k++){const j=(G.turn+k)%G.players.length,p=G.players[j],t=total(p);if(t<=7)continue;const n=Math.floor(t/2);
   if(p.bot){botDiscard(j,n);log(`${p.name} bỏ ${n} lá`);continue}
