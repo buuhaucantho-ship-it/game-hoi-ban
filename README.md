@@ -36,6 +36,8 @@ Nút chọn chủ đề ở trang cài đặt và trên thanh trên cùng (đổ
 
 ## Ma Sói
 
+Giao diện "Làng thần tiên" theo nét vẽ sách giáo khoa xưa: giấy ngà, màu chì dịu, tranh làng mái tranh, hoa đào, tiên nhỏ (tự vẽ). Nút bấm nảy và rắc bụi tiên, có tiếng; nhạc nền dân gian êm (ban ngày đàn tranh, sáo; ban đêm hộp nhạc, dế kêu), tự nhỏ lại khi giọng đọc dẫn truyện. Bật tắt nhạc và hiệu ứng trong phần Tùy chỉnh.
+
 Tự dẫn, không cần quản trò. Chuyền máy để mỗi người giữ thẻ xem vai, rồi đặt máy giữa vòng và bật âm lượng.
 Ban đêm giọng đọc gọi từng vai thức dậy; vai được gọi cầm máy chọn, bấm xong máy tự gọi vai tiếp theo.
 Vai đã chết vẫn được gọi và chờ một lúc ngẫu nhiên để không lộ. Ban ngày: công bố người chết, thảo luận có đếm giờ, bỏ phiếu kín chuyền máy (hoặc biểu quyết công khai). Trang tự tính kết quả và báo phe thắng.
