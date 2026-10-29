@@ -20,7 +20,7 @@ Nút chọn chủ đề ở trang cài đặt và trên thanh trên cùng (đổ
 
 ### Chủ đề Cần Thơ
 
-- Chủ đề Tây Đô, phong cách Gen Z: mỳ cay Omega, mỳ cay Itada, bún đậu Xưa, hồng trà Ngô Gia, music box, karaoke, chợ đêm, Vincom Xuân Khánh, các con đường lớn, nhà cổ Bình Thủy, Đại học Cần Thơ, cầu đi bộ Ninh Kiều, cầu Cần Thơ. Khu du lịch: chợ nổi Cái Răng, vườn cò Bằng Lăng, Mỹ Khánh, Cồn Sơn, Thiền viện Trúc Lâm.
+- Bàn cờ Cần Thơ, đời sinh viên Tây Đô: Mỳ cay Omega, Mỳ cay Itada, Koi Thé, Jollibee, Hồng trà Ngô Gia, Bún đậu Xưa, Tiệm giặt sấy 2en, Tiệm thuê đồ Bby Thorr, Ký túc xá, Trung tâm gia sư Kiến, Trung tâm ngoại ngữ Edugo, Đại học Cần Thơ, Vựa cua Đăng Quân (CN Trần Hoàng Na, CN Đại Ngân), Tiệm điện thoại iTN, Music box, Karaoke, Vincom Xuân Khánh, Vincom Hùng Vương, Sense City, Cầu đi bộ Ninh Kiều, Cầu Cần Thơ. Ô Nhà xe Haha đưa tới ô bất kỳ. Khu du lịch: chợ nổi Cái Răng, vườn cò Bằng Lăng, Mỹ Khánh, Cồn Sơn, Thiền viện Trúc Lâm.
 - Ô đặc biệt: Bến Ninh Kiều (xuất phát), Kẹt xe, Đêm nhạc (thuê ×2), Đi phượt (đi đâu cũng được), thẻ Kèo và Drama, Triều cường, Đèn xanh, Bill cuối tháng.
 - 10 nhân vật hoạt hình dân gian ba miền: Cô Ba Nam Bộ, Anh Hai khăn rằn, Cô gái Huế, Anh Cả Bắc Bộ, Liền chị Quan họ, Cô gái H'Mông, Chàng Ê Đê, Cô gái Chăm, Cô gái Khmer, Ông Tư miệt vườn.
 - Mỗi ô có hoạ tiết và màu riêng theo nơi đó (mẹt tre bún đậu, gạch bông nhà cổ, sóng chợ nổi, lưới kính Vincom…).
