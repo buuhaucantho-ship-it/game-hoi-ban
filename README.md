@@ -62,7 +62,21 @@ Trò chơi khai hoang, giao thương trên đảo lục giác (lấy cảm hứn
 - Thẻ phát triển: Hiệp sĩ, Điểm thưởng, Làm đường, Bội thu, Độc quyền. Đường dài nhất (từ 5 đoạn) và Đội quân mạnh nhất (từ 3 hiệp sĩ) mỗi cái 2 điểm.
 - Chọn 8, 10 hoặc 12 điểm để thắng. Ván được tự lưu để chơi tiếp.
 
+## Ngoại Ơi, Cháu Về! (3D, bản 0.1)
+
+Game nông trại 3D ấm áp ở quê ngoại miền Tây, chạy trên PC, điện thoại và iPad. Thư mục `ngoai-oi/` là bản đã build; mã nguồn nằm ở `ngoai-oi-src/` (Three.js + TypeScript + Vite).
+- Vườn nhà ngoại: nhà ngói, hiên, lu nước, bếp, nhà kho, ao sen, vườn xoài chuối, kênh dừa, ruộng lúa, sạp hạt giống, khu đất chừa sẵn để xây.
+- Nhân vật chibi tự tạo (tóc, màu tóc, màu da, trang phục, tên); góc nhìn thứ ba và thứ nhất (V).
+- Ngoại có lịch sinh hoạt theo giờ, chào cháu ở cổng, trò chuyện bằng giọng miền Tây, kể chuyện, cho hạt giống mỗi ngày, nhận quà rau.
+- 6 luống đất; xới, gieo rau muống hoặc cải xanh, tưới, thu hoạch. Cây chỉ lớn khi đất ẩm và không bao giờ chết.
+- Kho đồ 20 ô, thanh công cụ 8 ô; mua hạt, bán rau ở sạp. Ngày đêm 20 phút; nhạc sáo và đàn tranh tổng hợp; tiếng chim, gà, dế, ếch.
+- Tự lưu bằng IndexedDB (dự phòng localStorage).
+- Điều khiển trên PC: WASD đi, kéo chuột xoay camera, Shift chạy, Space nhảy, E tương tác, I mở kho, V đổi góc nhìn, Esc mở menu.
+- Điều khiển trên điện thoại: cần điều khiển bên trái, vuốt bên phải để xoay, cùng các nút bấm trên màn hình.
+
+Build lại: `cd ngoai-oi-src && npm install && npm run build` (xuất ra `../ngoai-oi`). Chạy thử khi đang sửa: `npm run dev`.
+
 ## Kỹ thuật
 
-Các trang HTML tĩnh, không cần build: `index.html` (trang chủ), `co-ty-phu.html`, `ma-soi.html`, `gian-diep.html`, `khai-hoang.html`, `hub.css`.
+Các trang HTML tĩnh, không cần build: `index.html` (trang chủ), `co-ty-phu.html`, `ma-soi.html`, `gian-diep.html`, `khai-hoang.html`, `hub.css`. Riêng Ngoại Ơi dùng Three.js, build sẵn trong `ngoai-oi/`.
 Nhân vật và hình minh họa là SVG tự vẽ. Thư viện ngoài duy nhất là [PeerJS](https://peerjs.com/) cho chế độ online của Cờ Tỷ Phú.
