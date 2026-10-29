@@ -28,6 +28,26 @@ export const ICON: Record<string, string> = {
   home: S(`<path ${OUT} fill="#e8a05a" d="M6 24L24 8l18 16"/><path ${OUT} fill="#fff6e6" d="M11 21v19h26V21"/><path ${OUT} fill="#c98a4a" d="M20 40V29h8v11"/>`),
   chat: S(`<path ${OUT} fill="#fff6e6" d="M6 10h36v22H20l-8 8v-8H6z"/><g fill="#4a3220"><circle cx="16" cy="21" r="2.4"/><circle cx="24" cy="21" r="2.4"/><circle cx="32" cy="21" r="2.4"/></g>`),
   gift: S(`<path ${OUT} fill="#ef6a7a" d="M8 20h32v20H8z"/><path ${OUT} fill="#f2c84a" d="M6 14h36v6H6zM21 14h6v26h-6z"/><path ${OUT} fill="none" d="M24 14c-4-8-12-6-8 0m8 0c4-8 12-6 8 0"/>`),
+  rod: S(`<path ${OUT} fill="none" d="M8 42L40 6"/><path stroke="#9a6a3c" stroke-width="4" stroke-linecap="round" d="M8 42L22 26"/><path stroke="#4a3220" stroke-width="1.4" fill="none" d="M40 6c4 10 2 24-4 30"/><circle ${OUT} cx="36" cy="38" r="3" fill="#e8433a"/><circle ${OUT} cx="13" cy="37" r="3.5" fill="#7a8a9a"/>`),
+  seed_cachua: seedPack("#f6d2c8", `<circle ${OUT} cx="24" cy="29" r="7" fill="#e0453a"/><path fill="#5a9a4a" d="M20 22l4 3 4-3-2 4h-4z"/>`),
+  seed_daubap: seedPack("#e2efcf", `<path ${OUT} fill="#9ac85a" d="M24 20c4 6 4 14 0 18-4-4-4-12 0-18z"/>`),
+  seed_muoigio: seedPack("#f6d6ea", `<g ${OUT} fill="#e8508a"><circle cx="24" cy="24" r="4"/><circle cx="24" cy="34" r="4"/><circle cx="19" cy="29" r="4"/><circle cx="29" cy="29" r="4"/></g><circle cx="24" cy="29" r="2.6" fill="#f6e04a"/>`),
+  seed_bido: seedPack("#f8e0c4", `<ellipse ${OUT} cx="24" cy="30" rx="9" ry="7" fill="#e9843a"/><path ${OUT} fill="none" d="M24 23v14M18 24c-2 4-2 8 0 12M30 24c2 4 2 8 0 12"/>`),
+  cachua: S(`<circle ${OUT} cx="24" cy="27" r="15" fill="#e0453a"/><path ${OUT} fill="#5a9a4a" d="M16 14l8 5 8-5-3 7h-10z"/><circle cx="18" cy="23" r="3" fill="#fff" opacity=".45"/>`),
+  daubap: S(`<g ${OUT}><path fill="#9ac85a" d="M14 40C10 28 18 12 30 6c2 10-4 28-16 34z"/><path fill="#7ab04a" d="M26 42c-2-12 6-26 16-30 0 10-6 26-16 30z"/></g><path stroke="#cfe8a8" stroke-width="2" fill="none" d="M16 36c2-10 8-20 12-26"/>`),
+  muoigio: S(`<g ${OUT}><path fill="#7ab84a" d="M24 44V24"/><circle cx="24" cy="14" r="5" fill="#e8508a"/><circle cx="16" cy="20" r="5" fill="#f2a83a"/><circle cx="32" cy="20" r="5" fill="#c85ad8"/><circle cx="20" cy="28" r="5" fill="#f6e04a"/><circle cx="29" cy="29" r="5" fill="#e8433a"/></g>`),
+  bido: S(`<g ${OUT}><ellipse cx="24" cy="29" rx="18" ry="13" fill="#e9843a"/><path fill="none" d="M24 16v26M14 18c-4 6-4 16 0 22M34 18c4 6 4 16 0 22"/><path fill="#6a5a3a" d="M22 10h4v7h-4z"/></g>`),
+  egg: S(`<ellipse ${OUT} cx="24" cy="26" rx="12" ry="16" fill="#fbf2e0"/><ellipse cx="19" cy="20" rx="3" ry="5" fill="#fff" opacity=".8"/>`),
+  caro: fish("#8a9a6a", "#c9d08a"), caloc: fish("#5a6a7a", "#a8b4be"), cavang: fish("#f2b83a", "#fbe08a"),
+  rain: S(`<path ${OUT} fill="#e8e6dc" d="M12 26a8 8 0 010-16 10 10 0 0119-2 7 7 0 015 13z"/><g stroke="#5aa0d8" stroke-width="3" stroke-linecap="round"><path d="M16 32l-3 8M26 32l-3 8M36 32l-3 8"/></g>`),
+  star: S(`<path ${OUT} fill="#f2c84a" d="M24 5l5.6 12 13 1.4-9.8 8.8 2.8 12.8L24 33.4 12.4 40l2.8-12.8L5.4 18.4l13-1.4z"/>`),
+  land: S(`<path ${OUT} fill="#c9a070" d="M4 34l12-10 10 6 8-8 10 12v8H4z"/><path ${OUT} fill="#e8433a" d="M30 8v14"/><path ${OUT} fill="#e8433a" d="M30 8l10 4-10 4z"/>`),
+  rotate: S(`<g ${OUT} fill="none"><path d="M38 24a14 14 0 11-4-10"/><path d="M36 6v9h-9"/></g>`),
+  move: S(`<g ${OUT} fill="none"><path d="M24 6v36M6 24h36M24 6l-5 5M24 6l5 5M24 42l-5-5M24 42l5-5M6 24l5-5M6 24l5 5M42 24l-5-5M42 24l-5 5"/></g>`),
+  trash: S(`<g ${OUT}><path fill="#e8605a" d="M12 14h24l-2 28H14z"/><path fill="none" d="M8 14h32M19 14V8h10v6M20 20v16M28 20v16"/></g>`),
+  check: S(`<g ${OUT} fill="none" stroke-width="4"><path d="M10 25l9 9 19-20"/></g>`),
   wave: S(`<path ${OUT} fill="#f6cfa4" d="M14 26V14a3 3 0 016 0v9-13a3 3 0 016 0v13-11a3 3 0 016 0v12-7a3 3 0 016 0v13c0 8-5 14-13 14h-2c-5 0-8-3-11-7l-6-8a3 3 0 015-4z"/><g ${OUT} fill="none"><path d="M6 8c-3 4-3 8 0 12M42 34c3-4 3-8 0-12"/></g>`)
 };
+function seedPack(bg: string, art: string) { return S(`<path ${OUT} fill="${bg}" d="M10 12h28l-2 30H12z"/><path ${OUT} fill="#d9bf9c" d="M10 12l4-5h20l4 5"/>${art}`); }
+function fish(c: string, b: string) { return S(`<path ${OUT} fill="${c}" d="M6 24c8-12 24-12 32 0-8 12-24 12-32 0z"/><path ${OUT} fill="${c}" d="M38 24l8-8v16z"/><path fill="${b}" d="M12 26c8 4 18 4 24 0-6 6-18 6-24 0z"/><circle cx="14" cy="22" r="2.2" fill="#241a16"/>`); }
 export const icon = (k: string) => ICON[k] || ICON.hand;

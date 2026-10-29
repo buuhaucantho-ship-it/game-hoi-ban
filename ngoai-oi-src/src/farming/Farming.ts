@@ -8,14 +8,16 @@ export type PlotAction = { kind: "till" | "plant" | "water" | "harvest" | "wait"
 export class Farming {
   constructor(private s: GameState, private inv: Inventory) {}
   /** Advance growth by real seconds (also used to catch up after the game was closed). */
+  boost: (p: PlotState) => number = () => 1; raining = false;
   tick(dt: number) {
     for (const p of this.s.plots) {
+      if (this.raining && p.tilled && p.crop && p.stage < RIPE) p.wet = true;
       if (!p.crop || !p.wet || p.stage >= RIPE) continue;
-      const def = CROPS[p.crop]; let t = dt;
+      const def = CROPS[p.crop]; let t = dt * this.boost(p);
       while (t > 0 && p.stage < RIPE && p.wet) {
         const need = def.stageSeconds[p.stage] * (1 - p.progress), use = Math.min(t, need);
         p.progress += use / def.stageSeconds[p.stage]; t -= use;
-        if (p.progress >= 0.999) { p.stage++; p.progress = 0; p.wet = p.stage < RIPE ? false : p.wet; bus.emit("plotGrow", p); }
+        if (p.progress >= 0.999) { p.stage++; p.progress = 0; p.wet = p.stage < RIPE && !this.raining ? false : p.wet; if (p.stage >= RIPE) p.wet = false; bus.emit("plotGrow", p); }
       }
     }
   }
@@ -25,7 +27,7 @@ export class Farming {
     const sel = this.inv.selected().id;
     if (!p.tilled) return { kind: "till", label: "Xới đất" };
     if (!p.crop) {
-      const seedId = ITEMS[sel]?.kind === "seed" ? sel : (["seed_raumuong", "seed_caixanh"].find(id => this.inv.count(id) > 0) || "");
+      const seedId = ITEMS[sel]?.kind === "seed" && this.inv.count(sel) > 0 ? sel : (Object.keys(ITEMS).find(id => ITEMS[id].kind === "seed" && this.inv.count(id) > 0) || "");
       if (!seedId) return { kind: "wait", label: "Hết hạt giống, ghé sạp mua nha" };
       const crop = ITEMS[seedId].crop!; return { kind: "plant", label: `Gieo ${CROPS[crop].name.toLowerCase()}`, crop };
     }

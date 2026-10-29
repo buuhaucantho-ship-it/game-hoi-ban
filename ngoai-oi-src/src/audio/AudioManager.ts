@@ -105,6 +105,15 @@ export class AudioManager {
   open() { this.tone(500, 900, 0.12, 0.07, "triangle", "ui"); }
   close() { this.tone(800, 450, 0.1, 0.06, "triangle", "ui"); }
   error() { this.tone(220, 180, 0.18, 0.08, "square", "ui"); }
+  private rainG: GainNode | null = null; private rainOn = false;
+  rain(on: boolean) { if (!this.ctx || on === this.rainOn) return; this.rainOn = on; const c = this.ctx;
+    if (!this.rainG) { this.rainG = c.createGain(); this.rainG.gain.value = 0; const hp = c.createBiquadFilter(); hp.type = "bandpass"; hp.frequency.value = 2600; hp.Q.value = 0.4; const src = c.createBufferSource(); src.buffer = this.noise; src.loop = true; src.connect(hp); hp.connect(this.rainG); this.rainG.connect(this.g.ambient); src.start(); }
+    this.rainG.gain.setTargetAtTime(on ? 0.35 : 0, c.currentTime, 1.2); }
+  levelUp() { if (!this.ctx) return; [0, 2, 4, 5, 7].forEach((d, i) => this.tranh(this.note(d + 5), this.t + i * 0.09, 1.4, 0.2, "sfx")); this.tone(1046, 1568, 0.4, 0.06, "triangle", "sfx", 0.45); }
+  build() { this.nz(0.1, 600, 1, 0.3, "lowpass"); this.tone(180, 90, 0.12, 0.18, "triangle"); this.nz(0.08, 900, 1, 0.2, "lowpass", "sfx", 0.16); this.tone(200, 100, 0.1, 0.12, "triangle", "sfx", 0.16); this.tone(660, 990, 0.2, 0.05, "sine", "sfx", 0.3); }
+  cast() { this.nz(0.25, 2500, 1, 0.08, "highpass"); this.nz(0.2, 800, 1, 0.15, "bandpass", "sfx", 0.35); }
+  bite() { this.tone(880, 440, 0.08, 0.12, "square"); this.tone(880, 440, 0.08, 0.12, "square", "sfx", 0.12); this.nz(0.15, 900, 1, 0.2, "bandpass"); }
+  splash() { this.nz(0.4, 1200, 0.6, 0.35, "bandpass"); this.tone(400, 150, 0.2, 0.08, "sine"); }
   chime() { [0, 2, 4].forEach((d, i) => this.ctx && this.tranh(this.note(d + 5), this.t + i * 0.12, 1.2, 0.18, "sfx")); }
 }
 export const audio = new AudioManager();

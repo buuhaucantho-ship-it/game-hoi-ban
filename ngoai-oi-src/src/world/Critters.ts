@@ -1,12 +1,13 @@
 import * as THREE from "three";
 import { mat } from "./materials";
+import { hen } from "./models";
 /** Ambient life: butterflies over the flowers, birds perched on the roof, chickens pecking in the yard. */
 export class Critters {
   bf: { g: THREE.Group; wl: THREE.Mesh; wr: THREE.Mesh; home: THREE.Vector3; ph: number; tgt: THREE.Vector3 }[] = [];
   birds: { g: THREE.Group; base: THREE.Vector3; t: number; hop: number }[] = [];
   hens: { g: THREE.Group; head: THREE.Object3D; pos: THREE.Vector3; tgt: THREE.Vector3; wait: number; peck: number }[] = [];
   constructor(scene: THREE.Scene, flowers: THREE.Vector3[], perches: THREE.Vector3[], count: number) {
-    const cols = [0xf2c84a, 0xf28ab0, 0xffffff, 0x7ad0f0, 0xf07a3a];
+    const cols = [0xf2c84a, 0xf2a8bc, 0xfbf6ee, 0x9ad0e0, 0xe9743c];
     for (let i = 0; i < count; i++) { const g = new THREE.Group(), m = mat(cols[i % cols.length], { side: THREE.DoubleSide }), wg = new THREE.CircleGeometry(0.13, 6);
       const wl = new THREE.Mesh(wg, m), wr = new THREE.Mesh(wg, m); wl.position.x = -0.1; wr.position.x = 0.1; wl.rotation.x = wr.rotation.x = -Math.PI / 2; g.add(wl, wr, new THREE.Mesh(new THREE.CapsuleGeometry(0.02, 0.12, 2, 4), mat(0x3a2a20)));
       const home = flowers[i % Math.max(1, flowers.length)]?.clone() || new THREE.Vector3(); g.position.copy(home).add(new THREE.Vector3(0, 1, 0)); scene.add(g); this.bf.push({ g, wl, wr, home, ph: Math.random() * 6, tgt: g.position.clone() }); }
@@ -14,12 +15,7 @@ export class Critters {
       const hd = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 6), mat(0x5a4a3a)); hd.position.set(0, 0.13, 0.14); g.add(hd);
       const bk = new THREE.Mesh(new THREE.ConeGeometry(0.03, 0.08, 4), mat(0xf2b03a)); bk.rotation.x = Math.PI / 2; bk.position.set(0, 0.12, 0.26); g.add(bk);
       g.position.copy(p); scene.add(g); this.birds.push({ g, base: p.clone(), t: Math.random() * 5, hop: 0 }); });
-    for (let i = 0; i < 3; i++) { const g = new THREE.Group(); const body = new THREE.Mesh(new THREE.SphereGeometry(0.26, 9, 7), mat(i === 1 ? 0xffffff : 0xc9783a)); body.scale.set(0.9, 0.85, 1.2); body.position.y = 0.36; body.castShadow = true; g.add(body);
-      const tail = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.3, 5), mat(i === 1 ? 0xeeeeee : 0x3a2a20)); tail.position.set(0, 0.5, -0.3); tail.rotation.x = -0.6; g.add(tail);
-      const head = new THREE.Group(); head.position.set(0, 0.6, 0.24); g.add(head); head.add(new THREE.Mesh(new THREE.SphereGeometry(0.13, 8, 6), mat(i === 1 ? 0xffffff : 0xd98a4a)));
-      const comb = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.1, 0.12), mat(0xe8333a)); comb.position.set(0, 0.13, 0.02); head.add(comb);
-      const bk = new THREE.Mesh(new THREE.ConeGeometry(0.035, 0.1, 4), mat(0xf2b03a)); bk.rotation.x = Math.PI / 2; bk.position.set(0, 0, 0.15); head.add(bk);
-      [-0.08, 0.08].forEach(x => { const l = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.25, 4), mat(0xf2b03a)); l.position.set(x, 0.12, 0); g.add(l); });
+    for (let i = 0; i < 3; i++) { const g = hen(i === 1), head = g.userData.head as THREE.Object3D; g.traverse(o => { if ((o as THREE.Mesh).isMesh) o.castShadow = true; });
       const pos = new THREE.Vector3(-4 + i * 3, 0, 3 + i); g.position.copy(pos); scene.add(g); this.hens.push({ g, head, pos, tgt: pos.clone(), wait: 1 + i, peck: 0 }); }
   }
   update(dt: number, t: number, night: number, player: THREE.Vector3) {

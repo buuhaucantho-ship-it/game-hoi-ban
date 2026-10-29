@@ -62,17 +62,17 @@ Trò chơi khai hoang, giao thương trên đảo lục giác (lấy cảm hứn
 - Thẻ phát triển: Hiệp sĩ, Điểm thưởng, Làm đường, Bội thu, Độc quyền. Đường dài nhất (từ 5 đoạn) và Đội quân mạnh nhất (từ 3 hiệp sĩ) mỗi cái 2 điểm.
 - Chọn 8, 10 hoặc 12 điểm để thắng. Ván được tự lưu để chơi tiếp.
 
-## Ngoại Ơi, Cháu Về! (3D, bản 0.1)
+## Ngoại Ơi, Cháu Về! (3D, bản 1.0)
 
-Game nông trại 3D ấm áp ở quê ngoại miền Tây, chạy trên PC, điện thoại và iPad. Thư mục `ngoai-oi/` là bản đã build; mã nguồn nằm ở `ngoai-oi-src/` (Three.js + TypeScript + Vite).
-- Vườn nhà ngoại: nhà ngói, hiên, lu nước, bếp, nhà kho, ao sen, vườn xoài chuối, kênh dừa, ruộng lúa, sạp hạt giống, khu đất chừa sẵn để xây.
-- Nhân vật chibi tự tạo (tóc, màu tóc, màu da, trang phục, tên); góc nhìn thứ ba và thứ nhất (V).
-- Ngoại có lịch sinh hoạt theo giờ, chào cháu ở cổng, trò chuyện bằng giọng miền Tây, kể chuyện, cho hạt giống mỗi ngày, nhận quà rau.
-- 6 luống đất; xới, gieo rau muống hoặc cải xanh, tưới, thu hoạch. Cây chỉ lớn khi đất ẩm và không bao giờ chết.
-- Kho đồ 20 ô, thanh công cụ 8 ô; mua hạt, bán rau ở sạp. Ngày đêm 20 phút; nhạc sáo và đàn tranh tổng hợp; tiếng chim, gà, dế, ếch.
-- Tự lưu bằng IndexedDB (dự phòng localStorage).
-- Điều khiển trên PC: WASD đi, kéo chuột xoay camera, Shift chạy, Space nhảy, E tương tác, I mở kho, V đổi góc nhìn, Esc mở menu.
-- Điều khiển trên điện thoại: cần điều khiển bên trái, vuốt bên phải để xoay, cùng các nút bấm trên màn hình.
+Game nông trại 3D phong cách tranh vẽ phẳng (trời vàng, đồi xanh ngọc, cây lá vàng cam, tường đá tím, ghế đỏ, đèn xanh, đài phun nước). Chạy trên PC, điện thoại, iPad. Bản build ở `ngoai-oi/`, mã nguồn ở `ngoai-oi-src/` (Three.js + TypeScript + Vite).
+- Bản đồ: vườn nhà ngoại, quảng trường làng có đài phun nước và sạp cô Út, 3 khu đất mua thêm (Vườn Đông có rạch câu cá, Vườn Tây, Đồi Bắc).
+- Trồng trọt: 6 loại cây (rau muống, cải xanh, cà chua, đậu bắp, hoa mười giờ, bí đỏ), mở dần theo cấp. Cây chỉ lớn khi đất ẩm, không bao giờ chết; trời mưa tự tưới.
+- Xây dựng (phím B): 22 món chia 4 nhóm — luống đất, thùng hàng, bù nhìn (cây lớn nhanh 25%), chuồng gà (trứng mỗi sáng), giếng (tưới cả khu), gạch lát, chậu hoa, bụi cây, cây lá vàng/cam/nâu, đèn đường (tự sáng ban đêm), ghế đỏ, đài phun nước, hàng rào, tường đá, ao cá nhỏ, chòi nghỉ, nhà gỗ, nhà ngói. Xoay (R), dời (M), dỡ lấy lại nửa tiền (X).
+- Cấp độ 1–10 bằng XP, mở khoá cây, công trình và đất. Ngoại giao việc mỗi ngày, có thưởng xu, tim, XP.
+- Câu cá (cần câu mua ở sạp): cá rô, cá lóc, hiếm có cá chép vàng. Ngủ ở nhà để qua đêm. Ước ở đài phun nước. Thời tiết nắng/mưa.
+- Lưu tự động (IndexedDB + localStorage), tự nâng cấp save của bản 0.1.
+- Điều khiển trên PC: WASD đi, kéo chuột xoay camera, Shift chạy, Space nhảy, E tương tác, I mở kho, B xây dựng, V đổi góc nhìn, Esc mở menu.
+- Điều khiển trên điện thoại: cần điều khiển bên trái, vuốt bên phải để xoay, cùng các nút bấm trên màn hình (có nút Đặt khi xây).
 
 Build lại: `cd ngoai-oi-src && npm install && npm run build` (xuất ra `../ngoai-oi`). Chạy thử khi đang sửa: `npm run dev`.
 

@@ -12,7 +12,7 @@ export const OUTFITS = [
   { name: "Áo sọc vàng", shirt: 0xf2c84a, pants: 0x4fae4a, skirt: false },
   { name: "Áo trắng, váy đỏ", shirt: 0xf6f4ee, pants: 0xd8433a, skirt: true }
 ];
-export type Action = "plant" | "water" | "harvest" | "build" | "talk" | "wave" | "sweep" | "till" | "pet" | null;
+export type Action = "plant" | "water" | "harvest" | "build" | "talk" | "wave" | "sweep" | "till" | "pet" | "fish" | "reel" | null;
 interface Pose { by: number; bp: number; hp: number; hy: number; alx: number; alz: number; arx: number; arz: number; llx: number; lrx: number; sq: number; }
 const ZERO: Pose = { by: 0, bp: 0, hp: 0, hy: 0, alx: 0, alz: 0.12, arx: 0, arz: -0.12, llx: 0, lrx: 0, sq: 1 };
 const cap = (r: number, l: number) => new THREE.CapsuleGeometry(r, l, 3, 8);
@@ -59,7 +59,9 @@ export class Avatar {
     const ham = new THREE.Group(); ham.add(part(new THREE.CylinderGeometry(0.025, 0.025, 0.4, 5), mat(0x9a6a3c), 0, 0, 0.08)); ham.add(part(new THREE.BoxGeometry(0.16, 0.08, 0.08), mat(0x8a8f98), 0, -0.2, 0.1));
     const seeds = new THREE.Group(); seeds.add(part(sph(0.1, 6, 5), mat(0xd8b47a), 0, -0.04, 0.08));
     const veg = new THREE.Group(); veg.add(part(new THREE.ConeGeometry(0.12, 0.3, 6), mat(0x4fae4a), 0, 0.05, 0.1));
-    Object.entries({ can, hoe, broom, ham, seeds, veg }).forEach(([k, o]) => { o.visible = false; this.handR.add(o); this.held[k] = o; });
+    const rod = new THREE.Group(); const pole = part(new THREE.CylinderGeometry(0.015, 0.03, 2.2, 5), mat(0x9a6a3c), 0, 0, 0); pole.rotation.x = Math.PI / 2 - 0.5; pole.position.set(0, 0.5, 0.95); rod.add(pole);
+    const reel = part(new THREE.CylinderGeometry(0.05, 0.05, 0.05, 8), mat(0x5a6a7a), 0.05, 0, 0.1); reel.rotation.z = Math.PI / 2; rod.add(reel);
+    Object.entries({ can, hoe, broom, ham, seeds, veg, rod }).forEach(([k, o]) => { o.visible = false; this.handR.add(o); this.held[k] = o; });
     this.root.traverse(o => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).castShadow = true; });
   }
   private buildHair(look: Look | null, hr: number) {
@@ -94,6 +96,8 @@ export class Avatar {
         case "talk": tp.hp = Math.sin(at * 14) * 0.08; tp.arx = -0.5 - Math.sin(at * 9) * 0.2; tp.arz = -0.35; break;
         case "wave": tp.arz = -2.6; tp.arx = 0; tp.arz += Math.sin(at * 22) * 0.3; tp.hy = 0.1; break;
         case "sweep": { const sw = Math.sin(this.t * 3.2); tp.bp += 0.35; tp.arx = -0.6 + sw * 0.15; tp.alx = -0.7 + sw * 0.15; tp.arz = 0.3 + sw * 0.3; tp.alz = -0.1 + sw * 0.3; break; }
+        case "fish": tp.arx = -0.9 + Math.sin(this.t * 1.5) * 0.04; tp.alx = -0.8; tp.alz = -0.3; tp.bp += 0.05; break;
+        case "reel": tp.arx = -1.6 - k * 0.6; tp.alx = -1.4 - k * 0.5; tp.bp -= 0.15 * k; tp.by += 0.04 * k; break;
         case "pet": tp.by -= 0.25 * k; tp.bp += 0.5 * k; tp.arx = -1.2 * k + Math.sin(at * 18) * 0.15; break; }
     }
     const b = 1 - Math.pow(0.0008, dt), P = this.pose as any, T = tp as any;

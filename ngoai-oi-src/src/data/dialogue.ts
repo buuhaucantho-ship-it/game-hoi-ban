@@ -20,3 +20,9 @@ export const STORIES = [
   "Ao sen này hồi trước là ao cá. Má con hồi nhỏ hay ra đây hái gương sen, té xuống ao hoài.",
   "Ngoại hay để dành mấy hột giống ngon nhứt mỗi mùa. Mai mốt ngoại chỉ con cách giữ giống nghen."
 ];
+export const questAsk = (qty: number, name: string, reward: number) => pick([`Bữa nay ngoại cần ${qty} ${name} để nấu cơm. Con kiếm giúp ngoại nghen, ngoại gửi ${reward} xu mua bánh.`, `Con ơi, nhà mình hết ${name} rồi. Con đem cho ngoại ${qty} cái nghen, ngoại cho ${reward} xu.`, `Mai có khách, ngoại cần ${qty} ${name}. Con giúp ngoại hông? Ngoại thưởng ${reward} xu đó.`]);
+export const questThanks = () => pick(["Trời ơi cháu ngoại giỏi quá! Đây, ngoại gửi tiền nè, cất kỹ nghen.", "Có cháu về ngoại đỡ cực biết bao nhiêu. Thương con quá!", "Đủ rồi đủ rồi! Để ngoại đi nấu liền. Tiền này con mua kẹo nghen."]);
+export const questDoneLine = () => "Hôm nay con giúp ngoại đủ rồi. Mai ngoại nhờ tiếp nghen!";
+export const rainLine = () => pick(["Trời mưa rồi, khỏi tưới rau nghen con. Mưa xuống là cây lớn vù vù.", "Mưa giông chiều nè, con vô hiên đứng cho khỏi ướt."]);
+export const WISHES = ["Con ước ngoại luôn mạnh khoẻ!", "Ước vườn rau năm nay trúng mùa!", "Ước cả nhà được sum vầy Tết này.", "Ước mai trời đẹp để ra đồng chơi.", "Ước con câu được cá chép vàng!"];
+export const sleepLine = (h: number) => h < 17 ? "Còn sớm mà con, chiều tối hẵng ngủ nghen." : pick(["Ngủ ngon nghen cháu. Mai dậy sớm tưới rau.", "Tắt đèn ngủ thôi con, khuya rồi."]);

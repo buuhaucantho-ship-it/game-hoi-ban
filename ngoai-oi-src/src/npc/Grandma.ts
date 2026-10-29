@@ -13,7 +13,7 @@ export const ROUTINE: { from: number; spots: Spot[] }[] = [
   { from: 21, spots: [{ x: 0, z: -12.2, act: null, hold: null, inside: true, label: "Ngoại đã vô nhà nghỉ" }] }
 ];
 export class Grandma {
-  av = new Avatar(null, true); pos = new THREE.Vector3(0, 0, 19); ry = Math.PI; spot: Spot | null = null; idx = 0; wait = 0; talking = false; visible = true;
+  av = new Avatar(null, true); pos = new THREE.Vector3(0, 0, 23); ry = Math.PI; spot: Spot | null = null; idx = 0; wait = 0; talking = false; visible = true;
   speed = 0; actT = 0; greet = false; label = "";
   constructor() { this.av.root.position.copy(this.pos); }
   routine(h: number) { let r = ROUTINE[ROUTINE.length - 1]; for (const x of ROUTINE) if (h >= x.from) r = x; if (h < 5) r = ROUTINE[ROUTINE.length - 1]; return r; }
@@ -21,7 +21,7 @@ export class Grandma {
     const h = hourOf(time), r = this.routine(h);
     if (!this.spot || !r.spots.includes(this.spot)) { this.spot = r.spots[0]; this.idx = 0; this.av.sitting = false; }
     this.label = this.spot.label;
-    let target = this.greet ? new THREE.Vector3(0, 0, 19) : new THREE.Vector3(this.spot.x, 0, this.spot.z);
+    let target = this.greet ? new THREE.Vector3(0, 0, 23) : new THREE.Vector3(this.spot.x, 0, this.spot.z);
     const d = Math.hypot(target.x - this.pos.x, target.z - this.pos.z);
     let act: Action = null;
     if (this.talking) { this.speed = 0; const tr = Math.atan2(player.x - this.pos.x, player.z - this.pos.z); this.turn(tr, dt); act = "talk"; this.av.sitting = false; }

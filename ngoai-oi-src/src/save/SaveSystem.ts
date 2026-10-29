@@ -1,4 +1,4 @@
-import { GameState } from "../core/State";
+import { GameState, migrate } from "../core/State";
 /** IndexedDB save with a localStorage mirror as fallback (private mode / old Safari). */
 const DB = "ngoai-oi", STORE = "saves", KEY = "slot1", LS = "ngoai-oi-slot1";
 function open(): Promise<IDBDatabase> {
@@ -15,7 +15,7 @@ export async function loadGame(): Promise<GameState | null> {
   try { const db = await open(); a = await new Promise(res => { const tx = db.transaction(STORE, "readonly"); const r = tx.objectStore(STORE).get(KEY); r.onsuccess = () => res(r.result || null); r.onerror = () => res(null); }); db.close(); } catch {}
   try { const t = localStorage.getItem(LS); if (t) b = JSON.parse(t); } catch {}
   const best = [a, b].filter(Boolean).sort((x, y) => (y!.savedAt || 0) - (x!.savedAt || 0))[0] || null;
-  return best && best.version === 1 ? best : null;
+  try { return migrate(best); } catch { return null; }
 }
 export async function wipeSave() {
   try { localStorage.removeItem(LS); } catch {}
