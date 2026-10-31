@@ -38,6 +38,8 @@ Nút chọn chủ đề ở trang cài đặt và trên thanh trên cùng (đổ
 
 Giao diện "Làng thần tiên" theo nét vẽ sách giáo khoa xưa: giấy ngà, màu chì dịu, tranh làng mái tranh, hoa đào, tiên nhỏ (tự vẽ). Nút bấm nảy và rắc bụi tiên, có tiếng; nhạc nền dân gian êm (ban ngày đàn tranh, sáo; ban đêm hộp nhạc, dế kêu), tự nhỏ lại khi giọng đọc dẫn truyện. Bật tắt nhạc và hiệu ứng trong phần Tùy chỉnh.
 
+**Chơi online (mỗi người một máy):** ở trang Ma Sói bấm "Tạo phòng" để lấy mã 5 ký tự (hoặc gửi link mời `?room=MÃ`), bạn bè nhập mã và tên để vào. Chủ phòng chỉnh bộ vai và tùy chọn rồi bắt đầu; mỗi người chỉ nhận vai và kết quả chức năng của riêng mình trên máy mình (Sói thấy nhau, Tay sai thấy bầy Sói, cặp đôi thấy nhau, còn lại không ai biết). Ban đêm Sói có khung chat riêng và thấy lựa chọn của nhau; ban ngày cả làng có khung chat, mỗi người bỏ phiếu kín trên máy mình. Mất mạng giữa chừng thì tự nối lại vào đúng chỗ cũ; lượt của người mất kết nối được bỏ qua sau 20 giây (chủ phòng cũng có nút "Bỏ qua lượt đang chờ"). Kết nối WebRTC trực tiếp qua PeerJS, giống Cờ Tỷ Phú: ván nằm trên trình duyệt của chủ phòng nên chủ phòng đừng đóng hay tải lại trang giữa ván. Chơi chung một máy (chuyền máy) vẫn dùng được như cũ.
+
 Tự dẫn, không cần quản trò. Chuyền máy để mỗi người giữ thẻ xem vai, rồi đặt máy giữa vòng và bật âm lượng.
 Ban đêm giọng đọc gọi từng vai thức dậy; vai được gọi cầm máy chọn, bấm xong máy tự gọi vai tiếp theo.
 Vai đã chết vẫn được gọi và chờ một lúc ngẫu nhiên để không lộ. Ban ngày: công bố người chết, thảo luận có đếm giờ, bỏ phiếu kín chuyền máy (hoặc biểu quyết công khai). Trang tự tính kết quả và báo phe thắng.
