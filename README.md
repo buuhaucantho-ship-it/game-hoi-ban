@@ -47,11 +47,11 @@ Vai đã chết vẫn được gọi và chờ một lúc ngẫu nhiên để kh
 **Luật tùy chỉnh (bật/tắt trong mục Tùy chỉnh):**
 - *Thằng ngốc bị treo cổ là thắng* (mặc định bật): dân làng treo cổ Thằng ngốc vào bất kỳ ngày nào thì Thằng ngốc thắng cả ván. Tắt thì về luật cũ: lần đầu bị treo được tha nhưng mất quyền bỏ phiếu.
 - *Giấu nguyên nhân chết ban đêm* (mặc định bật): buổi sáng chỉ báo ai chết, không nói bị Sói cắn, trúng độc hay bị Sát nhân giết. Hết ván mới lật trong "Nhật ký ván".
-- *Sói con ẩn mình* (mặc định bật): Sói con và bầy Sói không biết nhau. Sói cắn trúng Sói con thì Sói con không chết mà nhập bầy, từ đêm sau thức cùng Sói. Mỗi đêm Sói con được gọi riêng để biết mình đã nhập bầy chưa. Bầy Sói chết hết thì Sói con tự nhập bầy. Sói con chết thì đêm sau bầy Sói vẫn được cắn hai người.
+- *Sói con ẩn mình* (mặc định bật): lúc đầu Sói con thuộc phe Dân, chưa phải Sói thật; Sói con và bầy Sói không biết nhau, Tiên tri soi Sói con không ra Sói. Sói cắn trúng Sói con thì Sói con không chết mà hóa Sói, nhập bầy, từ đêm sau thức cùng Sói (từ lúc đó Tiên tri soi ra Sói). Mỗi đêm Sói con được gọi riêng để biết mình đã hóa Sói chưa. Bầy Sói chết hết mà chưa cắn Sói con thì Sói con vẫn là dân làng. Sói con đã nhập bầy mà chết thì đêm sau bầy Sói được cắn hai người.
 - *Bầu trưởng làng* (mặc định bật): sáng ngày đầu cả làng bầu trưởng làng, phiếu treo cổ của trưởng làng tính gấp đôi; trưởng làng chết thì trao quyền cho người khác.
 - *Di ngôn* (chơi online, mặc định bật): người vừa chết được để lại một câu cho cả làng.
 
-Thêm cho vui: lời dẫn sáng/đêm thay đổi ngẫu nhiên; khi chơi online, lúc thảo luận mọi người thả cảm xúc nhanh ("Nghi lắm!", "Oan quá!"…) hiện bay lên trên màn hình mọi máy; hết ván có "Nhật ký ván" lật hết bí mật (cặp đôi, bình thuốc, ai bị giết bởi ai).
+Thêm cho vui: lời dẫn sáng/đêm thay đổi ngẫu nhiên; khi chơi online, lúc thảo luận mọi người thả cảm xúc nhanh ("Nghi lắm!", "Oan quá!"…) hiện bay lên trên màn hình mọi máy; người chết theo người yêu không bị chỉ đích danh, lời dẫn chỉ báo "còn có thêm N người nữa đã chết"; hết ván có "Nhật ký ván" lật hết bí mật (cặp đôi, bình thuốc, ai bị giết bởi ai).
 
 20 vai trong 3 phe:
 - **Phe Sói:** Sói, Sói tiên tri, Sói con, Tay sai.
