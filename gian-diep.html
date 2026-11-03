@@ -471,7 +471,7 @@ function bindHold(card,onShow){
  card.addEventListener("keydown",e=>{if(e.key===" "||e.key==="Enter")on(e)});card.addEventListener("keyup",off);
  card.addEventListener("contextmenu",e=>e.preventDefault());return off}
 function flipHTML(i,name,kind,word,cls){const col=ROLE_COL[kind];
- return `<div class="flip ${cls||""}" style="--rc:${col}"><div class="fl-in"><div class="face fb">${av(i,name,72)}<b>${esc(name)}</b><small>Lật bài…</small></div><div class="face ff">${ICON[kind]}<div class="rl">${ROLE_NAME[kind]}</div>${kind==="blank"?"<small>Không có từ khóa</small>":`<b>${esc(word)}</b>`}</div></div></div>`}
+ return `<div class="flip ${cls||""}" style="--rc:${col}"><div class="fl-in"><div class="face fb">${av(i,name,72)}<b>${esc(name)}</b><small>Lật bài…</small></div><div class="face ff">${ICON[kind]}<div class="rl">${ROLE_NAME[kind]}</div>${kind==="blank"?"<small>Không có từ khóa</small>":word?`<b>${esc(word)}</b>`:"<small>Từ khóa vẫn được giữ kín</small>"}</div></div></div>`}
 function autoFlip(root){setTimeout(()=>{const f=root.querySelector(".flip");if(!f)return;f.classList.add("go");sfx.flip();const k=f.dataset.k;if(k==="spy"||k==="blank")setTimeout(()=>f.classList.add("shk"),500)},900)}
 
 /* ---------- shared: game over screen ---------- */
@@ -539,7 +539,7 @@ function renderVote(){
  $("#doVote").disabled=R.voteSel==null;$("#doVote").textContent=R.voteSel==null?"Loại người này":`Loại ${names[R.voteSel]}`}
 $("#doVote").addEventListener("click",()=>{const i=R.voteSel;if(i==null)return;R.alive[i]=false;R.out.push(i);verdict(i)});
 function verdict(i){const r=R.roles[i],box=$("#mvBox");
- let html=`<span class="eyebrow">${esc(names[i])} bị loại</span><div class="vd" data-k="${r}">${flipHTML(i,names[i],r,r==="spy"?R.spy:R.civ).replace('class="flip','data-k="'+r+'" class="flip')}${r==="blank"?"<p>Trắng được một lần đoán từ của dân. Đoán đúng là phe gián điệp thắng!</p>":""}</div>`;
+ let html=`<span class="eyebrow">${esc(names[i])} bị loại</span><div class="vd" data-k="${r}">${flipHTML(i,names[i],r,"").replace('class="flip','data-k="'+r+'" class="flip')}${r==="blank"?"<p>Trắng được một lần đoán từ của dân. Đoán đúng là phe gián điệp thắng!</p>":""}</div>`;
  if(r==="blank")html+=`<div class="row" style="justify-content:center"><input class="inp" id="guess" placeholder="Trắng đoán từ…" maxlength="24" aria-label="Từ đoán"><button class="btn primary" id="gOk" type="button">Đoán</button><button class="btn ghost" id="gSkip" type="button">Bỏ qua</button></div>`;
  else html+=`<button class="btn primary" id="vOk" type="button">Tiếp tục</button>`;
  box.innerHTML=html;$("#mVerdict").hidden=false;autoFlip(box);
@@ -665,7 +665,7 @@ function resolveVote(){const cnt={};Object.values(G.votes).forEach(t=>cnt[t]=(cn
  const tie=top.length!==1,out=tie?-1:top[0];
  if(out>=0){G.alive[out]=false;G.out.push(out)}
  const r=out>=0?G.roles[out]:null;
- G.res={out,tie,cnt,ballots:opt.pubvote?Object.assign({},G.votes):null,role:r,word:out>=0?(r==="spy"?G.spy:r==="blank"?"":G.civ):null};
+ G.res={out,tie,cnt,ballots:opt.pubvote?Object.assign({},G.votes):null,role:r,word:null};
  G.step="verdict";G.tot=0;G.dl=Date.now()+(out>=0?9500:6000);push()}
 function afterVerdict(){const r=G.res;
  if(r.out>=0&&r.role==="blank"){G.step="guess";G.gi=r.out;G.tot=30000;G.dl=Date.now()+30000;push();return}
