@@ -1,5 +1,5 @@
 /* Game Hội Bạn — offline cache. Pages: network first (always fresh when online), cached copy when offline. */
-const V="ghb-v6";
+const V="ghb-v7";
 const CORE=["./","index.html","co-ty-phu.html","ma-soi.html","gian-diep.html","khai-hoang.html","hub.css","vendor/peerjs.min.js","manifest.webmanifest","icon-192.png","icon-512.png","icon-180.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});

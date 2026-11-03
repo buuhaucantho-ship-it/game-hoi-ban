@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Ma Sói · Làng thần tiên · Game Hội Bạn</title>
-<meta name="description" content="Ma Sói tự dẫn: 20 vai, có phe thứ ba, giọng đọc tự gọi từng vai, không cần quản trò. 5–24 người.">
+<meta name="description" content="Ma Sói tự dẫn: 23 vai, có phe thứ ba, giọng đọc tự gọi từng vai, không cần quản trò. 5–24 người.">
 <meta name="theme-color" content="#f6ecd2">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f6ecd2'/%3E%3Cpath d='M12 40l20-16 20 16z' fill='%23e2b25a' stroke='%234a3424' stroke-width='2.5'/%3E%3Crect x='18' y='40' width='28' height='14' fill='%23f3dcb4' stroke='%234a3424' stroke-width='2.5'/%3E%3Ccircle cx='46' cy='14' r='7' fill='%23fff1b8' stroke='%234a3424' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -220,6 +220,20 @@ h1{letter-spacing:.01em}
 .sky.day .script{background:rgba(255,250,238,.95)}
 .sky .btn{background:rgba(255,250,238,.9);border-color:#4a3424;color:#3b2a1c;box-shadow:0 3px 0 #4a3424}
 .sky h2 .ri{width:52px;height:52px}
+.act.pop{box-sizing:border-box;position:fixed;z-index:85;left:50%;top:50%;transform:translate(-50%,-50%);width:min(540px,calc(100vw - 24px));max-height:calc(100vh - 36px);max-height:calc(100dvh - 36px);overflow:auto;box-shadow:0 28px 80px rgba(0,0,0,.6);margin:0;border-radius:22px}
+.act.pop.enter{animation:popIn .5s cubic-bezier(.2,1.25,.4,1) both}
+@keyframes popIn{from{opacity:0;transform:translate(-50%,-40%) scale(.88)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+#popBg{position:fixed;inset:0;z-index:80;background:radial-gradient(circle at 50% 40%,rgba(30,20,70,.55),rgba(3,8,24,.82));backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);animation:popFade .35s both}
+@keyframes popFade{from{opacity:0}to{opacity:1}}
+.pophead{display:flex;gap:12px;align-items:center;padding-bottom:10px;border-bottom:2px dashed var(--line)}
+.pophead .ri{width:50px;height:50px;flex:none;animation:popGlow 2.4s ease-in-out infinite}
+.pophead small{display:block;color:var(--muted);font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:11px}
+.pophead b{font-family:var(--f-display);font-size:21px;line-height:1.1}
+@keyframes popGlow{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--rc) 25%,transparent),0 0 22px var(--rc)}}
+body.wolfchat #chatBox:not([hidden]){position:fixed;left:10px;right:10px;bottom:10px;z-index:90;max-height:33vh;overflow:auto;margin:0;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+body.wolfchat .act.pop{top:6px;transform:translate(-50%,0);max-height:calc(100dvh - 33vh - 28px)}
+body.wolfchat .act.pop.enter{animation-name:popInTop}
+@keyframes popInTop{from{opacity:0;transform:translate(-50%,-20px) scale(.94)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
 /* act + wait */
 .act{min-height:140px}
 .wait{color:var(--muted);font-family:var(--f-display);font-weight:400;font-size:18px}
@@ -414,7 +428,7 @@ h1{letter-spacing:.01em}
         </div>
       </div>
       <div class="card">
-        <div class="bar" style="margin-bottom:6px"><h3 style="margin:0">20 vai trong 3 phe</h3><button class="btn sm" id="suggest" type="button">Gợi ý theo số người</button></div>
+        <div class="bar" style="margin-bottom:6px"><h3 style="margin:0">23 vai trong 3 phe</h3><button class="btn sm" id="suggest" type="button">Gợi ý theo số người</button></div>
         <p class="sub">Dân làng tự bù cho đủ người. Bộ vai là công khai, mọi người đều biết ván này có những vai nào.</p>
         <div id="rolesEd"></div>
         <div class="total" id="total"></div>
@@ -460,6 +474,7 @@ h1{letter-spacing:.01em}
           <div class="phase"><span class="live"></span><span id="phase">Đêm 1</span><span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i></span></div><h2 id="stepTitle"></h2><div class="script" id="script"></div>
           <div class="skybtns"><button class="btn sm" id="replay" type="button">Đọc lại</button><button class="btn sm" id="pause" type="button">Tạm dừng</button><button class="btn sm" id="musBtn" type="button"></button><button class="btn sm" id="whoBtn" type="button" hidden>Vai của tôi</button><button class="btn sm" id="voiceBtn" type="button" hidden></button><button class="btn sm" id="skipBtn" type="button" hidden>Bỏ qua lượt đang chờ</button></div></div>
         <p class="pill" id="prog" hidden role="status" aria-live="polite"></p>
+        <div id="actHold" hidden style="min-height:150px"></div><div id="popBg" hidden></div>
         <div class="card act" id="act"></div>
         <div class="card" id="chatBox" hidden><h3 id="chatHd" style="font-size:18px;margin:0 0 8px">Chat</h3><ul class="chatlog" id="chatLog"></ul><form id="chatForm" class="row" style="flex-wrap:nowrap"><input class="inp" id="chatIn" maxlength="140" autocomplete="off" aria-label="Tin nhắn" style="flex:1"><button class="btn sm primary" type="submit">Gửi</button></form></div>
       </div>
@@ -544,6 +559,12 @@ const ROLES={
   i:sv('<rect x="7" y="14" width="18" height="13" rx="3" '+W+'/><path d="M11 14v-3a5 5 0 0 1 10 0v3" '+S+'/>')},
  tre:{n:"Đứa trẻ hoang",t:"dan",c:"#3a9d23",d:"Đêm đầu chọn một hình mẫu. Nếu hình mẫu chết, bạn hóa Sói và theo phe Sói.",
   i:sv('<circle cx="15" cy="11" r="4.5" '+W+'/><path d="M8 29c0-6 3-9.5 7-9.5s7 3.5 7 9.5z" '+W+'/><path d="M21 7c5 0 6 3 6 6-4 0-6-2.5-6-6z" '+W+'/>')},
+ thaybo:{n:"Thầy bói",t:"dan",c:"#9b59b6",d:"Mỗi đêm bói một người: biết có bao nhiêu Sói trong ba người gồm người đó và hai người sống ngồi kề bên.",
+  i:sv('<circle cx="16" cy="14" r="10" '+W+'/><path d="M8 29h16l-2.5-5h-11z" '+W+'/><path d="M11 11q3-3 6-2" stroke="#9b59b6" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="19" cy="17" r="1.6" fill="#9b59b6"/>')},
+ gau:{n:"Người dẫn gấu",t:"dan",c:"#8d5524",d:"Không thức đêm. Sáng nào mà một trong hai người sống ngồi kề bên bạn là Sói thì con gấu gầm lên cho cả làng nghe.",
+  i:sv('<circle cx="8.5" cy="8.5" r="4" '+W+'/><circle cx="23.5" cy="8.5" r="4" '+W+'/><circle cx="16" cy="18" r="10.5" '+W+'/><circle cx="12" cy="16" r="1.4" fill="#8d5524"/><circle cx="20" cy="16" r="1.4" fill="#8d5524"/><ellipse cx="16" cy="21.5" rx="3.4" ry="2.4" fill="#8d5524"/>')},
+ thaycung:{n:"Thầy cúng",t:"dan",c:"#c0392b",d:"Một lần trong ván, ban đêm ban bùa hộ mệnh cho một người: người đó sống sót qua một lần bị Sói cắn hoặc Sát nhân giết (nhưng không biết mình có bùa).",
+  i:sv('<rect x="9" y="3" width="14" height="26" rx="2.5" '+W+'/><path d="M13 9h6M13 14h6M16 9v14" stroke="#c0392b" stroke-width="2.2" stroke-linecap="round" fill="none"/>')},
  satnhan:{n:"Sát nhân",t:"ba",c:"#e07a00",d:"Phe riêng. Mỗi đêm giết một người, không sợ Sói cắn. Thắng khi chỉ còn mình hoặc đấu tay đôi.",
   i:sv('<path d="M6 26L21 7l4 4L10 30z" '+W+'/><path d="M19 5l8 8" '+S+'/>')},
  thanghe:{n:"Thằng hề",t:"ba",c:"#d35400",d:"Phe riêng. Thắng ngay nếu bị dân làng treo cổ ban ngày.",
@@ -551,7 +572,7 @@ const ROLES={
  thoisao:{n:"Kẻ thổi sáo",t:"ba",c:"#a0522d",d:"Phe riêng. Mỗi đêm thôi miên hai người. Thắng khi mọi người còn sống đều bị thôi miên.",
   i:sv('<path d="M4 25L24 7l3 3L7 28z" '+W+'/><circle cx="12" cy="20" r="1.3" fill="#a0522d"/><circle cx="16" cy="16.4" r="1.3" fill="#a0522d"/><circle cx="20" cy="12.8" r="1.3" fill="#a0522d"/>')}};
 const TEAMS=[["soi","Phe Sói","var(--t-soi)",["soi","soitientri","soicon","taysai"]],
- ["dan","Phe Dân","var(--t-dan)",["dan","tientri","baove","phuthuy","thosan","cupid","gialang","thamtu","hiepsi","thangngoc","badong","phongan","tre"]],
+ ["dan","Phe Dân","var(--t-dan)",["dan","tientri","baove","phuthuy","thosan","cupid","gialang","thamtu","thaybo","gau","thaycung","hiepsi","thangngoc","badong","phongan","tre"]],
  ["ba","Phe thứ ba","var(--t-ba)",["satnhan","thanghe","thoisao"]]];
 const TEAMNAME={soi:"Phe Sói",dan:"Phe Dân",ba:"Phe riêng"};
 const KILLERS=["soi","soitientri","soicon"];
@@ -570,7 +591,7 @@ const DEF=["An","Bình","Chi","Dũng","Giang","Hạnh","Khoa","Linh","Minh","Nga
 let names=(()=>{try{const v=JSON.parse(store.get("ms2-names")||"null");return Array.isArray(v)&&v.length>=5?v:DEF.slice()}catch(e){return DEF.slice()}})();
 let opt=(()=>{const d={speak:true,secret:true,reveal:true,time:180,rate:1,counts:null,music:true,sfx:true,voice:"",south:true,breath:true,idiotWin:true,hideCause:true,pupHidden:true,mayor:true,lastWords:true};try{return Object.assign(d,JSON.parse(store.get("ms2-opt")||"{}"))}catch(e){return d}})();
 const save=()=>{if(!ON.on)store.set("ms2-names",JSON.stringify(names));store.set("ms2-opt",JSON.stringify(opt))};
-function suggest(n){const pri=[["tientri",5],["baove",6],["phuthuy",7],["thosan",8],["cupid",9],["satnhan",10],["thanghe",11],["soicon",12],["gialang",12],["thamtu",13],["taysai",14],["badong",15],["thoisao",16],["soitientri",17],["hiepsi",17],["phongan",18],["thangngoc",19],["tre",20]];
+function suggest(n){const pri=[["tientri",5],["baove",6],["phuthuy",7],["thosan",8],["cupid",9],["satnhan",10],["thanghe",11],["soicon",12],["gialang",12],["gau",13],["thamtu",13],["thaycung",15],["thaybo",16],["taysai",14],["badong",15],["thoisao",16],["soitientri",17],["hiepsi",17],["phongan",18],["thangngoc",19],["tre",20]];
  const c={},W=Math.max(1,Math.round(n/4.5));let keys=pri.filter(([k,m])=>n>=m).map(([k])=>k);
  const tot=()=>Object.values(c).reduce((a,b)=>a+b,0);
  const build=()=>{Object.keys(c).forEach(k=>delete c[k]);keys.forEach(k=>c[k]=1);c.soi=Math.max(1,W-(c.soicon||0)-(c.soitientri||0))};
@@ -720,10 +741,10 @@ $("#testVoice").addEventListener("click",()=>{chimeUp();speak("Màn đêm buông
 /* ======================= GAME STATE ======================= */
 let G=null,token=0;
 const ABORT={};
-function show(id){["setup","reveal","play","over","room","roleWait"].forEach(s=>$("#"+s).hidden=s!==id);window.scrollTo(0,0);if(id!=="play")setMood("day")}
+function show(id){["setup","reveal","play","over","room","roleWait"].forEach(s=>$("#"+s).hidden=s!==id);window.scrollTo(0,0);if(id!=="play"){setMood("day");$("#popBg").hidden=true;$("#actHold").hidden=true;$("#act").classList.remove("pop","enter")}}
 function makeG(){
  let deck=[];Object.keys(ROLES).forEach(k=>{for(let j=0;j<cnt(k);j++)deck.push(k)});deck=shuffle(deck);
- return{players:names.map((n,i)=>({name:n,role:deck[i],team:deck[i]==="soicon"&&opt.pupHidden?"dan":ROLES[deck[i]].t,alive:true,lover:false,lives:deck[i]==="gialang"?2:1,charmed:false,model:null,wild:false,idiot:false,silenced:false,joined:false})),
+ return{players:names.map((n,i)=>({name:n,role:deck[i],team:deck[i]==="soicon"&&opt.pupHidden?"dan":ROLES[deck[i]].t,alive:true,lover:false,lives:deck[i]==="gialang"?2:1,charmed:false,charm:false,model:null,wild:false,idiot:false,silenced:false,joined:false})),
   inGame:new Set(deck),seen:Array(names.length).fill(false),mayor:null,night:0,day:0,lastProtect:null,lastSilence:null,heal:true,poison:true,knight:false,rage:false,hunters:[],log:[],over:null}}
 function newGame(){
  names=names.map((n,i)=>n.trim()||"Người "+(i+1));save();
@@ -740,6 +761,7 @@ function joinPup(i){P(i).joined=true;P(i).team="soi";log(`${P(i).name} (Sói con
  if(ON.on){const ws=alive().filter(inPack);ws.forEach(w=>sendTo(w,{t:"me",patch:w===i?{joined:true,mates:ws.filter(x=>x!==w).map(x=>P(x).name)}:{mates:ws.filter(x=>x!==w).map(x=>P(x).name)}}))}}
 function pack(){return alive().filter(inPack)}
 const wt=v=>v===G.mayor?2:1;
+function nbrs(i){const a=alive(),k=a.indexOf(i);if(k<0)return[];const L=a[(k-1+a.length)%a.length],Rr=a[(k+1)%a.length];return[...new Set([L,Rr])].filter(x=>x!==i)}
 const roleAlive=k=>G.players.some(p=>p.alive&&p.role===k);
 const roleName=i=>ROLES[P(i).role].n+(P(i).role==="tre"&&P(i).wild?" (đã hóa Sói)":"");
 function log(t,p=true){G.log.unshift({t,p});renderSide()}
@@ -771,7 +793,7 @@ let lastLine="",paused=false,resume=null;
 async function gate(my){while(paused){await new Promise(r=>resume=r)}chk(my)}
 /* every on-screen change goes through out(): local = draw here, online = send to everybody (and draw here for the host) */
 function sky(phase,title,role){out({t:"sky",phase,title,role:role||null,night:G.night,day:G.day})}
-function skyDOM(m){const d=m.phase==="day";$("#sky").classList.toggle("day",d);setMood(d?"day":"night");
+function skyDOM(m){CURSKY=m;const d=m.phase==="day";$("#sky").classList.toggle("day",d);setMood(d?"day":"night");
  $("#phase").textContent=d?`Ngày ${m.day}`:`Đêm ${m.night}`;
  $("#stepTitle").innerHTML=(m.role?`<span class="ri" style="--rc:${ROLES[m.role].c}">${ROLES[m.role].i}</span>`:"")+esc(m.title)}
 const onlineText=t=>t.replace(/đặt máy ở giữa và /g,"").replace(/cầm máy (và )?/g,"").replace(/Chuyền máy lần lượt cho từng người\./,"Mỗi người bỏ phiếu kín trên máy của mình.");
@@ -783,7 +805,14 @@ async function say(my,text){
  lastLine=text;sayDOM(text);chk(my);
  if(opt.speak){await speak(text);chk(my)}
  else{await new Promise(r=>{act(`<div class="row"><button class="btn primary big" id="nx" type="button">Đã đọc xong, tiếp</button></div>`);$("#nx").addEventListener("click",r)});chk(my)}}
-function act(html){$("#act").innerHTML=html}
+let CURSKY=null;
+function act(html){const a=$("#act"),was=a.classList.contains("pop");
+ const inter=CURSKY&&CURSKY.phase==="night"&&/id="ok"|id="heal"/.test(html);
+ if(inter){const R=CURSKY.role&&ROLES[CURSKY.role];
+  a.innerHTML=`<div class="pophead">${R?`<span class="ri" style="--rc:${R.c}">${R.i}</span>`:""}<div><small>Đêm ${CURSKY.night}</small><b>${esc(CURSKY.title||"")}</b></div></div>${html}`;
+  a.classList.add("pop");$("#popBg").hidden=false;$("#actHold").hidden=false;
+  if(!was){a.classList.add("enter");a.addEventListener("animationend",()=>a.classList.remove("enter"),{once:true});a.scrollTop=0;try{navigator.vibrate&&ON.on&&navigator.vibrate(120)}catch(e){}}}
+ else{a.innerHTML=html;a.classList.remove("pop","enter");$("#popBg").hidden=true;$("#actHold").hidden=true}}
 const waitHTML=text=>`<div class="wait"><div class="moon"></div><div>${esc(text||"Mọi người nhắm mắt…")}</div></div>`;
 function waitScreen(text){out({t:"wait",text})}
 const cue=k=>out({t:"cue",k});
@@ -862,6 +891,11 @@ const NIGHT=[
   run:async my=>{const w=G.players.map((p,i)=>knownWolf(i)?i:-1).filter(i=>i>=0);await info(my,`<p class="sub" style="margin:0">Bầy Sói là:</p><div class="big">${w.map(i=>esc(P(i).name)).join(", ")}</div><p class="sub" style="margin:0">Sói không biết bạn là ai. Hãy giúp họ thắng.</p>`,"Đã biết",idxOf("taysai"))}},
  {k:"phongan",wake:"Phong ấn sư thức dậy. Chọn một người không được nói vào ngày mai.",sleep:"Phong ấn sư đi ngủ.",
   run:async my=>{const s=await pick(my,{who:idxOf("phongan"),ids:alive().filter(i=>i!==G.lastSilence),confirm:"Phong ấn người này",note:G.lastSilence!=null?`Không được chọn lại ${esc(P(G.lastSilence).name)}.`:"",extra:[{label:"Không phong ấn ai",value:[]}]});G.T.silence=s[0]??null}},
+ {k:"thaycung",wake:"Thầy cúng thức dậy. Chọn một người để ban bùa hộ mệnh.",sleep:"Thầy cúng đi ngủ.",
+  run:async my=>{const me=idxOf("thaycung");
+   if(G.charmUsed){await info(my,`<p style="margin:0;font-weight:800">Bạn đã ban bùa rồi, không còn bùa nào nữa.</p>`,"Đi ngủ",me);return}
+   const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Ban bùa cho người này",note:"Chỉ ban được một lần trong ván. Người nhận sống sót qua một lần bị Sói cắn hoặc Sát nhân giết, và không biết mình có bùa.",extra:[{label:"Để dành, chưa ban đêm nay",value:[]}]});
+   if(s.length){P(s[0]).charm=true;G.charmUsed=true;log(`Thầy cúng ban bùa cho ${P(s[0]).name}`,false)}}},
  {k:"baove",wake:"Bảo vệ thức dậy. Chọn một người để che chở đêm nay.",sleep:"Bảo vệ đi ngủ.",
   run:async my=>{const s=await pick(my,{who:idxOf("baove"),ids:alive().filter(i=>i!==G.lastProtect),confirm:"Bảo vệ người này",note:G.lastProtect!=null?`Không được bảo vệ ${esc(P(G.lastProtect).name)} hai đêm liền.`:""});G.T.protect=s[0]??null}},
  {k:"soicon",pup:true,wake:"Sói con thức dậy.",sleep:"Sói con đi ngủ.",
@@ -884,6 +918,10 @@ const NIGHT=[
  {k:"thamtu",wake:"Thám tử thức dậy. Chọn hai người để so phe.",sleep:"Thám tử đi ngủ.",
   run:async my=>{const me=idxOf("thamtu");const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),count:2,confirm:"So phe hai người"});
    if(s.length===2){const same=P(s[0]).team===P(s[1]).team;await info(my,resultBox(ROLES.thamtu.i,`${esc(P(s[0]).name)} và ${esc(P(s[1]).name)} <b>${same?"CÙNG PHE":"KHÁC PHE"}</b>`,same?"var(--good)":"var(--bad)"),undefined,me)}}},
+ {k:"thaybo",wake:"Thầy bói thức dậy. Chọn một người để bói xem quanh họ có bao nhiêu Sói.",sleep:"Thầy bói đi ngủ.",
+  run:async my=>{const me=idxOf("thaybo");const s=await pick(my,{who:me,ids:alive(),confirm:"Bói người này",note:"Kết quả là số Sói trong ba người: người được chọn và hai người sống ngồi kề bên."});
+   if(s.length){const t=s[0],grp=[...new Set([t,...nbrs(t)])],n=grp.filter(isWolf).length;
+    await info(my,resultBox(ROLES.thaybo.i,`Trong ${grp.map(i=>esc(P(i).name)).join(", ")} có <b>${n} Sói</b>`,n?ROLES.soi.c:ROLES.dan.c)+`<p class="sub" style="margin:0">Người tay sai và Sói con chưa nhập bầy không tính là Sói.</p>`,undefined,me)}}},
  {k:"badong",wake:"Bà đồng thức dậy. Chọn một linh hồn để hỏi chuyện.",sleep:"Bà đồng đi ngủ.",
   run:async my=>{const me=idxOf("badong"),dead=G.players.map((p,i)=>p.alive?-1:i).filter(i=>i>=0);
    if(!dead.length){await info(my,`<p style="margin:0;font-weight:800">Chưa có ai chết để hỏi chuyện.</p>`,undefined,me);return}
@@ -926,8 +964,8 @@ async function hunterShots(my,phase){while(G.hunters.length){const h=G.hunters.s
  await succession(my,phase)}
 async function dayPhase(my){G.day++;G.players.forEach(p=>p.silenced=false);
  const T=G.T,d=[];
- (T.bites||[]).forEach(v=>{const p=P(v);if(!p.alive||v===T.protect||v===T.heal||p.role==="satnhan")return;if(p.role==="gialang"&&p.lives>1){p.lives--;log(`Già làng ${p.name} bị cắn nhưng còn sống`,false);return}if(hiddenPup(v)){joinPup(v);return}kill(v,"wolf",d)});
- if(T.sk!=null&&T.sk!==T.protect&&P(T.sk).alive)kill(T.sk,"sk",d);
+ (T.bites||[]).forEach(v=>{const p=P(v);if(!p.alive||v===T.protect||v===T.heal||p.role==="satnhan")return;if(p.charm){p.charm=false;log(`Bùa hộ mệnh cứu ${p.name} khỏi bị cắn`,false);return}if(p.role==="gialang"&&p.lives>1){p.lives--;log(`Già làng ${p.name} bị cắn nhưng còn sống`,false);return}if(hiddenPup(v)){joinPup(v);return}kill(v,"wolf",d)});
+ if(T.sk!=null&&T.sk!==T.protect&&P(T.sk).alive){if(P(T.sk).charm){P(T.sk).charm=false;log(`Bùa hộ mệnh cứu ${P(T.sk).name} khỏi Sát nhân`,false)}else kill(T.sk,"sk",d)}
  if(T.poison!=null&&P(T.poison).alive)kill(T.poison,"poison",d);
  if(opt.hideCause&&d.length){log(`Đêm ${G.night}: ${d.map(x=>P(x.i).name).join(", ")} đã chết`);log(`Bí mật đêm ${G.night}: ${d.map(x=>`${P(x.i).name} ${CAUSE[x.c]}`).join("; ")}`,false)}
  else{log(`Đêm ${G.night}: ${d.length?(mainD(d).length?deathLog(d):`${d.map(x=>P(x.i).name).join(", ")} đã chết`):"bình yên"}`);secretLog(`đêm ${G.night}`,d)}
@@ -935,6 +973,7 @@ async function dayPhase(my){G.day++;G.players.forEach(p=>p.silenced=false);
  waitScreen("Mọi người mở mắt");
  await say(my,`${pickOne(MORNING)} Mọi người mở mắt ra. ${d.length?`Đêm qua, ${deathText(opt.hideCause?d:mainD(d))} đã chết.${opt.hideCause?"":extraSay(d)}`:"Đêm qua làng bình yên, không ai chết."}`);
  if(endIf())throw ABORT;
+ if(roleAlive("gau")){const b=idxOf("gau");if(nbrs(b).some(isWolf)){log(`Gấu của ${P(b).name} gầm gừ`);cue("toll");await say(my,`Grừ… grừ! Con gấu của ${P(b).name} gầm lên. Có Sói ngồi ngay cạnh người dẫn gấu!`)}}
  await lastWords(my,d.map(x=>x.i));
  await hunterShots(my,"day");
  if(T.silence!=null&&P(T.silence).alive){P(T.silence).silenced=true;renderSide();await say(my,`${P(T.silence).name} đã bị phong ấn, hôm nay không được nói, nhưng vẫn được bỏ phiếu.`)}
@@ -1365,7 +1404,7 @@ function discDOM(m){const host=ON.host,kn=m.knight>=0&&m.knight===ON.me;
  $("#act").querySelectorAll("[data-k]").forEach(b=>b.addEventListener("click",()=>reply({c:"cmd",k:b.dataset.k})));
  $("#act").querySelectorAll("[data-r]").forEach(b=>b.addEventListener("click",()=>reply({c:"react",k:+b.dataset.r})))}
 const meAlive=()=>{const s=ON.lastSide;return !!(s&&s.pl[ON.me]&&s.pl[ON.me].a)};
-function chatMode(mode){const b=$("#chatBox");if(mode==="off"){b.hidden=true;ON.chatMode=null;return}
+function chatMode(mode){const b=$("#chatBox");document.body.classList.toggle("wolfchat",mode==="wolves");if(mode==="off"){b.hidden=true;ON.chatMode=null;return}
  if(ON.chatMode!==mode){ON.chatMode=mode;$("#chatLog").innerHTML=""}
  b.hidden=false;$("#chatHd").textContent=mode==="wolves"?"Chat riêng của bầy Sói":"Chat ban ngày";$("#chatIn").placeholder=mode==="wolves"?"Nhắn cho các Sói…":"Nhắn cả làng…"}
 function chatAdd(m){const l=$("#chatLog");const li=document.createElement("li");li.innerHTML=`<b>${esc(m.from)}:</b> ${esc(m.text)}`;l.appendChild(li);while(l.children.length>60)l.removeChild(l.firstChild);l.scrollTop=l.scrollHeight}

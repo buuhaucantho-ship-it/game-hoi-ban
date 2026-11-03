@@ -7,7 +7,7 @@ Trang board game cho hội bạn, chơi ngay trên trình duyệt (điện tho�
 | Trò chơi | Người chơi | Cách chơi |
 |---|---|---|
 | [Cờ Tỷ Phú (Cần Thơ / Tây Du Ký / Showbiz)](https://buuhaucantho-ship-it.github.io/game-hoi-ban/co-ty-phu.html) | 2–10 | Chung một máy, hoặc online mỗi người một máy theo mã phòng |
-| [Ma Sói](https://buuhaucantho-ship-it.github.io/game-hoi-ban/ma-soi.html) | 5–24 | Tự dẫn bằng giọng đọc, không cần quản trò; 20 vai, 3 phe |
+| [Ma Sói](https://buuhaucantho-ship-it.github.io/game-hoi-ban/ma-soi.html) | 5–24 | Tự dẫn bằng giọng đọc, không cần quản trò; 23 vai, 3 phe |
 | [Ai Là Gián Điệp](https://buuhaucantho-ship-it.github.io/game-hoi-ban/gian-diep.html) | 3–12 | Online theo mã phòng (từ khóa, mô tả, phiếu kín trên máy riêng), hoặc chuyền máy |
 | [Đảo Khai Hoang](https://buuhaucantho-ship-it.github.io/game-hoi-ban/khai-hoang.html) | 3–4, mở rộng 5–6 | Chung một máy, mỗi ghế chọn người hoặc máy |
 
@@ -53,9 +53,10 @@ Vai đã chết vẫn được gọi và chờ một lúc ngẫu nhiên để kh
 
 Thêm cho vui: lời dẫn sáng/đêm thay đổi ngẫu nhiên; khi chơi online, lúc thảo luận mọi người thả cảm xúc nhanh ("Nghi lắm!", "Oan quá!"…) hiện bay lên trên màn hình mọi máy; người chết theo người yêu không bị chỉ đích danh, lời dẫn chỉ báo "còn có thêm N người nữa đã chết"; hết ván có "Nhật ký ván" lật hết bí mật (cặp đôi, bình thuốc, ai bị giết bởi ai).
 
-20 vai trong 3 phe:
+23 vai trong 3 phe:
 - **Phe Sói:** Sói, Sói tiên tri, Sói con, Tay sai.
-- **Phe Dân:** Dân làng, Tiên tri, Bảo vệ, Phù thủy, Thợ săn, Thần tình yêu, Già làng, Thám tử, Hiệp sĩ, Thằng ngốc, Bà đồng, Phong ấn sư, Đứa trẻ hoang.
+- **Mới:** các lượt thức đêm của từng vai hiện thành cửa sổ popup nổi, có tên vai và hiệu ứng, kèm rung nhẹ trên điện thoại.
+- **Phe Dân:** Dân làng, Tiên tri, Bảo vệ, Phù thủy, Thợ săn, Thần tình yêu, Già làng, Thám tử, Hiệp sĩ, Thằng ngốc, Bà đồng, Phong ấn sư, Đứa trẻ hoang, Thầy bói (đếm Sói quanh một người), Người dẫn gấu (gấu gầm khi hàng xóm là Sói), Thầy cúng (ban bùa hộ mệnh một lần).
 - **Phe thứ ba:** Sát nhân (thắng khi còn lại một mình hoặc đấu tay đôi), Thằng hề (thắng nếu bị treo cổ), Kẻ thổi sáo (thắng khi mọi người còn sống bị thôi miên). Cặp đôi khác phe cũng thắng riêng nếu là hai người cuối cùng.
 
 ## Ai Là Gián Điệp
