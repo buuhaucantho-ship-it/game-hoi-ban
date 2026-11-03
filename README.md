@@ -68,7 +68,7 @@ Mỗi người nhận một từ khóa, gián điệp nhận từ gần nghĩa k
 - Trắng bị loại tự đoán từ của dân trên máy mình.
 - Người bị loại vẫn xem tiếp. Có biểu cảm nhanh bay lên màn hình, bảng điểm giữa các ván trong phòng.
 - Mất mạng thì tự nối lại (cùng cơ chế với Ma Sói); chủ phòng lỡ tải lại trang thì dùng "Khôi phục phòng" để tiếp tục ván.
-Có thể thêm người Trắng (không có từ, bị loại được đoán từ để lật kèo), đổi số gián điệp, chọn chủ đề hoặc tự thêm cặp từ của nhóm. Có bảng điểm qua nhiều ván.
+Có thể thêm người Trắng (không có từ, bị loại được đoán từ để lật kèo), đổi số gián điệp, chọn trong 11 chủ đề (hơn 200 cặp từ: đồ ăn, địa điểm, học đường, công nghệ, thiên nhiên, thể thao, miền Tây…) hoặc tự thêm cặp từ của nhóm. Có bảng điểm qua nhiều ván.
 
 ## Đảo Khai Hoang
 
