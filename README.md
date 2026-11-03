@@ -45,6 +45,7 @@ Ban đêm giọng đọc gọi từng vai thức dậy; vai được gọi cầm
 Vai đã chết vẫn được gọi và chờ một lúc ngẫu nhiên để không lộ. Ban ngày: công bố người chết, thảo luận có đếm giờ, bỏ phiếu kín chuyền máy (hoặc biểu quyết công khai). Trang tự tính kết quả và báo phe thắng.
 
 **Luật tùy chỉnh (bật/tắt trong mục Tùy chỉnh):**
+- **Luật "Sói được cắn Sói"** (tùy chọn, mặc định tắt): bầy Sói có thể chọn cắn cả đồng bọn, kể cả chính mình; người bị cắn vẫn chết nếu không được che chở hoặc cứu.
 - *Thằng ngốc bị treo cổ là thắng* (mặc định bật): dân làng treo cổ Thằng ngốc vào bất kỳ ngày nào thì Thằng ngốc thắng cả ván. Tắt thì về luật cũ: lần đầu bị treo được tha nhưng mất quyền bỏ phiếu.
 - *Giấu nguyên nhân chết ban đêm* (mặc định bật): buổi sáng chỉ báo ai chết, không nói bị Sói cắn, trúng độc hay bị Sát nhân giết. Hết ván mới lật trong "Nhật ký ván".
 - *Sói con ẩn mình* (mặc định bật): lúc đầu Sói con thuộc phe Dân, chưa phải Sói thật; Sói con và bầy Sói không biết nhau, Tiên tri soi Sói con không ra Sói. Sói cắn trúng Sói con thì Sói con không chết mà hóa Sói, nhập bầy, từ đêm sau thức cùng Sói (từ lúc đó Tiên tri soi ra Sói). Mỗi đêm Sói con được gọi riêng để biết mình đã hóa Sói chưa. Bầy Sói chết hết mà chưa cắn Sói con thì Sói con vẫn là dân làng. Sói con đã nhập bầy mà chết thì đêm sau bầy Sói được cắn hai người.

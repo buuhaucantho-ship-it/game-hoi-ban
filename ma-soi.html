@@ -416,6 +416,7 @@ body.wolfchat .act.pop.enter{animation-name:popInTop}
           <div class="opt"><div><b>Giấu nguyên nhân chết ban đêm</b><small>Buổi sáng chỉ báo ai đã chết, không nói bị Sói cắn, trúng độc hay bị Sát nhân giết. Hết ván mới lật.</small></div><button class="switch" id="optCause" type="button" role="switch" aria-checked="true" aria-label="Giấu nguyên nhân chết ban đêm"></button></div>
           <div class="opt"><div><b>Sói con ẩn mình</b><small>Sói con và bầy Sói không biết nhau. Lúc đầu Sói con thuộc phe Dân, Tiên tri soi không ra Sói. Sói cắn trúng thì Sói con hóa Sói, nhập bầy, từ đêm sau thức cùng Sói.</small></div><button class="switch" id="optPup" type="button" role="switch" aria-checked="true" aria-label="Sói con ẩn mình"></button></div>
           <div class="opt"><div><b>Bầu trưởng làng</b><small>Sáng ngày đầu cả làng bầu trưởng làng; phiếu treo cổ của trưởng làng tính gấp đôi. Trưởng làng chết thì trao quyền cho người khác.</small></div><button class="switch" id="optMayor" type="button" role="switch" aria-checked="true" aria-label="Bầu trưởng làng"></button></div>
+          <div class="opt"><div><b>Sói được cắn Sói</b><small>Bầy Sói có thể chọn cắn cả người trong bầy (kể cả chính mình). Bị cắn vẫn chết như thường, trừ khi được che chở hoặc cứu.</small></div><button class="switch" id="optWB" type="button" role="switch" aria-checked="false" aria-label="Sói được cắn Sói"></button></div>
           <div class="opt"><div><b>Di ngôn</b><small>Chơi online: người vừa chết được để lại một câu cho cả làng trước khi rời cuộc chơi.</small></div><button class="switch" id="optLast" type="button" role="switch" aria-checked="true" aria-label="Di ngôn"></button></div>
           <div class="opt"><div><b>Thời gian thảo luận</b></div><select class="inp" id="optTime" aria-label="Thời gian thảo luận"><option value="60">1 phút</option><option value="120">2 phút</option><option value="180" selected>3 phút</option><option value="300">5 phút</option><option value="0">Không giới hạn</option></select></div>
           <div class="opt"><div><b>Nhạc nền</b><small>Nhạc dân gian êm, tự nhỏ lại khi giọng đọc dẫn truyện.</small></div><button class="switch" id="optMusic" type="button" role="switch" aria-checked="true" aria-label="Nhạc nền"></button></div>
@@ -589,7 +590,7 @@ const REACTS=["Nghi lắm!","Oan quá!","Đồng ý","Haha","Bình tĩnh!","Nói
 /* ======================= SETUP ======================= */
 const DEF=["An","Bình","Chi","Dũng","Giang","Hạnh","Khoa","Linh","Minh","Nga"];
 let names=(()=>{try{const v=JSON.parse(store.get("ms2-names")||"null");return Array.isArray(v)&&v.length>=5?v:DEF.slice()}catch(e){return DEF.slice()}})();
-let opt=(()=>{const d={speak:true,secret:true,reveal:true,time:180,rate:1,counts:null,music:true,sfx:true,voice:"",south:true,breath:true,idiotWin:true,hideCause:true,pupHidden:true,mayor:true,lastWords:true};try{return Object.assign(d,JSON.parse(store.get("ms2-opt")||"{}"))}catch(e){return d}})();
+let opt=(()=>{const d={speak:true,secret:true,reveal:true,time:180,rate:1,counts:null,music:true,sfx:true,voice:"",south:true,breath:true,idiotWin:true,hideCause:true,pupHidden:true,mayor:true,lastWords:true,wolfBite:false};try{return Object.assign(d,JSON.parse(store.get("ms2-opt")||"{}"))}catch(e){return d}})();
 const save=()=>{if(!ON.on)store.set("ms2-names",JSON.stringify(names));store.set("ms2-opt",JSON.stringify(opt))};
 function suggest(n){const pri=[["tientri",5],["baove",6],["phuthuy",7],["thosan",8],["cupid",9],["satnhan",10],["thanghe",11],["soicon",12],["gialang",12],["gau",13],["thamtu",13],["thaycung",15],["thaybo",16],["taysai",14],["badong",15],["thoisao",16],["soitientri",17],["hiepsi",17],["phongan",18],["thangngoc",19],["tre",20]];
  const c={},W=Math.max(1,Math.round(n/4.5));let keys=pri.filter(([k,m])=>n>=m).map(([k])=>k);
@@ -624,12 +625,12 @@ function renderSetup(){
  const pr=problem(),t=$("#total");t.classList.toggle("bad",!!pr);
  t.innerHTML=pr?`<span>${pr}</span>`:`<span>${names.length} người · ${Object.keys(ROLES).filter(k=>cnt(k)>0).length} loại vai</span><span class="num">Sói ${wolvesSet()} · thứ ba ${["satnhan","thanghe","thoisao"].reduce((a,k)=>a+cnt(k),0)}</span>`;
  $("#start").disabled=!!pr;
- $("#optSpeak").setAttribute("aria-checked",opt.speak);$("#optMusic").setAttribute("aria-checked",opt.music);$("#optSouth").setAttribute("aria-checked",opt.south);$("#optBreath").setAttribute("aria-checked",opt.breath);$("#optSfx").setAttribute("aria-checked",opt.sfx);$("#optSecret").setAttribute("aria-checked",opt.secret);$("#optReveal").setAttribute("aria-checked",opt.reveal);[["#optIdiot","idiotWin"],["#optCause","hideCause"],["#optPup","pupHidden"],["#optMayor","mayor"],["#optLast","lastWords"]].forEach(([id,k])=>$(id).setAttribute("aria-checked",!!opt[k]));
+ $("#optSpeak").setAttribute("aria-checked",opt.speak);$("#optMusic").setAttribute("aria-checked",opt.music);$("#optSouth").setAttribute("aria-checked",opt.south);$("#optBreath").setAttribute("aria-checked",opt.breath);$("#optSfx").setAttribute("aria-checked",opt.sfx);$("#optSecret").setAttribute("aria-checked",opt.secret);$("#optReveal").setAttribute("aria-checked",opt.reveal);[["#optIdiot","idiotWin"],["#optCause","hideCause"],["#optPup","pupHidden"],["#optMayor","mayor"],["#optLast","lastWords"],["#optWB","wolfBite"]].forEach(([id,k])=>$(id).setAttribute("aria-checked",!!opt[k]));
  $("#optTime").value=String(opt.time);$("#optRate").value=String(opt.rate);
  if(ON.host&&ON.phase==="lobby")pushLobby()}
 $("#addP").addEventListener("click",()=>{if(names.length<24){names.push("Người "+(names.length+1));save();renderSetup();const ins=$("#names").querySelectorAll("input");ins[ins.length-1].select()}});
 $("#suggest").addEventListener("click",()=>{ON.custom=false;opt.counts=suggest(names.length);save();renderSetup()});
-[["#optSpeak","speak"],["#optSecret","secret"],["#optReveal","reveal"],["#optMusic","music"],["#optSfx","sfx"],["#optSouth","south"],["#optBreath","breath"],["#optIdiot","idiotWin"],["#optCause","hideCause"],["#optPup","pupHidden"],["#optMayor","mayor"],["#optLast","lastWords"]].forEach(([id,k])=>$(id).addEventListener("click",()=>{opt[k]=!opt[k];save();if(k==="music"){if(opt.music)startMusic();else stopMusic()}renderSetup()}));
+[["#optSpeak","speak"],["#optSecret","secret"],["#optReveal","reveal"],["#optMusic","music"],["#optSfx","sfx"],["#optSouth","south"],["#optBreath","breath"],["#optIdiot","idiotWin"],["#optCause","hideCause"],["#optPup","pupHidden"],["#optMayor","mayor"],["#optLast","lastWords"],["#optWB","wolfBite"]].forEach(([id,k])=>$(id).addEventListener("click",()=>{opt[k]=!opt[k];save();if(k==="music"){if(opt.music)startMusic();else stopMusic()}renderSetup()}));
 $("#optTime").addEventListener("change",e=>{opt.time=+e.target.value;save()});
 $("#optRate").addEventListener("change",e=>{opt.rate=+e.target.value;save()});
 $("#optVoice").addEventListener("change",e=>{opt.voice=e.target.value;save();pickVoice();speak("Chào cả làng. Tui là người dẫn truyện của làng thần tiên nè.")});
@@ -904,8 +905,8 @@ const NIGHT=[
     :resultBox(ROLES.soicon.i,"Bạn chưa bị Sói cắn nên vẫn là dân làng. Đêm nay cứ ngủ tiếp.",ROLES.soicon.c),undefined,me)}},
  {k:"soi",wolf:true,wake:"Bầy Sói thức dậy, nhìn nhau và cầm máy chọn người để cắn.",sleep:"Bầy Sói đi ngủ.",
   run:async my=>{const ws=pack(),n=G.rage?2:1;
-   const s=await pick(my,{who:ws,shared:true,ids:alive().filter(i=>!ws.includes(i)),count:n,min:n,confirm:n>1?"Cắn hai người này":"Cắn người này",
-    top:`<p style="margin:0;font-weight:800">Bầy Sói còn sống: ${ws.map(i=>esc(P(i).name)).join(", ")}</p>${ON.on&&ws.length>1?`<p class="sub" style="margin:0">Các Sói thấy lựa chọn của nhau và nhắn riêng được ở khung chat bên dưới. Ai bấm xác nhận trước thì chốt luôn.</p>`:""}${n>1?`<p style="margin:0;font-weight:800;color:var(--bad)">Sói con đã chết. Đêm nay được cắn hai người!</p>`:""}`,
+   const s=await pick(my,{who:ws,shared:true,ids:alive().filter(i=>opt.wolfBite||!ws.includes(i)),count:n,min:n,confirm:n>1?"Cắn hai người này":"Cắn người này",
+    top:`<p style="margin:0;font-weight:800">Bầy Sói còn sống: ${ws.map(i=>esc(P(i).name)).join(", ")}</p>${ON.on&&ws.length>1?`<p class="sub" style="margin:0">Các Sói thấy lựa chọn của nhau và nhắn riêng được ở khung chat bên dưới. Ai bấm xác nhận trước thì chốt luôn.</p>`:""}${opt.wolfBite?`<p class="sub" style="margin:0">Luật đặc biệt: bầy Sói được phép cắn cả đồng bọn.</p>`:""}${n>1?`<p style="margin:0;font-weight:800;color:var(--bad)">Sói con đã chết. Đêm nay được cắn hai người!</p>`:""}`,
     extra:[{label:"Không cắn ai",value:[]}]});G.T.bites=s;G.rage=false}},
  {k:"soitientri",wake:"Sói tiên tri thức dậy. Chọn một người để biết vai thật của họ.",sleep:"Sói tiên tri đi ngủ.",
   run:async my=>{const me=idxOf("soitientri");const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Soi người này"});
@@ -1175,7 +1176,7 @@ function onChat(from,text){text=String(text||"").trim().slice(0,140);if(!text||!
 
 /* ---- host: members and connections ---- */
 function lobbyMsg(){const c={};Object.keys(ROLES).forEach(k=>{if(cnt(k)>0)c[k]=cnt(k)});
- return{t:"lobby",code:ON.code,members:ON.members.map(m=>({n:m.name,off:isOff(m)})),counts:c,o:{time:opt.time,secret:opt.secret,reveal:opt.reveal,idiotWin:opt.idiotWin,hideCause:opt.hideCause,pupHidden:opt.pupHidden,mayor:opt.mayor,lastWords:opt.lastWords}}}
+ return{t:"lobby",code:ON.code,members:ON.members.map(m=>({n:m.name,off:isOff(m)})),counts:c,o:{time:opt.time,secret:opt.secret,reveal:opt.reveal,idiotWin:opt.idiotWin,hideCause:opt.hideCause,pupHidden:opt.pupHidden,mayor:opt.mayor,lastWords:opt.lastWords,wolfBite:opt.wolfBite}}}
 function pushLobby(){const m=lobbyMsg();ON.members.forEach((mm,i)=>{if(i>0)tx(mm.conn,m)})}
 function lobbyChanged(){if(!ON.host||ON.phase!=="lobby")return;saveHost();names=ON.members.map(m=>m.name);if(!ON.custom)opt.counts=suggest(names.length);renderSetup()}
 function afterNet(){if(ON.phase==="lobby")lobbyChanged();else if(G)renderSide()}
@@ -1226,7 +1227,7 @@ function snap(i){const L=ON.last;
  ON.pend.forEach(r=>{if(r.who.includes(i)&&r.got[i]===undefined)sendTo(i,{t:"ask",id:r.id,kind:r.kind,data:r.wire,shared:r.shared})});
  if(Array.isArray(ON.chatScope)&&ON.chatScope.includes(i))sendTo(i,{t:"chatmode",mode:"wolves"});else if(ON.chatScope==="day")sendTo(i,{t:"chatmode",mode:"day"})}
 function rolePacket(i){const p=P(i);return{t:"role",i,name:p.name,role:p.role,roster:ROSTER,ready:ON.phase!=="roles"||(ON.ready?ON.ready.has(i):false),wild:!!p.wild,
- mates:matesOf(i),rules:{idiotWin:opt.idiotWin,hideCause:opt.hideCause,pupHidden:opt.pupHidden,mayor:opt.mayor,lastWords:opt.lastWords},
+ mates:matesOf(i),rules:{idiotWin:opt.idiotWin,hideCause:opt.hideCause,pupHidden:opt.pupHidden,mayor:opt.mayor,lastWords:opt.lastWords,wolfBite:opt.wolfBite},
  lover:p.lover?(G.players.find((q,j)=>j!==i&&q.lover)||{}).name||"":""}}
 function readyCount(){bc({t:"readycount",k:ON.ready.size,n:ON.members.length})}
 function startOnline(){if(!ON.host||ON.phase!=="lobby")return;
@@ -1271,7 +1272,7 @@ const HKEY="ms2-host";
 function saveHost(){if(!ON.host||!ON.code)return;
  try{const play=ON.phase==="play"&&G&&!G.over;
   localStorage.setItem(HKEY,JSON.stringify({t:Date.now(),code:ON.code,pid:ON.pid,play,members:ON.members.map(m=>({pid:m.pid,name:m.name})),roster:ROSTER,
-   opt:{time:opt.time,secret:opt.secret,reveal:opt.reveal,speak:opt.speak,idiotWin:opt.idiotWin,hideCause:opt.hideCause,pupHidden:opt.pupHidden,mayor:opt.mayor,lastWords:opt.lastWords,counts:opt.counts},
+   opt:{time:opt.time,secret:opt.secret,reveal:opt.reveal,speak:opt.speak,idiotWin:opt.idiotWin,hideCause:opt.hideCause,pupHidden:opt.pupHidden,mayor:opt.mayor,lastWords:opt.lastWords,wolfBite:opt.wolfBite,counts:opt.counts},
    G:play?Object.assign({},G,{inGame:[...G.inGame],T:null}):null}))}catch(e){}}
 const clearHost=()=>{try{localStorage.removeItem(HKEY)}catch(e){}};
 function readHost(){try{const d=JSON.parse(localStorage.getItem(HKEY)||"null");if(d&&d.code&&Date.now()-d.t<3*3600*1000)return d}catch(e){}return null}
@@ -1412,7 +1413,7 @@ $("#chatForm").addEventListener("submit",e=>{e.preventDefault();const t=$("#chat
 function renderRoom(){if(!ROOM)return;$("#rmCode").textContent=ROOM.code;
  $("#rmList").innerHTML=ROOM.members.map((p,i)=>`<li><span class="ri unk"></span><div><b>${esc(p.n)}${i===ON.me?" (bạn)":""}</b><small>${i===0?"Chủ phòng":"Người chơi"}</small></div><span class="tags">${p.off?'<span class="dd">Mất kết nối</span>':""}</span></li>`).join("");
  $("#rmRoles").innerHTML=Object.keys(ROOM.counts).map(k=>`<span class="pill" style="color:${ROLES[k].c}">${ROLES[k].n} ×${ROOM.counts[k]}</span>`).join(" ");
- $("#rmOpt").textContent=`Thảo luận ${ROOM.o.time?ROOM.o.time/60+" phút":"không giới hạn"} · ${ROOM.o.reveal?"lật vai khi chết":"giấu vai khi chết"} · ${ROOM.o.secret?"bỏ phiếu kín":"bỏ phiếu công khai"}${ROOM.o.idiotWin?" · Thằng ngốc bị treo là thắng":""}${ROOM.o.hideCause?" · giấu nguyên nhân chết":""}${ROOM.o.pupHidden?" · Sói con ẩn mình":""}${ROOM.o.mayor?" · có trưởng làng":""}${ROOM.o.lastWords?" · có di ngôn":""}`;
+ $("#rmOpt").textContent=`Thảo luận ${ROOM.o.time?ROOM.o.time/60+" phút":"không giới hạn"} · ${ROOM.o.reveal?"lật vai khi chết":"giấu vai khi chết"} · ${ROOM.o.secret?"bỏ phiếu kín":"bỏ phiếu công khai"}${ROOM.o.idiotWin?" · Thằng ngốc bị treo là thắng":""}${ROOM.o.hideCause?" · giấu nguyên nhân chết":""}${ROOM.o.pupHidden?" · Sói con ẩn mình":""}${ROOM.o.mayor?" · có trưởng làng":""}${ROOM.o.lastWords?" · có di ngôn":""}${ROOM.o.wolfBite?" · Sói được cắn Sói":""}`;
  $("#rmState").textContent=`${ROOM.members.length} người trong phòng. Chờ chủ phòng bắt đầu ván.`}
 function renderRW(){if(!ON.mine)return;const c=ON.rc;
  $("#rwCount").textContent=c?`${c.k}/${c.n} đã xem vai`:"";
