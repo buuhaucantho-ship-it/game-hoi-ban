@@ -8,7 +8,7 @@ Trang board game cho hội bạn, chơi ngay trên trình duyệt (điện tho�
 |---|---|---|
 | [Cờ Tỷ Phú (Cần Thơ / Tây Du Ký / Showbiz)](https://buuhaucantho-ship-it.github.io/game-hoi-ban/co-ty-phu.html) | 2–10 | Chung một máy, hoặc online mỗi người một máy theo mã phòng |
 | [Ma Sói](https://buuhaucantho-ship-it.github.io/game-hoi-ban/ma-soi.html) | 5–24 | Tự dẫn bằng giọng đọc, không cần quản trò; 20 vai, 3 phe |
-| [Ai Là Gián Điệp](https://buuhaucantho-ship-it.github.io/game-hoi-ban/gian-diep.html) | 3–12 | Chuyền máy nhận từ khóa, mô tả và bỏ phiếu |
+| [Ai Là Gián Điệp](https://buuhaucantho-ship-it.github.io/game-hoi-ban/gian-diep.html) | 3–12 | Online theo mã phòng (từ khóa, mô tả, phiếu kín trên máy riêng), hoặc chuyền máy |
 | [Đảo Khai Hoang](https://buuhaucantho-ship-it.github.io/game-hoi-ban/khai-hoang.html) | 3–4, mở rộng 5–6 | Chung một máy, mỗi ghế chọn người hoặc máy |
 
 ## Cờ Tỷ Phú (3 chủ đề)
@@ -61,6 +61,13 @@ Thêm cho vui: lời dẫn sáng/đêm thay đổi ngẫu nhiên; khi chơi onli
 ## Ai Là Gián Điệp
 
 Mỗi người nhận một từ khóa, gián điệp nhận từ gần nghĩa khác. Lần lượt mô tả, bỏ phiếu loại người.
+
+**Chơi online (mỗi người một máy):** một người tạo phòng, bạn bè nhập mã 5 ký tự hoặc mở link mời. Chủ phòng giữ ván; mỗi người chỉ nhận đúng từ khóa của mình (giữ thẻ để xem, thả ra là úp lại, có nút xem lại khi đang chơi). Máy người chơi không bao giờ nhận vai hay từ của người khác cho đến khi họ bị loại hoặc hết ván.
+- Mô tả theo lượt có đồng hồ: gõ một câu trên máy (mọi người thấy dòng mô tả) hoặc nói miệng rồi bấm "Xong lượt". Quá giờ hoặc mất kết nối thì tự bỏ lượt.
+- Bỏ phiếu kín cùng lúc, đổi ý được đến hết giờ. Nhiều phiếu nhất bị loại và lật vai; hòa phiếu thì không ai bị loại. Tùy chọn công khai ai bầu cho ai.
+- Trắng bị loại tự đoán từ của dân trên máy mình.
+- Người bị loại vẫn xem tiếp. Có biểu cảm nhanh bay lên màn hình, bảng điểm giữa các ván trong phòng.
+- Mất mạng thì tự nối lại (cùng cơ chế với Ma Sói); chủ phòng lỡ tải lại trang thì dùng "Khôi phục phòng" để tiếp tục ván.
 Có thể thêm người Trắng (không có từ, bị loại được đoán từ để lật kèo), đổi số gián điệp, chọn chủ đề hoặc tự thêm cặp từ của nhóm. Có bảng điểm qua nhiều ván.
 
 ## Đảo Khai Hoang
