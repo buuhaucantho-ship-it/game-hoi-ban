@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Ma Sói · Làng thần tiên · Game Hội Bạn</title>
-<meta name="description" content="Ma Sói tự dẫn: 23 vai, có phe thứ ba, giọng đọc tự gọi từng vai, không cần quản trò. 5–24 người.">
+<meta name="description" content="Ma Sói tự dẫn: 29 vai, có phe thứ ba, giọng đọc tự gọi từng vai, không cần quản trò. 5–24 người.">
 <meta name="theme-color" content="#f6ecd2">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f6ecd2'/%3E%3Cpath d='M12 40l20-16 20 16z' fill='%23e2b25a' stroke='%234a3424' stroke-width='2.5'/%3E%3Crect x='18' y='40' width='28' height='14' fill='%23f3dcb4' stroke='%234a3424' stroke-width='2.5'/%3E%3Ccircle cx='46' cy='14' r='7' fill='%23fff1b8' stroke='%234a3424' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -384,7 +384,7 @@ body.wolfchat .act.pop.enter{animation-name:popInTop}
       <div class="petals" aria-hidden="true"><i style="--x:8%;--d:0s;--t:9s;--s:1"></i><i style="--x:18%;--d:-3s;--t:11s;--s:0.8"></i><i style="--x:30%;--d:-6s;--t:10s;--s:1.1"></i><i style="--x:44%;--d:-1.5s;--t:12s;--s:0.9"></i><i style="--x:57%;--d:-7s;--t:9.5s;--s:1"></i><i style="--x:68%;--d:-4s;--t:11.5s;--s:0.75"></i><i style="--x:80%;--d:-2s;--t:10.5s;--s:1.05"></i><i style="--x:92%;--d:-5s;--t:12.5s;--s:0.85"></i></div>
       <div class="bt"><span class="eyebrow">Làng thần tiên · tự dẫn · 5–24 người</span><h1>Ma Sói</h1><p>Ngày xửa ngày xưa, ở một ngôi làng thần tiên, có những con sói đội lốt dân làng…</p></div>
       <button class="btn primary big" id="start" type="button">Chia vai</button></div>
-    <div class="note" style="margin-bottom:16px">Đặt máy giữa vòng và <b>bật âm lượng</b> để nghe nhạc và lời dẫn. Ban đêm giọng đọc gọi từng vai thức dậy; ai được gọi thì cầm máy chọn, bấm xong máy tự gọi vai tiếp theo. Vai đã chết vẫn được gọi và chờ một lúc như thường, để không ai đoán được. Ban ngày mọi người chuyền máy bỏ phiếu kín.</div>
+    <div class="note" style="margin-bottom:16px">Đặt máy giữa vòng và <b>bật âm lượng</b> để nghe nhạc và lời dẫn. Ban đêm giọng đọc gọi từng vai thức dậy; ai được gọi thì cầm máy chọn, bấm xong máy tự gọi vai tiếp theo. Vai đã out vẫn được gọi và chờ một lúc như thường, để không ai đoán được. Ban ngày mọi người chuyền máy bỏ phiếu kín.</div>
     <div class="card" id="onCard" style="margin-bottom:16px">
       <div class="bar" style="margin-bottom:6px"><h3 style="margin:0">Chơi online</h3><span class="pill">mỗi người một máy</span></div>
       <p class="sub">Một người tạo phòng, những người còn lại nhập mã phòng trên máy của mình. Vai và lượt chọn chỉ hiện trên máy của người đó nên không phải chuyền máy. Cần có mạng.</p>
@@ -411,13 +411,13 @@ body.wolfchat .act.pop.enter{animation-name:popInTop}
           <h3>Tùy chỉnh</h3>
           <div class="opt"><div><b>Giọng đọc lời dẫn</b><small>Tắt thì phải có người đọc to và bấm “Tiếp”.</small></div><button class="switch" id="optSpeak" type="button" role="switch" aria-checked="true" aria-label="Giọng đọc"></button></div>
           <div class="opt"><div><b>Bỏ phiếu kín</b><small>Chuyền máy cho từng người bỏ phiếu. Tắt: cả nhóm chọn công khai.</small></div><button class="switch" id="optSecret" type="button" role="switch" aria-checked="true" aria-label="Bỏ phiếu kín"></button></div>
-          <div class="opt"><div><b>Lật vai khi chết</b><small>Công bố vai của người vừa chết.</small></div><button class="switch" id="optReveal" type="button" role="switch" aria-checked="true" aria-label="Lật vai khi chết"></button></div>
+          <div class="opt"><div><b>Lật vai khi out</b><small>Công bố vai của người vừa out.</small></div><button class="switch" id="optReveal" type="button" role="switch" aria-checked="true" aria-label="Lật vai khi out"></button></div>
           <div class="opt"><div><b>Thằng ngốc bị treo cổ là thắng</b><small>Bật: dân làng treo cổ Thằng ngốc vào bất kỳ ngày nào thì Thằng ngốc thắng cả ván. Tắt: lần đầu bị treo được tha nhưng mất quyền bỏ phiếu.</small></div><button class="switch" id="optIdiot" type="button" role="switch" aria-checked="true" aria-label="Thằng ngốc bị treo cổ là thắng"></button></div>
-          <div class="opt"><div><b>Giấu nguyên nhân chết ban đêm</b><small>Buổi sáng chỉ báo ai đã chết, không nói bị Sói cắn, trúng độc hay bị Sát nhân giết. Hết ván mới lật.</small></div><button class="switch" id="optCause" type="button" role="switch" aria-checked="true" aria-label="Giấu nguyên nhân chết ban đêm"></button></div>
+          <div class="opt"><div><b>Giấu nguyên nhân out ban đêm</b><small>Buổi sáng chỉ báo ai đã out, không nói bị Sói cắn, trúng độc hay bị Sát nhân giết. Hết ván mới lật.</small></div><button class="switch" id="optCause" type="button" role="switch" aria-checked="true" aria-label="Giấu nguyên nhân out ban đêm"></button></div>
           <div class="opt"><div><b>Sói con ẩn mình</b><small>Sói con và bầy Sói không biết nhau. Lúc đầu Sói con thuộc phe Dân, Tiên tri soi không ra Sói. Sói cắn trúng thì Sói con hóa Sói, nhập bầy, từ đêm sau thức cùng Sói.</small></div><button class="switch" id="optPup" type="button" role="switch" aria-checked="true" aria-label="Sói con ẩn mình"></button></div>
-          <div class="opt"><div><b>Bầu trưởng làng</b><small>Sáng ngày đầu cả làng bầu trưởng làng; phiếu treo cổ của trưởng làng tính gấp đôi. Trưởng làng chết thì trao quyền cho người khác.</small></div><button class="switch" id="optMayor" type="button" role="switch" aria-checked="true" aria-label="Bầu trưởng làng"></button></div>
-          <div class="opt"><div><b>Sói được cắn Sói</b><small>Bầy Sói có thể chọn cắn cả người trong bầy (kể cả chính mình). Bị cắn vẫn chết như thường, trừ khi được che chở hoặc cứu.</small></div><button class="switch" id="optWB" type="button" role="switch" aria-checked="false" aria-label="Sói được cắn Sói"></button></div>
-          <div class="opt"><div><b>Di ngôn</b><small>Chơi online: người vừa chết được để lại một câu cho cả làng trước khi rời cuộc chơi.</small></div><button class="switch" id="optLast" type="button" role="switch" aria-checked="true" aria-label="Di ngôn"></button></div>
+          <div class="opt"><div><b>Bầu trưởng làng</b><small>Sáng ngày đầu cả làng bầu trưởng làng; phiếu treo cổ của trưởng làng tính gấp đôi. Trưởng làng out thì trao quyền cho người khác.</small></div><button class="switch" id="optMayor" type="button" role="switch" aria-checked="true" aria-label="Bầu trưởng làng"></button></div>
+          <div class="opt"><div><b>Sói được cắn Sói</b><small>Bầy Sói có thể chọn cắn cả người trong bầy (kể cả chính mình). Bị cắn vẫn out như thường, trừ khi được che chở hoặc cứu.</small></div><button class="switch" id="optWB" type="button" role="switch" aria-checked="false" aria-label="Sói được cắn Sói"></button></div>
+          <div class="opt"><div><b>Di ngôn</b><small>Chơi online: người vừa out được để lại một câu cho cả làng trước khi rời cuộc chơi.</small></div><button class="switch" id="optLast" type="button" role="switch" aria-checked="true" aria-label="Di ngôn"></button></div>
           <div class="opt"><div><b>Thời gian thảo luận</b></div><select class="inp" id="optTime" aria-label="Thời gian thảo luận"><option value="60">1 phút</option><option value="120">2 phút</option><option value="180" selected>3 phút</option><option value="300">5 phút</option><option value="0">Không giới hạn</option></select></div>
           <div class="opt"><div><b>Nhạc nền</b><small>Nhạc dân gian êm, tự nhỏ lại khi giọng đọc dẫn truyện.</small></div><button class="switch" id="optMusic" type="button" role="switch" aria-checked="true" aria-label="Nhạc nền"></button></div>
           <div class="opt"><div><b>Hiệu ứng âm thanh</b><small>Tiếng nút bấm, chuông gọi vai, chim hót khi trời sáng.</small></div><button class="switch" id="optSfx" type="button" role="switch" aria-checked="true" aria-label="Hiệu ứng âm thanh"></button></div>
@@ -429,7 +429,7 @@ body.wolfchat .act.pop.enter{animation-name:popInTop}
         </div>
       </div>
       <div class="card">
-        <div class="bar" style="margin-bottom:6px"><h3 style="margin:0">23 vai trong 3 phe</h3><button class="btn sm" id="suggest" type="button">Gợi ý theo số người</button></div>
+        <div class="bar" style="margin-bottom:6px"><h3 style="margin:0">29 vai trong 3 phe</h3><button class="btn sm" id="suggest" type="button">Gợi ý theo số người</button></div>
         <p class="sub">Dân làng tự bù cho đủ người. Bộ vai là công khai, mọi người đều biết ván này có những vai nào.</p>
         <div id="rolesEd"></div>
         <div class="total" id="total"></div>
@@ -530,7 +530,7 @@ const ROLES={
   i:sv(WOLF+'<path d="M11 17l3 2M21 17l-3 2" stroke="#b8323f" stroke-width="2" stroke-linecap="round"/>')},
  soitientri:{n:"Sói tiên tri",t:"soi",c:"#8f1f45",d:"Là Sói. Mỗi đêm còn được soi đúng vai của một người.",
   i:sv(WOLF+'<circle cx="16" cy="17" r="4" fill="#8f1f45"/><circle cx="16" cy="17" r="1.6" fill="#fff"/>')},
- soicon:{n:"Sói con",t:"soi",c:"#d9534f",d:"Là Sói. Nếu Sói con chết, đêm sau bầy Sói được cắn hai người.",
+ soicon:{n:"Sói con",t:"soi",c:"#d9534f",d:"Là Sói. Nếu Sói con out, đêm sau bầy Sói được cắn hai người.",
   i:sv('<path d="M9 8l4 5h6l4-5 1 8-3 7-5 3-5-3-3-7z" '+W+'/><circle cx="13.5" cy="17" r="1.3" fill="#d9534f"/><circle cx="18.5" cy="17" r="1.3" fill="#d9534f"/>')},
  taysai:{n:"Tay sai",t:"soi",c:"#6d2a3a",d:"Phe Sói nhưng không cắn. Đêm đầu được biết ai là Sói. Tiên tri soi thấy là người thường.",
   i:sv('<path d="M16 4c-6 0-9 6-9 12v13h18V16c0-6-3-12-9-12z" '+W+'/><circle cx="13" cy="16" r="1.6" fill="#6d2a3a"/><circle cx="19" cy="16" r="1.6" fill="#6d2a3a"/>')},
@@ -542,24 +542,36 @@ const ROLES={
   i:sv('<path d="M16 3l11 4v8c0 7-5 12-11 14C10 27 5 22 5 15V7z" '+W+'/><path d="M11 16l4 4 7-8" stroke="#0a9d86" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>')},
  phuthuy:{n:"Phù thủy",t:"dan",c:"#8e44ad",d:"Một bình cứu và một bình độc, mỗi bình dùng một lần trong ván.",
   i:sv('<path d="M12 3h8v3h-1v6l6 9a4 4 0 0 1-3.4 6H10.4A4 4 0 0 1 7 21l6-9V6h-1z" '+W+'/><circle cx="14" cy="23" r="1.6" fill="#8e44ad"/><circle cx="18.5" cy="22.5" r="1.1" fill="#8e44ad"/>')},
- thosan:{n:"Thợ săn",t:"dan",c:"#b5651d",d:"Khi chết được bắn chết theo một người. Chết vì bình độc thì không bắn được.",
+ thosan:{n:"Thợ săn",t:"dan",c:"#b5651d",d:"Khi out được bắn out theo một người. Out vì bình độc thì không bắn được.",
   i:sv('<circle cx="16" cy="16" r="10" '+S+'/><circle cx="16" cy="16" r="3" '+W+'/><path d="M16 2v8M16 22v8M2 16h8M22 16h8" '+S+'/>')},
- cupid:{n:"Thần tình yêu",t:"dan",c:"#ff4f9e",d:"Đêm đầu ghép đôi hai người. Một người chết, người kia chết theo.",
+ cupid:{n:"Thần tình yêu",t:"dan",c:"#ff4f9e",d:"Đêm đầu ghép đôi hai người. Một người out, người kia out theo.",
   i:sv('<path d="M16 27S5 20 5 12a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 8-11 15-11 15z" '+W+'/>')},
- gialang:{n:"Già làng",t:"dan",c:"#7f8c3d",d:"Chịu được một lần bị Sói cắn. Lần thứ hai mới chết.",
+ gialang:{n:"Già làng",t:"dan",c:"#7f8c3d",d:"Chịu được một lần bị Sói cắn. Lần thứ hai mới out.",
   i:sv('<circle cx="15" cy="10" r="5" '+W+'/><path d="M7 29c0-7 3.5-11 8-11s8 4 8 11z" '+W+'/><path d="M25 13v16" '+S+'/>')},
  thamtu:{n:"Thám tử",t:"dan",c:"#2e86ab",d:"Mỗi đêm chọn hai người để biết họ có cùng phe hay không.",
   i:sv('<circle cx="13" cy="13" r="8" '+S+'/><path d="M19 19l8 8" '+S+'/>')},
- hiepsi:{n:"Hiệp sĩ",t:"dan",c:"#5b6f79",d:"Một lần trong ván, ban ngày thách đấu một người: nếu là Sói thì Sói chết, nếu không thì Hiệp sĩ chết.",
+ hiepsi:{n:"Hiệp sĩ",t:"dan",c:"#5b6f79",d:"Một lần trong ván, ban ngày thách đấu một người: nếu là Sói thì Sói out, nếu không thì Hiệp sĩ out.",
   i:sv('<path d="M16 2l3 4v14h-6V6z" '+W+'/><rect x="9" y="20" width="14" height="3" rx="1.5" '+W+'/><rect x="14.5" y="23" width="3" height="6" rx="1" '+W+'/>')},
  thangngoc:{n:"Thằng ngốc",t:"dan",c:"#c79a00",d:"Bị dân treo cổ lần đầu thì lộ vai và sống sót, nhưng từ đó mất quyền bỏ phiếu.",
   i:sv('<circle cx="16" cy="16" r="12" '+W+'/><path d="M12.5 12.5a3.5 3.5 0 1 1 5 3.2c-1 .5-1.5 1.2-1.5 2.3" stroke="#c79a00" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="16" cy="22" r="1.5" fill="#c79a00"/>')},
- badong:{n:"Bà đồng",t:"dan",c:"#6c5ce7",d:"Mỗi đêm hỏi hồn một người đã chết để biết vai của họ.",
+ badong:{n:"Bà đồng",t:"dan",c:"#6c5ce7",d:"Mỗi đêm hỏi hồn một người đã out để biết vai của họ.",
   i:sv('<circle cx="16" cy="13" r="9" '+W+'/><path d="M8 27h16l-2-4H10z" '+W+'/><path d="M12 11q4-4 8 0" stroke="#6c5ce7" stroke-width="2" fill="none" stroke-linecap="round"/>')},
  phongan:{n:"Phong ấn sư",t:"dan",c:"#3d5a80",d:"Mỗi đêm phong ấn một người: ngày hôm sau người đó không được nói (vẫn được bỏ phiếu).",
   i:sv('<rect x="7" y="14" width="18" height="13" rx="3" '+W+'/><path d="M11 14v-3a5 5 0 0 1 10 0v3" '+S+'/>')},
- tre:{n:"Đứa trẻ hoang",t:"dan",c:"#3a9d23",d:"Đêm đầu chọn một hình mẫu. Nếu hình mẫu chết, bạn hóa Sói và theo phe Sói.",
+ tre:{n:"Đứa trẻ hoang",t:"dan",c:"#3a9d23",d:"Đêm đầu chọn một hình mẫu. Nếu hình mẫu out, bạn hóa Sói và theo phe Sói.",
   i:sv('<circle cx="15" cy="11" r="4.5" '+W+'/><path d="M8 29c0-6 3-9.5 7-9.5s7 3.5 7 9.5z" '+W+'/><path d="M21 7c5 0 6 3 6 6-4 0-6-2.5-6-6z" '+W+'/>')},
+ kynu:{n:"Kỹ nữ",t:"dan",c:"#e84393",d:"Mỗi đêm chọn một người để qua đêm ở nhà họ. Sáng dậy nếu Kỹ nữ bị out trong đêm thì người cô ghé thăm cũng out theo.",
+  i:sv('<path d="M16 27S5 20 5 12a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 8-11 15-11 15z" '+W+'/><path d="M11 12q5 5 10 0" stroke="#e84393" stroke-width="2" fill="none" stroke-linecap="round"/>')},
+ colbe:{n:"Cô bé",t:"dan",c:"#f39c12",d:"Mỗi đêm, khi bầy Sói thức, bạn nghe lỏm được hai cái tên: một trong hai người đó là Sói, người còn lại là dân.",
+  i:sv('<circle cx="16" cy="12" r="7" '+W+'/><path d="M6 29c0-6 4-10 10-10s10 4 10 10z" '+W+'/><path d="M9 8q7-8 14 0" stroke="#f39c12" stroke-width="2.4" fill="none" stroke-linecap="round"/>')},
+ matngu:{n:"Người mất ngủ",t:"dan",c:"#34495e",d:"Mỗi đêm thức trắng và biết có bao nhiêu vai khác thức dậy làm việc đêm đó (không biết là vai nào).",
+  i:sv('<circle cx="16" cy="16" r="12" '+W+'/><path d="M10 14h4M18 14h4M11 21q5 3 10 0" stroke="#34495e" stroke-width="2.2" fill="none" stroke-linecap="round"/>')},
+ soicam:{n:"Sói câm",t:"soi",c:"#7b2d4f",d:"Là Sói. Mỗi đêm, sau khi bầy Sói cắn, còn được bịt miệng một người: hôm sau người đó không được nói (vẫn được bỏ phiếu).",
+  i:sv(WOLF+'<path d="M10 20h12" stroke="#7b2d4f" stroke-width="3" stroke-linecap="round"/>')},
+ soitanghinh:{n:"Sói tàng hình",t:"soi",c:"#4a235a",d:"Là Sói. Tiên tri soi bạn sẽ thấy \"không phải Sói\". Các Sói khác vẫn biết bạn.",
+  i:sv(WOLF+'<path d="M3 3l26 26" stroke="#4a235a" stroke-width="2.6" stroke-linecap="round"/>')},
+ soibaothu:{n:"Sói báo thù",t:"soi",c:"#a93226",d:"Là Sói. Khi bị out (trừ trúng bình độc), được chọn kéo theo một người cùng out.",
+  i:sv(WOLF+'<path d="M16 13v8M12 17h8" stroke="#a93226" stroke-width="2.6" stroke-linecap="round"/>')},
  thaybo:{n:"Thầy bói",t:"dan",c:"#9b59b6",d:"Mỗi đêm bói một người: biết có bao nhiêu Sói trong ba người gồm người đó và hai người sống ngồi kề bên.",
   i:sv('<circle cx="16" cy="14" r="10" '+W+'/><path d="M8 29h16l-2.5-5h-11z" '+W+'/><path d="M11 11q3-3 6-2" stroke="#9b59b6" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="19" cy="17" r="1.6" fill="#9b59b6"/>')},
  gau:{n:"Người dẫn gấu",t:"dan",c:"#8d5524",d:"Không thức đêm. Sáng nào mà một trong hai người sống ngồi kề bên bạn là Sói thì con gấu gầm lên cho cả làng nghe.",
@@ -572,15 +584,15 @@ const ROLES={
   i:sv('<path d="M4 22l4-14 8 8 8-8 4 14z" '+W+'/><circle cx="8" cy="7" r="2.4" '+W+'/><circle cx="24" cy="7" r="2.4" '+W+'/><circle cx="16" cy="13" r="2.4" '+W+'/><rect x="4" y="23" width="24" height="4" rx="2" '+W+'/>')},
  thoisao:{n:"Kẻ thổi sáo",t:"ba",c:"#a0522d",d:"Phe riêng. Mỗi đêm thôi miên hai người. Thắng khi mọi người còn sống đều bị thôi miên.",
   i:sv('<path d="M4 25L24 7l3 3L7 28z" '+W+'/><circle cx="12" cy="20" r="1.3" fill="#a0522d"/><circle cx="16" cy="16.4" r="1.3" fill="#a0522d"/><circle cx="20" cy="12.8" r="1.3" fill="#a0522d"/>')}};
-const TEAMS=[["soi","Phe Sói","var(--t-soi)",["soi","soitientri","soicon","taysai"]],
- ["dan","Phe Dân","var(--t-dan)",["dan","tientri","baove","phuthuy","thosan","cupid","gialang","thamtu","thaybo","gau","thaycung","hiepsi","thangngoc","badong","phongan","tre"]],
+const TEAMS=[["soi","Phe Sói","var(--t-soi)",["soi","soitientri","soicon","soicam","soitanghinh","soibaothu","taysai"]],
+ ["dan","Phe Dân","var(--t-dan)",["dan","tientri","baove","phuthuy","thosan","cupid","gialang","thamtu","thaybo","gau","thaycung","kynu","colbe","matngu","hiepsi","thangngoc","badong","phongan","tre"]],
  ["ba","Phe thứ ba","var(--t-ba)",["satnhan","thanghe","thoisao"]]];
 const TEAMNAME={soi:"Phe Sói",dan:"Phe Dân",ba:"Phe riêng"};
-const KILLERS=["soi","soitientri","soicon"];
+const KILLERS=["soi","soitientri","soicon","soicam","soitanghinh","soibaothu"];
 const RULES=()=>(ON.on&&!ON.host&&ON.rules)?ON.rules:opt;
 function rdesc(k){const r=RULES();
  if(k==="thangngoc"&&r.idiotWin)return "Bị dân làng treo cổ là thắng ngay cả ván, vào bất kỳ ngày nào. Không bị treo thì thắng cùng phe Dân.";
- if(k==="soicon"&&r.pupHidden)return "Lúc đầu bạn thuộc phe Dân, chưa phải Sói thật: bạn không biết bầy Sói, bầy Sói cũng không biết bạn, Tiên tri soi bạn không ra Sói. Bị Sói cắn trúng thì không chết mà hóa Sói, nhập bầy và từ đêm sau thức cùng Sói. Nếu bầy Sói chết hết trước khi cắn bạn, bạn vẫn là dân làng. Đã nhập bầy mà chết thì đêm sau bầy Sói được cắn hai người.";
+ if(k==="soicon"&&r.pupHidden)return "Lúc đầu bạn thuộc phe Dân, chưa phải Sói thật: bạn không biết bầy Sói, bầy Sói cũng không biết bạn, Tiên tri soi bạn không ra Sói. Bị Sói cắn trúng thì không out mà hóa Sói, nhập bầy và từ đêm sau thức cùng Sói. Nếu bầy Sói out hết trước khi cắn bạn, bạn vẫn là dân làng. Đã nhập bầy mà out thì đêm sau bầy Sói được cắn hai người.";
  return ROLES[k].d}
 const pickOne=a=>a[Math.floor(Math.random()*a.length)];
 const MORNING=["Ông mặt trời thức dậy, chim hót líu lo.","Gà gáy ò ó o, sương còn đọng trên lá.","Nắng sớm rọi qua mái tranh, khói bếp bay lên.","Tiếng chuông chùa ngân xa, trời hửng sáng.","Trời trong xanh, gió đồng thổi mát rượi."];
@@ -592,11 +604,11 @@ const DEF=["An","Bình","Chi","Dũng","Giang","Hạnh","Khoa","Linh","Minh","Nga
 let names=(()=>{try{const v=JSON.parse(store.get("ms2-names")||"null");return Array.isArray(v)&&v.length>=5?v:DEF.slice()}catch(e){return DEF.slice()}})();
 let opt=(()=>{const d={speak:true,secret:true,reveal:true,time:180,rate:1,counts:null,music:true,sfx:true,voice:"",south:true,breath:true,idiotWin:true,hideCause:true,pupHidden:true,mayor:true,lastWords:true,wolfBite:false};try{return Object.assign(d,JSON.parse(store.get("ms2-opt")||"{}"))}catch(e){return d}})();
 const save=()=>{if(!ON.on)store.set("ms2-names",JSON.stringify(names));store.set("ms2-opt",JSON.stringify(opt))};
-function suggest(n){const pri=[["tientri",5],["baove",6],["phuthuy",7],["thosan",8],["cupid",9],["satnhan",10],["thanghe",11],["soicon",12],["gialang",12],["gau",13],["thamtu",13],["thaycung",15],["thaybo",16],["taysai",14],["badong",15],["thoisao",16],["soitientri",17],["hiepsi",17],["phongan",18],["thangngoc",19],["tre",20]];
+function suggest(n){const pri=[["tientri",5],["baove",6],["phuthuy",7],["thosan",8],["cupid",9],["satnhan",10],["thanghe",11],["soicon",12],["gialang",12],["gau",13],["thamtu",13],["kynu",12],["colbe",14],["soibaothu",14],["soicam",15],["matngu",15],["soitanghinh",18],["thaycung",15],["thaybo",16],["taysai",14],["badong",15],["thoisao",16],["soitientri",17],["hiepsi",17],["phongan",18],["thangngoc",19],["tre",20]];
  const c={},W=Math.max(1,Math.round(n/4.5));let keys=pri.filter(([k,m])=>n>=m).map(([k])=>k);
  const tot=()=>Object.values(c).reduce((a,b)=>a+b,0);
- const build=()=>{Object.keys(c).forEach(k=>delete c[k]);keys.forEach(k=>c[k]=1);c.soi=Math.max(1,W-(c.soicon||0)-(c.soitientri||0))};
- build();while(tot()>n-1&&keys.length){const drop=[...keys].reverse().find(k=>k!=="soicon"&&k!=="soitientri")||keys[keys.length-1];keys=keys.filter(k=>k!==drop);build()}
+ const build=()=>{Object.keys(c).forEach(k=>delete c[k]);keys.forEach(k=>c[k]=1);c.soi=Math.max(1,W-KILLERS.reduce((a,k)=>k==="soi"?a:a+(c[k]||0),0))};
+ build();while(tot()>n-1&&keys.length){const drop=[...keys].reverse().find(k=>!KILLERS.includes(k))||keys[keys.length-1];keys=keys.filter(k=>k!==drop);build()}
  return c}
 if(!opt.counts)opt.counts=suggest(names.length);
 const cnt=k=>k==="dan"?danCount():(opt.counts[k]||0);
@@ -716,7 +728,7 @@ function paintMus(){const b=$("#musBtn");if(b)b.textContent=opt.music?"Nhạc: b
 
 /* Southern-style wording for the narrator */
 const SOUTH=[[/nhắm mắt lại\./g,"nhắm mắt lại nha."],[/mở mắt ra\./g,"mở mắt ra nghen."],[/đi ngủ\./g,"đi ngủ nha."],[/thức dậy\./g,"thức dậy nghen."],
- [/Mọi người/g,"Cả nhà"],[/không ai chết\./g,"hổng có ai chết hết."],[/Không ai bị treo cổ hôm nay\./g,"Hôm nay hổng ai bị treo cổ hết."],[/không được nói/g,"hổng được nói"],
+ [/Mọi người/g,"Cả nhà"],[/không ai out\./g,"hổng có ai out hết."],[/Không ai bị treo cổ hôm nay\./g,"Hôm nay hổng ai bị treo cổ hết."],[/không được nói/g,"hổng được nói"],
  [/Hết giờ thảo luận\./g,"Hết giờ thảo luận rồi nha."],[/để tìm ra kẻ đáng ngờ\./g,"để tìm ra kẻ đáng nghi nghen."],[/Chuyền máy lần lượt cho từng người\./g,"Chuyền máy lần lượt cho từng người nha."],
  [/Thợ săn không bắn ai\./g,"Thợ săn hổng bắn ai hết."],[/được tha\./g,"được tha nghen."]];
 const southern=t=>opt.south?SOUTH.reduce((a,[r,b])=>a.replace(r,b),t):t;
@@ -849,17 +861,17 @@ function witchUI(d,onDone){let heal=null,pmode=false,ptarget=null;const bitten=d
   $("#ok").addEventListener("click",()=>onDone({heal,ptarget}))};draw()}
 
 /* ======================= DEATH ======================= */
-const CAUSE={wolf:"bị Sói cắn",sk:"bị Sát nhân giết",poison:"trúng bình độc",love:"chết theo người yêu",vote:"bị dân làng treo cổ",shot:"bị Thợ săn bắn",duel:"thua cuộc thách đấu",knight:"bị Hiệp sĩ hạ"};
+const CAUSE={wolf:"bị Sói cắn",sk:"bị Sát nhân giết",poison:"trúng bình độc",love:"out theo người yêu",ky:"ngủ nhà Kỹ nữ nên out theo",vote:"bị dân làng treo cổ",shot:"bị Thợ săn bắn",duel:"thua cuộc thách đấu",knight:"bị Hiệp sĩ hạ"};
 function kill(i,cause,list){if(!P(i).alive)return list;P(i).alive=false;list.push({i,c:cause});const p=P(i);
- if(p.role==="thosan"&&cause!=="poison")G.hunters.push(i);
+ if((p.role==="thosan"||p.role==="soibaothu")&&cause!=="poison")G.hunters.push(i);
  if(p.role==="soicon"&&!hiddenPup(i))G.rage=true;
  G.players.forEach((q,j)=>{if(q.alive&&q.role==="tre"&&!q.wild&&q.model===i){q.wild=true;q.team="soi";log(`${q.name} đã âm thầm hóa Sói`,false);if(ON.on)sendTo(j,{t:"me",patch:{wild:true}})}});
  if(p.lover){const j=G.players.findIndex((q,k)=>k!==i&&q.lover);if(j>=0&&P(j).alive)kill(j,"love",list)}
  return list}
-const mainD=d=>d.filter(x=>x.c!=="love");
+const mainD=d=>d.filter(x=>x.c!=="love"&&x.c!=="ky");
 const extraD=d=>d.length-mainD(d).length;
-const extraSay=d=>extraD(d)?` Ngoài ra còn có thêm ${extraD(d)} người nữa đã chết.`:"";
-const deathLog=d=>mainD(d).map(x=>`${P(x.i).name} ${CAUSE[x.c]}`).join("; ")+(extraD(d)?`${mainD(d).length?"; ":""}thêm ${extraD(d)} người chết`:"");
+const extraSay=d=>extraD(d)?` Ngoài ra còn có thêm ${extraD(d)} người nữa đã out.`:"";
+const deathLog=d=>mainD(d).map(x=>`${P(x.i).name} ${CAUSE[x.c]}`).join("; ")+(extraD(d)?`${mainD(d).length?"; ":""}thêm ${extraD(d)} người out`:"");
 const secretLog=(pre,d)=>{if(extraD(d))log(`Bí mật ${pre}: ${d.map(x=>`${P(x.i).name} ${CAUSE[x.c]}`).join("; ")}`,false)};
 const deathText=list=>list.map(d=>`${P(d.i).name}${opt.reveal?` (${roleName(d.i)})`:""}`).join(", ");
 
@@ -882,16 +894,18 @@ const NIGHT=[
  {k:"cupid",first:true,wake:"Thần tình yêu thức dậy. Hãy cầm máy và chọn hai người để ghép đôi.",sleep:"Thần tình yêu đi ngủ.",
   run:async my=>{const s=await pick(my,{who:idxOf("cupid"),ids:alive(),count:2,confirm:"Ghép đôi hai người này"});s.forEach(i=>P(i).lover=true);if(s.length===2){log(`Cặp đôi: ${P(s[0]).name} và ${P(s[1]).name}`,false);if(ON.on)G.players.forEach((p,i)=>{if(p.lover)sendTo(i,{t:"me",patch:{lover:P(s[0]===i?s[1]:s[0]).name}})})}}},
  {k:"cupid",first:true,lovers:true,title:"Cặp đôi",wake:"Hai người vừa được ghép đôi, hãy mở mắt và nhìn màn hình để biết người yêu của mình.",sleep:"Cặp đôi nhắm mắt lại.",
-  run:async my=>{const L=G.players.map((p,i)=>p.lover?i:-1).filter(i=>i>=0);await info(my,`<div class="big">${L.map(i=>esc(P(i).name)).join(" ♥ ")}</div><p class="sub" style="margin:0">Hai bạn sống chết có nhau. Nếu khác phe, hai bạn thắng khi chỉ còn lại hai người.</p>`,"Đã biết",L.filter(i=>P(i).alive))}},
+  run:async my=>{const L=G.players.map((p,i)=>p.lover?i:-1).filter(i=>i>=0);await info(my,`<div class="big">${L.map(i=>esc(P(i).name)).join(" ♥ ")}</div><p class="sub" style="margin:0">Hai bạn cùng sống cùng out. Nếu khác phe, hai bạn thắng khi chỉ còn lại hai người.</p>`,"Đã biết",L.filter(i=>P(i).alive))}},
  {k:"tre",wake:"Đứa trẻ hoang thức dậy.",sleep:"Đứa trẻ hoang đi ngủ.",
   run:async my=>{const me=idxOf("tre");
-   if(G.night===1){const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Chọn làm hình mẫu",note:"Chọn một người làm hình mẫu. Nếu người này chết, bạn sẽ hóa Sói."});if(s.length)P(me).model=s[0]}
-   else{const q=P(me);await info(my,q.wild?resultBox(ROLES.soi.i,"Hình mẫu của bạn đã chết. Bạn đã hóa Sói! Từ giờ hãy mở mắt cùng bầy Sói.",ROLES.soi.c)
+   if(G.night===1){const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Chọn làm hình mẫu",note:"Chọn một người làm hình mẫu. Nếu người này out, bạn sẽ hóa Sói."});if(s.length)P(me).model=s[0]}
+   else{const q=P(me);await info(my,q.wild?resultBox(ROLES.soi.i,"Hình mẫu của bạn đã out. Bạn đã hóa Sói! Từ giờ hãy mở mắt cùng bầy Sói.",ROLES.soi.c)
     :resultBox(ROLES.tre.i,`Hình mẫu ${esc(P(q.model).name)} vẫn còn sống. Bạn vẫn là dân làng.`,ROLES.tre.c),undefined,me)}}},
  {k:"taysai",first:true,wake:"Tay sai thức dậy và nhìn màn hình để biết ai là Sói.",sleep:"Tay sai đi ngủ.",
   run:async my=>{const w=G.players.map((p,i)=>knownWolf(i)?i:-1).filter(i=>i>=0);await info(my,`<p class="sub" style="margin:0">Bầy Sói là:</p><div class="big">${w.map(i=>esc(P(i).name)).join(", ")}</div><p class="sub" style="margin:0">Sói không biết bạn là ai. Hãy giúp họ thắng.</p>`,"Đã biết",idxOf("taysai"))}},
  {k:"phongan",wake:"Phong ấn sư thức dậy. Chọn một người không được nói vào ngày mai.",sleep:"Phong ấn sư đi ngủ.",
   run:async my=>{const s=await pick(my,{who:idxOf("phongan"),ids:alive().filter(i=>i!==G.lastSilence),confirm:"Phong ấn người này",note:G.lastSilence!=null?`Không được chọn lại ${esc(P(G.lastSilence).name)}.`:"",extra:[{label:"Không phong ấn ai",value:[]}]});G.T.silence=s[0]??null}},
+ {k:"kynu",wake:"Kỹ nữ thức dậy. Chọn một người để qua đêm ở nhà họ.",sleep:"Kỹ nữ đi ngủ.",
+  run:async my=>{const me=idxOf("kynu");const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Qua đêm ở nhà người này",note:"Nếu sáng mai bạn bị out thì người bạn ghé thăm cũng out theo.",extra:[{label:"Ở nhà một mình",value:[]}]});G.T.visit=s[0]??null;if(s.length)log(`Kỹ nữ ghé nhà ${P(s[0]).name}`,false)}},
  {k:"thaycung",wake:"Thầy cúng thức dậy. Chọn một người để ban bùa hộ mệnh.",sleep:"Thầy cúng đi ngủ.",
   run:async my=>{const me=idxOf("thaycung");
    if(G.charmUsed){await info(my,`<p style="margin:0;font-weight:800">Bạn đã ban bùa rồi, không còn bùa nào nữa.</p>`,"Đi ngủ",me);return}
@@ -906,16 +920,23 @@ const NIGHT=[
  {k:"soi",wolf:true,wake:"Bầy Sói thức dậy, nhìn nhau và cầm máy chọn người để cắn.",sleep:"Bầy Sói đi ngủ.",
   run:async my=>{const ws=pack(),n=G.rage?2:1;
    const s=await pick(my,{who:ws,shared:true,ids:alive().filter(i=>opt.wolfBite||!ws.includes(i)),count:n,min:n,confirm:n>1?"Cắn hai người này":"Cắn người này",
-    top:`<p style="margin:0;font-weight:800">Bầy Sói còn sống: ${ws.map(i=>esc(P(i).name)).join(", ")}</p>${ON.on&&ws.length>1?`<p class="sub" style="margin:0">Các Sói thấy lựa chọn của nhau và nhắn riêng được ở khung chat bên dưới. Ai bấm xác nhận trước thì chốt luôn.</p>`:""}${opt.wolfBite?`<p class="sub" style="margin:0">Luật đặc biệt: bầy Sói được phép cắn cả đồng bọn.</p>`:""}${n>1?`<p style="margin:0;font-weight:800;color:var(--bad)">Sói con đã chết. Đêm nay được cắn hai người!</p>`:""}`,
+    top:`<p style="margin:0;font-weight:800">Bầy Sói còn sống: ${ws.map(i=>esc(P(i).name)).join(", ")}</p>${ON.on&&ws.length>1?`<p class="sub" style="margin:0">Các Sói thấy lựa chọn của nhau và nhắn riêng được ở khung chat bên dưới. Ai bấm xác nhận trước thì chốt luôn.</p>`:""}${opt.wolfBite?`<p class="sub" style="margin:0">Luật đặc biệt: bầy Sói được phép cắn cả đồng bọn.</p>`:""}${n>1?`<p style="margin:0;font-weight:800;color:var(--bad)">Sói con đã out. Đêm nay được cắn hai người!</p>`:""}`,
     extra:[{label:"Không cắn ai",value:[]}]});G.T.bites=s;G.rage=false}},
+ {k:"soicam",wake:"Sói câm thức dậy. Chọn một người để bịt miệng ngày mai.",sleep:"Sói câm đi ngủ.",
+  run:async my=>{const me=idxOf("soicam");const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Bịt miệng người này",extra:[{label:"Không bịt miệng ai",value:[]}]});G.T.silence2=s[0]??null}},
  {k:"soitientri",wake:"Sói tiên tri thức dậy. Chọn một người để biết vai thật của họ.",sleep:"Sói tiên tri đi ngủ.",
   run:async my=>{const me=idxOf("soitientri");const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Soi người này"});
    if(s.length){const R=ROLES[P(s[0]).role];await info(my,resultBox(R.i,`${esc(P(s[0]).name)} là <b>${roleName(s[0])}</b>`,R.c),undefined,me)}}},
+ {k:"colbe",wake:"Cô bé thức dậy, lén nghe bầy Sói thì thầm.",sleep:"Cô bé đi ngủ.",
+  run:async my=>{const me=idxOf("colbe"),ws=alive().filter(i=>i!==me&&isWolf(i)),ns=alive().filter(i=>i!==me&&!isWolf(i));
+   if(!ws.length||!ns.length){await info(my,`<p style="margin:0;font-weight:800">Đêm nay bạn không nghe được gì.</p>`,"Đi ngủ",me);return}
+   const a=pickOne(ws),b=pickOne(ns),pair=Math.random()<.5?[a,b]:[b,a];
+   await info(my,resultBox(ROLES.colbe.i,`Bạn nghe lỏm được hai cái tên: <b>${esc(P(pair[0]).name)}</b> và <b>${esc(P(pair[1]).name)}</b>.`,ROLES.colbe.c)+`<p class="sub" style="margin:0">Một trong hai người này là Sói, người còn lại không phải.</p>`,undefined,me)}},
  {k:"satnhan",wake:"Sát nhân thức dậy. Chọn một người để ra tay.",sleep:"Sát nhân đi ngủ.",
   run:async my=>{const me=idxOf("satnhan");const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Ra tay",extra:[{label:"Đêm nay nghỉ tay",value:[]}]});G.T.sk=s[0]??null}},
  {k:"tientri",wake:"Tiên tri thức dậy. Chọn một người để soi.",sleep:"Tiên tri đi ngủ.",
   run:async my=>{const me=idxOf("tientri");const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Soi người này"});
-   if(s.length){const w=isWolf(s[0]);await info(my,resultBox(w?ROLES.soi.i:ROLES.dan.i,`${esc(P(s[0]).name)} ${w?"<b>LÀ SÓI</b>":"không phải Sói"}`,w?ROLES.soi.c:ROLES.dan.c),undefined,me)}}},
+   if(s.length){const w=isWolf(s[0])&&P(s[0]).role!=="soitanghinh";await info(my,resultBox(w?ROLES.soi.i:ROLES.dan.i,`${esc(P(s[0]).name)} ${w?"<b>LÀ SÓI</b>":"không phải Sói"}`,w?ROLES.soi.c:ROLES.dan.c),undefined,me)}}},
  {k:"thamtu",wake:"Thám tử thức dậy. Chọn hai người để so phe.",sleep:"Thám tử đi ngủ.",
   run:async my=>{const me=idxOf("thamtu");const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),count:2,confirm:"So phe hai người"});
    if(s.length===2){const same=P(s[0]).team===P(s[1]).team;await info(my,resultBox(ROLES.thamtu.i,`${esc(P(s[0]).name)} và ${esc(P(s[1]).name)} <b>${same?"CÙNG PHE":"KHÁC PHE"}</b>`,same?"var(--good)":"var(--bad)"),undefined,me)}}},
@@ -925,7 +946,7 @@ const NIGHT=[
     await info(my,resultBox(ROLES.thaybo.i,`Trong ${grp.map(i=>esc(P(i).name)).join(", ")} có <b>${n} Sói</b>`,n?ROLES.soi.c:ROLES.dan.c)+`<p class="sub" style="margin:0">Người tay sai và Sói con chưa nhập bầy không tính là Sói.</p>`,undefined,me)}}},
  {k:"badong",wake:"Bà đồng thức dậy. Chọn một linh hồn để hỏi chuyện.",sleep:"Bà đồng đi ngủ.",
   run:async my=>{const me=idxOf("badong"),dead=G.players.map((p,i)=>p.alive?-1:i).filter(i=>i>=0);
-   if(!dead.length){await info(my,`<p style="margin:0;font-weight:800">Chưa có ai chết để hỏi chuyện.</p>`,undefined,me);return}
+   if(!dead.length){await info(my,`<p style="margin:0;font-weight:800">Chưa có ai out để hỏi chuyện.</p>`,undefined,me);return}
    const s=await pick(my,{who:me,ids:dead,confirm:"Hỏi hồn người này"});if(s.length){const R=ROLES[P(s[0]).role];await info(my,resultBox(R.i,`Linh hồn ${esc(P(s[0]).name)} là <b>${roleName(s[0])}</b>`,R.c),undefined,me)}}},
  {k:"phuthuy",wake:"Phù thủy thức dậy.",sleep:"Phù thủy đi ngủ.",
   run:async my=>{const me=idxOf("phuthuy");const T=G.T,bitten=(T.bites||[]).filter(i=>P(i).alive);
@@ -937,9 +958,11 @@ const NIGHT=[
  {k:"thoisao",wake:"Kẻ thổi sáo thức dậy. Chọn hai người để thôi miên.",sleep:"Kẻ thổi sáo đi ngủ.",
   run:async my=>{const me=idxOf("thoisao");const ids=alive().filter(i=>i!==me&&!P(i).charmed),n=Math.min(2,ids.length);
    const s=await pick(my,{who:me,ids,count:n,min:n,confirm:"Thôi miên",top:`<p class="sub" style="margin:0">Đã bị thôi miên: ${G.players.filter(p=>p.charmed&&p.alive).map(p=>esc(p.name)).join(", ")||"chưa có ai"}</p>`});
-   s.forEach(i=>P(i).charmed=true)}}];
+   s.forEach(i=>P(i).charmed=true)}},
+ {k:"matngu",wake:"Người mất ngủ thức trắng đêm, lắng nghe xem có ai thức dậy.",sleep:"Người mất ngủ đi ngủ.",
+  run:async my=>{const me=idxOf("matngu"),n=G.T.woke||0;await info(my,resultBox(ROLES.matngu.i,`Đêm nay có <b>${n}</b> vai khác thức dậy làm việc.`,ROLES.matngu.c)+`<p class="sub" style="margin:0">Bạn không biết đó là những vai nào.</p>`,undefined,me)}}];
 function actorAlive(st){if(st.wolf)return alive().some(isWolf);if(st.lovers)return G.players.some(p=>p.lover&&p.alive);return roleAlive(st.k)}
-async function nightPhase(my){G.night++;G.T={bites:[],protect:null,heal:null,poison:null,sk:null,silence:null};
+async function nightPhase(my){G.night++;G.T={bites:[],protect:null,heal:null,poison:null,sk:null,silence:null,silence2:null,visit:null,woke:0};
  sky("night","Màn đêm buông xuống");waitScreen();renderSide();cue("night");
  await say(my,G.night===1?"Màn đêm đầu tiên buông xuống làng thần tiên. Mọi người đặt máy ở giữa và nhắm mắt lại.":`Đêm thứ ${G.night}. ${pickOne(NIGHTS)} Mọi người nhắm mắt lại.`);
  await sleep(1200);chk(my);
@@ -950,16 +973,16 @@ async function nightPhase(my){G.night++;G.T={bites:[],protect:null,heal:null,poi
   await gate(my);
   const R=ROLES[st.k];sky("night",st.title||R.n,st.lovers?"cupid":st.k);waitScreen(`${st.title||R.n} đang thức…`);cue("up");
   await say(my,st.wake);
-  if(actorAlive(st)&&!(st.lovers&&!G.players.some(p=>p.lover))){await st.run(my);chk(my)}
+  if(actorAlive(st)&&!(st.lovers&&!G.players.some(p=>p.lover))){if(!st.pup&&st.k!=="matngu")G.T.woke=(G.T.woke||0)+1;await st.run(my);chk(my)}
   else{waitScreen(`${st.title||R.n} đang thức…`);await sleep(rnd(5500,9500));chk(my)}
   waitScreen();cue("down");await say(my,st.sleep);await sleep(900);chk(my)}
  G.lastProtect=G.T.protect;G.lastSilence=G.T.silence}
 
 /* ======================= DAY ======================= */
 async function hunterShots(my,phase){while(G.hunters.length){const h=G.hunters.shift();await gate(my);
-  sky(phase,"Phát súng cuối","thosan");await say(my,`${P(h).name} là Thợ săn. Trước khi gục xuống, Thợ săn hãy cầm máy và chọn người để bắn theo.`);
+  const rv=P(h).role==="soibaothu";sky(phase,rv?"Sói báo thù":"Phát súng cuối",P(h).role);await say(my,rv?`${P(h).name} là Sói báo thù. Trước khi gục xuống, hãy cầm máy và chọn một người để kéo theo.`:`${P(h).name} là Thợ săn. Trước khi gục xuống, Thợ săn hãy cầm máy và chọn người để bắn theo.`);
   const s=await pick(my,{who:h,ids:alive(),confirm:"Bắn người này",extra:[{label:"Không bắn",value:[]}]});chk(my);
-  if(s.length){const d=kill(s[0],"shot",[]);log(`Thợ săn ${P(h).name} bắn ${deathText(mainD(d))}${extraD(d)?`; thêm ${extraD(d)} người chết`:""}`);secretLog("phát súng",d);waitScreen("Đoàng!");await say(my,`Đoàng! ${deathText(mainD(d))} đã chết.${extraSay(d)}`)}
+  if(s.length){const d=kill(s[0],"shot",[]);log(`${ROLES[P(h).role].n} ${P(h).name} bắn ${deathText(mainD(d))}${extraD(d)?`; thêm ${extraD(d)} người out`:""}`);secretLog("phát súng",d);waitScreen("Đoàng!");await say(my,`Đoàng! ${deathText(mainD(d))} đã out.${extraSay(d)}`)}
   else await say(my,"Thợ săn không bắn ai.");
   renderSide();if(endIf())throw ABORT}
  await succession(my,phase)}
@@ -968,16 +991,17 @@ async function dayPhase(my){G.day++;G.players.forEach(p=>p.silenced=false);
  (T.bites||[]).forEach(v=>{const p=P(v);if(!p.alive||v===T.protect||v===T.heal||p.role==="satnhan")return;if(p.charm){p.charm=false;log(`Bùa hộ mệnh cứu ${p.name} khỏi bị cắn`,false);return}if(p.role==="gialang"&&p.lives>1){p.lives--;log(`Già làng ${p.name} bị cắn nhưng còn sống`,false);return}if(hiddenPup(v)){joinPup(v);return}kill(v,"wolf",d)});
  if(T.sk!=null&&T.sk!==T.protect&&P(T.sk).alive){if(P(T.sk).charm){P(T.sk).charm=false;log(`Bùa hộ mệnh cứu ${P(T.sk).name} khỏi Sát nhân`,false)}else kill(T.sk,"sk",d)}
  if(T.poison!=null&&P(T.poison).alive)kill(T.poison,"poison",d);
- if(opt.hideCause&&d.length){log(`Đêm ${G.night}: ${d.map(x=>P(x.i).name).join(", ")} đã chết`);log(`Bí mật đêm ${G.night}: ${d.map(x=>`${P(x.i).name} ${CAUSE[x.c]}`).join("; ")}`,false)}
- else{log(`Đêm ${G.night}: ${d.length?(mainD(d).length?deathLog(d):`${d.map(x=>P(x.i).name).join(", ")} đã chết`):"bình yên"}`);secretLog(`đêm ${G.night}`,d)}
+ if(T.visit!=null&&P(T.visit).alive&&d.some(x=>x.c!=="ky"&&P(x.i).role==="kynu"))kill(T.visit,"ky",d);
+ if(opt.hideCause&&d.length){log(`Đêm ${G.night}: ${d.map(x=>P(x.i).name).join(", ")} đã out`);log(`Bí mật đêm ${G.night}: ${d.map(x=>`${P(x.i).name} ${CAUSE[x.c]}`).join("; ")}`,false)}
+ else{log(`Đêm ${G.night}: ${d.length?(mainD(d).length?deathLog(d):`${d.map(x=>P(x.i).name).join(", ")} đã out`):"bình yên"}`);secretLog(`đêm ${G.night}`,d)}
  sky("day","Trời sáng");renderSide();cue("day");if(d.length)setTimeout(()=>cue("toll"),1400);
  waitScreen("Mọi người mở mắt");
- await say(my,`${pickOne(MORNING)} Mọi người mở mắt ra. ${d.length?`Đêm qua, ${deathText(opt.hideCause?d:mainD(d))} đã chết.${opt.hideCause?"":extraSay(d)}`:"Đêm qua làng bình yên, không ai chết."}`);
+ await say(my,`${pickOne(MORNING)} Mọi người mở mắt ra. ${d.length?`Đêm qua, ${deathText(opt.hideCause?d:mainD(d))} đã out.${opt.hideCause?"":extraSay(d)}`:"Đêm qua làng bình yên, không ai out."}`);
  if(endIf())throw ABORT;
  if(roleAlive("gau")){const b=idxOf("gau");if(nbrs(b).some(isWolf)){log(`Gấu của ${P(b).name} gầm gừ`);cue("toll");await say(my,`Grừ… grừ! Con gấu của ${P(b).name} gầm lên. Có Sói ngồi ngay cạnh người dẫn gấu!`)}}
  await lastWords(my,d.map(x=>x.i));
  await hunterShots(my,"day");
- if(T.silence!=null&&P(T.silence).alive){P(T.silence).silenced=true;renderSide();await say(my,`${P(T.silence).name} đã bị phong ấn, hôm nay không được nói, nhưng vẫn được bỏ phiếu.`)}
+ for(const sv of [T.silence,T.silence2]){if(sv!=null&&P(sv).alive&&!P(sv).silenced){P(sv).silenced=true;renderSide();await say(my,`${P(sv).name} đã bị phong ấn, hôm nay không được nói, nhưng vẫn được bỏ phiếu.`)}}
  if(opt.mayor&&G.day===1&&G.mayor==null)await electMayor(my);
  await discussion(my);
  await vote(my)}
@@ -1013,7 +1037,7 @@ async function duel(my){sky("day","Hiệp sĩ thách đấu","hiepsi");
  const s=await pick(my,{who:kn,ids:alive().filter(i=>i!==kn),confirm:"Thách đấu người này",note:"Hiệp sĩ sẽ bị lộ vai."});chk(my);
  if(!s.length)return;G.knight=true;const t=s[0],w=isWolf(t),d=kill(w?t:kn,w?"knight":"duel",[]);
  log(`Hiệp sĩ ${P(kn).name} thách đấu ${P(t).name}: ${w?"thắng":"thua"}`);
- await say(my,w?`${P(kn).name} là Hiệp sĩ và đã hạ gục ${deathText(mainD(d))}. Đó đúng là Sói!${extraSay(d)}`:`${P(kn).name} là Hiệp sĩ, nhưng ${P(t).name} không phải Sói. ${deathText(mainD(d))} đã chết.${extraSay(d)}`);secretLog("thách đấu",d);
+ await say(my,w?`${P(kn).name} là Hiệp sĩ và đã hạ gục ${deathText(mainD(d))}. Đó đúng là Sói!${extraSay(d)}`:`${P(kn).name} là Hiệp sĩ, nhưng ${P(t).name} không phải Sói. ${deathText(mainD(d))} đã out.${extraSay(d)}`);secretLog("thách đấu",d);
  renderSide();if(endIf())throw ABORT;await hunterShots(my,"day")}
 async function vote(my){await gate(my);sky("day","Bỏ phiếu");
  const voters=alive().filter(i=>!P(i).idiot);let target=null;
@@ -1072,7 +1096,7 @@ async function succession(my,phase){if(G.mayor==null||P(G.mayor).alive)return;co
  else{log("Làng không còn trưởng làng");await say(my,"Trưởng làng không trao quyền cho ai. Làng không còn trưởng làng.")}}
 async function lastWords(my,ids){if(!ON.on||!opt.lastWords)return;ids=ids.filter(i=>!P(i).alive);if(!ids.length)return;
  waitScreen("Đang chờ di ngôn…");
- const rs=await Promise.all(ids.map(i=>ask(my,[i],"text",{note:"Bạn đã chết. Để lại một câu di ngôn cho cả làng (không bắt buộc, tối đa 100 ký tự).",btn:"Gửi di ngôn"},{timeout:45000*SP()})));chk(my);
+ const rs=await Promise.all(ids.map(i=>ask(my,[i],"text",{note:"Bạn đã out. Để lại một câu di ngôn cho cả làng (không bắt buộc, tối đa 100 ký tự).",btn:"Gửi di ngôn"},{timeout:45000*SP()})));chk(my);
  for(let k=0;k<ids.length;k++){if(!rs[k])continue;const n=P(ids[k]).name;log(`Di ngôn của ${n}: “${rs[k]}”`);
   out({t:"act",html:`<div class="result" style="--rc:var(--accent)"><span>Di ngôn của <b>${esc(n)}</b>: “${esc(rs[k])}”</span></div>`});await say(my,`Di ngôn của ${n}: ${rs[k]}`)}}
 function fmt(t){return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")}
@@ -1084,9 +1108,9 @@ async function run(){const my=token;show("play");renderSide();
 const sideState=()=>({t:"side",al:alive().length,pl:G.players.map((p,i)=>{const k=(!p.alive&&opt.reveal)||p.idiot;return{n:p.name,a:p.alive,r:k?p.role:null,k:!!k,rn:k?roleName(i):"",sl:!!(p.silenced&&p.alive),id:!!p.idiot,my:i===G.mayor&&p.alive,off:!!(ON.on&&i>0&&isOff(ON.members[i]))}}),log:G.log.filter(x=>x.p).slice(0,14).map(x=>x.t)});
 function renderSide(){if(!G)return;out(sideState())}
 function sideDOM(m){ON.lastSide=m;const dead=ON.on&&ON.me>=0&&m.pl[ON.me]&&!m.pl[ON.me].a;
- $("#aliveLbl").textContent=`${dead?"Bạn đã chết · ":""}Còn ${m.al}/${m.pl.length}`;
+ $("#aliveLbl").textContent=`${dead?"Bạn đã out · ":""}Còn ${m.al}/${m.pl.length}`;
  $("#plist").innerHTML=m.pl.map((p,i)=>{const R=ROLES[p.r||"dan"];
-  return `<li class="${p.a?"":"dead"}"><span class="ri${p.k?"":" unk"}" style="--rc:${R.c}">${R.i}</span><div><b>${esc(p.n)}${ON.on&&i===ON.me?" (bạn)":""}</b><small>${p.k?esc(p.rn):p.a?"Còn sống":"Đã chết"}</small></div><span class="tags">${p.my?'<span class="sl">Trưởng làng</span>':""}${p.sl?'<span class="sl">Phong ấn</span>':""}${p.id?'<span>Không bỏ phiếu</span>':""}${p.off?'<span class="dd">Mất kết nối</span>':""}${p.a?"":'<span class="dd">Chết</span>'}</span></li>`}).join("");
+  return `<li class="${p.a?"":"dead"}"><span class="ri${p.k?"":" unk"}" style="--rc:${R.c}">${R.i}</span><div><b>${esc(p.n)}${ON.on&&i===ON.me?" (bạn)":""}</b><small>${p.k?esc(p.rn):p.a?"Còn sống":"Đã out"}</small></div><span class="tags">${p.my?'<span class="sl">Trưởng làng</span>':""}${p.sl?'<span class="sl">Phong ấn</span>':""}${p.id?'<span>Không bỏ phiếu</span>':""}${p.off?'<span class="dd">Mất kết nối</span>':""}${p.a?"":'<span class="dd">Out</span>'}</span></li>`}).join("");
  $("#log").innerHTML=m.log.map(t=>`<li>${esc(t)}</li>`).join("")||'<li>Chưa có gì xảy ra.</li>'}
 $("#replay").addEventListener("click",()=>{if(lastLine)speak(lastLine)});
 $("#musBtn").addEventListener("click",()=>{opt.music=!opt.music;save();if(opt.music)startMusic();else stopMusic();paintMus()});paintMus();
@@ -1100,7 +1124,7 @@ const THEMES={dan:["#7cbf5a","#4a8a3a","Dân làng chiến thắng!","Mọi mố
   thanghe:["#e88a4a","#a8502a","Thằng hề chiến thắng!","Cả làng đã mắc bẫy, treo cổ đúng người muốn bị treo cổ."],
   thangngoc:["#e8c84a","#a88a1a","Thằng ngốc chiến thắng!","Cả làng đã treo cổ Thằng ngốc, đúng điều Thằng ngốc mong muốn."],
   thoisao:["#c08a5a","#7a5030","Kẻ thổi sáo chiến thắng!","Tất cả những người còn sống đã bị thôi miên."],
-  hoa:["#9aa4b0","#5b6f79","Không ai sống sót","Cả làng đã chết hết. Ván này hòa."],
+  hoa:["#9aa4b0","#5b6f79","Không ai sống sót","Cả làng đã out hết. Ván này hòa."],
   quit:["#9aa4b0","#5b6f79","Ván đã kết thúc","Ván được dừng giữa chừng."]};
 function over(w){if(!G||G.over)return;G.over=w;token++;paused=false;
  if(ON.on){ON.phase="over";ON.discCmd=null;ON.chatScope=null;skipAll();clearHost()}
@@ -1110,7 +1134,7 @@ function overDOM(m){const w=m.w;spkId++;try{speechSynthesis.cancel()}catch(e){}p
  $("#winBox").style.setProperty("--wc1",th[0]);$("#winBox").style.setProperty("--wc2",th[1]);
  $("#winBox").innerHTML=`<span class="eyebrow" style="color:#fff;opacity:.85">Sau ${m.night} đêm</span><h2>${th[2]}</h2><p>${th[3]}</p>`;
  setMood("day");if(w!=="quit"){sfx.win();setTimeout(()=>speak(th[2]+" "+th[3]),900)}
- $("#finalList").innerHTML=m.pl.map(p=>{const R=ROLES[p.role];return `<li class="${p.alive?"":"dead"}"><span class="ri" style="--rc:${R.c}">${R.i}</span><div><b>${esc(p.n)}</b><small>${esc(p.rn)} · ${TEAMNAME[p.team]}${p.lover?" · cặp đôi":""}${p.charmed?" · bị thôi miên":""}</small></div><span class="tags">${p.alive?'<span>Sống</span>':'<span class="dd">Chết</span>'}</span></li>`}).join("");
+ $("#finalList").innerHTML=m.pl.map(p=>{const R=ROLES[p.role];return `<li class="${p.alive?"":"dead"}"><span class="ri" style="--rc:${R.c}">${R.i}</span><div><b>${esc(p.n)}</b><small>${esc(p.rn)} · ${TEAMNAME[p.team]}${p.lover?" · cặp đôi":""}${p.charmed?" · bị thôi miên":""}</small></div><span class="tags">${p.alive?'<span>Sống</span>':'<span class="dd">Out</span>'}</span></li>`}).join("");
  $("#finalLog").innerHTML=(m.log||[]).map(t=>`<li>${esc(t)}</li>`).join("")||"<li>Không có gì.</li>";
  $("#again").hidden=ON.on&&!ON.host;$("#toSetup").hidden=ON.on;$("#overHint").hidden=!(ON.on&&!ON.host);
  $("#again").textContent=ON.on?"Về phòng chờ, chơi ván mới":"Ván mới, cùng người chơi";
@@ -1282,7 +1306,7 @@ function resumeRoom(){const d=readHost();if(!d)return;
  Object.assign(opt,d.opt);
  Object.assign(ON,{on:true,host:true,me:0,phase:d.play?"play":"lobby",pid:d.pid,pend:new Map(),last:{},rid:0,custom:true,tries:0,code:"",mine:null,resume:true});
  ON.members=d.members.map((m,i)=>({pid:m.pid,name:m.name,conn:null,lastSeen:Date.now(),idx:i,offSince:i?Date.now():0}));
- if(d.play&&d.G){G=d.G;G.inGame=new Set(G.inGame);G.T={bites:[],protect:null,heal:null,poison:null,sk:null,silence:null};ROSTER=d.roster;names=ROSTER.slice();token++}
+ if(d.play&&d.G){G=d.G;G.inGame=new Set(G.inGame);G.T={bites:[],protect:null,heal:null,poison:null,sk:null,silence:null,silence2:null,visit:null,woke:0};ROSTER=d.roster;names=ROSTER.slice();token++}
  setMsg("Đang khôi phục phòng "+d.code+"…");keepAwake(true);openHost(d.code)}
 function hostResumeView(){ON.resume=false;
  if(!G){lobbyChanged();show("setup");setMsg("Đã khôi phục phòng chờ. Người chơi sẽ tự vào lại.");return}
@@ -1413,7 +1437,7 @@ $("#chatForm").addEventListener("submit",e=>{e.preventDefault();const t=$("#chat
 function renderRoom(){if(!ROOM)return;$("#rmCode").textContent=ROOM.code;
  $("#rmList").innerHTML=ROOM.members.map((p,i)=>`<li><span class="ri unk"></span><div><b>${esc(p.n)}${i===ON.me?" (bạn)":""}</b><small>${i===0?"Chủ phòng":"Người chơi"}</small></div><span class="tags">${p.off?'<span class="dd">Mất kết nối</span>':""}</span></li>`).join("");
  $("#rmRoles").innerHTML=Object.keys(ROOM.counts).map(k=>`<span class="pill" style="color:${ROLES[k].c}">${ROLES[k].n} ×${ROOM.counts[k]}</span>`).join(" ");
- $("#rmOpt").textContent=`Thảo luận ${ROOM.o.time?ROOM.o.time/60+" phút":"không giới hạn"} · ${ROOM.o.reveal?"lật vai khi chết":"giấu vai khi chết"} · ${ROOM.o.secret?"bỏ phiếu kín":"bỏ phiếu công khai"}${ROOM.o.idiotWin?" · Thằng ngốc bị treo là thắng":""}${ROOM.o.hideCause?" · giấu nguyên nhân chết":""}${ROOM.o.pupHidden?" · Sói con ẩn mình":""}${ROOM.o.mayor?" · có trưởng làng":""}${ROOM.o.lastWords?" · có di ngôn":""}${ROOM.o.wolfBite?" · Sói được cắn Sói":""}`;
+ $("#rmOpt").textContent=`Thảo luận ${ROOM.o.time?ROOM.o.time/60+" phút":"không giới hạn"} · ${ROOM.o.reveal?"lật vai khi out":"giấu vai khi out"} · ${ROOM.o.secret?"bỏ phiếu kín":"bỏ phiếu công khai"}${ROOM.o.idiotWin?" · Thằng ngốc bị treo là thắng":""}${ROOM.o.hideCause?" · giấu nguyên nhân out":""}${ROOM.o.pupHidden?" · Sói con ẩn mình":""}${ROOM.o.mayor?" · có trưởng làng":""}${ROOM.o.lastWords?" · có di ngôn":""}${ROOM.o.wolfBite?" · Sói được cắn Sói":""}`;
  $("#rmState").textContent=`${ROOM.members.length} người trong phòng. Chờ chủ phòng bắt đầu ván.`}
 function renderRW(){if(!ON.mine)return;const c=ON.rc;
  $("#rwCount").textContent=c?`${c.k}/${c.n} đã xem vai`:"";
