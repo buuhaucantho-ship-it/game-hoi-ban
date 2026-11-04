@@ -560,7 +560,7 @@ const ROLES={
   i:sv('<rect x="7" y="14" width="18" height="13" rx="3" '+W+'/><path d="M11 14v-3a5 5 0 0 1 10 0v3" '+S+'/>')},
  tre:{n:"Đứa trẻ hoang",t:"dan",c:"#3a9d23",d:"Đêm đầu chọn một hình mẫu. Nếu hình mẫu out, bạn hóa Sói và theo phe Sói.",
   i:sv('<circle cx="15" cy="11" r="4.5" '+W+'/><path d="M8 29c0-6 3-9.5 7-9.5s7 3.5 7 9.5z" '+W+'/><path d="M21 7c5 0 6 3 6 6-4 0-6-2.5-6-6z" '+W+'/>')},
- kynu:{n:"Kỹ nữ",t:"dan",c:"#e84393",d:"Mỗi đêm chọn một người để qua đêm ở nhà họ. Sáng dậy nếu Kỹ nữ bị out trong đêm thì người cô ghé thăm cũng out theo.",
+ kynu:{n:"Kỹ nữ",t:"dan",c:"#e84393",d:"Mỗi đêm chọn một người để qua đêm ở nhà họ. Ngủ nhà Sói thì sáng dậy Kỹ nữ out. Ngủ nhà dân thì sống, kể cả đêm đó Sói cắn cô.",
   i:sv('<path d="M16 27S5 20 5 12a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 8-11 15-11 15z" '+W+'/><path d="M11 12q5 5 10 0" stroke="#e84393" stroke-width="2" fill="none" stroke-linecap="round"/>')},
  colbe:{n:"Cô bé",t:"dan",c:"#f39c12",d:"Mỗi đêm, khi bầy Sói thức, bạn nghe lỏm được hai cái tên: một trong hai người đó là Sói, người còn lại là dân.",
   i:sv('<circle cx="16" cy="12" r="7" '+W+'/><path d="M6 29c0-6 4-10 10-10s10 4 10 10z" '+W+'/><path d="M9 8q7-8 14 0" stroke="#f39c12" stroke-width="2.4" fill="none" stroke-linecap="round"/>')},
@@ -861,14 +861,14 @@ function witchUI(d,onDone){let heal=null,pmode=false,ptarget=null;const bitten=d
   $("#ok").addEventListener("click",()=>onDone({heal,ptarget}))};draw()}
 
 /* ======================= DEATH ======================= */
-const CAUSE={wolf:"bị Sói cắn",sk:"bị Sát nhân giết",poison:"trúng bình độc",love:"out theo người yêu",ky:"ngủ nhà Kỹ nữ nên out theo",vote:"bị dân làng treo cổ",shot:"bị Thợ săn bắn",duel:"thua cuộc thách đấu",knight:"bị Hiệp sĩ hạ"};
+const CAUSE={wolf:"bị Sói cắn",sk:"bị Sát nhân giết",poison:"trúng bình độc",love:"out theo người yêu",ky:"ngủ nhầm nhà Sói nên out",vote:"bị dân làng treo cổ",shot:"bị Thợ săn bắn",duel:"thua cuộc thách đấu",knight:"bị Hiệp sĩ hạ"};
 function kill(i,cause,list){if(!P(i).alive)return list;P(i).alive=false;list.push({i,c:cause});const p=P(i);
  if((p.role==="thosan"||p.role==="soibaothu")&&cause!=="poison")G.hunters.push(i);
  if(p.role==="soicon"&&!hiddenPup(i))G.rage=true;
  G.players.forEach((q,j)=>{if(q.alive&&q.role==="tre"&&!q.wild&&q.model===i){q.wild=true;q.team="soi";log(`${q.name} đã âm thầm hóa Sói`,false);if(ON.on)sendTo(j,{t:"me",patch:{wild:true}})}});
  if(p.lover){const j=G.players.findIndex((q,k)=>k!==i&&q.lover);if(j>=0&&P(j).alive)kill(j,"love",list)}
  return list}
-const mainD=d=>d.filter(x=>x.c!=="love"&&x.c!=="ky");
+const mainD=d=>d.filter(x=>x.c!=="love");
 const extraD=d=>d.length-mainD(d).length;
 const extraSay=d=>extraD(d)?` Ngoài ra còn có thêm ${extraD(d)} người nữa đã out.`:"";
 const deathLog=d=>mainD(d).map(x=>`${P(x.i).name} ${CAUSE[x.c]}`).join("; ")+(extraD(d)?`${mainD(d).length?"; ":""}thêm ${extraD(d)} người out`:"");
@@ -905,7 +905,7 @@ const NIGHT=[
  {k:"phongan",wake:"Phong ấn sư thức dậy. Chọn một người không được nói vào ngày mai.",sleep:"Phong ấn sư đi ngủ.",
   run:async my=>{const s=await pick(my,{who:idxOf("phongan"),ids:alive().filter(i=>i!==G.lastSilence),confirm:"Phong ấn người này",note:G.lastSilence!=null?`Không được chọn lại ${esc(P(G.lastSilence).name)}.`:"",extra:[{label:"Không phong ấn ai",value:[]}]});G.T.silence=s[0]??null}},
  {k:"kynu",wake:"Kỹ nữ thức dậy. Chọn một người để qua đêm ở nhà họ.",sleep:"Kỹ nữ đi ngủ.",
-  run:async my=>{const me=idxOf("kynu");const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Qua đêm ở nhà người này",note:"Nếu sáng mai bạn bị out thì người bạn ghé thăm cũng out theo.",extra:[{label:"Ở nhà một mình",value:[]}]});G.T.visit=s[0]??null;if(s.length)log(`Kỹ nữ ghé nhà ${P(s[0]).name}`,false)}},
+  run:async my=>{const me=idxOf("kynu");const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Qua đêm ở nhà người này",note:"Ngủ nhà Sói thì sáng mai bạn out. Ngủ nhà dân thì bạn an toàn, Sói cắn cũng không trúng.",extra:[{label:"Ở nhà một mình",value:[]}]});G.T.visit=s[0]??null;if(s.length)log(`Kỹ nữ ghé nhà ${P(s[0]).name}`,false)}},
  {k:"thaycung",wake:"Thầy cúng thức dậy. Chọn một người để ban bùa hộ mệnh.",sleep:"Thầy cúng đi ngủ.",
   run:async my=>{const me=idxOf("thaycung");
    if(G.charmUsed){await info(my,`<p style="margin:0;font-weight:800">Bạn đã ban bùa rồi, không còn bùa nào nữa.</p>`,"Đi ngủ",me);return}
@@ -988,10 +988,10 @@ async function hunterShots(my,phase){while(G.hunters.length){const h=G.hunters.s
  await succession(my,phase)}
 async function dayPhase(my){G.day++;G.players.forEach(p=>p.silenced=false);
  const T=G.T,d=[];
- (T.bites||[]).forEach(v=>{const p=P(v);if(!p.alive||v===T.protect||v===T.heal||p.role==="satnhan")return;if(p.charm){p.charm=false;log(`Bùa hộ mệnh cứu ${p.name} khỏi bị cắn`,false);return}if(p.role==="gialang"&&p.lives>1){p.lives--;log(`Già làng ${p.name} bị cắn nhưng còn sống`,false);return}if(hiddenPup(v)){joinPup(v);return}kill(v,"wolf",d)});
+ (T.bites||[]).forEach(v=>{const p=P(v);if(!p.alive||v===T.protect||v===T.heal||p.role==="satnhan")return;if(p.role==="kynu"&&T.visit!=null&&!isWolf(T.visit)){log(`Kỹ nữ ${p.name} không có ở nhà nên thoát nạn`,false);return}if(p.charm){p.charm=false;log(`Bùa hộ mệnh cứu ${p.name} khỏi bị cắn`,false);return}if(p.role==="gialang"&&p.lives>1){p.lives--;log(`Già làng ${p.name} bị cắn nhưng còn sống`,false);return}if(hiddenPup(v)){joinPup(v);return}kill(v,"wolf",d)});
  if(T.sk!=null&&T.sk!==T.protect&&P(T.sk).alive){if(P(T.sk).charm){P(T.sk).charm=false;log(`Bùa hộ mệnh cứu ${P(T.sk).name} khỏi Sát nhân`,false)}else kill(T.sk,"sk",d)}
  if(T.poison!=null&&P(T.poison).alive)kill(T.poison,"poison",d);
- if(T.visit!=null&&P(T.visit).alive&&d.some(x=>x.c!=="ky"&&P(x.i).role==="kynu"))kill(T.visit,"ky",d);
+ {const kn=idxOf("kynu");if(kn>=0&&T.visit!=null&&isWolf(T.visit))kill(kn,"ky",d)}
  if(opt.hideCause&&d.length){log(`Đêm ${G.night}: ${d.map(x=>P(x.i).name).join(", ")} đã out`);log(`Bí mật đêm ${G.night}: ${d.map(x=>`${P(x.i).name} ${CAUSE[x.c]}`).join("; ")}`,false)}
  else{log(`Đêm ${G.night}: ${d.length?(mainD(d).length?deathLog(d):`${d.map(x=>P(x.i).name).join(", ")} đã out`):"bình yên"}`);secretLog(`đêm ${G.night}`,d)}
  sky("day","Trời sáng");renderSide();cue("day");if(d.length)setTimeout(()=>cue("toll"),1400);
