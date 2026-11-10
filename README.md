@@ -58,7 +58,7 @@ Thêm cho vui: lời dẫn sáng/đêm thay đổi ngẫu nhiên; khi chơi onli
 - **Phe Sói:** Sói, Sói tiên tri, Sói con, Sói câm (bịt miệng một người ngày hôm sau), Sói tàng hình (Tiên tri soi ra "không phải Sói"), Sói báo thù (out thì kéo theo một người), Tay sai.
 - **Mới:** các lượt thức đêm của từng vai hiện thành cửa sổ popup nổi, có tên vai và hiệu ứng, kèm rung nhẹ trên điện thoại.
 - Toàn bộ chữ "chết" trong Ma Sói đã đổi thành "out".
-- **Phe Dân:** Dân làng, Tiên tri, Bảo vệ, Phù thủy, Thợ săn, Thần tình yêu, Già làng, Thám tử, Hiệp sĩ, Thằng ngốc, Bà đồng, Phong ấn sư, Đứa trẻ hoang, Thầy bói (đếm Sói quanh một người), Người dẫn gấu (gấu gầm khi hàng xóm là Sói), Thầy cúng (ban bùa hộ mệnh một lần), Kỹ nữ (qua đêm nhà một người: nhà Sói thì out, nhà dân thì sống), Cô bé (nghe lỏm hai tên, một người là Sói), Người mất ngủ (biết có bao nhiêu vai thức đêm).
+- **Phe Dân:** Dân làng, Tiên tri, Bảo vệ, Phù thủy, Thợ săn, Thần tình yêu, Già làng, Thám tử, Hiệp sĩ, Thằng ngốc, Bà đồng, Phong ấn sư, Đứa trẻ hoang, Thầy bói (đếm Sói quanh một người), Người dẫn gấu (mỗi đêm chọn hai người ngồi kề bên; gấu gầm khi một trong hai là Sói), Thầy cúng (ban bùa hộ mệnh một lần), Kỹ nữ (qua đêm nhà một người: nhà Sói thì out, nhà dân thì sống), Cô bé (nghe lỏm hai tên, một người là Sói), Người mất ngủ (biết có bao nhiêu vai thức đêm).
 - **Phe thứ ba:** Sát nhân (thắng khi còn lại một mình hoặc đấu tay đôi), Thằng hề (thắng nếu bị treo cổ), Kẻ thổi sáo (thắng khi mọi người còn sống bị thôi miên). Cặp đôi khác phe cũng thắng riêng nếu là hai người cuối cùng.
 
 ## Ai Là Gián Điệp
