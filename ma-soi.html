@@ -568,7 +568,7 @@ const ROLES={
   i:sv('<circle cx="16" cy="16" r="12" '+W+'/><path d="M10 14h4M18 14h4M11 21q5 3 10 0" stroke="#34495e" stroke-width="2.2" fill="none" stroke-linecap="round"/>')},
  soicam:{n:"Sói câm",t:"soi",c:"#7b2d4f",d:"Là Sói. Mỗi đêm, sau khi bầy Sói cắn, còn được bịt miệng một người: hôm sau người đó không được nói (vẫn được bỏ phiếu).",
   i:sv(WOLF+'<path d="M10 20h12" stroke="#7b2d4f" stroke-width="3" stroke-linecap="round"/>')},
- soitanghinh:{n:"Sói tàng hình",t:"soi",c:"#4a235a",d:"Là Sói. Tiên tri soi bạn sẽ thấy \"không phải Sói\". Các Sói khác vẫn biết bạn.",
+ soitanghinh:{n:"Sói tàng hình",t:"soi",c:"#4a235a",d:"Là Sói. Tiên tri soi bạn sẽ thấy \"không phải Sói\". Người dẫn gấu cũng không nghe được gấu gầm khi ngồi cạnh bạn. Các Sói khác vẫn biết bạn.",
   i:sv(WOLF+'<path d="M3 3l26 26" stroke="#4a235a" stroke-width="2.6" stroke-linecap="round"/>')},
  soibaothu:{n:"Sói báo thù",t:"soi",c:"#a93226",d:"Là Sói. Khi bị out (trừ trúng bình độc), được chọn kéo theo một người cùng out.",
   i:sv(WOLF+'<path d="M16 13v8M12 17h8" stroke="#a93226" stroke-width="2.6" stroke-linecap="round"/>')},
@@ -1000,7 +1000,7 @@ async function dayPhase(my){G.day++;G.players.forEach(p=>p.silenced=false);
  waitScreen("Mọi người mở mắt");
  await say(my,`${pickOne(MORNING)} Mọi người mở mắt ra. ${d.length?`Đêm qua, ${deathText(opt.hideCause?d:mainD(d))} đã out.${opt.hideCause?"":extraSay(d)}`:"Đêm qua làng bình yên, không ai out."}`);
  if(endIf())throw ABORT;
- if(roleAlive("gau")){const b=idxOf("gau");if((G.T.gauNb||[]).some(i=>P(i).alive&&isWolf(i))){log(`Gấu của ${P(b).name} gầm gừ`);cue("toll");await say(my,`Grừ… grừ! Con gấu của ${P(b).name} gầm lên. Có Sói ngồi ngay cạnh người dẫn gấu!`)}}
+ if(roleAlive("gau")){const b=idxOf("gau");if((G.T.gauNb||[]).some(i=>P(i).alive&&isWolf(i)&&P(i).role!=="soitanghinh")){log(`Gấu của ${P(b).name} gầm gừ`);cue("toll");await say(my,`Grừ… grừ! Con gấu của ${P(b).name} gầm lên. Có Sói ngồi ngay cạnh người dẫn gấu!`)}}
  await lastWords(my,d.map(x=>x.i));
  await hunterShots(my,"day");
  for(const sv of [T.silence,T.silence2]){if(sv!=null&&P(sv).alive&&!P(sv).silenced){P(sv).silenced=true;renderSide();await say(my,`${P(sv).name} đã bị phong ấn, hôm nay không được nói, nhưng vẫn được bỏ phiếu.`)}}
