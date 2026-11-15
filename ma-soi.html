@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Ma Sói · Làng thần tiên · Game Hội Bạn</title>
-<meta name="description" content="Ma Sói tự dẫn: 29 vai, có phe thứ ba, giọng đọc tự gọi từng vai, không cần quản trò. 5–24 người.">
+<meta name="description" content="Ma Sói tự dẫn: 31 vai, có phe thứ ba, giọng đọc tự gọi từng vai, không cần quản trò. 5–24 người.">
 <meta name="theme-color" content="#f6ecd2">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23f6ecd2'/%3E%3Cpath d='M12 40l20-16 20 16z' fill='%23e2b25a' stroke='%234a3424' stroke-width='2.5'/%3E%3Crect x='18' y='40' width='28' height='14' fill='%23f3dcb4' stroke='%234a3424' stroke-width='2.5'/%3E%3Ccircle cx='46' cy='14' r='7' fill='%23fff1b8' stroke='%234a3424' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -429,7 +429,7 @@ body.wolfchat .act.pop.enter{animation-name:popInTop}
         </div>
       </div>
       <div class="card">
-        <div class="bar" style="margin-bottom:6px"><h3 style="margin:0">29 vai trong 3 phe</h3><button class="btn sm" id="suggest" type="button">Gợi ý theo số người</button></div>
+        <div class="bar" style="margin-bottom:6px"><h3 style="margin:0">31 vai trong 3 phe</h3><button class="btn sm" id="suggest" type="button">Gợi ý theo số người</button></div>
         <p class="sub">Dân làng tự bù cho đủ người. Bộ vai là công khai, mọi người đều biết ván này có những vai nào.</p>
         <div id="rolesEd"></div>
         <div class="total" id="total"></div>
@@ -572,6 +572,10 @@ const ROLES={
   i:sv(WOLF+'<path d="M3 3l26 26" stroke="#4a235a" stroke-width="2.6" stroke-linecap="round"/>')},
  soibaothu:{n:"Sói báo thù",t:"soi",c:"#a93226",d:"Là Sói. Khi bị out (trừ trúng bình độc), được chọn kéo theo một người cùng out.",
   i:sv(WOLF+'<path d="M16 13v8M12 17h8" stroke="#a93226" stroke-width="2.6" stroke-linecap="round"/>')},
+ gacdem:{n:"Người gác đêm",t:"dan",c:"#2c7a7b",d:"Mỗi đêm chọn một nhà để canh. Sáng dậy biết có bao nhiêu người đã tác động lên nhà đó trong đêm (cắn, bảo vệ, cứu, đầu độc, giết, qua đêm, phong ấn, bịt miệng), nhưng không biết là ai.",
+  i:sv('<path d="M16 3v4M10 9h12l2 5v11H8V14z" '+W+'/><circle cx="16" cy="18" r="3" stroke="#2c7a7b" stroke-width="2" fill="none"/>')},
+ danhtrao:{n:"Kẻ đánh tráo",t:"soi",c:"#b9770e",d:"Là Sói. Một lần duy nhất trong ván, vào ban đêm chọn hai người (không phải Sói) để hoán đổi vai cho nhau. Hai người đó biết vai mới của mình nhưng không biết ai đã tráo.",
+  i:sv(WOLF+'<path d="M7 24h8M12 21l3 3-3 3M25 28h-8M20 25l-3 3 3 3" stroke="#b9770e" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>')},
  thaybo:{n:"Thầy bói",t:"dan",c:"#9b59b6",d:"Mỗi đêm bói một người: biết có bao nhiêu Sói trong ba người gồm người đó và hai người sống ngồi kề bên.",
   i:sv('<circle cx="16" cy="14" r="10" '+W+'/><path d="M8 29h16l-2.5-5h-11z" '+W+'/><path d="M11 11q3-3 6-2" stroke="#9b59b6" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="19" cy="17" r="1.6" fill="#9b59b6"/>')},
  gau:{n:"Người dẫn gấu",t:"dan",c:"#8d5524",d:"Mỗi đêm thức dậy chọn hai người đang ngồi kề bên mình ngoài đời (app không hiện chỗ ngồi). Sáng nào một trong hai người đó là Sói thì con gấu gầm lên cho cả làng nghe.",
@@ -584,11 +588,11 @@ const ROLES={
   i:sv('<path d="M4 22l4-14 8 8 8-8 4 14z" '+W+'/><circle cx="8" cy="7" r="2.4" '+W+'/><circle cx="24" cy="7" r="2.4" '+W+'/><circle cx="16" cy="13" r="2.4" '+W+'/><rect x="4" y="23" width="24" height="4" rx="2" '+W+'/>')},
  thoisao:{n:"Kẻ thổi sáo",t:"ba",c:"#a0522d",d:"Phe riêng. Mỗi đêm thôi miên hai người. Thắng khi mọi người còn sống đều bị thôi miên.",
   i:sv('<path d="M4 25L24 7l3 3L7 28z" '+W+'/><circle cx="12" cy="20" r="1.3" fill="#a0522d"/><circle cx="16" cy="16.4" r="1.3" fill="#a0522d"/><circle cx="20" cy="12.8" r="1.3" fill="#a0522d"/>')}};
-const TEAMS=[["soi","Phe Sói","var(--t-soi)",["soi","soitientri","soicon","soicam","soitanghinh","soibaothu","taysai"]],
- ["dan","Phe Dân","var(--t-dan)",["dan","tientri","baove","phuthuy","thosan","cupid","gialang","thamtu","thaybo","gau","thaycung","kynu","colbe","matngu","hiepsi","thangngoc","badong","phongan","tre"]],
+const TEAMS=[["soi","Phe Sói","var(--t-soi)",["soi","soitientri","soicon","soicam","soitanghinh","soibaothu","danhtrao","taysai"]],
+ ["dan","Phe Dân","var(--t-dan)",["dan","tientri","baove","phuthuy","thosan","cupid","gialang","thamtu","thaybo","gau","thaycung","kynu","gacdem","colbe","matngu","hiepsi","thangngoc","badong","phongan","tre"]],
  ["ba","Phe thứ ba","var(--t-ba)",["satnhan","thanghe","thoisao"]]];
 const TEAMNAME={soi:"Phe Sói",dan:"Phe Dân",ba:"Phe riêng"};
-const KILLERS=["soi","soitientri","soicon","soicam","soitanghinh","soibaothu"];
+const KILLERS=["soi","soitientri","soicon","soicam","soitanghinh","soibaothu","danhtrao"];
 const RULES=()=>(ON.on&&!ON.host&&ON.rules)?ON.rules:opt;
 function rdesc(k){const r=RULES();
  if(k==="thangngoc"&&r.idiotWin)return "Bị dân làng treo cổ là thắng ngay cả ván, vào bất kỳ ngày nào. Không bị treo thì thắng cùng phe Dân.";
@@ -604,7 +608,7 @@ const DEF=["An","Bình","Chi","Dũng","Giang","Hạnh","Khoa","Linh","Minh","Nga
 let names=(()=>{try{const v=JSON.parse(store.get("ms2-names")||"null");return Array.isArray(v)&&v.length>=5?v:DEF.slice()}catch(e){return DEF.slice()}})();
 let opt=(()=>{const d={speak:true,secret:true,reveal:true,time:180,rate:1,counts:null,music:true,sfx:true,voice:"",south:true,breath:true,idiotWin:true,hideCause:true,pupHidden:true,mayor:true,lastWords:true,wolfBite:false};try{return Object.assign(d,JSON.parse(store.get("ms2-opt")||"{}"))}catch(e){return d}})();
 const save=()=>{if(!ON.on)store.set("ms2-names",JSON.stringify(names));store.set("ms2-opt",JSON.stringify(opt))};
-function suggest(n){const pri=[["tientri",5],["baove",6],["phuthuy",7],["thosan",8],["cupid",9],["satnhan",10],["thanghe",11],["soicon",12],["gialang",12],["gau",13],["thamtu",13],["kynu",12],["colbe",14],["soibaothu",14],["soicam",15],["matngu",15],["soitanghinh",18],["thaycung",15],["thaybo",16],["taysai",14],["badong",15],["thoisao",16],["soitientri",17],["hiepsi",17],["phongan",18],["thangngoc",19],["tre",20]];
+function suggest(n){if(n===6)return{soi:1,danhtrao:1,tientri:1,baove:1,gacdem:1};const pri=[["tientri",5],["baove",6],["phuthuy",7],["thosan",8],["cupid",9],["satnhan",10],["thanghe",11],["soicon",12],["gialang",12],["gau",13],["thamtu",13],["danhtrao",8],["gacdem",9],["kynu",12],["colbe",14],["soibaothu",14],["soicam",15],["matngu",15],["soitanghinh",18],["thaycung",15],["thaybo",16],["taysai",14],["badong",15],["thoisao",16],["soitientri",17],["hiepsi",17],["phongan",18],["thangngoc",19],["tre",20]];
  const c={},W=Math.max(1,Math.round(n/4.5));let keys=pri.filter(([k,m])=>n>=m).map(([k])=>k);
  const tot=()=>Object.values(c).reduce((a,b)=>a+b,0);
  const build=()=>{Object.keys(c).forEach(k=>delete c[k]);keys.forEach(k=>c[k]=1);c.soi=Math.max(1,W-KILLERS.reduce((a,k)=>k==="soi"?a:a+(c[k]||0),0))};
@@ -924,6 +928,20 @@ const NIGHT=[
     extra:[{label:"Không cắn ai",value:[]}]});G.T.bites=s;G.rage=false}},
  {k:"soicam",wake:"Sói câm thức dậy. Chọn một người để bịt miệng ngày mai.",sleep:"Sói câm đi ngủ.",
   run:async my=>{const me=idxOf("soicam");const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Bịt miệng người này",extra:[{label:"Không bịt miệng ai",value:[]}]});G.T.silence2=s[0]??null}},
+ {k:"danhtrao",wake:"Kẻ đánh tráo thức dậy. Nếu muốn, hãy chọn hai người để hoán đổi vai.",sleep:"Kẻ đánh tráo đi ngủ.",
+  run:async my=>{const me=idxOf("danhtrao");
+   if(G.swapUsed){await info(my,`<p style="margin:0;font-weight:800">Bạn đã dùng quyền đánh tráo rồi.</p>`,"Đi ngủ",me);return}
+   const ok=alive().filter(i=>i!==me&&!KILLERS.includes(P(i).role)&&!["tre","satnhan","taysai"].includes(P(i).role));
+   if(ok.length<2){await info(my,`<p style="margin:0;font-weight:800">Không đủ người để đánh tráo.</p>`,"Đi ngủ",me);return}
+   const s=await pick(my,{who:me,ids:ok,count:2,confirm:"Hoán đổi vai hai người này",note:"Chỉ dùng được một lần. Hai người sẽ biết vai mới nhưng không biết ai tráo.",extra:[{label:"Chưa tráo đêm nay",value:[]}]});
+   if(s.length!==2)return;
+   G.swapUsed=true;const a=P(s[0]),b=P(s[1]);
+   [a.role,b.role]=[b.role,a.role];[a.team,b.team]=[b.team,a.team];[a.lives,b.lives]=[b.lives,a.lives];
+   log(`Kẻ đánh tráo hoán đổi vai ${a.name} (nay là ${ROLES[a.role].n}) và ${b.name} (nay là ${ROLES[b.role].n})`,false);
+   if(ON.on)s.forEach(i=>sendTo(i,{t:"me",patch:{role:P(i).role}}));
+   await say(my,"Hai người vừa bị tráo vai hãy lần lượt mở mắt và nhìn màn hình để biết vai mới.");
+   for(const i of s){const R=ROLES[P(i).role];await info(my,resultBox(R.i,`Vai mới của bạn: <b>${R.n}</b>`,R.c)+`<p class="sub" style="margin:0">${esc(R.d)}</p>`,"Đã rõ",i);chk(my)}
+   await say(my,"Hai người nhắm mắt lại.")}},
  {k:"soitientri",wake:"Sói tiên tri thức dậy. Chọn một người để biết vai thật của họ.",sleep:"Sói tiên tri đi ngủ.",
   run:async my=>{const me=idxOf("soitientri");const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Soi người này"});
    if(s.length){const R=ROLES[P(s[0]).role];await info(my,resultBox(R.i,`${esc(P(s[0]).name)} là <b>${roleName(s[0])}</b>`,R.c),undefined,me)}}},
@@ -961,6 +979,10 @@ const NIGHT=[
   run:async my=>{const me=idxOf("thoisao");const ids=alive().filter(i=>i!==me&&!P(i).charmed),n=Math.min(2,ids.length);
    const s=await pick(my,{who:me,ids,count:n,min:n,confirm:"Thôi miên",top:`<p class="sub" style="margin:0">Đã bị thôi miên: ${G.players.filter(p=>p.charmed&&p.alive).map(p=>esc(p.name)).join(", ")||"chưa có ai"}</p>`});
    s.forEach(i=>P(i).charmed=true)}},
+ {k:"gacdem",wake:"Người gác đêm thức dậy. Chọn một nhà để canh.",sleep:"Người gác đêm đi ngủ.",
+  run:async my=>{const me=idxOf("gacdem");const s=await pick(my,{who:me,ids:alive().filter(i=>i!==me),confirm:"Canh nhà này"});
+   if(s.length){const t=s[0],T=G.T,n=(T.bites||[]).filter(x=>x===t).length+[T.protect,T.heal,T.poison,T.sk,T.visit,T.silence,T.silence2].filter(x=>x===t).length;
+    await info(my,resultBox(ROLES.gacdem.i,`Đêm nay có <b>${n}</b> người ghé nhà <b>${esc(P(t).name)}</b>.`,ROLES.gacdem.c)+`<p class="sub" style="margin:0">Bạn không biết đó là ai.</p>`,undefined,me)}}},
  {k:"matngu",wake:"Người mất ngủ thức trắng đêm, lắng nghe xem có ai thức dậy.",sleep:"Người mất ngủ đi ngủ.",
   run:async my=>{const me=idxOf("matngu"),n=G.T.woke||0;await info(my,resultBox(ROLES.matngu.i,`Đêm nay có <b>${n}</b> vai khác thức dậy làm việc.`,ROLES.matngu.c)+`<p class="sub" style="margin:0">Bạn không biết đó là những vai nào.</p>`,undefined,me)}}];
 function actorAlive(st){if(st.wolf)return alive().some(isWolf);if(st.lovers)return G.players.some(p=>p.lover&&p.alive);return roleAlive(st.k)}
