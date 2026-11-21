@@ -1,0 +1,274 @@
+{
+  "fish": [
+    {
+      "id": "F01",
+      "name": "Cá Chuồn Bạc",
+      "depth": 1,
+      "difficulty": 3,
+      "sell": 2,
+      "prestige": 1,
+      "effect": "Không có hiệu ứng."
+    },
+    {
+      "id": "F02",
+      "name": "Cá Mây Hồng",
+      "depth": 1,
+      "difficulty": 4,
+      "sell": 2,
+      "prestige": 2,
+      "effect": "Khi bắt: nhận 1 vàng."
+    },
+    {
+      "id": "F03",
+      "name": "Sao Biển Ánh Kim",
+      "depth": 1,
+      "difficulty": 5,
+      "sell": 3,
+      "prestige": 2,
+      "effect": "Khi bắt: giảm 1 Bão Tố."
+    },
+    {
+      "id": "F04",
+      "name": "Cá Bống Ngọc",
+      "depth": 1,
+      "difficulty": 3,
+      "sell": 1,
+      "prestige": 2,
+      "effect": "Khi trưng bày: +1 DT cuối ván."
+    },
+    {
+      "id": "F05",
+      "name": "Ốc Xoắn Lam",
+      "depth": 1,
+      "difficulty": 4,
+      "sell": 3,
+      "prestige": 1,
+      "effect": "Khi xuất hiện: nhận 1 vàng."
+    },
+    {
+      "id": "F06",
+      "name": "Cá Lá Rong",
+      "depth": 1,
+      "difficulty": 5,
+      "sell": 3,
+      "prestige": 3,
+      "effect": "Khi bắt: tăng 1 Bão Tố."
+    },
+    {
+      "id": "F07",
+      "name": "Sứa Đèn Lồng",
+      "depth": 2,
+      "difficulty": 7,
+      "sell": 4,
+      "prestige": 3,
+      "effect": "Khi bắt: nhận 1 vàng."
+    },
+    {
+      "id": "F08",
+      "name": "Cua Giáp San Hô",
+      "depth": 2,
+      "difficulty": 9,
+      "sell": 5,
+      "prestige": 4,
+      "effect": "Khi xuất hiện: tăng 1 Bão Tố."
+    },
+    {
+      "id": "F09",
+      "name": "Cá Ngựa Pha Lê",
+      "depth": 2,
+      "difficulty": 6,
+      "sell": 3,
+      "prestige": 4,
+      "effect": "Khi bắt: giảm 1 Bão Tố."
+    },
+    {
+      "id": "F10",
+      "name": "Mực Bút Màu",
+      "depth": 2,
+      "difficulty": 8,
+      "sell": 5,
+      "prestige": 3,
+      "effect": "Khi bắt: nhận 1 DT."
+    },
+    {
+      "id": "F11",
+      "name": "Cá Đèn Tím",
+      "depth": 2,
+      "difficulty": 7,
+      "sell": 4,
+      "prestige": 4,
+      "effect": "Khi xuất hiện: tăng 1 Bão Tố."
+    },
+    {
+      "id": "F12",
+      "name": "Tôm Kỵ Sĩ",
+      "depth": 2,
+      "difficulty": 9,
+      "sell": 6,
+      "prestige": 4,
+      "effect": "Khi bắt: nhận 1 vàng."
+    },
+    {
+      "id": "F13",
+      "name": "Cá Đuối Ngân Hà",
+      "depth": 3,
+      "difficulty": 11,
+      "sell": 7,
+      "prestige": 6,
+      "effect": "Khi bắt: nhận 2 DT."
+    },
+    {
+      "id": "F14",
+      "name": "Long Ngư Hoàng Kim",
+      "depth": 3,
+      "difficulty": 14,
+      "sell": 10,
+      "prestige": 9,
+      "effect": "Khi bắt: giảm 2 Bão Tố."
+    },
+    {
+      "id": "F15",
+      "name": "Bạch Tuộc Sao",
+      "depth": 3,
+      "difficulty": 12,
+      "sell": 8,
+      "prestige": 7,
+      "effect": "Khi bắt: nhận 1 DT."
+    },
+    {
+      "id": "F16",
+      "name": "Cá Voi Mộng",
+      "depth": 3,
+      "difficulty": 13,
+      "sell": 9,
+      "prestige": 8,
+      "effect": "Khi xuất hiện: tăng 1 Bão Tố."
+    },
+    {
+      "id": "F17",
+      "name": "Lươn Sét Xanh",
+      "depth": 3,
+      "difficulty": 10,
+      "sell": 6,
+      "prestige": 6,
+      "effect": "Khi bắt: tăng 1 Bão Tố."
+    },
+    {
+      "id": "F18",
+      "name": "Sứa Vương Miện",
+      "depth": 3,
+      "difficulty": 12,
+      "sell": 8,
+      "prestige": 7,
+      "effect": "Khi bắt: nhận 2 vàng."
+    }
+  ],
+  "events": [
+    {
+      "id": "E1",
+      "name": "Sóng Biếc",
+      "effect": "Nhận 1 vàng."
+    },
+    {
+      "id": "E2",
+      "name": "Gió Thuận",
+      "effect": "Di chuyển miễn phí 1 tầng hợp lệ ngay bây giờ."
+    },
+    {
+      "id": "E3",
+      "name": "Mưa Sao Biển",
+      "effect": "Giảm 1 Bão Tố."
+    },
+    {
+      "id": "E4",
+      "name": "Dòng Chảy Xiết",
+      "effect": "Tăng 1 Bão Tố."
+    },
+    {
+      "id": "E5",
+      "name": "Kho Báu Trôi Dạt",
+      "effect": "Nhận 2 vàng."
+    },
+    {
+      "id": "E6",
+      "name": "Bóng Đen Dưới Đáy",
+      "effect": "Tăng 2 Bão Tố và nhận 2 DT."
+    }
+  ],
+  "equipment": [
+    {
+      "id": "G1",
+      "name": "Cần Câu Tre",
+      "cost": 2,
+      "effect": "+1 sức câu tại Tầng I."
+    },
+    {
+      "id": "G2",
+      "name": "Cần Câu San Hô",
+      "cost": 4,
+      "effect": "+2 sức câu tại Tầng II."
+    },
+    {
+      "id": "G3",
+      "name": "Cần Câu Vực Sâu",
+      "cost": 6,
+      "effect": "+3 sức câu tại Tầng III."
+    },
+    {
+      "id": "G4",
+      "name": "La Bàn Sao",
+      "cost": 3,
+      "effect": "Lần đầu di chuyển xuống sâu mỗi ngày: không tốn xúc xắc."
+    },
+    {
+      "id": "G5",
+      "name": "Áo Choàng Thủy Thủ",
+      "cost": 3,
+      "effect": "Bỏ qua 1 điểm Bão Tố đầu tiên phải nhận mỗi ngày."
+    },
+    {
+      "id": "G6",
+      "name": "Cuộn Dây Thần Kỳ",
+      "cost": 5,
+      "effect": "Một lần mỗi ngày: +2 sức câu."
+    }
+  ],
+  "missions": [
+    {
+      "id": "M1",
+      "name": "Bữa Tiệc Hải Sản",
+      "reward": 4,
+      "requirement": "2 cá tầng I"
+    },
+    {
+      "id": "M2",
+      "name": "Ánh Sáng Đại Dương",
+      "reward": 5,
+      "requirement": "1 Sứa Đèn Lồng"
+    },
+    {
+      "id": "M3",
+      "name": "Bộ Sưu Tập San Hô",
+      "reward": 6,
+      "requirement": "1 Cua Giáp San Hô"
+    },
+    {
+      "id": "M4",
+      "name": "Nhà Khám Phá",
+      "reward": 10,
+      "requirement": "1 cá mỗi tầng"
+    },
+    {
+      "id": "M5",
+      "name": "Thương Gia Biển Cả",
+      "reward": 5,
+      "requirement": "8 vàng"
+    },
+    {
+      "id": "M6",
+      "name": "Huyền Thoại Vực Sâu",
+      "reward": 12,
+      "requirement": "1 Long Ngư Hoàng Kim"
+    }
+  ]
+}

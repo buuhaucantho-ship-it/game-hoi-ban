@@ -1,0 +1,40 @@
+name: Hải Trình Kỳ Thú — rules tests
+on:
+  push:
+    branches: [feature/boardgame-hub]
+    paths:
+      - 'games/hai-trinh/**'
+      - '.github/workflows/hai-trinh-tests.yml'
+  pull_request:
+    paths:
+      - 'games/hai-trinh/**'
+      - '.github/workflows/hai-trinh-tests.yml'
+jobs:
+  rules:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate JavaScript syntax
+        run: |
+          node --check games/hai-trinh/engine.mjs
+          node --check games/hai-trinh/engine.test.mjs
+      - name: Validate inline browser module syntax
+        run: |
+          node --input-type=module -e "import fs from 'node:fs'; const html=fs.readFileSync('games/hai-trinh/index.html','utf8'); const code=html.match(/<script type=\"module\">([\\s\\S]*?)<\\/script>/)?.[1]; if(!code)process.exit(1); fs.writeFileSync('/tmp/hai-trinh-ui.mjs',code);"
+          node --check /tmp/hai-trinh-ui.mjs
+      - name: Run rules tests
+        run: node --test games/hai-trinh/engine.test.mjs
+      - name: Validate prototype deck counts
+        run: |
+          node --input-type=module -e "import fs from 'node:fs'; import assert from 'node:assert/strict'; const d=JSON.parse(fs.readFileSync('games/hai-trinh/cards.json','utf8')); for(const [key,count] of Object.entries({fish:18,events:6,equipment:6,missions:6}))assert.equal(d[key].length,count,key); assert.equal(new Set(d.fish.map(x=>x.id)).size,18); for(let depth=1;depth<=3;depth++)assert.equal(d.fish.filter(x=>x.depth===depth).length,6);"
+      - name: Install browser smoke test dependencies
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Run browser smoke test
+        run: node games/hai-trinh/browser-smoke.mjs
