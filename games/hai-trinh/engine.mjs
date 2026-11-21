@@ -40,3 +40,22 @@ export function resolveStorm(storm,change,cloakAvailable=false){
  if(actual>0&&cloakAvailable)actual--;
  return {storm:clamp(storm+actual,0,6),cloakUsed:change>0&&cloakAvailable};
 }
+
+/**
+ * Choose the next player after an action. All players marked passed are inactive.
+ * Last active player gets at most two consecutive actions, then automatically passes.
+ * This helper is pure: the caller applies the returned autoPass flag.
+ */
+export function nextTurn(players,current,extra=0){
+ const active=players.map((p,i)=>!p.passed?i:-1).filter(i=>i>=0);
+ if(active.length===0)return {turn:current,extra:0,dayOver:true,autoPass:false};
+ if(active.length===1){
+   const only=active[0];
+   if(only!==current)return {turn:only,extra:0,dayOver:false,autoPass:false};
+   if(extra>=1)return {turn:only,extra:0,dayOver:true,autoPass:true};
+   return {turn:only,extra:extra+1,dayOver:false,autoPass:false};
+ }
+ let turn=current;
+ do{turn=(turn+1)%players.length}while(players[turn].passed);
+ return {turn,extra:0,dayOver:false,autoPass:false};
+}
