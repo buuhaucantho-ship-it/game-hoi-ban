@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {score,questEligible,questPayment,catchStrength,stormPenalty,travelCost,resolveStorm} from './engine.mjs';
+import {score,questEligible,questPayment,catchStrength,stormPenalty,travelCost,resolveStorm,nextTurn} from './engine.mjs';
 const fish=(id,depth,prestige=2)=>({id,depth,prestige});
 test('storm thresholds',()=>{assert.equal(stormPenalty(1),0);assert.equal(stormPenalty(2),1);assert.equal(stormPenalty(4),2);assert.equal(stormPenalty(6),2)});
 test('travel costs',()=>{assert.equal(travelCost(0,1),1);assert.equal(travelCost(1,2,true),0);assert.equal(travelCost(3,0),0);assert.equal(travelCost(1,3),null)});
@@ -11,3 +11,7 @@ test('mission eligibility and payment',()=>{let p={gold:8,hand:[fish('F01',1),fi
 test('F04 display bonus applies once',()=>assert.equal(score({fame:0,hand:[],display:[fish('F04',1,2)],gold:0,storm:0}),5));
 test('mission M1 needs two tier-I cards',()=>assert.equal(questEligible({id:'M1'},{hand:[fish('F01',1),fish('F07',2)],gold:0}),false));
 test('storm six applies endgame penalty',()=>assert.equal(score({fame:10,hand:[],display:[],gold:0,storm:6}),8));
+
+test('turn rotates among active players',()=>{const p=[{passed:false},{passed:true},{passed:false}];assert.deepEqual(nextTurn(p,0,0),{turn:2,extra:0,dayOver:false,autoPass:false})});
+test('last player gets at most two actions',()=>{const p=[{passed:true},{passed:false}];assert.deepEqual(nextTurn(p,0,0),{turn:1,extra:0,dayOver:false,autoPass:false});assert.deepEqual(nextTurn(p,1,0),{turn:1,extra:1,dayOver:false,autoPass:false});assert.deepEqual(nextTurn(p,1,1),{turn:1,extra:0,dayOver:true,autoPass:true})});
+test('all passed ends the day',()=>assert.equal(nextTurn([{passed:true},{passed:true}],1).dayOver,true));
