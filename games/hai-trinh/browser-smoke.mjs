@@ -25,13 +25,13 @@ try{
  for(let day=1;day<=6;day++){
    for(let guard=0;guard<20;guard++){
      const ended=await page.locator('#status').innerText();
-     if(ended.includes('Kết thúc'))break;
+     if(ended.includes('kết thúc'))break;
      const label=await page.locator('#day').innerText();
      if(!label.includes('Ngày '+day+' /'))break;
      await page.locator('#actions button').filter({hasText:'Qua lượt'}).click();
    }
  }
- assert.match(await page.locator('#status').innerText(),/Kết thúc/);
+ assert.match(await page.locator('#status').innerText(),/kết thúc/i);
  assert.deepEqual(errors,[],'No uncaught browser errors');
  console.log('PASS: start, move, save/resume, six-day completion on mobile viewport');
 }finally{
