@@ -32,3 +32,9 @@ jobs:
       - name: Validate prototype deck counts
         run: |
           node --input-type=module -e "import fs from 'node:fs'; import assert from 'node:assert/strict'; const d=JSON.parse(fs.readFileSync('games/hai-trinh/cards.json','utf8')); for(const [key,count] of Object.entries({fish:18,events:6,equipment:6,missions:6}))assert.equal(d[key].length,count,key); assert.equal(new Set(d.fish.map(x=>x.id)).size,18); for(let depth=1;depth<=3;depth++)assert.equal(d.fish.filter(x=>x.depth===depth).length,6);"
+      - name: Install browser smoke test dependencies
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Run browser smoke test
+        run: node games/hai-trinh/browser-smoke.mjs
