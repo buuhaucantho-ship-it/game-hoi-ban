@@ -20,11 +20,11 @@ Mở `http://localhost:8000/games/hai-trinh/`. Trên Vercel Preview, đường d
 - Tổng điểm tạm tính và kết thúc ngày 6.
 
 ## CHƯA HOÀN CHỈNH — không gọi là bản release
-- Nhiệm vụ (dữ liệu có nhưng chưa có hành động nhận/trả).
-- Hiệu ứng Gió Thuận và một số trường hợp timing chưa xử lý đầy đủ.
+- Đã có nhiệm vụ tại cảng: kiểm tra điều kiện, trả cá/vàng, thưởng DT, giới hạn một lần/ngày. Cần kiểm thử tương tác nhiều người.
+- Gió Thuận đã có quy tắc tạm thời: ưu tiên tiến sâu một tầng, nếu không được thì về Cảng; cần người thiết kế phê duyệt.
 - Quy tắc người cuối còn hoạt động được thêm 2 lượt cần test kỹ.
 - Chưa có modal riêng cho chọn/trả cá, thay trang bị, che thông tin khi chuyền máy.
-- Chưa có persistence, seed RNG, unit tests, kiểm thử trên thiết bị thật.
+- Có bộ kiểm thử đơn vị cho helpers; chưa có persistence, seed RNG, kiểm thử UI tự động hoặc kiểm thử trên thiết bị thật.
 - Chưa có âm thanh và artwork minh họa riêng.
 - Chưa có backend realtime; chỉ offline pass-and-play.
 - Chưa có Vercel Preview URL được xác nhận.
@@ -41,3 +41,20 @@ Mở `http://localhost:8000/games/hai-trinh/`. Trên Vercel Preview, đường d
 - `./cards.json`
 
 Không chỉnh sửa các game cũ hoặc file `index.html` gốc trong giai đoạn alpha.
+
+## Chạy kiểm thử luật thuần
+
+Yêu cầu Node.js 18 trở lên:
+
+```bash
+node --test games/hai-trinh/engine.test.mjs
+```
+
+**Chưa xác nhận chạy thành công trên CI/Vercel**. Trước khi merge, kiểm tra toàn bộ test, chơi thử 6 ngày và kiểm tra màn hình điện thoại.
+
+## Quyết định playtest tạm thời
+- Bộ 18 cá được chia đều 3 tầng, mỗi tầng 3 chồng × 2 lá.
+- Nếu tay đã đủ 5 cá, không được câu tiếp.
+- Thẻ Gió Thuận tự di chuyển thêm một tầng nếu hợp lệ; nếu không thì về Cảng. Đây là quy tắc thử nghiệm, chưa khóa luật.
+- Khi có hai trang bị, mua thêm sẽ tự bỏ trang bị cũ nhất (cần thay bằng hộp thoại lựa chọn).
+- Nhiệm vụ được trả từ cá trong tay; cá trưng bày không hợp lệ.
