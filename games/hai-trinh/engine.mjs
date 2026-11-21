@@ -1,7 +1,7 @@
 // Pure helpers for Hải Trình Kỳ Thú. No DOM, deterministic inputs.
 export const clamp=(value,min,max)=>Math.min(max,Math.max(min,value));
 export function stormPenalty(storm){return storm>=4?2:storm>=2?1:0}
-export function score(player){return player.fame+player.hand.reduce((n,f)=>n+f.prestige,0)+player.display.reduce((n,f)=>n+2*f.prestige,0)+Math.floor(player.gold/3)-(player.storm===6?2:0)}
+export function score(player){return player.fame+player.hand.reduce((n,f)=>n+f.prestige,0)+player.display.reduce((n,f)=>n+2*f.prestige+(f.id==='F04'?1:0),0)+Math.floor(player.gold/3)-(player.storm===6?2:0)}
 export function questEligible(quest,player){
  const fish=player.hand;
  switch(quest.id){
