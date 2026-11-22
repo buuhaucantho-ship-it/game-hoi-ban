@@ -2,13 +2,14 @@
 
 Trang board game cho hội bạn, chơi ngay trên trình duyệt (điện thoại, iPad, máy tính), không cần cài đặt hay tài khoản.
 
-**Chơi ngay:** https://buuhaucantho-ship-it.github.io/game-hoi-ban/
+**Chơi ngay:** https://game-hoi-ban.vercel.app/ (bản GitHub Pages: https://buuhaucantho-ship-it.github.io/game-hoi-ban/)
 
 | Trò chơi | Người chơi | Cách chơi |
 |---|---|---|
 | [Cờ Tỷ Phú (Cần Thơ / Tây Du Ký / Showbiz)](https://buuhaucantho-ship-it.github.io/game-hoi-ban/co-ty-phu.html) | 2–10 | Chung một máy, hoặc online mỗi người một máy theo mã phòng |
 | [Ma Sói](https://buuhaucantho-ship-it.github.io/game-hoi-ban/ma-soi.html) | 5–24 | Tự dẫn bằng giọng đọc, không cần quản trò; 31 vai, 3 phe |
 | [Ai Là Gián Điệp](https://buuhaucantho-ship-it.github.io/game-hoi-ban/gian-diep.html) | 3–12 | Online theo mã phòng (từ khóa, mô tả, phiếu kín trên máy riêng), hoặc chuyền máy |
+| [Chọi Bí Mật](https://game-hoi-ban.vercel.app/choi.html) | 2, 4, 6, 8 | Giấu 5 món đồ rồi chọi nhau; online theo mã phòng, chỗ trống do máy chơi |
 | [Đảo Khai Hoang](https://buuhaucantho-ship-it.github.io/game-hoi-ban/khai-hoang.html) | 3–4, mở rộng 5–6 | Chung một máy, mỗi ghế chọn người hoặc máy |
 
 ## Cờ Tỷ Phú (3 chủ đề)
@@ -102,3 +103,11 @@ Build lại: `cd ngoai-oi-src && npm install && npm run build` (xuất ra `../ng
 
 Các trang HTML tĩnh, không cần build: `index.html` (trang chủ), `co-ty-phu.html`, `ma-soi.html`, `gian-diep.html`, `khai-hoang.html`, `hub.css`. Riêng Ngoại Ơi dùng Three.js, build sẵn trong `ngoai-oi/`.
 Nhân vật và hình minh họa là SVG tự vẽ. Thư viện ngoài duy nhất là [PeerJS](https://peerjs.com/) cho chế độ online của Cờ Tỷ Phú.
+
+## Chọi Bí Mật
+
+- Mỗi người giấu 5 món (dài 5, 4, 3, 3, 2 ô) trên bàn 10×10. Tới lượt thì chọn một người còn trụ và chọi một ô của họ. Món bị trúng hết ô thì lộ ra; mất cả 5 món là out. Người cuối cùng còn trụ thắng.
+- 2, 4, 6 hoặc 8 người. Chơi với máy, hoặc tạo phòng online (mã 5 ký tự, link mời); chỗ trống do máy chơi.
+- 4 chủ đề, mỗi chủ đề một chiêu dùng 1 lần mỗi ván: Bến sông (Ngư lôi: 3 ô một hàng), Bầu trời (Radar: dò khung 3×3), Xóm nhỏ (Pháo hoa: dấu cộng 5 ô), Trang trại (Hàng rào: tự chặn phát trúng đầu tiên).
+- Luật tùy chỉnh: trúng thì chọi tiếp, đồ không nằm sát nhau, ai chọi trước, gợi ý, đồng hồ mỗi phát, đồng hồ giấu đồ, giới hạn cả ván.
+- Thú bông tự vẽ, nhạc hộp nhạc và hiệu ứng âm thanh tự tổng hợp bằng Web Audio, không dùng file ngoài.
