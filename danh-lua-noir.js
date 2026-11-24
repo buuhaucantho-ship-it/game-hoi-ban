@@ -48,8 +48,38 @@ function beautify(){
   el.dataset.noir="1";el.setAttribute("aria-label",(type==="clue"?"Vật chứng: ":"Phương thức gây án: ")+text);
  });
 }
+
+function evidenceWall(){
+ if(typeof S==="undefined"||!S||!["scene","present"].includes(S.phase))return;
+ const content=document.getElementById("content");if(!content||content.querySelector(".evidence-wall"))return;
+ const people=publicPlayers();
+ const gallery=document.createElement("section");gallery.className="evidence-wall";
+ const headline=document.createElement("div");headline.className="row spread";
+ const title=document.createElement("h2");title.textContent="BÀN VẬT CHỨNG";title.style.marginBottom="4px";
+ const hint=document.createElement("span");hint.className="badge";hint.textContent="8 lá / người";
+ headline.append(title,hint);
+ const instruction=document.createElement("p");instruction.className="muted";instruction.textContent="Chọn một người để xem đủ 4 phương thức gây án và 4 vật chứng công khai. Bấm thẻ để phóng to.";
+ const picker=document.createElement("div");picker.className="evidence-tabs";
+ const grid=document.createElement("div");grid.className="cardgrid evidence-board";
+ function show(p){
+  picker.replaceChildren(...people.map(q=>{const b=document.createElement("button");b.textContent=q.name;b.className="small"+(q.name===p.name?" primary":"");b.onclick=()=>show(q);return b}));
+  grid.replaceChildren();
+  p.means.forEach(name=>grid.append(publicCard(name,"means")));
+  p.clues.forEach(name=>grid.append(publicCard(name,"clue")));
+  beautify();
+ }
+ function publicCard(name,type){
+  const b=document.createElement("button");b.className="evidence"+(type==="clue"?" clue":"");
+  const em=document.createElement("em");em.textContent=type==="clue"?"VẬT CHỨNG":"PHƯƠNG THỨC";b.append(em,document.createTextNode(name));
+  b.onclick=()=>{const body=document.createElement("div");body.className="evidence-preview";const img=document.createElement("div");img.innerHTML=illustration(name,type);const heading=document.createElement("h3");heading.textContent=name;body.append(img,heading);const modal=document.getElementById("dialog");const t=document.getElementById("dialogTitle"),ct=document.getElementById("dialogBody"),act=document.getElementById("dialogActions");t.textContent=type==="clue"?"VẬT CHỨNG":"PHƯƠNG THỨC GÂY ÁN";ct.replaceChildren(body);const close=document.createElement("button");close.textContent="Đóng thẻ";close.className="primary";close.onclick=()=>modal.classList.add("hidden");act.replaceChildren(close);modal.classList.remove("hidden")};
+  return b;
+ }
+ gallery.append(headline,instruction,picker,grid);
+ content.append(gallery);show(people[0]);
+}
+
 let scheduled=false;
-const obs=new MutationObserver(()=>{if(scheduled)return;scheduled=true;queueMicrotask(()=>{scheduled=false;beautify()})});
+const obs=new MutationObserver(()=>{if(scheduled)return;scheduled=true;queueMicrotask(()=>{scheduled=false;beautify();evidenceWall()})});
 obs.observe(document.body,{childList:true,subtree:true});
-beautify();
+beautify();evidenceWall();
 })();
