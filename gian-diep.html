@@ -40,6 +40,7 @@ main>section.in>*:nth-child(2){animation-delay:.06s}main>section.in>*:nth-child(
 .opt:first-of-type{border-top:0}
 .opt b{display:block}
 .opt small{color:var(--muted);font-weight:700}
+.seg{display:flex;border-radius:10px;background:var(--surface);border:1px solid var(--line);padding:2px;flex:none}.seg button{padding:6px 10px;border-radius:8px;font-weight:800;font-size:13px;color:var(--muted);background:none;border:0;cursor:pointer}.seg button.on{background:var(--accent);color:var(--accent-ink,#fff)}
 .switch{position:relative;width:50px;height:30px;border-radius:999px;background:var(--line);flex:none;transition:background .2s}
 .switch::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .25s cubic-bezier(.3,1.5,.5,1)}
 .switch[aria-checked="true"]{background:var(--accent)}
@@ -244,6 +245,7 @@ main>section.in>*:nth-child(2){animation-delay:.06s}main>section.in>*:nth-child(
         </div>
         <div class="card" id="lobbyCard" hidden>
           <h3>Trong phòng</h3><p class="sub" id="lobbyHint"></p>
+        <div class="opt" id="boardRow"><div><b>Máy này</b><small>Chỉ làm bàn chơi: đặt máy này (iPad) giữa bàn để hiện lượt mô tả, bỏ phiếu, kết quả; mọi người chơi bằng điện thoại.</small></div><span class="seg" id="segBoard"></span></div>
           <ul class="mems" id="lobbyList"></ul>
         </div>
         <div class="card">
@@ -422,7 +424,7 @@ let scores=(()=>{try{return JSON.parse(store.get("gd-score")||"{}")}catch(e){ret
 let localNames=null;
 const ON={on:false,host:false,me:-1,code:"",phase:"off",members:[],peer:null,conn:null,scores:{}};
 const save=()=>{if(!ON.on)store.set("gd-names",JSON.stringify(names));store.set("gd-opt",JSON.stringify(opt));store.set("gd-score",JSON.stringify(scores))};
-const N=()=>ON.host?ON.members.length:names.length;
+const N=()=>ON.host?ON.members.length-(ON.board?1:0):names.length;
 const maxSpies=()=>Math.max(1,Math.floor((N()-(opt.blank&&N()>=5?1:0)-1)/2));
 const optChanged=()=>{save();if(ON.host)pushLobby()};
 
@@ -439,7 +441,8 @@ function renderSetup(){
   $("#names").querySelectorAll("[data-x]").forEach(b=>b.addEventListener("click",()=>{names.splice(+b.dataset.x,1);clampOpt();save();renderSetup()}));
   $("#addP").disabled=names.length>=12;$("#pcount").textContent=`${names.length} người`}
  else{
-  $("#lobbyHint").textContent=ON.members.length<3?`Cần thêm ${3-ON.members.length} người nữa để bắt đầu.`:`${ON.members.length} người, sẵn sàng bắt đầu.`;
+  {const h=N();$("#lobbyHint").textContent=h<3?`Cần thêm ${3-h} người chơi nữa để bắt đầu.`:`${h} người chơi, sẵn sàng bắt đầu.`}
+  $("#segBoard").innerHTML=`<button type="button" data-b="1" class="${ON.board?"on":""}">Chỉ làm bàn</button><button type="button" data-b="0" class="${ON.board?"":"on"}">Cũng chơi</button>`;
   $("#lobbyList").innerHTML=memHTML();
   $("#lobbyList").querySelectorAll("[data-k]").forEach(b=>b.addEventListener("click",()=>kick(+b.dataset.k)))}
  $("#spyN").textContent=opt.spies;$("#spyNote").textContent=`Tối đa ${maxSpies()} với ${N()} người.`;
@@ -455,7 +458,7 @@ function renderSetup(){
  $("#start").textContent=host?"Bắt đầu ván online":"Chia từ khóa";
  $("#start").disabled=!pool().length||(host&&ON.members.length<3);
  paintOnline()}
-function memHTML(){return ON.members.map((m,i)=>`<li class="mem${isOff(m)?" off":""}" style="animation-delay:${i*50}ms">${av(i,m.name,40)}<b>${esc(m.name)}</b>${i===0?"<em>Chủ phòng</em>":""}${isOff(m)?"<small>mất kết nối</small>":""}${ON.host&&i>0?`<button class="x" type="button" data-k="${i}" aria-label="Mời ${esc(m.name)} ra khỏi phòng">×</button>`:""}</li>`).join("")}
+function memHTML(){const O=ON.board?1:0;return ON.members.map((m,i)=>i===0&&O?`<li class="mem" style="background:color-mix(in srgb,var(--accent) 10%,var(--surface))"><svg viewBox="0 0 64 64" width="40" height="40" aria-hidden="true" style="flex:none"><rect x="6" y="12" width="52" height="38" rx="7" fill="#0a9d86" stroke="#123" stroke-width="2.5"/><rect x="12" y="18" width="40" height="26" rx="3" fill="#dff7f2"/><circle cx="32" cy="47" r="1.6" fill="#123"/></svg><b>Bàn chơi (máy này)</b><em>Chủ phòng</em></li>`:`<li class="mem${isOff(m)?" off":""}" style="animation-delay:${i*50}ms">${av(i-O,m.name,40)}<b>${esc(m.name)}</b>${i===0?"<em>Chủ phòng</em>":""}${isOff(m)?"<small>mất kết nối</small>":""}${ON.host&&i>0?`<button class="x" type="button" data-k="${i}" aria-label="Mời ${esc(m.name)} ra khỏi phòng">×</button>`:""}</li>`).join("")}
 function clampOpt(){opt.spies=Math.min(Math.max(1,opt.spies),maxSpies());if(N()<5)opt.blank=false}
 function pool(){let p=[];opt.cats.forEach(c=>{if(PACKS[c])p=p.concat(PACKS[c]);if(c==="Của nhóm")p=p.concat(opt.custom)});return p}
 $("#addP").addEventListener("click",()=>{if(names.length<12){names.push("Người "+(names.length+1));save();renderSetup();const ins=$("#names").querySelectorAll("input");ins[ins.length-1].select()}});
@@ -590,12 +593,13 @@ const reply=m=>{if(ON.host){onHostMsg(0,m);return}if(ON.conn&&ON.conn.open)tx(ON
 
 let G=null; /* host only: the whole game */
 let MY=null,ST=null,MYV=null,ROOM=null,RC_=null;
-function sendTo(i,m){if(ON.host&&i===0){onMsg(m);return}const mm=ON.members[i];if(mm)tx(mm.conn,m)}
+const OFF=()=>ON.host&&ON.board?1:0,memOf=i=>i+OFF(),seatOf=m=>m-OFF(),seatOff=i=>{const mi=memOf(i);return mi===0?0:offFor(ON.members[mi])};
+function sendTo(i,m){const mi=memOf(i);if(ON.host&&mi===0){onMsg(m);return}const mm=ON.members[mi];if(mm)tx(mm.conn,m)}
 function bc(m){ON.members.forEach((mm,i)=>{if(i>0)tx(mm.conn,m)});onMsg(m)}
 const aliveIdx_=()=>G.names.map((_,i)=>i).filter(i=>G.alive[i]);
 
 /* ---- lobby ---- */
-function lobbyMsg(){return{t:"lobby",code:ON.code,members:ON.members.map(m=>({n:m.name,off:isOff(m)})),o:{spies:opt.spies,blank:opt.blank&&ON.members.length>=5,know:opt.know,mode:opt.mode,turn:opt.turn,vtime:opt.vtime,pubvote:opt.pubvote,cats:opt.cats.length},scores:Object.entries(ON.scores).sort((a,b)=>b[1]-a[1])}}
+function lobbyMsg(){return{t:"lobby",code:ON.code,board:!!ON.board,members:ON.members.map(m=>({n:m.name,off:isOff(m)})),o:{spies:opt.spies,blank:opt.blank&&ON.members.length>=5,know:opt.know,mode:opt.mode,turn:opt.turn,vtime:opt.vtime,pubvote:opt.pubvote,cats:opt.cats.length},scores:Object.entries(ON.scores).sort((a,b)=>b[1]-a[1])}}
 function pushLobby(){const m=lobbyMsg();ON.members.forEach((mm,i)=>{if(i>0)tx(mm.conn,m)})}
 function lobbyChanged(){if(!ON.host||ON.phase!=="lobby")return;clampOpt();saveHost();pushLobby();renderSetup()}
 function afterNet(){if(ON.phase==="lobby")lobbyChanged();else if(G){push()}}
@@ -609,7 +613,8 @@ function hostConn(c){
  c.on("data",d=>{if(!d||typeof d!=="object")return;
   if(d.c==="hello"){onHello(c,d);return}
   const i=ON.members.findIndex(m=>m.conn===c);if(i<1)return;
-  ON.members[i].lastSeen=Date.now();onHostMsg(i,d)});
+  ON.members[i].lastSeen=Date.now();if(d.c==="ping"){tx(c,{t:"pong"});return}if(d.c==="leave"){dropMember(i);return}
+  const st=seatOf(i);if(st>=0)onHostMsg(st,d)});
  c.on("close",()=>{const i=ON.members.findIndex(m=>m.conn===c);if(i<1)return;
   const m=ON.members[i];m.conn=null;m.offSince=Date.now();
   if(ON.phase==="lobby"){clearTimeout(m.dropT);m.dropT=setTimeout(()=>{const k=ON.members.indexOf(m);if(k>0&&!m.conn&&ON.phase==="lobby"){ON.members.splice(k,1);reindex();lobbyChanged()}},20000)}
@@ -626,16 +631,15 @@ function onHello(c,d){const pid=String(d.pid||"").slice(0,24);
  const m={pid,name:uniq(cleanName(d.name)),conn:c,lastSeen:Date.now(),idx:ON.members.length,offSince:0};ON.members.push(m);
  tx(c,{t:"joined",idx:m.idx,code:ON.code});lobbyChanged()}
 function onHostMsg(from,d){switch(d.c){
- case"ping":sendTo(from,{t:"pong"});break;
  case"ready":if(G&&G.step==="reveal"){G.ready.add(from);readyCount()}break;
  case"clue":onClue(from,d.text,false);break;
  case"done":onClue(from,"",true);break;
  case"vote":onVote(from,d.v);break;
  case"guess":onGuess(from,d.text);break;
- case"react":{if(!G)break;const mm=ON.members[from],now=Date.now(),k=+d.k;if(now-(mm.lastR||0)<1200||!(k>=0&&k<REACTS.length))break;mm.lastR=now;bc({t:"react",from:mm.name,k});break}
- case"leave":dropMember(from);break}}
-function snap(i){const mm=ON.members[i];
- if(ON.phase==="lobby"||!G){tx(mm.conn,lobbyMsg());return}
+ case"react":{if(!G)break;const mm=ON.members[memOf(from)],now=Date.now(),k=+d.k;if(now-(mm.lastR||0)<1200||!(k>=0&&k<REACTS.length))break;mm.lastR=now;bc({t:"react",from:mm.name,k});break}
+}}
+function snap(mi){const mm=ON.members[mi];
+ if(ON.phase==="lobby"||!G){tx(mm.conn,lobbyMsg());return}const i=seatOf(mi);if(i<0)return;
  sendTo(i,youMsg(i));
  if(G.step==="reveal"){sendTo(i,{t:"phase",p:"reveal"});sendTo(i,rcMsg())}
  else if(G.step==="over"){sendTo(i,{t:"phase",p:"play"});if(G.overMsg)sendTo(i,G.overMsg)}
@@ -644,23 +648,23 @@ function snap(i){const mm=ON.members[i];
 /* ---- game engine (host) ---- */
 function youMsg(i){const r=G.roles[i],kind=r==="spy"&&!opt.know?"dan":r,word=r==="blank"?"":r==="spy"?G.spy:G.civ;
  return{t:"you",i,name:G.names[i],kind,word,ready:G.ready.has(i)||G.step!=="reveal"}}
-function rcMsg(){const all=ON.members.every((m,i)=>i===0||isOff(m)||G.ready.has(i));return{t:"rc",k:[...G.ready],n:G.names.length,go:G.ready.has(0)&&(all||Date.now()-G.t0>25000),off:ON.members.map(isOff)}}
+function rcMsg(){const all=G.names.every((_,i)=>memOf(i)===0||seatOff(i)>0||G.ready.has(i));return{t:"rc",k:[...G.ready],n:G.names.length,go:(ON.board||G.ready.has(0))&&(all||Date.now()-G.t0>25000),all,off:G.names.map((_,i)=>seatOff(i)>0)}}
 function readyCount(){bc(rcMsg())}
 function pub(){return{t:"st",step:G.step,round:G.round,alive:G.alive.slice(),names:G.names,order:G.order,ti:G.ti,clues:G.clues,voted:Object.keys(G.votes).map(Number),
- dl:G.dl?Math.max(0,G.dl-Date.now()):0,tot:G.tot||0,res:G.res,gi:G.gi,mode:opt.mode,pubv:opt.pubvote,off:ON.members.map(isOff)}}
+ dl:G.dl?Math.max(0,G.dl-Date.now()):0,tot:G.tot||0,res:G.res,gi:G.gi,mode:opt.mode,pubv:opt.pubvote,off:G.names.map((_,i)=>seatOff(i)>0)}}
 function push(){if(!G)return;saveHost();bc(pub())}
 function startOnline(){if(!ON.host||ON.phase!=="lobby")return;
  if(ON.members.some(isOff)){setMsg("Có người đang mất kết nối. Chờ họ vào lại rồi hãy bắt đầu.");return}
- if(ON.members.length<3){setMsg("Cần ít nhất 3 người.");return}
+ if(N()<3){setMsg("Cần ít nhất 3 người chơi.");return}
  clampOpt();setMsg("");
- const n=ON.members.length,pair=shuffle(pool())[0],flip=Math.random()<.5;
+ const hm=ON.members.slice(OFF()),n=hm.length,pair=shuffle(pool())[0],flip=Math.random()<.5;
  const civ=flip?pair[1]:pair[0],spy=flip?pair[0]:pair[1];
  const roles=Array(n).fill("dan"),idx=shuffle([...Array(n).keys()]);
  for(let k=0;k<opt.spies;k++)roles[idx[k]]="spy";
  if(opt.blank&&n>=5)roles[idx[opt.spies]]="blank";
- G={names:ON.members.map(m=>m.name),civ,spy,roles,alive:Array(n).fill(true),round:1,start:Math.floor(Math.random()*n),step:"reveal",order:[],ti:0,clues:[],votes:{},dl:0,tot:0,res:null,gi:-1,out:[],ready:new Set(),winner:null,t0:Date.now(),overMsg:null};
+ G={names:hm.map(m=>m.name),civ,spy,roles,alive:Array(n).fill(true),round:1,start:Math.floor(Math.random()*n),step:"reveal",order:[],ti:0,clues:[],votes:{},dl:0,tot:0,res:null,gi:-1,out:[],ready:new Set(),winner:null,t0:Date.now(),overMsg:null};
  if(typeof window.__gdForce==="function")window.__gdForce(G);
- ON.phase="play";ON.members.forEach((m,i)=>sendTo(i,youMsg(i)));
+ ON.me=ON.board?-1:0;ON.phase="play";G.names.forEach((_,i)=>sendTo(i,youMsg(i)));
  bc({t:"phase",p:"reveal"});readyCount();saveHost()}
 function beginTalk(){G.step="talk";const n=G.names.length;let s=G.start;while(!G.alive[s])s=(s+1)%n;
  G.order=[];for(let k=0;k<n;k++){const j=(s+k)%n;if(G.alive[j])G.order.push(j)}G.ti=0;G.votes={};G.res=null;G.gi=-1;turnStart()}
@@ -672,7 +676,7 @@ function advance(text,skip){G.clues.push({i:G.order[G.ti],r:G.round,t:text,s:ski
 function beginVote(){G.step="vote";G.votes={};const t=opt.vtime*1000;G.tot=t;G.dl=Date.now()+t;push()}
 function onVote(from,t){if(!G||G.step!=="vote"||!G.alive[from])return;t=+t;
  if(!(t>=0&&t<G.names.length&&G.alive[t]&&t!==from))return;G.votes[from]=t;sendTo(from,{t:"myvote",v:t});push();checkVote()}
-const needVoters=()=>aliveIdx_().filter(i=>!(i>0&&offFor(ON.members[i])>8000));
+const needVoters=()=>aliveIdx_().filter(i=>!(seatOff(i)>8000));
 function checkVote(){if(!G||G.step!=="vote")return;if(needVoters().every(i=>G.votes[i]!==undefined)||Date.now()>G.dl)resolveVote()}
 function resolveVote(){const cnt={};Object.values(G.votes).forEach(t=>cnt[t]=(cnt[t]||0)+1);
  let mx=0,top=[];Object.entries(cnt).forEach(([k,v])=>{if(v>mx){mx=v;top=[+k]}else if(v===mx)top.push(+k)});
@@ -694,16 +698,16 @@ function finishOnline(w){G.step="over";G.winner=w;G.dl=0;G.tot=0;
  const sc=Object.entries(ON.scores).sort((a,b)=>b[1]-a[1]);
  G.overMsg={t:"over",w,round:G.round,civ:G.civ,spy:G.spy,names:G.names,roles:G.roles,alive:G.alive,scores:sc};
  clearHost();bc({t:"phase",p:"play"});
- ON.members.forEach((m,i)=>{if(i>0)tx(m.conn,Object.assign({me:i},G.overMsg))});onMsg(Object.assign({me:0},G.overMsg))}
+ ON.members.forEach((m,i)=>{if(i>0)tx(m.conn,Object.assign({me:seatOf(i)},G.overMsg))});onMsg(Object.assign({me:ON.board?-1:0},G.overMsg))}
 function htick(){if(!ON.host)return;
  const sig=ON.members.map(isOff).join();if(sig!==ON.offSig){ON.offSig=sig;afterNet()}
  if(!G||G.step==="over")return;const now=Date.now();
  if(G.step==="reveal"){readyCount();return}
  if(G.step==="talk"){const s=G.order[G.ti];
-  if(now>G.dl||(s>0&&offFor(ON.members[s])>8000))advance("",1);return}
+  if(now>G.dl||seatOff(s)>8000)advance("",1);return}
  if(G.step==="vote"){checkVote();return}
  if(G.step==="verdict"){if(now>G.dl)afterVerdict();return}
- if(G.step==="guess"){if(now>G.dl||(G.gi>0&&offFor(ON.members[G.gi])>8000))doGuess("")}}
+ if(G.step==="guess"){if(now>G.dl||seatOff(G.gi)>8000)doGuess("")}}
 $("#oBegin").addEventListener("click",()=>{if(!G||G.step!=="reveal")return;bc({t:"phase",p:"play"});beginTalk()});
 function backToLobby(){if(!ON.host)return;G=null;ON.phase="lobby";ON.members=ON.members.filter((m,i)=>i===0||!!m.conn);reindex();$("#mPeek").hidden=true;
  names=ON.members.map(m=>m.name);lobbyChanged();show("setup")}
@@ -712,7 +716,7 @@ function backToLobby(){if(!ON.host)return;G=null;ON.phase="lobby";ON.members=ON.
 function createRoom(name){
  if(typeof Peer==="undefined"){setMsg("Không tải được thư viện kết nối. Kiểm tra mạng rồi tải lại trang.");return}
  localNames=names.slice();
- Object.assign(ON,{on:true,host:true,me:0,phase:"lobby",pid:pidOf(),tries:0,code:"",scores:{},outbox:[]});
+ Object.assign(ON,{on:true,host:true,me:0,phase:"lobby",pid:pidOf(),tries:0,code:"",scores:{},outbox:[],board:store.get("gd-board")!=="0"});
  ON.members=[{pid:ON.pid,name:cleanName(name),conn:null,lastSeen:Date.now(),idx:0,offSince:0}];
  setMsg("Đang tạo phòng…");keepAwake(true);openHost()}
 function brokerRetry(peer,n){if(ON.peer!==peer||!ON.host||peer.destroyed||!peer.disconnected)return;
@@ -731,7 +735,7 @@ function openHost(fixed){const code=fixed||rcode(5);const peer=new Peer(idOf(cod
 const HKEY="gd-host";
 function saveHost(){if(!ON.host||!ON.code)return;
  try{const play=!!G&&G.step!=="over";
-  localStorage.setItem(HKEY,JSON.stringify({t:Date.now(),code:ON.code,pid:ON.pid,play,members:ON.members.map(m=>({pid:m.pid,name:m.name})),scores:ON.scores,
+  localStorage.setItem(HKEY,JSON.stringify({t:Date.now(),code:ON.code,pid:ON.pid,play,board:!!ON.board,members:ON.members.map(m=>({pid:m.pid,name:m.name})),scores:ON.scores,
    opt:{spies:opt.spies,blank:opt.blank,know:opt.know,turn:opt.turn,mode:opt.mode,vtime:opt.vtime,pubvote:opt.pubvote,cats:opt.cats,custom:opt.custom},
    G:play?Object.assign({},G,{ready:[...G.ready],dlLeft:Math.max(0,G.dl-Date.now()),overMsg:null}):null}))}catch(e){}}
 const clearHost=()=>{try{localStorage.removeItem(HKEY)}catch(e){}};
@@ -739,13 +743,13 @@ function readHost(){try{const d=JSON.parse(localStorage.getItem(HKEY)||"null");i
 function resumeRoom(){const d=readHost();if(!d)return;
  if(typeof Peer==="undefined"){setMsg("Không tải được thư viện kết nối.");return}
  localNames=names.slice();sess.set("gd-pid",d.pid);Object.assign(opt,d.opt);
- Object.assign(ON,{on:true,host:true,me:0,phase:d.play?"play":"lobby",pid:d.pid,tries:0,code:"",resume:true,scores:d.scores||{},outbox:[]});
+ Object.assign(ON,{on:true,host:true,me:d.board?-1:0,phase:d.play?"play":"lobby",pid:d.pid,tries:0,code:"",resume:true,scores:d.scores||{},outbox:[],board:!!d.board});
  ON.members=d.members.map((m,i)=>({pid:m.pid,name:m.name,conn:null,lastSeen:Date.now(),idx:i,offSince:i?Date.now():0}));
  G=null;if(d.play&&d.G){G=d.G;G.ready=new Set(G.ready);G.overMsg=null;G.t0=Date.now()-20000;if(G.dl)G.dl=Date.now()+(G.dlLeft||0)+8000}
  setMsg("Đang khôi phục phòng "+d.code+"…");keepAwake(true);openHost(d.code)}
 function hostResumeView(){ON.resume=false;
  if(!G){lobbyChanged();show("setup");setMsg("Đã khôi phục phòng chờ. Người chơi sẽ tự vào lại.");return}
- sendTo(0,youMsg(0));
+ if(!ON.board)sendTo(0,youMsg(0));
  if(G.step==="reveal"){bc({t:"phase",p:"reveal"});readyCount()}else{bc({t:"phase",p:"play"});push()}}
 function closeRoom(){if(!ON.host)return;ON.members.forEach((m,i)=>{if(i>0)tx(m.conn,{t:"closed"})});const k=ON.code;clearHost();setTimeout(()=>{if(ON.code===k)resetOnline("Đã đóng phòng.")},300)}
 
@@ -831,14 +835,17 @@ function onMsg(m){switch(m.t){
 
 function renderRoom(){const m=ROOM;if(!m)return;
  $("#rmCode").textContent=m.code;$("#rmCount").textContent=m.members.length+" người";
- $("#rmList").innerHTML=m.members.map((x,i)=>`<li class="mem${x.off?" off":""}" style="animation-delay:${i*50}ms">${av(i,x.n,40)}<b>${esc(x.n)}</b>${i===0?"<em>Chủ phòng</em>":""}${i===ON.me?"<em>Bạn</em>":""}${x.off?"<small>mất kết nối</small>":""}</li>`).join("");
+ const O=m.board?1:0;$("#rmCount").textContent=(m.members.length-O)+" người chơi";$("#rmList").innerHTML=m.members.map((x,i)=>i===0&&O?`<li class="mem"><svg viewBox="0 0 64 64" width="40" height="40" aria-hidden="true" style="flex:none"><rect x="6" y="12" width="52" height="38" rx="7" fill="#0a9d86" stroke="#123" stroke-width="2.5"/><rect x="12" y="18" width="40" height="26" rx="3" fill="#dff7f2"/><circle cx="32" cy="47" r="1.6" fill="#123"/></svg><b>Bàn chơi</b><em>Chủ phòng</em></li>`:`<li class="mem${x.off?" off":""}" style="animation-delay:${i*50}ms">${av(i-O,x.n,40)}<b>${esc(x.n)}</b>${i===0?"<em>Chủ phòng</em>":""}${i===ON.me?"<em>Bạn</em>":""}${x.off?"<small>mất kết nối</small>":""}</li>`).join("");
  const o=m.o;$("#rmRules").innerHTML=[`${o.spies} gián điệp`,o.blank?"Có người Trắng":"Không có Trắng",o.know?"Gián điệp biết vai":"Gián điệp không biết vai",o.mode==="type"?"Mô tả: gõ trên máy":"Mô tả: nói miệng",`${o.turn}s mỗi lượt`,`${o.vtime}s bỏ phiếu`,o.pubvote?"Phiếu công khai":"Phiếu kín"].map(t=>`<span class="chip">${t}</span>`).join("");
  $("#rmScoreCard").hidden=!m.scores.length;$("#rmScore").innerHTML=m.scores.map(([n,p])=>`<li><span>${esc(n)}</span><span class="num">${p} điểm</span></li>`).join("")}
 $("#rmCopy").addEventListener("click",copyInvite);$("#rmLeave").addEventListener("click",leaveRoom);
 
 /* reveal (online) */
 const offOnline=bindHold($("#oCard"),()=>{if(MY&&!MY.ready)$("#oReady").disabled=false;if(MY)MY.seen=true});
-function renderReveal2(){if(!MY||$("#oReveal").hidden)return;
+function renderReveal2(){if($("#oReveal").hidden)return;const TB=ON.host&&ON.board;$("#oCard").hidden=TB;$("#oReady").hidden=TB;document.querySelector("#oReveal .eyebrow").textContent=TB?"Bàn chơi":"Chỉ mình bạn thấy";document.querySelector("#oReveal .card .sub").textContent=TB?"Mọi người đang xem từ khóa trên điện thoại của mình.":"Giữ vào thẻ để xem từ khóa. Thả tay ra thẻ sẽ úp lại. Đừng để ai nhìn trộm màn hình.";
+ if(TB){const n=RC_?RC_.n:0,k=RC_?RC_.k.length:0;$("#orc").textContent=n?`${k}/${n} sẵn sàng`:"";$("#oWait").textContent=RC_&&RC_.all?"Mọi người đã sẵn sàng. Bấm bắt đầu nhé!":"Chờ mọi người xem từ khóa và bấm sẵn sàng…";
+  if(RC_)$("#oDots").innerHTML=ST0names().map((nm,i)=>`<div class="sp${RC_.k.includes(i)?" done":""}${RC_.off&&RC_.off[i]?" off":""}">${av(i,nm,52)}<span class="n">${esc(nm)}</span></div>`).join("");$("#oHostRow").hidden=false;$("#oBegin").disabled=!(RC_&&RC_.go);return}
+ if(!MY)return;
  setFace($("#oFront"),MY.kind,MY.word);
  const ready=MY.ready||(RC_&&RC_.k.includes(MY.i));
  $("#oReady").disabled=ready||!MY.seen;$("#oReady").textContent=ready?"Đã sẵn sàng ✓":"Đã nhớ, sẵn sàng";
@@ -873,7 +880,9 @@ function paintWall(st){const cl=st.clues,fresh=cl.length>wallN;let h="",rr=0;
   const txt=c.s?"đã bỏ lượt":c.t?esc(c.t):"đã nói";
   h+=`<div class="cl${c.s?" skip":""}${c.i===ON.me?" me":""}${fresh&&k===cl.length-1?" pop":""}">${av(c.i,nmOf(st,c.i),34)}<div class="bub"><small>${esc(nmOf(st,c.i))}</small>${txt}</div></div>`});
  $("#wall").innerHTML=h||`<p class="sub" style="margin:0">Chưa có mô tả nào.</p>`;wallN=cl.length}
-function stageFull(st,alive){const me=ON.me,box=$("#oStage");let h=alive?"":`<div class="dead-note">Bạn đã bị loại. Bạn vẫn xem được ván nhưng không bỏ phiếu nữa.</div>`;
+function stageFull(st,alive){const me=ON.me,box=$("#oStage"),TB=ON.host&&ON.board;
+ if(TB&&st.step==="vote"){box.innerHTML=`<div class="card"><div class="bar"><div><span class="eyebrow">Bỏ phiếu kín trên điện thoại</span><h3>Ai là gián điệp?</h3></div>${ringHTML(`<span></span>`,"sm")}</div><div class="vgrid" id="vgrid">${st.names.map((nm,j)=>st.alive[j]?`<div class="vc" data-j="${j}" style="--k:${j}">${av(j,nm,40)}<span style="min-width:0"><b>${esc(nm)}</b><small>chưa bỏ phiếu</small></span></div>`:"").join("")}</div><p class="sub" id="vprog" style="margin:10px 0 0"></p></div>`;stagePatch(st);return}
+ let h=alive||TB?"":`<div class="dead-note">Bạn đã bị loại. Bạn vẫn xem được ván nhưng không bỏ phiếu nữa.</div>`;
  if(st.step==="talk"){const s=st.order[st.ti],mine=s===me;
   h+=`<div class="card spot">${ringHTML(av(s,nmOf(st,s),70))}<div class="spotx"><span class="eyebrow">${mine?"Đến lượt bạn":"Đang mô tả"}</span><h2>${esc(nmOf(st,s))}</h2><p class="sub" style="margin:0">Lượt ${st.ti+1}/${st.order.length}</p>`+
    (mine?(st.mode==="type"?`<form id="cform" class="cform"><input class="inp" id="cin" maxlength="60" autocomplete="off" placeholder="Một câu mô tả từ của bạn…" aria-label="Mô tả"><button class="btn primary" type="submit">Gửi</button></form><p class="sub" style="margin:0">Đừng nói thẳng từ khóa nhé.</p>`:`<p class="sub" style="margin:0">Hãy nói một câu về từ của bạn, rồi bấm Xong.</p><button class="btn primary" id="cdone" type="button">Xong lượt</button>`):
@@ -919,6 +928,7 @@ setInterval(()=>{if(!ST||$("#oPlay").hidden)return;
 /* reactions + peek */
 $("#rbar").innerHTML=REACTS.map((e,k)=>`<button type="button" data-k="${k}" aria-label="Biểu cảm ${e}">${e}</button>`).join("");
 $("#rbar").addEventListener("click",e=>{const b=e.target.closest("[data-k]");if(!b)return;reply({c:"react",k:+b.dataset.k});sfx.pop()});
+setInterval(()=>{const TB=ON.host&&ON.board&&ON.on;$("#peekBtn").hidden=TB;$("#rbar").hidden=TB},500);
 {const pb=$("#peekBtn"),show_=e=>{if(e)e.preventDefault();if(!MY)return;setFace($("#pkFront"),MY.kind,MY.word);$("#mPeek").hidden=false},hide_=()=>{$("#mPeek").hidden=true};
  pb.addEventListener("pointerdown",e=>{pb.setPointerCapture?.(e.pointerId);show_(e)});["pointerup","pointercancel","pointerleave","lostpointercapture"].forEach(t=>pb.addEventListener(t,hide_));
  pb.addEventListener("keydown",e=>{if(e.key===" "||e.key==="Enter")show_(e)});pb.addEventListener("keyup",hide_);pb.addEventListener("contextmenu",e=>e.preventDefault())}
@@ -935,6 +945,7 @@ $("#onJoin").addEventListener("click",doJoin);
 $("#onCode").addEventListener("keydown",e=>{if(e.key==="Enter")doJoin()});
 $("#onCode").addEventListener("input",e=>{e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,"")});
 $("#onClose").addEventListener("click",closeRoom);
+$("#segBoard").addEventListener("click",e=>{const b=e.target.closest("button");if(!b||!ON.host||ON.phase!=="lobby")return;ON.board=b.dataset.b==="1";store.set("gd-board",ON.board?"1":"0");lobbyChanged()});
 $("#onCopy").addEventListener("click",copyInvite);
 $("#onResumeBtn").addEventListener("click",()=>{$("#onResume").hidden=true;resumeRoom()});
 $("#onResumeNo").addEventListener("click",()=>{clearHost();$("#onResume").hidden=true});

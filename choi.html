@@ -204,6 +204,26 @@ h2{margin:0 0 10px;font-size:19px;font-weight:800}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
 #net{position:fixed;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--bad);color:#fff;font-weight:800;border-radius:999px;padding:6px 14px;z-index:50;font-size:14px}
 #net[hidden]{display:none}
+body.table #app{max-width:1500px}
+body.table .lower{display:none}
+body.table .playgrid{display:block}
+body.table .mainb{max-width:none!important;background:rgba(255,250,241,.7)}
+body.table #chips{display:none}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.tgrid.n2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:980px;margin:0 auto}
+.tgrid.n6{grid-template-columns:repeat(3,minmax(0,1fr))}
+.tgrid.n8{grid-template-columns:repeat(4,minmax(0,1fr))}
+.tcard{background:#fff;border-radius:18px;padding:10px;box-shadow:0 4px 0 rgba(36,71,122,.1);transition:transform .3s,box-shadow .3s;position:relative}
+.tcard.turn{box-shadow:0 0 0 4px var(--gold),0 8px 20px rgba(255,201,74,.45);transform:translateY(-3px)}
+.tcard.turn .bhead svg{animation:bob 1s ease-in-out infinite}
+.tcard.hit{box-shadow:0 0 0 4px var(--ac),0 8px 20px rgba(255,122,89,.35)}
+.tcard.out{opacity:.55;filter:grayscale(.7)}
+.tcard.out::after{content:"OUT";position:absolute;top:44%;left:50%;transform:translate(-50%,-50%) rotate(-14deg);background:var(--bad);color:#fff;font-weight:800;font-size:28px;padding:0 14px;border-radius:10px;border:3px solid #fff}
+.tcard .dots{display:flex;gap:3px}.tcard .dots i{width:9px;height:9px;border-radius:50%;background:var(--ac)}.tcard .dots i.x{background:#d6dbe6}
+.boardrow{display:flex;align-items:center;gap:10px;padding:10px 0 2px;border-top:1px dashed var(--line);margin-top:10px}
+.boardrow .ol{flex:1}.boardrow b{display:block}.boardrow small{color:var(--ink2);font-size:12.5px}
+.mem li.tbl{background:#fff3ea}
+.tlog{margin-top:14px;font-size:16px;max-height:none}.tlog li{padding:5px 0}
 @media (min-width:900px){
  #app{max-width:1040px}
  #sHome .wrapw,#sWait .wrapw,#sPlace .wrapw{max-width:560px;margin:0 auto}
@@ -230,6 +250,7 @@ h2{margin:0 0 10px;font-size:19px;font-weight:800}
    <p class="sub" style="text-align:center">Mã phòng</p>
    <div class="code" id="roomCode">-----</div>
    <div class="row" style="margin-top:10px"><button class="btn gold" id="bCopy" type="button">Sao chép link mời</button><button class="btn" id="bClose" type="button">Đóng phòng</button></div>
+   <div class="boardrow"><div class="ol"><b>Máy này</b><small>Chỉ làm bàn chơi: đặt máy này (iPad) giữa bàn, mọi người chơi bằng điện thoại.</small></div><div class="seg" id="segBoard"><button type="button" data-b="1">Chỉ làm bàn</button><button type="button" data-b="0">Cũng chơi</button></div></div>
    <ul class="mem" id="mems"></ul>
    <p class="note" id="memNote"></p>
   </div>
@@ -342,7 +363,7 @@ const TKEYS=Object.keys(THEMES);
 /* thú bông tự vẽ */
 const ANI=[["Gấu Bông","#c9925f","#f2d3b3","bear"],["Thỏ Hồng","#fbe3ea","#ff9eb5","bunny"],["Mèo Mướp","#ffb46b","#fff0dd","cat"],["Gà Con","#ffd95c","#ffb347","chick"],
  ["Cún Vàng","#f0c27a","#a8744a","dog"],["Ếch Xanh","#8fd694","#e9ffd8","frog"],["Cáo Nhỏ","#ff9a5c","#fff3e6","fox"],["Heo Hồng","#ffb8c8","#ff8fa8","pig"]];
-function animal(k){const [,c,c2,t]=ANI[k%ANI.length];const o='stroke="#3b3b5c" stroke-width="2"';let ears="",snout="",extra="";
+function animal(k){const [,c,c2,t]=ANI[((k%ANI.length)+ANI.length)%ANI.length];const o='stroke="#3b3b5c" stroke-width="2"';let ears="",snout="",extra="";
  if(t==="bear")ears=`<circle cx="15" cy="17" r="7" fill="${c}" ${o}/><circle cx="49" cy="17" r="7" fill="${c}" ${o}/><circle cx="15" cy="17" r="3" fill="${c2}"/><circle cx="49" cy="17" r="3" fill="${c2}"/>`,snout=`<ellipse cx="32" cy="42" rx="8" ry="6" fill="${c2}"/><circle cx="32" cy="39.5" r="2.4" fill="#3b3b5c"/>`;
  if(t==="bunny")ears=`<ellipse cx="22" cy="12" rx="5.5" ry="13" fill="${c}" ${o}/><ellipse cx="42" cy="12" rx="5.5" ry="13" fill="${c}" ${o}/><ellipse cx="22" cy="13" rx="2.5" ry="8" fill="${c2}"/><ellipse cx="42" cy="13" rx="2.5" ry="8" fill="${c2}"/>`,snout=`<path d="M30 40q2 2 4 0" ${o} fill="none"/>`;
  if(t==="cat"||t==="fox")ears=`<path d="M12 24L15 6l13 10z" fill="${c}" ${o} stroke-linejoin="round"/><path d="M52 24L49 6 36 16z" fill="${c}" ${o} stroke-linejoin="round"/>`,snout=t==="fox"?`<path d="M18 38q14 14 28 0q-6 10-14 10t-14-10z" fill="${c2}"/><circle cx="32" cy="40" r="2.2" fill="#3b3b5c"/>`:`<path d="M30 40l2 2 2-2" ${o} fill="none"/>`;
@@ -491,7 +512,7 @@ function makeGame(players,o){const n=players.length,th=o.theme;
  if(G.o.placeT){G.tot=G.o.placeT*60000;G.dl=now()+G.tot}
  G.names.forEach((_,i)=>sendYou(i));push()}
 function sendYou(i){if(!G.bots[i])sendTo(i,{t:"you",i,fleet:G.fleets[i],placed:G.placed[i]})}
-function seatOff(i){if(!ON.on||G.bots[i]||i===0)return false;return isOff(ON.members[i])}
+function seatOff(i){if(!ON.on||G.bots[i])return false;const mi=memOf(i);if(mi===0)return false;return isOff(ON.members[mi])}
 function pub(){return{t:"st",phase:G.phase,theme:G.theme,o:G.o,n:G.n,names:G.names,bots:G.bots,placed:G.placed,board:G.board.map(b=>b.join("")),sunk:G.sunk,
  fence:G.fence,skill:G.skill,scans:G.scans,alive:G.alive,out:G.out,hits:G.hits,turn:G.turn,dl:G.dl?Math.max(0,G.dl-now()):0,tot:G.tot,ev:G.ev,winner:G.winner,draw:G.draw,
  left:G.endAt?Math.max(0,G.endAt-now()):0,off:G.names.map((_,i)=>seatOff(i)),log:G.log.slice(-25),scores:ON.scores}}
@@ -561,22 +582,22 @@ setInterval(htick,250);
 /* =========================================================
    GIAO TIẾP (máy chủ ↔ người chơi)
    ========================================================= */
-function sendTo(i,m){if(isHost()&&i===0){onMsg(m);return}if(!ON.on)return;const mm=ON.members[i];if(mm)tx(mm.conn,m)}
+const OFF=()=>ON.on&&ON.host&&ON.board?1:0,memOf=i=>i+OFF(),seatOf=m=>m-OFF();
+function sendTo(i,m){if(!ON.on){onMsg(m);return}const mi=memOf(i);if(mi===0){onMsg(m);return}const mm=ON.members[mi];if(mm)tx(mm.conn,m)}
 function bc(m){if(ON.on&&ON.host)ON.members.forEach((mm,i)=>{if(i>0)tx(mm.conn,m)});onMsg(m)}
 const reply=m=>{if(isHost()){onHostMsg(0,m);return}if(ON.conn&&ON.conn.open)tx(ON.conn,m);else if(m.c==="place"||m.c==="act"){ON.outbox=(ON.outbox||[]).filter(x=>x.c!==m.c);ON.outbox.push(m)}};
 function onHostMsg(from,d){switch(d.c){
- case"ping":sendTo(from,{t:"pong"});break;
  case"place":onPlace(from,d.f);break;
  case"act":if(G&&G.phase==="play"&&now()>=G.busy-W_(300)&&!act(from,d))push();else if(G&&G.phase==="play"&&now()<G.busy-W_(300))push();break;
- case"leave":dropMember(from);break}}
+}}
 
 /* =========================================================
    GIAO DIỆN NGƯỜI CHƠI
    ========================================================= */
 let ST=null,MY=null,ROOM=null,VIEW=-1,AIM=-1,SKM=false,LOCK=0,ANIM=0,LASTEV=0,DRAFT=null,SELK=-1,SENTPLACE=false,overShown=0;
-const ME=()=>ON.on?ON.me:0;
+const ME=()=>!ON.on?0:ON.host?(ON.board?-1:0):(MY?MY.i:ON.me-(ROOM&&ROOM.board?1:0));
 const myTurn=()=>ST&&ST.phase==="play"&&ST.turn===ME()&&ST.alive[ME()];
-function show(id){["sHome","sWait","sPlace","sPlay"].forEach(s=>$("#"+s).classList.toggle("on",s===id));if(id!=="sPlay")$("#mOver").hidden=true;window.scrollTo(0,0)}
+function show(id){["sHome","sWait","sPlace","sPlay"].forEach(s=>$("#"+s).classList.toggle("on",s===id));if(id!=="sPlay")document.body.classList.remove("table");if(id!=="sPlay")$("#mOver").hidden=true;window.scrollTo(0,0)}
 function onMsg(m){switch(m.t){
  case"lobby":ROOM=m;if(!ON.host){scene(m.o.theme);renderWait();if(!$("#sWait").classList.contains("on"))show("sWait")}break;
  case"you":MY=m;if(m.fleet&&!DRAFT)DRAFT=m.fleet.map(x=>({...x}));if(ST&&ST.phase==="place")renderPlace();break;
@@ -586,6 +607,8 @@ function onMsg(m){switch(m.t){
  case"closed":resetOnline("Chủ phòng đã đóng phòng.");break}}
 function onState(m){const prev=ST;ST=m;ST.recv=now();
  if(!prev||prev.theme!==m.theme)scene(m.theme);
+ if(ME()<0){if(!$("#sPlay").classList.contains("on"))show("sPlay");const ev=m.ev,fresh=ev&&ev.id!==LASTEV&&m.phase!=="place";if(fresh)LASTEV=ev.id;
+  if(m.phase==="place"){overShown=0;LASTEV=0}renderPlay(fresh?ev:null);if(fresh)playEv(ev,prev);else if(m.phase==="over"&&overShown!==m.ev.id)setTimeout(()=>showOver(),W_(300));return}
  if(m.phase==="place"){if(!prev||prev.phase!=="place"){DRAFT=MY&&MY.fleet?MY.fleet.map(x=>({...x})):randFleet(m.o.noTouch);SELK=-1;SENTPLACE=false;overShown=0;LASTEV=0}
   if(!DRAFT)DRAFT=randFleet(m.o.noTouch);show("sPlace");renderPlace();return}
  if(!$("#sPlay").classList.contains("on")){show("sPlay");VIEW=-1}
@@ -645,7 +668,7 @@ $("#bDone").addEventListener("click",()=>{if(!validFleet(DRAFT,ST.o.noTouch)){sf
 function shake(s){const el=$(s);el.classList.remove("shake");void el.offsetWidth;el.classList.add("shake")}
 
 /* ---- màn chơi ---- */
-function renderPlay(ev){if(!ST)return;const th=THEMES[ST.theme],me=ME(),mt=myTurn();
+function renderPlay(ev){if(!ST)return;if(ME()<0){renderTable(ev);return}document.body.classList.remove("table");const th=THEMES[ST.theme],me=ME(),mt=myTurn();
  $("#pTheme").textContent=th.n;
  $("#chips").innerHTML=ST.names.map((n,i)=>{const left=SIZES.length-ST.sunk[i].length;
   const cls=["chip",i===VIEW?"view":"",i===ST.turn&&ST.phase==="play"?"turn":"",!ST.alive[i]?"out":"",ev&&ev.out&&ev.tg===i?"fresh":""].join(" ");
@@ -704,7 +727,17 @@ function playEv(ev,prev){const th=THEMES[ST.theme],me=ME();
  if(ev.sunk.length)setTimeout(()=>{sfx("sunk");toast(ev.tg,th.sunk,`${ev.sunk.map(s=>th.items[s.k]).join(", ")} của ${ev.tg===me?"bạn":ST.names[ev.tg]} ${th.lose} rồi.<br>${th.rhyme[0]}<br>${th.rhyme[1]}`,true)},W_(tEnd));
  if(ev.out)setTimeout(()=>{sfx("out");toast(ev.tg,`${ev.tg===me?"Bạn":ST.names[ev.tg]} out rồi!`,ev.tg===me?"Đừng buồn, xem mọi người chọi tiếp nhé.":"Mất hết 5 món, rời cuộc chơi.")},W_(tEnd+(ev.sunk.length?1400:0)));
  setTimeout(()=>afterEv(ev),W_(tEnd+(ev.sunk.length?900:0)+(ev.out?900:0)))}
-function afterEv(ev){if(!ST)return;if(ST.phase==="over"){showOver();return}
+function renderTable(ev){const th=THEMES[ST.theme];document.body.classList.add("table");
+ $("#pTheme").textContent=th.n+(ON.code?` · phòng ${ON.code}`:"");
+ let tx;if(ST.phase==="place"){const k=ST.placed.filter(Boolean).length;tx=`Mọi người đang giấu ${th.obj} trên điện thoại (${k}/${ST.n})`}
+ else if(ST.phase==="over")tx=ST.winner>=0?`${esc(ST.names[ST.winner])} thắng rồi!`:"Hòa!";else tx=`Lượt của <b>${esc(ST.names[ST.turn])}</b>: đang ngắm…`;
+ $("#stx").innerHTML=tx;$("#vHead").innerHTML="";$("#acts").innerHTML="";
+ $("#vBoard").innerHTML=`<div class="tgrid n${ST.n}">${ST.names.map((n,i)=>{const left=SIZES.length-ST.sunk[i].length;let fresh=null,freshSunk=null,proj=null;
+  if(ev&&ev.kind==="shot"&&ev.tg===i){fresh={};proj=[];ev.res.forEach((r,j)=>{const t=j*120;proj.push({c:r.c,t});fresh[r.c]=t+470});freshSunk={};ev.sunk.forEach(s=>freshSunk[s.k]=ev.res.length*120+600)}
+  const cls=["tcard",ST.phase==="play"&&i===ST.turn?"turn":"",!ST.alive[i]?"out":"",ev&&ev.tg===i&&ev.kind!=="start"?"hit":""].join(" ");
+  return `<div class="${cls}"><div class="bhead">${animal(i)}<div><b>${esc(n)}</b><small>${ST.phase==="place"?(ST.placed[i]?"Đã giấu xong ✓":"Đang giấu…"):ST.alive[i]?`Còn ${left} ${th.obj} · chọi trúng ${ST.hits[i]} ô`:"Đã out"}${ST.off[i]?" · mất kết nối":""}</small></div><span class="sp"></span><span class="dots">${SIZES.map((_,k)=>`<i class="${k<left?"":"x"}"></i>`).join("")}</span></div>${boardHTML(i,{board:ST.board[i],sunk:ST.sunk[i],scans:ST.scans[i],mini:ST.n>2,fresh,freshSunk,proj})}</div>`}).join("")}</div><ul class="log tlog">${ST.log.slice(-4).reverse().map(l=>`<li>${esc(l)}</li>`).join("")}</ul>`;
+ $("#pClock").hidden=!ST.left;paintTimer()}
+function afterEv(ev){if(!ST)return;if(ME()<0&&ST.phase==="play"){banner(ST.turn,`Lượt của ${esc(ST.names[ST.turn])}`);sfx("turn")}if(ST.phase==="over"){showOver();return}
  if(myTurn()){if(VIEW===ME()||!ST.alive[VIEW])VIEW=defaultView();sfx("turn");banner(ME(),"Tới lượt bạn!")}
  renderPlay(null)}
 let lastBanner=0;function banner(i,t){if(now()-lastBanner<500)return;lastBanner=now();const b=document.createElement("div");b.className="banner";b.innerHTML=animal(i)+`<span>${t}</span>`;document.body.appendChild(b);setTimeout(()=>b.remove(),1700)}
@@ -734,7 +767,7 @@ $("#overBox").addEventListener("click",e=>{const b=e.target.closest("button");if
  if(b.id==="bHome")quitGame()});
 function confetti(){const cols=["#ff8fab","#ffc85c","#7cc4f2","#8fd694","#b89cff"];for(let k=0;k<60;k++){const d=document.createElement("i");d.className="conf";d.style.left=Math.random()*100+"vw";d.style.background=pick(cols);
  d.style.animationDuration=(2+Math.random()*2)+"s";d.style.animationDelay=Math.random()*.8+"s";document.body.appendChild(d);setTimeout(()=>d.remove(),5000)}}
-$("#bQuit").addEventListener("click",()=>{$("#quitTx").textContent=ON.on?(ON.host?"Bạn là chủ phòng. Thoát sẽ đóng phòng và dừng ván của mọi người.":"Bạn sẽ rời phòng. Máy sẽ chọi giúp bạn tới khi bạn vào lại."):"Ván này sẽ kết thúc.";$("#mQuit").hidden=false});
+$("#bQuit").addEventListener("click",()=>{$("#quitTx").textContent=ON.on?(ON.host?"Máy này là chủ phòng. Thoát sẽ đóng phòng và dừng ván của mọi người.":"Bạn sẽ rời phòng. Máy sẽ chọi giúp bạn tới khi bạn vào lại."):"Ván này sẽ kết thúc.";$("#mQuit").hidden=false});
 $("#bQNo").addEventListener("click",()=>$("#mQuit").hidden=true);
 $("#bQYes").addEventListener("click",()=>{$("#mQuit").hidden=true;quitGame()});
 function quitGame(){$("#mOver").hidden=true;if(ON.on){if(ON.host)closeRoom();else leaveRoom()}else{G=null;ST=null;MY=null;show("sHome");renderHome()}}
@@ -750,19 +783,21 @@ function renderHome(){scene(opt.theme);const host=ON.on&&ON.host;
  $("#themes").innerHTML=TKEYS.map(k=>{const t=THEMES[k];return`<button type="button" class="theme${opt.theme===k?" sel":""}" data-t="${k}"><span class="tg" style="background:${t.col}"><svg viewBox="0 0 24 24">${GLYPH[k]}</svg></span><span><b>${t.n}</b><span>Giấu ${t.obj} · chiêu ${t.skn}</span></span></button>`}).join("");
  $("#skillNote").innerHTML=`<b>${THEMES[opt.theme].skn}:</b> ${esc(THEMES[opt.theme].skd)}`;
  $("#cnt").innerHTML=[2,4,6,8].map(n=>`<button type="button" data-n="${n}" class="${opt.count===n?"on":""}">${n}</button>`).join("");
- const hum=host?ON.members.length:1;$("#cntNote").textContent=host?`${hum} người trong phòng${opt.count>hum?` + ${opt.count-hum} máy chơi cùng`:""}.`:`Bạn + ${opt.count-1} máy. Tạo phòng online để bạn bè vào thay máy.`;
+ const hum=host?ON.members.length-OFF():1;$("#cntNote").textContent=host?`${hum} người trong phòng${opt.count>hum?` + ${opt.count-hum} máy chơi cùng`:""}.`:`Bạn + ${opt.count-1} máy. Tạo phòng online để bạn bè vào thay máy.`;
  $("#opts").innerHTML=OPTS.map(x=>`<div class="optrow"><div class="ol"><b>${x.l}</b><small>${x.d}</small></div><div class="seg" data-k="${x.k}">${x.v.map(([v,l],j)=>`<button type="button" data-j="${j}" class="${opt[x.k]===v?"on":""}">${l}</button>`).join("")}</div></div>`).join("");
  $("#roomCard").hidden=!host;$("#goLocal").hidden=host;$("#goHost").hidden=!host;$("#nameCard").hidden=host;
  if(host){$("#roomCode").textContent=ON.code||"…";
-  const list=ON.members.map((m,i)=>`<li>${animal(i)}<span>${esc(m.name)}</span>${i===0?'<span class="pill">chủ phòng</span>':isOff(m)?'<span class="pill off">mất kết nối</span>':""}${i>0?`<button class="x" type="button" data-k="${i}" aria-label="Mời ra">×</button>`:""}</li>`);
-  for(let i=ON.members.length;i<opt.count;i++)list.push(`<li class="bot">${animal(i)}<span>${ANI[i][0]}</span><span class="pill">máy</span></li>`);
+  const O=OFF();const list=ON.members.map((m,i)=>i===0&&O?`<li class="tbl"><svg class="av" viewBox="0 0 64 64"><rect x="6" y="12" width="52" height="38" rx="7" fill="#7cc4f2" stroke="#3b3b5c" stroke-width="2.5"/><rect x="12" y="18" width="40" height="26" rx="3" fill="#dff1ff"/><circle cx="32" cy="47" r="1.6" fill="#3b3b5c"/></svg><span>Bàn chơi (máy này)</span><span class="pill">chủ phòng</span></li>`:`<li>${animal(i-O)}<span>${esc(m.name)}</span>${i===0?'<span class="pill">chủ phòng</span>':isOff(m)?'<span class="pill off">mất kết nối</span>':""}${i>0?`<button class="x" type="button" data-k="${i}" aria-label="Mời ra">×</button>`:""}</li>`);
+  $("#segBoard").innerHTML=`<button type="button" data-b="1" class="${ON.board?"on":""}">Chỉ làm bàn</button><button type="button" data-b="0" class="${ON.board?"":"on"}">Cũng chơi</button>`;
+  for(let i=ON.members.length-O;i<opt.count;i++)list.push(`<li class="bot">${animal(i)}<span>${ANI[i][0]}</span><span class="pill">máy</span></li>`);
   $("#mems").innerHTML=list.join("");
-  $("#memNote").textContent=ON.members.length>opt.count?`Phòng có ${ON.members.length} người, hãy chọn số người chơi lớn hơn.`:"Gửi mã hoặc link cho bạn bè. Chỗ trống sẽ do máy chơi.";
-  $("#bStart").disabled=ON.members.length>opt.count||ON.members.length<1}
+  $("#memNote").textContent=hum>opt.count?`Phòng có ${hum} người chơi, hãy chọn số người chơi lớn hơn.`:"Gửi mã hoặc link cho bạn bè. Chỗ trống sẽ do máy chơi.";
+  $("#bStart").disabled=hum>opt.count||hum<1;if(hum<1)$("#memNote").textContent="Chờ mọi người vào phòng bằng điện thoại. Chỗ trống sẽ do máy chơi."}
  $("#bResume").hidden=!readHost()}
 $("#themes").addEventListener("click",e=>{const b=e.target.closest(".theme");if(!b)return;opt.theme=b.dataset.t;saveOpt();sfx("pop");renderHome();lobbyChanged()});
 $("#cnt").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;opt.count=+b.dataset.n;saveOpt();sfx("tap");renderHome();lobbyChanged()});
 $("#opts").addEventListener("click",e=>{const b=e.target.closest("button"),s=e.target.closest(".seg");if(!b||!s)return;const x=OPTS.find(o=>o.k===s.dataset.k);opt[x.k]=x.v[+b.dataset.j][0];saveOpt();sfx("tap");renderHome();lobbyChanged()});
+$("#segBoard").addEventListener("click",e=>{const b=e.target.closest("button");if(!b||!ON.host||ON.phase!=="lobby")return;ON.board=b.dataset.b==="1";ls.set("ch-board",ON.board);sfx("tap");lobbyChanged()});
 $("#mems").addEventListener("click",e=>{const b=e.target.closest(".x");if(b)kick(+b.dataset.k)});
 const nameOk=()=>{const n=cleanName($("#myName").value);if(!$("#myName").value.trim()){$("#myName").focus();setMsg("Nhập tên của bạn trước nhé.");shake("#nameCard");return null}return n};
 function startLocal(){const n=cleanName(myName||"Bạn");const pl=[{name:n}];for(let i=1;i<opt.count;i++)pl.push({name:ANI[i][0],bot:true});
@@ -776,10 +811,10 @@ $("#bClose").addEventListener("click",()=>closeRoom());
 $("#bCopy").addEventListener("click",()=>{const u=location.origin+location.pathname+"?room="+ON.code;const done=()=>{toast(0,"Đã chép link mời",esc(u))};
  if(navigator.share){navigator.share({title:"Chọi Bí Mật",text:"Vào phòng "+ON.code+" chơi Chọi Bí Mật nè!",url:u}).catch(()=>{})}else if(navigator.clipboard)navigator.clipboard.writeText(u).then(done,()=>prompt("Chép link này:",u));else prompt("Chép link này:",u)});
 $("#bLeave").addEventListener("click",()=>leaveRoom());
-function renderWait(){if(!ROOM)return;$("#wCode").textContent=ROOM.code;const o=ROOM.o;
- const list=ROOM.members.map((m,i)=>`<li>${animal(i)}<span>${esc(m.n)}${i===ON.me?" (bạn)":""}</span>${i===0?'<span class="pill">chủ phòng</span>':m.off?'<span class="pill off">mất kết nối</span>':""}</li>`);
- for(let i=ROOM.members.length;i<o.count;i++)list.push(`<li class="bot">${animal(i)}<span>${ANI[i][0]}</span><span class="pill">máy</span></li>`);
- $("#wMems").innerHTML=list.join("");$("#wNote").textContent=`Ván ${o.count} người${o.count>ROOM.members.length?`, ${o.count-ROOM.members.length} chỗ do máy chơi`:""}.`;
+function renderWait(){if(!ROOM)return;$("#wCode").textContent=ROOM.code;const o=ROOM.o,O=ROOM.board?1:0,hn=ROOM.members.length-O;
+ const list=ROOM.members.map((m,i)=>i===0&&O?`<li class="tbl"><svg class="av" viewBox="0 0 64 64"><rect x="6" y="12" width="52" height="38" rx="7" fill="#7cc4f2" stroke="#3b3b5c" stroke-width="2.5"/><rect x="12" y="18" width="40" height="26" rx="3" fill="#dff1ff"/></svg><span>Bàn chơi</span><span class="pill">chủ phòng</span></li>`:`<li>${animal(i-O)}<span>${esc(m.n)}${i===ON.me?" (bạn)":""}</span>${i===0?'<span class="pill">chủ phòng</span>':m.off?'<span class="pill off">mất kết nối</span>':""}</li>`);
+ for(let i=hn;i<o.count;i++)list.push(`<li class="bot">${animal(i)}<span>${ANI[i][0]}</span><span class="pill">máy</span></li>`);
+ $("#wMems").innerHTML=list.join("");$("#wNote").textContent=`Ván ${o.count} người${o.count>hn?`, ${o.count-hn} chỗ do máy chơi`:""}.${O?" Máy chủ phòng làm bàn chơi chung, bạn chơi trên điện thoại này.":""}`;
  const th=THEMES[o.theme];$("#wInfo").innerHTML=`<h2>Chủ đề: ${th.n}</h2><p class="sub"><b>${th.skn}:</b> ${esc(th.skd)}</p>${optSummary(o)}`}
 
 /* =========================================================
@@ -798,9 +833,9 @@ function peerCfg(){const c={debug:0,config:{iceCandidatePoolSize:2,iceServers:[{
 function setMsg(t){$("#onMsg").textContent=t||""}
 const offFor=m=>{if(!m||m.idx===0)return 0;const base=m.conn?m.lastSeen+40000:m.offSince;return Math.max(0,now()-base)};
 const isOff=m=>offFor(m)>0;
-function lobbyMsg(){return{t:"lobby",code:ON.code,members:ON.members.map(m=>({n:m.name,off:isOff(m)})),o:{theme:opt.theme,count:opt.count,chain:opt.chain,noTouch:opt.noTouch,first:opt.first,hint:opt.hint,shotT:opt.shotT,placeT:opt.placeT,limit:opt.limit}}}
+function lobbyMsg(){return{t:"lobby",code:ON.code,board:!!ON.board,members:ON.members.map(m=>({n:m.name,off:isOff(m)})),o:{theme:opt.theme,count:opt.count,chain:opt.chain,noTouch:opt.noTouch,first:opt.first,hint:opt.hint,shotT:opt.shotT,placeT:opt.placeT,limit:opt.limit}}}
 function pushLobby(){const m=lobbyMsg();ON.members.forEach((mm,i)=>{if(i>0)tx(mm.conn,m)})}
-function lobbyChanged(){if(!ON.on||!ON.host||ON.phase!=="lobby")return;if(ON.members.length>opt.count)opt.count=[2,4,6,8].find(n=>n>=ON.members.length)||8;saveHost();pushLobby();renderHome()}
+function lobbyChanged(){if(!ON.on||!ON.host||ON.phase!=="lobby")return;{const h=ON.members.length-OFF();if(h>opt.count)opt.count=[2,4,6,8].find(n=>n>=h)||8}saveHost();pushLobby();renderHome()}
 function afterNet(){if(ON.phase==="lobby")lobbyChanged();else if(G&&G.phase!=="over")push()}
 function reindex(){ON.members.forEach((m,k)=>m.idx=k)}
 function dropMember(i,tell){const m=ON.members[i];if(!m||i===0)return;if(tell)tx(m.conn,{t:tell});
@@ -809,7 +844,7 @@ function dropMember(i,tell){const m=ON.members[i];if(!m||i===0)return;if(tell)tx
 function kick(i){dropMember(i,"kicked")}
 function hostConn(c){
  c.on("data",d=>{if(!d||typeof d!=="object")return;if(d.c==="hello"){onHello(c,d);return}
-  const i=ON.members.findIndex(m=>m.conn===c);if(i<1)return;ON.members[i].lastSeen=now();onHostMsg(i,d)});
+  const i=ON.members.findIndex(m=>m.conn===c);if(i<1)return;ON.members[i].lastSeen=now();if(d.c==="ping"){tx(c,{t:"pong"});return}if(d.c==="leave"){dropMember(i);return}const st=seatOf(i);if(st>=0)onHostMsg(st,d)});
  c.on("close",()=>{const i=ON.members.findIndex(m=>m.conn===c);if(i<1)return;const m=ON.members[i];m.conn=null;m.offSince=now();
   if(ON.phase==="lobby"){clearTimeout(m.dropT);m.dropT=setTimeout(()=>{const k=ON.members.indexOf(m);if(k>0&&!m.conn&&ON.phase==="lobby"){ON.members.splice(k,1);reindex();lobbyChanged()}},20000)}
   afterNet()});
@@ -824,16 +859,17 @@ function onHello(c,d){const pid=String(d.pid||"").slice(0,24);
  if(ON.members.length>=8){tx(c,{t:"reject",why:"Phòng đã đủ 8 người."});return}
  const m={pid,name:uniq(cleanName(d.name)),conn:c,lastSeen:now(),idx:ON.members.length,offSince:0};ON.members.push(m);
  tx(c,{t:"joined",idx:m.idx,code:ON.code});lobbyChanged()}
-function snap(i){const mm=ON.members[i];if(ON.phase==="lobby"||!G){tx(mm.conn,lobbyMsg());return}
- if(!G.bots[i])tx(mm.conn,{t:"you",i,fleet:G.fleets[i],placed:G.placed[i]});tx(mm.conn,pub())}
+function snap(mi){const mm=ON.members[mi];if(ON.phase==="lobby"||!G){tx(mm.conn,lobbyMsg());return}const i=seatOf(mi);
+ if(i>=0&&i<G.n&&!G.bots[i])tx(mm.conn,{t:"you",i,fleet:G.fleets[i],placed:G.placed[i]});tx(mm.conn,pub())}
 function startOnline(){if(!ON.host||ON.phase!=="lobby")return;
  if(ON.members.some(isOff)){setMsg("Có người đang mất kết nối. Chờ họ vào lại hoặc mời ra rồi hãy bắt đầu.");return}
- if(ON.members.length>opt.count){setMsg("Số người chơi nhỏ hơn số người trong phòng.");return}
- setMsg("");const pl=ON.members.map(m=>({name:m.name}));for(let i=pl.length;i<opt.count;i++)pl.push({name:ANI[i][0],bot:true});
+ const hm=ON.members.slice(OFF());if(!hm.length){setMsg("Chưa có ai vào phòng. Mời mọi người vào bằng điện thoại trước nhé.");return}
+ if(hm.length>opt.count){setMsg("Số người chơi nhỏ hơn số người trong phòng.");return}
+ setMsg("");const pl=hm.map(m=>({name:m.name}));for(let i=pl.length;i<opt.count;i++)pl.push({name:ANI[i][0],bot:true});
  ON.phase="play";ST=null;MY=null;DRAFT=null;LASTEV=0;overShown=0;makeGame(pl,opt)}
 function backToLobby(){if(!ON.host)return;G=null;ST=null;MY=null;ON.phase="lobby";ON.members=ON.members.filter((m,i)=>i===0||!!m.conn);reindex();lobbyChanged();show("sHome");renderHome()}
 function createRoom(name){if(typeof Peer==="undefined"){setMsg("Không tải được thư viện kết nối. Kiểm tra mạng rồi tải lại trang.");return}
- Object.assign(ON,{on:true,host:true,me:0,phase:"lobby",pid:pidOf(),tries:0,code:"",scores:{},outbox:[]});
+ Object.assign(ON,{on:true,host:true,me:0,phase:"lobby",pid:pidOf(),tries:0,code:"",scores:{},outbox:[],board:ls.get("ch-board",true)});
  ON.members=[{pid:ON.pid,name:cleanName(name),conn:null,lastSeen:now(),idx:0,offSince:0}];setMsg("Đang tạo phòng…");keepAwake(true);openHost()}
 function brokerRetry(peer,n){if(ON.peer!==peer||!ON.host||peer.destroyed||!peer.disconnected)return;
  setMsg("Mất liên lạc với máy chủ trung gian, đang nối lại… (người đang trong phòng vẫn chơi bình thường)");
@@ -848,18 +884,18 @@ function openHost(fixed){const code=fixed||rcode(5);const peer=new Peer(idOf(cod
  peer.on("disconnected",()=>{if(ON.code)brokerRetry(peer,0);else try{peer.reconnect()}catch(e){}})}
 const HKEY="ch-host";
 function saveHost(){if(!ON.on||!ON.host||!ON.code)return;try{const play=!!G&&G.phase!=="over";
- localStorage.setItem(HKEY,JSON.stringify({t:now(),code:ON.code,pid:ON.pid,play,members:ON.members.map(m=>({pid:m.pid,name:m.name})),scores:ON.scores,opt,
+ localStorage.setItem(HKEY,JSON.stringify({t:now(),code:ON.code,pid:ON.pid,play,board:!!ON.board,members:ON.members.map(m=>({pid:m.pid,name:m.name})),scores:ON.scores,opt,
   G:play?Object.assign({},G,{dlLeft:G.dl?Math.max(0,G.dl-now()):0,endLeft:G.endAt?Math.max(0,G.endAt-now()):0}):null}))}catch(e){}}
 const clearHost=()=>{try{localStorage.removeItem(HKEY)}catch(e){}};
 function readHost(){try{const d=JSON.parse(localStorage.getItem(HKEY)||"null");if(d&&d.code&&now()-d.t<3*3600*1000)return d}catch(e){}return null}
 function resumeRoom(){const d=readHost();if(!d)return;if(typeof Peer==="undefined"){setMsg("Không tải được thư viện kết nối.");return}
  sess.set("ch-pid",d.pid);Object.assign(opt,d.opt);
- Object.assign(ON,{on:true,host:true,me:0,phase:d.play?"play":"lobby",pid:d.pid,tries:0,code:"",resume:true,scores:d.scores||{},outbox:[]});
+ Object.assign(ON,{on:true,host:true,me:0,phase:d.play?"play":"lobby",pid:d.pid,tries:0,code:"",resume:true,scores:d.scores||{},outbox:[],board:!!d.board});
  ON.members=d.members.map((m,i)=>({pid:m.pid,name:m.name,conn:null,lastSeen:now(),idx:i,offSince:i?now():0}));
  G=null;if(d.play&&d.G){G=d.G;const t=now();G.dl=G.dl?t+G.dlLeft+8000:0;G.endAt=G.endAt?t+G.endLeft+8000:0;G.busy=t+2000;G.botAt=t+3000;G.autoAt=t+20000;G.placeAt=t}
  setMsg("Đang khôi phục phòng "+d.code+"…");keepAwake(true);openHost(d.code)}
 function hostResumeView(){ON.resume=false;if(!G){lobbyChanged();show("sHome");renderHome();setMsg("Đã khôi phục phòng chờ. Người chơi sẽ tự vào lại.");return}
- ST=null;LASTEV=G.ev?G.ev.id:0;sendYou(0);push()}
+ ST=null;LASTEV=G.ev?G.ev.id:0;if(!ON.board)sendYou(0);push()}
 function closeRoom(){if(!ON.host)return;ON.members.forEach((m,i)=>{if(i>0)tx(m.conn,{t:"closed"})});const k=ON.code;clearHost();setTimeout(()=>{if(ON.code===k)resetOnline("Đã đóng phòng.")},300)}
 function leaveRoom(){if(ON.on&&!ON.host){ON.bye=true;tx(ON.conn,{c:"leave"});sess.del("ch-join")}setTimeout(()=>resetOnline(""),200)}
 function resetOnline(why){const wasOn=ON.on;clearInterval(ON.ping);clearTimeout(ON.retry);clearTimeout(ON.dialTo);
