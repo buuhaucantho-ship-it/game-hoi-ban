@@ -33,7 +33,7 @@ const brick=()=>rect(31,44,98,93,4,"#9b5c57","#e3a486")+line("M32 87h96M64 45v42
 const bag=()=>rect(33,61,94,74,9,"url(#wood)")+path("M55 61V42q0-21 25-21t25 21v19","none","#e6c59c",7)+rect(75,95,11,17,2,"#eac995","none");
 const fruit=()=>circ(80,99,38,"#b65f5b","#e6ab8d")+path("M79 66q-2-22 12-40","none","#b6a474",6)+path("M91 40q18-24 36-3-13 18-36 3Z","#5d846e","#bdd0a0");
 const food=()=>circ(80,95,44,"#b47e53","#efd3a4")+circ(80,95,32,"#d7a672","none")+line("M57 96q23-18 46 0","#aa7154",4);
-const wheel=()=>circ(80,84,47,"#1a2b35","#d4ae80")+circ(80,84,23,"#5e7980","#c2b299")+line("M80 37v94M33 84h94","#d7ba90",3);
+const pistol=()=>path("M32 61h92v23H91l-9 45H58l9-45H32Z","url(#metal)")+rect(108,53,30,9,2,"#b4bfc3","#e1d1ad")+line("M67 90q12 9 20-2","#ecd9b4",3);
 let out;
 if(/thuốc độc|thuốc ngủ|lọ thuốc|chất tẩy|khí độc/.test(n))out=bottle();
 else if(/ly nước|chai rượu|nước sôi/.test(n))out=cup();
@@ -59,7 +59,7 @@ else if(/gạch/.test(n))out=brick();
 else if(/ví|hộp quà/.test(n))out=bag();
 else if(/táo/.test(n))out=fruit();
 else if(/bánh|kẹo/.test(n))out=food();
-else if(/súng/.test(n))out=wheel();
+else if(/súng/.test(n))out=pistol();
 else out=paper();
 return out;
 }
