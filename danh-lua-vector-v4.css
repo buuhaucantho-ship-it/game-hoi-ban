@@ -14,3 +14,11 @@
 .evidence-board .evidence{min-height:213px!important}
 @media(max-width:700px){.evidence-board{grid-template-columns:repeat(2,minmax(0,1fr))!important}.evidence-board .evidence{min-height:190px!important}.evidence .evidence-art{height:100px!important;min-height:100px!important}}
 @media(prefers-reduced-motion:reduce){.evidence .dl-v4-icon,.evidence{transition:none!important}}
+
+/* SVG role reveal portrait */
+.dl-role-v4{display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr);align-items:center;gap:22px;text-align:left}
+.dl-role-v4-art{border:2px solid #d7b07c;border-radius:11px;overflow:hidden;box-shadow:0 12px 30px #0008}
+.dl-role-v4-art svg{display:block;width:100%;height:auto}
+.dl-role-v4 h3{color:#f1c791!important;font-family:Georgia,serif;letter-spacing:.03em;font-size:23px}
+.dl-role-v4 p{color:#e5d4bb;line-height:1.7}
+@media(max-width:600px){.dl-role-v4{grid-template-columns:1fr;text-align:center}.dl-role-v4-art{width:170px;margin:auto}}
