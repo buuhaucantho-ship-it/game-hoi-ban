@@ -111,3 +111,12 @@ Nhân vật và hình minh họa là SVG tự vẽ. Thư viện ngoài duy nhấ
 - 4 chủ đề, mỗi chủ đề một chiêu dùng 1 lần mỗi ván: Bến sông (Ngư lôi: 3 ô một hàng), Bầu trời (Radar: dò khung 3×3), Xóm nhỏ (Pháo hoa: dấu cộng 5 ô), Trang trại (Hàng rào: tự chặn phát trúng đầu tiên).
 - Luật tùy chỉnh: trúng thì chọi tiếp, đồ không nằm sát nhau, ai chọi trước, gợi ý, đồng hồ mỗi phát, đồng hồ giấu đồ, giới hạn cả ván.
 - Thú bông tự vẽ, nhạc hộp nhạc và hiệu ứng âm thanh tự tổng hợp bằng Web Audio, không dùng file ngoài.
+
+## Chế độ iPad làm bàn chơi (Ma Sói, Gián Điệp, Chọi Bí Mật)
+
+- Khi tạo phòng online, mục **Máy này** có hai lựa chọn: **Chỉ làm bàn** (mặc định) hoặc **Cũng chơi**.
+- Chỉ làm bàn: máy chủ (ví dụ iPad đặt giữa bàn) không nhận vai, từ khóa hay đồ; mọi người vào phòng và chơi bằng điện thoại.
+  - Ma Sói: iPad đọc lời dẫn, hiện ngày đêm, danh sách làng, nút bắt đầu đêm và bắt đầu bỏ phiếu; điện thoại không đọc lời dẫn để khỏi trùng tiếng.
+  - Gián Điệp: iPad hiện ai đã sẵn sàng, người đang mô tả, dòng mô tả, tiến độ bỏ phiếu và kết quả.
+  - Chọi Bí Mật: iPad hiện bàn của tất cả người chơi cùng lúc, có hiệu ứng mỗi phát chọi.
+
